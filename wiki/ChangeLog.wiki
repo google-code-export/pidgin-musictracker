@@ -1,3 +1,5 @@
+#summary History of changes to MusicTracker
+
 ===2007-05-16 (Version 0.4.1)===
 	* Added Banshee and Quod Libet support
 	* Fixed bug that caused disable option to not workk for MSN
