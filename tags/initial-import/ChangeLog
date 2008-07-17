@@ -1,0 +1,55 @@
+ChangeLog for MusicTracker Pidgin Plugin
+-======================================-
+
+2007-05-16 (Version 0.4.1)
+	* Added Banshee and Quod Libet support
+	* Fixed bug that caused disable option to not work for MSN
+	* Disabling musictracker for a protocol now clears the previous status
+		set by musictracker. Also works for
+		Tools->MusicTracker->Toggle Status Changing
+	* Updated Exaile support to work with latest version (0.2.9)
+
+2007-05-12 (Version 0.4)
+	* Added new and improved preferences dialog
+	* Added scheme to set per-player preferences
+	* Per-account status customizations and disabling now supported
+	* Added hostname, port and password preferences to MPD support
+	* Added iTunes and Windows Media Player support
+	* Added NSIS based Windows installer
+
+2007-05-11
+	* Cleaned up player selection code. Now only a singe array entry
+		needs to be added to g_players for adding a player
+	* Fixed defect that caused detection of DBUS-based players to start
+		up the player if it was not running (such as Rhythmbox)
+
+2007-05-08
+	* Added support for compiling on Windows with Mingw
+	* Added Winamp support
+	* Added foobar2000 support (incomplete, does not get track duration)
+
+2007-05-06 (Version 0.3)
+	* Made compatible with Pidgin 2.0.0
+	* Added Rhythmbox support
+	* Fixed missing player-selection configuration option bug
+	* Added auto-detection of media players
+
+2007-03-22 (Version 0.2.3)
+	* MPD support added by Erik de Jong
+	* Fixed libxmms.so symlink checking bug
+	* Fixed crash due to assertion on delimiter length in preferences
+	* Added option for disabling status filter
+
+2007-01-29 (Version 0.2.2)
+	* Cleaned up XMMS & Audacious support code
+
+2007-01-03
+	* Removed dependency on XMMS Infopipe plugin
+	* Added Audacious player support
+
+2006-12-29 (Version 0.2.1)
+	* Added menu action to toggle status changing
+
+2006-12-27 (Version 0.2)
+	* Added protocol-specific status format overriding support
+	* Started maintaining Changelog
