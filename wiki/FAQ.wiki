@@ -1,0 +1,25 @@
+#summary FAQ
+#labels Featured
+
+= I installed musictracker, started my player and my status doesn't change =
+
+Your outgoing status message is changed, as your correspondents should be able to tell you, but the status message shown in the pidgin UI is not updated.
+
+This behaviour, whilst failing to provide clearly needed user feedback, is by design, at least for the moment.
+
+= Windows installer fails "Error opening the file for writing musictracker.dll" =
+
+You must exit pidgin to run the installer if you have a previous version of musictracker installed.
+
+= Doesn't work with Windows Media Player =
+
+Sigh.
+
+You must enable the plugin called "True Launch Bar Remote Control" in Windows Media
+Player (accessible from the little arrow underneath Now Playing, Plugins, Other).
+
+This plugin is implemented by wmp9.dll and seems to provide the hook needed for reporting WMP status messages.
+
+I've removed wmp9.dll from the pidgin-musictrcker installer as the distribution rights are unclear.  Googling for "True Launch Bar" should find it :-)
+
+Needless to say, this is a complete crock and needs re-writing.
