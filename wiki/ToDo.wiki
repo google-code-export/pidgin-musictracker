@@ -1,0 +1,7 @@
+#summary Things which need doing
+
+  * [http://mpris.org/ MPRIS]-compliant DBUS player track-info retrival
+  * Sensible WMP support
+  * XMPP tune status support
+  * Other outstanding patches
+  * issues with track info containing hyphens? winamp related?
