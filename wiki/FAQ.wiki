@@ -7,6 +7,8 @@ Your outgoing status message is changed, as your correspondents should be able t
 
 This behaviour, whilst failing to provide clearly needed user feedback, is by design, at least for the moment.
 
+Adding yourself to your own buddy list (if permitted by the protocol) may be one way of seeing your own status, or enabling the [http://plugins.guifications.org/trac/wiki/mystatusbox MyStatusBox] plugin from the [http://plugins.guifications.org/trac/wiki/PluginPack Pidgin Plugin Pack]
+
 = Windows installer fails "Error opening the file for writing musictracker.dll" =
 
 You must exit pidgin to run the installer if you have a previous version of musictracker installed.
