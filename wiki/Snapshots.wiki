@@ -1,0 +1,3 @@
+#summary Development snapshots
+
+Development snapshots are generated daily and can be found for [http://www.dronecode.org.uk/pidgin-musictracker-snapshot/?C=M;O=D download here]
