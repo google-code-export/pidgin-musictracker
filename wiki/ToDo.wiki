@@ -10,3 +10,4 @@
   * Generate reasonable linux binary packages (hopefully without needing a system with each kind of linux distrubution on)
   * When regex matching fails, log something useful
   * Are we leaking memory every time we pcre_comple? Check for leaks generally...
+  * Use purple_plugin_pref*() API rather than GTK directly?
