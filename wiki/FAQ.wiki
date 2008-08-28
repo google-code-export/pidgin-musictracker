@@ -13,7 +13,7 @@ Adding yourself to your own buddy list (if permitted by the protocol) may be one
 
 You must exit pidgin to run the installer if you have a previous version of musictracker installed.
 
-= Doesn't work with Windows Media Player =
+= Doesn't work with Windows Media Player (0.4.5 and earlier)=
 
 Sigh.
 
