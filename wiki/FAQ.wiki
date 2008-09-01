@@ -29,8 +29,16 @@ Needless to say, this is a complete crock and needs re-writing.
 = How do I build the Subversion source? =
 
 {{{
-echo hacked-up-version >version
+echo my-hacked-up-version >version
 ./reconf
 ./configure
 make
 }}}
+
+for Windows
+
+{{
+echo my-hacked-up-version >version
+cd src
+make -f Makefile.mingw installer
+}}
