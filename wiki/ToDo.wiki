@@ -5,7 +5,7 @@
   * ~~XMPP tune status support~~
   * ~~Other outstanding patches~~
   * ~~issues with track info containing hyphens? winamp related?~~
-  * XMMS2 support needs work: should use dlopen/dlsym to avoid depending on presence of library (detected at compile time at the moment)
+  * ~~XMMS2 support needs work: should use dlopen/dlsym to avoid depending on presence of library (detected at compile time at the moment)~~
   * ~~Last.fm feed support needs work: breaks player autodetection at the momeent, should look at timestamp and infer off it is more than 5 minutes (configurable?) in the past; look at what [http://code.google.com/p/pidgin-lastfm/ pidgin-lastfm] does?~~
   * Generate reasonable linux binary packages (hopefully without needing a system with each kind of linux distrubution on)
   * When regex matching fails, log something useful
