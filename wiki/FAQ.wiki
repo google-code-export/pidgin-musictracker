@@ -37,8 +37,8 @@ make
 
 for Windows
 
-{{
+{{{
 echo my-hacked-up-version >version
 cd src
 make -f Makefile.mingw installer
-}}
+}}}
