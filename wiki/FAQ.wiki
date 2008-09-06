@@ -61,4 +61,4 @@ for the Windows build you'll also need the pidgin source at the relative path ..
 
 Please send a mail to the pidigin-musictracker general discussion mailing list if you have a question.
 
-If you find a bug or have an enhancement request, put it into the Google code issue trcker
+If you find a bug or have an enhancement request, put it into the Google code issues tracker
