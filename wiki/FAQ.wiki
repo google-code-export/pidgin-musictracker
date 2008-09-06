@@ -55,10 +55,12 @@ cd src
 make -f Makefile.mingw installer
 }}}
 
-for the Windows build you'll also need the pidgin source at the relative path ../pidgin, with a win32-dev which has been populated by at Windows build dependency fetcher.
+For the Windows build, as we currently rely on some of the pidgin build infrastructure,  you'll also need the pidgin source at the relative path ../pidgin,  with a win32-dev/ which has been populated by at Windows build dependency fetcher, winpidgin-build-fetcher.sh.  This source needs to be buildable, i.e. have an appropriate config.h and local.mak.
+
+We don't provide and install a dynamic libpcre, so a static libpcre needs to be made available, one approach is to place that in a directory under win32-dev/ and add that directory to the LIB_PATH set in local.mak
 
 = My Question isn't answered here! Help! =
 
 Please send a mail to the pidigin-musictracker general discussion mailing list if you have a question.
 
-If you find a bug or have an enhancement request, put it into the Google code issues tracker
+If you find a bug or have an enhancement request, put it into the Google Code issues tracker
