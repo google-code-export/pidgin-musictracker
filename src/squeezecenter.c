@@ -703,48 +703,48 @@ squeezecenter_Player * get_squeezecenter_status(squeezecenter_Connection * conne
 
 /******************************************************************************/
 
-void squeezecenter_status_to_musictracker(squeezecenter_Player *pl,struct TrackInfo* ti) {
+void squeezecenter_status_to_musictracker(squeezecenter_Player *pl, TrackInfo* ti) {
 	static char name[STRLEN];
 
 	sprintf(name,"SqueezeCenter(%s)",pl->name);
 	trim(name);
-	ti->player = name;
-	ti->currentSecs = pl->time;
-	ti->status = STATUS_OFF;
+	trackinfo_set_player(ti, name);
+	trackinfo_set_currentSecs(ti, pl->time);
+	trackinfo_set_status(ti, STATUS_OFF);
         if (pl->remote == 1) {
 	        trace("squeezecenter remote streaming");
-		g_strlcpy(ti->track,pl->current_title,STRLEN);
+		g_string_assign(trackinfo_get_gstring_track(ti), pl->current_title);
 		// set others to null?
-		ti->totalSecs = -1;
+		trackinfo_set_totalSecs(ti, -1);
 	} else {
-		g_strlcpy(ti->track,pl->tinfo.title,STRLEN);
-		g_strlcpy(ti->artist,pl->tinfo.artist,STRLEN);
-		g_strlcpy(ti->album,pl->tinfo.album,STRLEN);
-		ti->totalSecs = pl->duration;
+		g_string_assign(trackinfo_get_gstring_track(ti), pl->tinfo.title);
+		g_string_assign(trackinfo_get_gstring_artist(ti), pl->tinfo.artist);
+		g_string_assign(trackinfo_get_gstring_album(ti), pl->tinfo.album);
+		trackinfo_set_totalSecs(ti, pl->duration);
 	}
 
 	if ( pl->power == 1 || pl->remote == 1) {
 	   trace("squeezecenter player on");
 	   switch(pl->mode[1]) {
 	      case 'l': //Play
-		ti->status = STATUS_NORMAL;
+		trackinfo_set_status(ti, STATUS_NORMAL);
 	      break;
 	      case 'a': //Pause
-		ti->status = STATUS_PAUSED;
+		trackinfo_set_status(ti, STATUS_PAUSED);
 	      break;
 	      case 't': //stop
-		ti->status = STATUS_OFF;
+		trackinfo_set_status(ti, STATUS_OFF);
 	      break;
 	   }
 	} else {
-		ti->status = STATUS_OFF;
+		trackinfo_set_status(ti, STATUS_OFF);
 	}
-        trace("squeezecenter musictracker status %d(%c)",ti->status,pl->mode[1]);
+        trace("squeezecenter musictracker status %d(%c)",trackinfo_get_status(ti),pl->mode[1]);
 }
 
 /* music tracker interfaces */
 
-gboolean get_squeezecenter_info(struct TrackInfo* ti)
+gboolean get_squeezecenter_info(TrackInfo* ti)
 {
 	char const * server = purple_prefs_get_string(PREF_SQUEEZECENTER_SERVER);
 	char const * user = purple_prefs_get_string(PREF_SQUEEZECENTER_USER);

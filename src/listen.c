@@ -4,7 +4,7 @@
 #include <string.h>
 
 gboolean
-get_listen_info(struct TrackInfo* ti)
+get_listen_info(TrackInfo* ti)
 {
     DBusGConnection *connection;
     DBusGProxy *proxy;
@@ -21,8 +21,7 @@ get_listen_info(struct TrackInfo* ti)
 
     if (!dbus_g_running(connection, "org.gnome.Listen")) {
         trace("org.gnome.Listen not running");
-        ti->status = STATUS_OFF;
-        return TRUE;
+        return FALSE;
     }
 
     proxy = dbus_g_proxy_new_for_name(connection,
@@ -40,13 +39,13 @@ get_listen_info(struct TrackInfo* ti)
     }
 
     if (strcmp(buf, "") == 0) {
-        ti->status = STATUS_PAUSED;
+        trackinfo_set_status(ti, STATUS_PAUSED);
         return TRUE;
     }
 
-    ti->status = STATUS_NORMAL;
+    trackinfo_set_status(ti, STATUS_NORMAL);
     re = regex("^(.*) - \\((.*) - (.*)\\)$", 0);
-    capture(re, buf, strlen(buf), ti->track, ti->album, ti->artist);
+    capture_gstring(re, buf, strlen(buf), trackinfo_get_gstring_track(ti), trackinfo_get_gstring_album(ti), trackinfo_get_gstring_artist(ti));
     pcre_free(re);
 
     return TRUE;

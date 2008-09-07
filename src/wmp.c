@@ -44,7 +44,7 @@ typedef enum WMPPlayState{
 } WMPPlayState;
 
 static
-void getItemInfo(IDispatch *objWmp, WCHAR *attr, char *result)
+void getItemInfo(IDispatch *objWmp, WCHAR *attr, GString *result)
 {
   BSTR value;
   BSTR attribute = SysAllocString(attr);
@@ -53,14 +53,13 @@ void getItemInfo(IDispatch *objWmp, WCHAR *attr, char *result)
   if (r == 0)
     {
       char *v = wchar_to_utf8(value);
-      strncpy(result, v, STRLEN);
-      result[STRLEN-1] = 0;
+      g_string_assign(result, v);
       dhFreeString(value);
       free(v);
     }
 }
 
-gboolean get_wmp_info(struct TrackInfo *ti)
+gboolean get_wmp_info(TrackInfo *ti)
 {
   HRESULT r;
   DISPATCH_OBJ(objWmpuice);
@@ -121,9 +120,9 @@ gboolean get_wmp_info(struct TrackInfo *ti)
     }
 
   // .currentMedia.getItemInfo()
-  getItemInfo(objWmp, L"WM/AlbumTitle", ti->album);
-  getItemInfo(objWmp, L"Author", ti->artist);
-  getItemInfo(objWmp, L"Title", ti->track);
+  getItemInfo(objWmp, L"WM/AlbumTitle", trackinfo_get_gstring_album(ti));
+  getItemInfo(objWmp, L"Author", trackinfo_get_gstring_artist(ti));
+  getItemInfo(objWmp, L"Title", trackinfo_get_gstring_track(ti));
 
   // currentMedia.duration
   double duration;

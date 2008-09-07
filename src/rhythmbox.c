@@ -4,12 +4,12 @@
 #include <string.h>
 
 gboolean
-get_hash_str(GHashTable *table, const char *key, char *dest)
+get_hash_str(GHashTable *table, const char *key, GString *dest)
 {
 	GValue* value = (GValue*) g_hash_table_lookup(table, key);
 	if (value != NULL && G_VALUE_HOLDS_STRING(value)) {
-		strncpy(dest, g_value_get_string(value), STRLEN-1);
-                trace("Got info for key '%s' is '%s'", key, dest);
+                g_string_assign(dest, g_value_get_string(value));
+                trace("Got info for key '%s' is '%s'", key, dest->str);
                 return TRUE;
 	}
         return FALSE;
@@ -25,7 +25,7 @@ unsigned int get_hash_uint(GHashTable *table, const char *key)
 }
 
 gboolean
-get_rhythmbox_info(struct TrackInfo* ti)
+get_rhythmbox_info(TrackInfo* ti)
 {
 	DBusGConnection *connection;
 	DBusGProxy *player, *shell;
@@ -39,8 +39,7 @@ get_rhythmbox_info(struct TrackInfo* ti)
 	}
 
 	if (!dbus_g_running(connection, "org.gnome.Rhythmbox")) {
-		ti->status = STATUS_OFF;
-		return TRUE;
+		return FALSE;
 	}
 
 	shell = dbus_g_proxy_new_for_name(connection,
@@ -58,7 +57,7 @@ get_rhythmbox_info(struct TrackInfo* ti)
 				G_TYPE_BOOLEAN, &playing,
 				G_TYPE_INVALID)) {
 		trace("Failed to get playing state from rhythmbox dbus (%s). Assuming player is off", error->message);
-		ti->status = STATUS_OFF;
+		trackinfo_set_status(ti, STATUS_OFF);
 		return TRUE;
 	}
 	
@@ -78,7 +77,7 @@ get_rhythmbox_info(struct TrackInfo* ti)
 				dbus_g_type_get_map("GHashTable", G_TYPE_STRING, G_TYPE_VALUE),	&table,
 				G_TYPE_INVALID)) {
 		if (!playing) {
-			ti->status = STATUS_OFF;
+			trackinfo_set_status(ti, STATUS_OFF);
 			return TRUE;
 		} else {
 			trace("Failed to get song info from rhythmbox dbus (%s)", error->message);
@@ -87,27 +86,59 @@ get_rhythmbox_info(struct TrackInfo* ti)
 	}
 
 	if (playing)
-		ti->status = STATUS_NORMAL;
+		trackinfo_set_status(ti, STATUS_NORMAL);
 	else
-		ti->status = STATUS_PAUSED;
+		trackinfo_set_status(ti, STATUS_PAUSED);
 
+        // dump hashtable keys
+        GHashTableIter iter;
+        gpointer key;
+        GValue *value;
+        g_hash_table_iter_init(&iter, table);
+        while (g_hash_table_iter_next(&iter, &key, (gpointer) &value))
+          {
+            if (value != NULL)
+              {
+                if (G_VALUE_HOLDS_STRING(value))
+                  {
+                    g_string_assign(trackinfo_get_gstring_tag(ti, key), g_value_get_string(value));
+                  }
+                else
+                  {
+                    // g_strdup_value_contents renders non-ASCII characters as /nnn sequences, so we can't just use it for everything....
+                    char *s = g_strdup_value_contents(value);
+                    g_string_assign(trackinfo_get_gstring_tag(ti, key), s);
+                    g_free(s);
+                  }
+                trace("For key '%s' value is '%s'", key, trackinfo_get_gstring_tag(ti, key)->str);
+              }
+          }
 
         // check if streamtitle is nonempty, if so use that as title
-        if (!get_hash_str(table, "rb:stream-song-title", ti->track))
+        if (g_hash_table_lookup(table, "rb:stream-song-title"))
           {
-            get_hash_str(table, "title", ti->track);
-          }        
-        get_hash_str(table, "artist", ti->artist);
-	get_hash_str(table, "album", ti->album);
-	ti->totalSecs = get_hash_uint(table, "duration");
+            get_hash_str(table, "rb:stream-song-title", trackinfo_get_gstring_track(ti));
+          }
+        else
+          {
+            // canonicalize tag name "title" as "track"
+            get_hash_str(table, "title", trackinfo_get_gstring_track(ti));
+          }
+
+        // get_hash_str(table, "artist", trackinfo_get_gstring_artist(ti));
+	// get_hash_str(table, "album", trackinfo_get_gstring_album(ti));
+
+	trackinfo_set_totalSecs(ti, get_hash_uint(table, "duration"));
 	g_hash_table_destroy(table);
 
+        int currentSecs;
 	if (!dbus_g_proxy_call_with_timeout(player, "getElapsed", DBUS_TIMEOUT, &error,
 				G_TYPE_INVALID,
-				G_TYPE_UINT, &ti->currentSecs,
+                                G_TYPE_UINT, &currentSecs,
 				G_TYPE_INVALID)) {
 		trace("Failed to get elapsed time from rhythmbox dbus (%s)", error->message);
 	}
+        trackinfo_set_currentSecs(ti, currentSecs);
 
 	return TRUE;
 }

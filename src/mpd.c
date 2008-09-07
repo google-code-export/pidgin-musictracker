@@ -5,7 +5,7 @@
 #include <string.h>
 #include <libmpdclient.h>
 
-gboolean get_mpd_info(struct TrackInfo* ti)
+gboolean get_mpd_info(TrackInfo* ti)
 {
 	const char * hostname = purple_prefs_get_string(PREF_MPD_HOSTNAME);
 	const char * port = purple_prefs_get_string(PREF_MPD_PORT);
@@ -38,8 +38,8 @@ gboolean get_mpd_info(struct TrackInfo* ti)
 		return FALSE;
 		mpd_closeConnection(conn);
 	}
-	ti->currentSecs = status->elapsedTime;
-	ti->totalSecs = status->totalTime;
+	trackinfo_set_currentSecs(ti, status->elapsedTime);
+	trackinfo_set_totalSecs(ti, status->totalTime);
 	mpd_nextListOkCommand(conn);
 	while((entity = mpd_getNextInfoEntity(conn))) {
 		mpd_Song * song = entity->info.song;
@@ -48,16 +48,13 @@ gboolean get_mpd_info(struct TrackInfo* ti)
 			continue;
 		}
 		if(song->artist) {
-			strncpy(ti->artist, song->artist, STRLEN);
-                        ti->artist[STRLEN-1] = 0;
+                        g_string_assign(trackinfo_get_gstring_artist(ti), song->artist);
 		}
 		if(song->album) {
-			strncpy(ti->album, song->album, STRLEN);
-                        ti->album[STRLEN-1] = 0;
+                        g_string_assign(trackinfo_get_gstring_album(ti), song->album);
 		}
 		if(song->title) {
-			strncpy(ti->track, song->title, STRLEN);
-                        ti->track[STRLEN-1] = 0;
+                        g_string_assign(trackinfo_get_gstring_track(ti), song->title);
 		}
 		mpd_freeInfoEntity(entity);
 	}
@@ -74,13 +71,13 @@ gboolean get_mpd_info(struct TrackInfo* ti)
 	}
 	switch(status->state) {
 		case MPD_STATUS_STATE_STOP:
-			ti->status = STATUS_OFF;
+			trackinfo_set_status(ti, STATUS_OFF);
 			break;
 		case MPD_STATUS_STATE_PAUSE:
-			ti->status = STATUS_PAUSED;
+			trackinfo_set_status(ti, STATUS_PAUSED);
 			break;
 		case MPD_STATUS_STATE_PLAY:
-			ti->status = STATUS_NORMAL;
+			trackinfo_set_status(ti, STATUS_NORMAL);
 			break;
 	}
 	mpd_freeStatus(status);

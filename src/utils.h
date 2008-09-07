@@ -19,6 +19,7 @@ void build_pref(char *dest, const char *format, const char* str1, const char* st
 
 pcre* regex(const char* pattern, int options);
 int capture(pcre* re, const char *text, int len, ...);
+int capture_gstring(pcre* re, const char* text, int len, ...);
 
 #ifndef WIN32
 gboolean dbus_g_running(DBusGConnection *connection, const char *name);

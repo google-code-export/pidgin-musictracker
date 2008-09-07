@@ -55,6 +55,7 @@ C_SRC =	musictracker.c \
                 mpd.c \
                 libmpdclient.c \
                 msn-compat.c \
+                trackinfo.c \
 
 CXX_SRC = itunes.cpp
 
