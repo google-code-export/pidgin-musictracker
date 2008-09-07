@@ -9,7 +9,7 @@ More documentation about the interface from audacious 1.4:
 src/audacious/objects.xml from http://svn.atheme.org/audacious/trunk (can be found through www.google.com/codesearch)
 */
 
-gboolean audacious_dbus_string(DBusGProxy *proxy, const char *method, int pos, const char *arg, char* dest)
+gboolean audacious_dbus_string(DBusGProxy *proxy, const char *method, int pos, const char *arg, GString* dest)
 {
 	GValue val = {0, };
 	GError *error = 0;
@@ -25,8 +25,7 @@ gboolean audacious_dbus_string(DBusGProxy *proxy, const char *method, int pos, c
 	}
 
 	if (G_VALUE_TYPE(&val) == G_TYPE_STRING) {
-		strncpy(dest, g_value_get_string(&val), STRLEN);
-		dest[STRLEN-1] = 0;
+                g_string_assign(dest, g_value_get_string(&val));
 	}
 	g_value_unset(&val);
 	return TRUE;
@@ -66,7 +65,7 @@ int audacious_dbus_int(DBusGProxy *proxy, const char *method, int pos)
 }
 
 gboolean
-get_audacious_info(struct TrackInfo* ti)
+get_audacious_info(TrackInfo* ti)
 {
 	DBusGConnection *connection;
 	DBusGProxy *proxy;
@@ -82,7 +81,7 @@ get_audacious_info(struct TrackInfo* ti)
 	}
 
 	if (!dbus_g_running(connection, "org.atheme.audacious")) {
-		ti->status = STATUS_OFF;
+		trackinfo_set_status(ti, STATUS_OFF);
 		return TRUE;
 	}
 
@@ -100,25 +99,25 @@ get_audacious_info(struct TrackInfo* ti)
 		return FALSE;
 	}
 
-        ti->player = "Audacious";
+        trackinfo_set_player(ti, "Audacious");
         
 	if (strcmp(status, "stopped") == 0) {
-		ti->status = STATUS_OFF;
+		trackinfo_set_status(ti, STATUS_OFF);
 		return TRUE;
 	} else if (strcmp(status, "playing") == 0) {
-		ti->status = STATUS_NORMAL;
+		trackinfo_set_status(ti, STATUS_NORMAL);
 	} else {
-		ti->status = STATUS_PAUSED;
+		trackinfo_set_status(ti, STATUS_PAUSED);
 	}
 	
 	// Find the position in the playlist
 	pos = audacious_dbus_uint(proxy, "Position");
 	
-	ti->currentSecs = audacious_dbus_uint(proxy, "Time")/1000;
-	ti->totalSecs = audacious_dbus_int(proxy, "SongLength", pos);
+	trackinfo_set_currentSecs(ti,audacious_dbus_uint(proxy, "Time")/1000);
+	trackinfo_set_totalSecs(ti, audacious_dbus_int(proxy, "SongLength", pos));
 	
-	audacious_dbus_string(proxy, "SongTuple", pos, "artist", ti->artist);
-	audacious_dbus_string(proxy, "SongTuple", pos, "album", ti->album);
-	audacious_dbus_string(proxy, "SongTuple", pos, "title", ti->track);
+	audacious_dbus_string(proxy, "SongTuple", pos, "artist",trackinfo_get_gstring_artist(ti));
+	audacious_dbus_string(proxy, "SongTuple", pos, "album", trackinfo_get_gstring_album(ti));
+	audacious_dbus_string(proxy, "SongTuple", pos, "title", trackinfo_get_gstring_track(ti));
 	return TRUE;
 }

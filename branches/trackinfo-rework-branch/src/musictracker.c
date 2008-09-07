@@ -35,39 +35,39 @@
 static guint g_tid;
 static PurplePlugin *g_plugin;
 static gboolean g_run=1;
-static struct TrackInfo mostrecent_ti;
+static TrackInfo *mostrecent_ti = 0;
 static PurpleCmdId cmdid_nowplaying;
 static PurpleCmdId cmdid_np;
 
 //--------------------------------------------------------------------
 
 #ifndef WIN32
-gboolean get_amarok_info(struct TrackInfo* ti);
-gboolean get_xmms_info(struct TrackInfo* ti);
-gboolean get_audacious_legacy_info(struct TrackInfo* ti);
-gboolean get_audacious_info(struct TrackInfo* ti);
-gboolean get_rhythmbox_info(struct TrackInfo* ti);
-gboolean get_exaile_info(struct TrackInfo* ti);
-gboolean get_banshee_info(struct TrackInfo* ti);
-gboolean get_quodlibet_info(struct TrackInfo* ti);
-gboolean get_listen_info(struct TrackInfo* ti);
-gboolean get_xmms2_info(struct TrackInfo* ti);
-gboolean get_squeezecenter_info(struct TrackInfo* ti);
+gboolean get_amarok_info(TrackInfo* ti);
+gboolean get_xmms_info(TrackInfo* ti);
+gboolean get_audacious_legacy_info(TrackInfo* ti);
+gboolean get_audacious_info(TrackInfo* ti);
+gboolean get_rhythmbox_info(TrackInfo* ti);
+gboolean get_exaile_info(TrackInfo* ti);
+gboolean get_banshee_info(TrackInfo* ti);
+gboolean get_quodlibet_info(TrackInfo* ti);
+gboolean get_listen_info(TrackInfo* ti);
+gboolean get_xmms2_info(TrackInfo* ti);
+gboolean get_squeezecenter_info(TrackInfo* ti);
 
 void get_xmmsctrl_pref(GtkBox *box);
 void get_xmms2_pref(GtkBox *box);
 void get_squeezecenter_pref(GtkBox *box);
 
 #else
-gboolean get_foobar2000_info(struct TrackInfo* ti);
-gboolean get_winamp_info(struct TrackInfo* ti);
-gboolean get_wmp_info(struct TrackInfo* ti);
-gboolean get_itunes_info(struct TrackInfo* ti);
-gboolean get_msn_compat_info(struct TrackInfo *ti);
+gboolean get_foobar2000_info(TrackInfo* ti);
+gboolean get_winamp_info(TrackInfo* ti);
+gboolean get_wmp_info(TrackInfo* ti);
+gboolean get_itunes_info(TrackInfo* ti);
+gboolean get_msn_compat_info(TrackInfo *ti);
 #endif
 
-gboolean get_mpd_info(struct TrackInfo* ti);
-gboolean get_lastfm_info(struct TrackInfo* ti);
+gboolean get_mpd_info(TrackInfo* ti);
+gboolean get_lastfm_info(TrackInfo* ti);
 
 void get_mpd_pref(GtkBox *box);
 void get_lastfm_pref(GtkBox *box);
@@ -169,60 +169,31 @@ message_changed(const char *one, const char *two)
 
 //--------------------------------------------------------------------
 
-static gboolean
-trackinfo_changed(const struct TrackInfo* one, const struct TrackInfo* two)
-{
-  if ((one == NULL) && (two == NULL))
-    return FALSE;
-
-  if ((one == NULL) || (two == NULL))
-    return TRUE;
-
-  if (one->status != two->status)
-    return TRUE;
-
-  if (strcmp(one->track, two->track) != 0)
-    return TRUE;
-  
-  if (strcmp(one->artist, two->artist) != 0)
-    return TRUE;
-  
-  if (strcmp(one->album, two->album) != 0)
-    return TRUE;
-
-  // comparing totalSecs is a bit daft since it should be invariant for a given track
-  // really we want to compare those members which correspond to attributes accepted by the tune status...
-  
-  return FALSE;
-}
-
-//--------------------------------------------------------------------
-
 static
-char* generate_status(const char *src, struct TrackInfo *ti)
+char* generate_status(const char *src, TrackInfo *ti)
 {
 	char *status = malloc(strlen(src)+1);
 	strcpy(status, src);
-	status = put_field(status, 'p', ti->artist);
-	status = put_field(status, 'a', ti->album);
-	status = put_field(status, 't', ti->track);
-	status = put_field(status, 'r', ti->player);
+	status = put_field(status, 'p', trackinfo_get_artist(ti));
+	status = put_field(status, 'a', trackinfo_get_album(ti));
+	status = put_field(status, 't', trackinfo_get_track(ti));
+	status = put_field(status, 'r', trackinfo_get_player(ti));
 
 	// Duration
 	char buf[20];
-	sprintf(buf, "%d:%02d", ti->totalSecs/60, ti->totalSecs%60);
+	sprintf(buf, "%d:%02d", trackinfo_get_totalSecs(ti)/60, trackinfo_get_totalSecs(ti)%60);
 	status = put_field(status, 'd', buf);
 
 	// Current time
-	sprintf(buf, "%d:%02d", ti->currentSecs/60, ti->currentSecs%60);
+	sprintf(buf, "%d:%02d", trackinfo_get_currentSecs(ti)/60, trackinfo_get_currentSecs(ti)%60);
 	status = put_field(status, 'c', buf);
 
 	// Progress bar
 	int i, progress;
-	if (ti->totalSecs == 0)
+	if (trackinfo_get_totalSecs(ti) == 0)
 		progress = 0;
 	else 
-		progress = (int)floor(ti->currentSecs * 10.0 / ti->totalSecs);
+		progress = (int)floor(trackinfo_get_currentSecs(ti) * 10.0 / trackinfo_get_totalSecs(ti));
 	if (progress >= 10)
 		progress = 9;
 	for (i=0; i<10; ++i)
@@ -249,7 +220,7 @@ char* generate_status(const char *src, struct TrackInfo *ti)
 // Updates 'user tune' status primitive with current track info
 static
 gboolean
-set_status_tune (PurpleAccount *account, gboolean validStatus, struct TrackInfo *ti)
+set_status_tune (PurpleAccount *account, gboolean validStatus, TrackInfo *ti)
 {
 	PurpleStatus *status			= NULL;
 	PurplePresence* presence = NULL;
@@ -259,7 +230,7 @@ set_status_tune (PurpleAccount *account, gboolean validStatus, struct TrackInfo 
 	{
 		if (ti == NULL)
 			return FALSE;
-		active = (ti->status == STATUS_NORMAL) || (ti->status == STATUS_PAUSED);
+		active = (trackinfo_get_status(ti) == STATUS_NORMAL) || (trackinfo_get_status(ti) == STATUS_PAUSED);
 	}
 	else
 	{		
@@ -277,7 +248,7 @@ set_status_tune (PurpleAccount *account, gboolean validStatus, struct TrackInfo 
 	}
 
         // don't need to do anything if track info hasn't changed
-        if (!trackinfo_changed(ti, &mostrecent_ti))
+        if (!trackinfo_changed(ti, mostrecent_ti))
           {
             trace("trackinfo hasn't changed, not doing anything to tune status");
             return TRUE;
@@ -291,13 +262,13 @@ set_status_tune (PurpleAccount *account, gboolean validStatus, struct TrackInfo 
 	{
                 GList *attrs = NULL;
                 attrs = g_list_append(attrs, PURPLE_TUNE_ARTIST);
-                attrs = g_list_append(attrs, ti->artist);
+                attrs = g_list_append(attrs, trackinfo_get_artist(ti));
                 attrs = g_list_append(attrs, PURPLE_TUNE_TITLE);
-                attrs = g_list_append(attrs, ti->track);
+                attrs = g_list_append(attrs, trackinfo_get_track(ti));
                 attrs = g_list_append(attrs, PURPLE_TUNE_ALBUM);
-                attrs = g_list_append(attrs, ti->album);
+                attrs = g_list_append(attrs, trackinfo_get_album(ti));
                 attrs = g_list_append(attrs, PURPLE_TUNE_TIME);
-                attrs = g_list_append(attrs, (gpointer) (intptr_t) ti->totalSecs);
+                attrs = g_list_append(attrs, (gpointer) (intptr_t) trackinfo_get_totalSecs(ti));
                 purple_status_set_active_with_attrs_list(status, TRUE, attrs);
                 g_list_free(attrs);
 	}
@@ -327,7 +298,7 @@ set_status_tune (PurpleAccount *account, gboolean validStatus, struct TrackInfo 
 //--------------------------------------------------------------------
 
 gboolean
-set_status (PurpleAccount *account, char *text, struct TrackInfo *ti)
+set_status (PurpleAccount *account, char *text, TrackInfo *ti)
 {
 	PurpleStatus				*status			= NULL;
 	gboolean				b				= FALSE;
@@ -349,7 +320,7 @@ set_status (PurpleAccount *account, char *text, struct TrackInfo *ti)
 			purple_account_get_username(account),
 			purple_account_get_protocol_name(account));
 	override = purple_prefs_get_string(buf);
-	if (ti && (ti->status == STATUS_NORMAL) && override && (*override != 0)) {
+	if (ti && (trackinfo_get_status(ti) == STATUS_NORMAL) && override && (*override != 0)) {
 		text = generate_status(override, ti);
 		overriden = TRUE;
 	}
@@ -433,7 +404,7 @@ set_status (PurpleAccount *account, char *text, struct TrackInfo *ti)
 //--------------------------------------------------------------------
 
 void
-set_userstatus_for_active_accounts (char *userstatus, struct TrackInfo *ti)
+set_userstatus_for_active_accounts (char *userstatus, TrackInfo *ti)
 {
         GList                   *accounts               = NULL,
                                         *head                   = NULL;
@@ -452,8 +423,13 @@ set_userstatus_for_active_accounts (char *userstatus, struct TrackInfo *ti)
         }
 
         // stash trackinfo in case we need it elsewhere....
+        if (mostrecent_ti)
+            trackinfo_destroy(mostrecent_ti);
+
         if (ti)
-          mostrecent_ti = *ti;
+          mostrecent_ti = trackinfo_copy(ti);
+        else
+          mostrecent_ti = 0;
 
         if (head != NULL)
                 g_list_free (head);
@@ -502,19 +478,18 @@ cb_timeout(gpointer data) {
 		return TRUE;
 	}
 
-	struct TrackInfo ti;
-	memset(&ti, 0, sizeof(ti));
-	ti.status = STATUS_OFF;
-	int player = purple_prefs_get_int(PREF_PLAYER);
+        TrackInfo *ti = trackinfo_new();
+	trackinfo_set_status(ti, STATUS_OFF);
 
+	int player = purple_prefs_get_int(PREF_PLAYER);
 	if (player != -1) {
-                ti.player = g_players[player].name;
-		b = (*g_players[player].track_func)(&ti);
+                trackinfo_set_player(ti, g_players[player].name);
+		b = (*g_players[player].track_func)(ti);
 	} else {
 		int i = 0;
-		while (strlen(g_players[i].name) && (!b || ti.status == STATUS_OFF)) {
-                        ti.player = g_players[i].name;
-			b = (*g_players[i].track_func)(&ti);
+		while (strlen(g_players[i].name) && (!b || trackinfo_get_status(ti) == STATUS_OFF)) {
+                        trackinfo_set_player(ti, g_players[i].name);
+			b = (*g_players[i].track_func)(ti);
 			++i;
 		}
 	}
@@ -522,41 +497,44 @@ cb_timeout(gpointer data) {
 	if (!b) {
 		trace("Getting info failed. Setting empty status.");
 		set_userstatus_for_active_accounts("", 0);
-		return TRUE;
 	}
-
-	trim(ti.album);
-	trim(ti.track);
-	trim(ti.artist);
-	trace("%s,%s,%s,%s,%d", ti.player, ti.artist, ti.album, ti.track, ti.status);
+        else {
+	trim(trackinfo_get_album(ti));
+	trim(trackinfo_get_track(ti));
+	trim(trackinfo_get_artist(ti));
+	trace("%s,%s,%s,%s,%d", trackinfo_get_player(ti), trackinfo_get_artist(ti), trackinfo_get_album(ti), trackinfo_get_track(ti), trackinfo_get_status(ti));
 
         // ensure track information is valid utf-8
-        utf8_validate(ti.album);
-        utf8_validate(ti.track);
-        utf8_validate(ti.artist);
+        utf8_validate(trackinfo_get_album(ti));
+        utf8_validate(trackinfo_get_track(ti));
+        utf8_validate(trackinfo_get_artist(ti));
 
 	char *status = NULL;
-	switch (ti.status) {
+	switch (trackinfo_get_status(ti)) {
 		case STATUS_OFF:
-			status = generate_status(purple_prefs_get_string(PREF_OFF), &ti);
+			status = generate_status(purple_prefs_get_string(PREF_OFF), ti);
 			break;
 		case STATUS_PAUSED:
-			status = generate_status(purple_prefs_get_string(PREF_PAUSED), &ti);
+			status = generate_status(purple_prefs_get_string(PREF_PAUSED), ti);
 			break;
 		case STATUS_NORMAL:
-			status = generate_status(purple_prefs_get_string(PREF_FORMAT), &ti);
+			status = generate_status(purple_prefs_get_string(PREF_FORMAT), ti);
 			break;
 		default:
-                  trace("unknown player status %d", ti.status);
+                  trace("unknown player status %d", trackinfo_get_status(ti));
 	}
 
         if (status)
           {
-            set_userstatus_for_active_accounts(status, &ti);
+            set_userstatus_for_active_accounts(status, ti);
             free(status);
           }
 
 	trace("Status set for all accounts");
+        }
+        
+        trackinfo_destroy(ti);
+
 	return TRUE;
 }
 
@@ -564,9 +542,9 @@ cb_timeout(gpointer data) {
 
 PurpleCmdRet musictracker_cmd_nowplaying(PurpleConversation *conv, const gchar *cmd, gchar **args, gchar **error, void *data)
 {
-  if (mostrecent_ti.status == STATUS_NORMAL)
+  if (mostrecent_ti && trackinfo_get_status(mostrecent_ti) == STATUS_NORMAL)
     {
-      char *status = generate_status(purple_prefs_get_string(PREF_FORMAT), &mostrecent_ti);
+      char *status = generate_status(purple_prefs_get_string(PREF_FORMAT), mostrecent_ti);
       PurpleConversationType type = purple_conversation_get_type (conv);
   
       if (type == PURPLE_CONV_TYPE_CHAT)

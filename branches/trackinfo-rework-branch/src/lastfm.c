@@ -26,9 +26,9 @@ lastfm_fetch(PurpleUtilFetchUrlData *url_data, gpointer user_data, const gchar *
 }
 
 gboolean
-get_lastfm_info(struct TrackInfo* ti)
+get_lastfm_info(TrackInfo* ti)
 {
-	char track[500], url[500]="http://ws.audioscrobbler.com/1.0/user/";
+	char url[500]="http://ws.audioscrobbler.com/1.0/user/";
 	char *request, *t;
 	size_t n;
 	const char *user = purple_prefs_get_string(PREF_LASTFM);
@@ -61,30 +61,30 @@ get_lastfm_info(struct TrackInfo* ti)
         trace("Got song status: '%s'",status);
 
         pcre *re;
-        char timestamp_string[STRLEN];
+        GString *timestamp_string = g_string_new("");
         // artist and track are separated by a U+2013 EN DASH character
         re = regex("(.*),(.*) \342€“ (.*)", 0);
-        if (capture(re, status, strlen(status), timestamp_string, ti->artist, ti->track))
-          {
-
-            time_t timestamp = atoi(timestamp_string);
+        if (capture_gstring(re, status, strlen(status), timestamp_string, trackinfo_get_gstring_artist(ti), trackinfo_get_gstring_track(ti)))
+          { 
+            time_t timestamp = atoi(timestamp_string->str);
             double delta = difftime(time(NULL), timestamp);
-            ti->status=STATUS_NORMAL;
+
             trace("Epoch seconds %d", time(NULL));
-            trace("Got timestamp %d, delta-t %g, artist '%s', track '%s'", timestamp, delta, ti->artist, ti->track);
+            trace("Got timestamp %d, delta-t %g, artist '%s', track '%s'", timestamp, delta, trackinfo_get_artist(ti), trackinfo_get_track(ti));
 
             // if the timestamp is more than the quiet interval in the past, assume player is off...
             if (delta < purple_prefs_get_int(PREF_LASTFM_QUIET))
               {
-                ti->status=STATUS_NORMAL;
+                trackinfo_set_status(ti, STATUS_NORMAL);
               }
             else
               {
-                ti->status=STATUS_OFF;
+                trackinfo_set_status(ti, STATUS_OFF);
               }
             
           }
         pcre_free(re);
+        g_string_free(timestamp_string, TRUE);
 
 	return TRUE;
 }

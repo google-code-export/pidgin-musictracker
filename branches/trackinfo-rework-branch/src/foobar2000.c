@@ -3,7 +3,7 @@
 #include <windows.h>
 
 gboolean
-get_foobar2000_info(struct TrackInfo* ti)
+get_foobar2000_info(TrackInfo* ti)
 {
         // very brittle way of finding the foobar2000 window...
 	HWND mainWindow = FindWindow("{DA7CD0DE-1602-45e6-89A1-C2CA151E008E}/1", NULL); // Foobar 0.9.1
@@ -27,7 +27,7 @@ get_foobar2000_info(struct TrackInfo* ti)
             ti->status = STATUS_NORMAL;
             pcre *re;
             re = regex("(.*) - \\[([^#]+)[^\\]]+\\] (.*) \\[foobar2000.*\\]", 0);
-            capture(re, title, strlen(title), ti->artist, ti->album, ti->track);
+            capture_gstring(re, title, strlen(title), trackinfo_get_gstring_artist(ti), trackinfo_get_gstring_album(ti), trackinfo_get_gstring_track(ti));
             pcre_free(re);
           }
 
