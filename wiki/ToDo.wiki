@@ -11,6 +11,6 @@
   * When regex matching fails, log something useful
   * Are we leaking memory every time we pcre_compile? Check for leaks generally...
   * Use purple_plugin_pref() API rather than GTK directly?
-  * asynchronous track info retrieval: dbus calls were synchronous, now synchronous with a timeout; and other retrieval follows a similar pattern.  This is not ideal as we are blocking a thread critical to pidgin's responsiveness while we wait. Properly async would be better?
+  * asynchronous track info retrieval: dbus calls were synchronous, now synchronous with a timeout; and other retrieval follows a similar pattern.  This is not ideal as we are blocking a thread critical to pidgin's responsiveness while we wait. Properly async would be better?  How would elapsed track time and progres bar formatting elements work when we don't poll? 
   * Player auto-detection gets complex in async case: 2 passes, first to launch all the data requests, the second to collect them all? (fold remaining synchronous retrieval into the collect phase?); evaluate if more than one player has returned info and break ties using the list of players we use sequentially at the moment (so no change in apparent behaviour); 
   * Player autodetection should perhaps retry the player it found last time first before trying all the other alternatives?
