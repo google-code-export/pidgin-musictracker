@@ -64,3 +64,5 @@ We don't provide and install a dynamic libpcre, so a static libpcre also needs t
 Please send a mail to the pidigin-musictracker general discussion mailing list if you have a question.
 
 If you find a bug or have an enhancement request, put it into the Google Code issues tracker
+
+_(Please to not post bug reports in the comments. Start a new issue instead)_
