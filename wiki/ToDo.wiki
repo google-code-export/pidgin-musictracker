@@ -1,6 +1,6 @@
 #summary Things which need doing / list of wishes
 
-  * [http://mpris.org/ MPRIS]-compliant DBUS player track-info retrival
+  * ~~[http://mpris.org/ MPRIS]-compliant DBUS player track-info retrival~~
   * ~~Sensible WMP support~~
   * ~~XMPP tune status support~~
   * ~~Other outstanding patches~~
