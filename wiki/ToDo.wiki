@@ -15,3 +15,4 @@
   * Player auto-detection gets complex in async case: 2 passes, first to launch all the data requests, the second to collect them all? (fold remaining synchronous retrieval into the collect phase?); evaluate if more than one player has returned info and break ties using the list of players we use sequentially at the moment (so no change in apparent behaviour); 
   * Player autodetection should perhaps retry the player it found last time first before trying all the other alternatives?
   * Filter isn't applied to tune status
+  * Enable and test !SqueezeCenter code under Windows
