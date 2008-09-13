@@ -6,8 +6,13 @@
 static HWND hWnd;
 static HANDLE hProcess;
 
-gboolean winamp_get_w(const wchar_t *filename, const wchar_t *key, GString *result)
+gboolean winamp_get_w(const wchar_t *filename, const char *key, GString *result)
 {
+        // convert key to wchar_t
+        wchar_t wkey[STRLEN];
+        MultiByteToWideChar(CP_UTF8, 0, key, -1, wkey, STRLEN-1);
+        wkey[STRLEN-1] = 0;
+
 	// Allocate memory inside Winamp's address space to exchange data with it
 	char *winamp_info = VirtualAllocEx(hProcess, NULL, 4096, MEM_COMMIT, PAGE_READWRITE);
 	wchar_t *winamp_filename = (wchar_t*)(winamp_info+1024);
@@ -23,7 +28,7 @@ gboolean winamp_get_w(const wchar_t *filename, const wchar_t *key, GString *resu
         WriteProcessMemory(hProcess, winamp_info, &info, sizeof(info), NULL);
 
         WriteProcessMemory(hProcess, winamp_filename, filename, sizeof(wchar_t)*(wcslen(filename)+1), NULL);
-	WriteProcessMemory(hProcess, winamp_key, key, sizeof(wchar_t)*(wcslen(key)+1), NULL);
+	WriteProcessMemory(hProcess, winamp_key, wkey, sizeof(wchar_t)*(wcslen(wkey)+1), NULL);
 	int rc = SendMessage(hWnd, WM_WA_IPC, (WPARAM)winamp_info, IPC_GET_EXTENDED_FILE_INFOW);
 
 	SIZE_T bytesRead;
@@ -35,7 +40,7 @@ gboolean winamp_get_w(const wchar_t *filename, const wchar_t *key, GString *resu
         WideCharToMultiByte(CP_UTF8, 0, wdest, -1, dest, STRLEN, NULL, NULL);
 
         g_string_assign(result, dest);
- 	trace("Got info '%s', return value %d", dest, rc);
+        trace("Got info for key '%s' is '%s', return value %d", key, dest, rc);
 
         return (rc != 1);
 }
@@ -98,6 +103,14 @@ gboolean get_winamp_info(TrackInfo* ti)
 
 	int position = SendMessage(hWnd, WM_WA_IPC, 0, IPC_GETLISTPOS);
 
+        // the metadata list for the track doesn't seem to be iterable, so we merely 
+        // attempt to fetch a known list of possible metadata values
+        const char *metadataList[] =
+          {
+            "title", "artist", "albumartist", "album", "genre", "year", "disc", "publisher", "comment", "track", "composer", "conductor",
+            "bitrate", "streamtitle", 0
+          };
+
         // first try wchar interface
 	LPCVOID address = (LPCVOID) SendMessage(hWnd, WM_WA_IPC, position, IPC_GETPLAYLISTFILEW);
         if ((unsigned int)address > 1)
@@ -108,9 +121,14 @@ gboolean get_winamp_info(TrackInfo* ti)
             trace("Filename(widechar): %s", f);
             free(f);
 
-            winamp_get_w(wfilename, L"ALBUM", trackinfo_get_gstring_album(ti));
-            winamp_get_w(wfilename, L"ARTIST", trackinfo_get_gstring_artist(ti));
-            winamp_get_w(wfilename, L"TITLE", trackinfo_get_gstring_track(ti));
+            // winamp_get_w(wfilename, "ALBUM", trackinfo_get_gstring_album(ti));
+            // winamp_get_w(wfilename, "ARTIST", trackinfo_get_gstring_artist(ti));
+            // winamp_get_w(wfilename, "TITLE", trackinfo_get_gstring_track(ti));
+
+            for (int i = 0; metadataList[i] != 0; i++)
+              {
+                winamp_get_w(wfilename, metadataList[i], trackinfo_get_gstring_tag(ti, metadataList[i]));
+              }
           }
         else
           {
@@ -121,10 +139,18 @@ gboolean get_winamp_info(TrackInfo* ti)
             ReadProcessMemory(hProcess, address, filename, 512, 0);
             trace("Filename: %s", filename);
 
-            winamp_get(filename, "ALBUM", trackinfo_get_gstring_album(ti));
-            winamp_get(filename, "ARTIST", trackinfo_get_gstring_artist(ti));
-            winamp_get(filename, "TITLE", trackinfo_get_gstring_track(ti));
+            // winamp_get(filename, "ALBUM", trackinfo_get_gstring_album(ti));
+            // winamp_get(filename, "ARTIST", trackinfo_get_gstring_artist(ti));
+            // winamp_get(filename, "TITLE", trackinfo_get_gstring_track(ti));
+
+            for (int i = 0; metadataList[i] != 0; i++)
+              {
+                winamp_get(filename, metadataList[i], trackinfo_get_gstring_tag(ti, metadataList[i]));
+              }
           }
+
+        // normalize tag name "title" as "track"
+        g_string_assign(trackinfo_get_gstring_track(ti), trackinfo_get_gstring_tag(ti, "title")->str);
 
         // if these are all empty, which seems to happen when listening to a stream, try something cruder
         // XXX: really should try to work out how to get winamp to resolve it's tag %streamtitle% for us...

@@ -27,6 +27,12 @@ gboolean audacious_dbus_string(DBusGProxy *proxy, const char *method, int pos, c
 	if (G_VALUE_TYPE(&val) == G_TYPE_STRING) {
                 g_string_assign(dest, g_value_get_string(&val));
 	}
+        else {
+          char *s = g_strdup_value_contents(&val);
+          g_string_assign(dest, s);
+          g_free(s);
+        }
+
 	g_value_unset(&val);
 	return TRUE;
 }
@@ -115,9 +121,33 @@ get_audacious_info(TrackInfo* ti)
 	
 	trackinfo_set_currentSecs(ti,audacious_dbus_uint(proxy, "Time")/1000);
 	trackinfo_set_totalSecs(ti, audacious_dbus_int(proxy, "SongLength", pos));
-	
-	audacious_dbus_string(proxy, "SongTuple", pos, "artist",trackinfo_get_gstring_artist(ti));
-	audacious_dbus_string(proxy, "SongTuple", pos, "album", trackinfo_get_gstring_album(ti));
-	audacious_dbus_string(proxy, "SongTuple", pos, "title", trackinfo_get_gstring_track(ti));
+
+	// in Audacious 1.4, the Tuple list for the track doesn't seem to be iterable, so we merely 
+        // attempt to fetch a known list of possible tuples
+        // later Audacious 1.5 provides GetTupleFields method to retrieve a list of standard tuple fields
+        // which is presumably similar to this list
+        const char *tupleFieldList[] = 
+          {
+            "artist"         , "title"          , "album"          , "comment"        , "genre"          ,
+            "track"          , "track-number"   , "length"         , "year"           , "quality"        ,
+            "codec"          , "file-name"      , "file-path"      , "file-ext"       , "song-artist"    ,
+            "mtime"          , "formatter"      , "performer"      , "copyright"      , "date"           ,
+            "subsong-id"     , "subsong-num"    , 0 
+          };
+
+        for (int i = 0; tupleFieldList[i] != 0; i++)
+          {
+            if (audacious_dbus_string(proxy, "SongTuple", pos, tupleFieldList[i], trackinfo_get_gstring_tag(ti, tupleFieldList[i])))
+              {
+                trace("tuple field '%s' returned '%s'", tupleFieldList[i], trackinfo_get_gstring_tag(ti, tupleFieldList[i])->str);
+              }
+          }
+
+        // normalize tag name "title" as "track"
+        g_string_assign(trackinfo_get_gstring_track(ti), trackinfo_get_gstring_tag(ti, "title")->str);
+
+	// audacious_dbus_string(proxy, "SongTuple", pos, "artist",trackinfo_get_gstring_artist(ti));
+        // audacious_dbus_string(proxy, "SongTuple", pos, "album", trackinfo_get_gstring_album(ti));
+	// audacious_dbus_string(proxy, "SongTuple", pos, "title", trackinfo_get_gstring_track(ti));
 	return TRUE;
 }

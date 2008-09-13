@@ -90,29 +90,8 @@ get_rhythmbox_info(TrackInfo* ti)
 	else
 		trackinfo_set_status(ti, STATUS_PAUSED);
 
-        // dump hashtable keys
-        GHashTableIter iter;
-        gpointer key;
-        GValue *value;
-        g_hash_table_iter_init(&iter, table);
-        while (g_hash_table_iter_next(&iter, &key, (gpointer) &value))
-          {
-            if (value != NULL)
-              {
-                if (G_VALUE_HOLDS_STRING(value))
-                  {
-                    g_string_assign(trackinfo_get_gstring_tag(ti, key), g_value_get_string(value));
-                  }
-                else
-                  {
-                    // g_strdup_value_contents renders non-ASCII characters as /nnn sequences, so we can't just use it for everything....
-                    char *s = g_strdup_value_contents(value);
-                    g_string_assign(trackinfo_get_gstring_tag(ti, key), s);
-                    g_free(s);
-                  }
-                trace("For key '%s' value is '%s'", key, trackinfo_get_gstring_tag(ti, key)->str);
-              }
-          }
+        // iterate over hashtable keys, adding them as tags
+        process_tag_hashtable(table, ti);
 
         // check if streamtitle is nonempty, if so use that as title
         if (g_hash_table_lookup(table, "rb:stream-song-title"))
@@ -121,12 +100,9 @@ get_rhythmbox_info(TrackInfo* ti)
           }
         else
           {
-            // canonicalize tag name "title" as "track"
-            get_hash_str(table, "title", trackinfo_get_gstring_track(ti));
+            // normalize tag name "title" as "track"
+            g_string_assign(trackinfo_get_gstring_track(ti), trackinfo_get_gstring_tag(ti, "title")->str);
           }
-
-        // get_hash_str(table, "artist", trackinfo_get_gstring_artist(ti));
-	// get_hash_str(table, "album", trackinfo_get_gstring_album(ti));
 
 	trackinfo_set_totalSecs(ti, get_hash_uint(table, "duration"));
 	g_hash_table_destroy(table);

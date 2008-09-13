@@ -211,6 +211,7 @@ GtkWidget* pref_frame(PurplePlugin *plugin)
 	APPEND_FORMAT_MENU("Prograss Bar", "%b");
 	APPEND_FORMAT_MENU("Player", "%r");
 	APPEND_FORMAT_MENU("Music Symbol (may not display on some networks)", "%m");
+	APPEND_FORMAT_MENU("Any Tag (tags available vary by player and source)", "%{tag}");
 	gtk_widget_show_all(format_menu);
 
 	// Format selection

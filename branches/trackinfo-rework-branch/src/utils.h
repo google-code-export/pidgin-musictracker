@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <pcre.h>
+#include <trackinfo.h>
 
 #ifndef WIN32
 #include <dbus/dbus-glib.h>
@@ -29,5 +30,7 @@ gboolean dbus_g_running(DBusGConnection *connection, const char *name);
 char *wchar_to_utf8(wchar_t *wstring);
 char *GetWindowTitleUtf8(HWND hWnd);
 #endif
+
+void process_tag_hashtable(GHashTable *table, TrackInfo *ti);
 
 #endif // _UTILS_H_

@@ -46,6 +46,22 @@ int banshee_dbus_int(DBusGProxy *proxy, const char *method)
 	return ret;
 }
 
+unsigned int banshee_dbus_uint(DBusGProxy *proxy, const char *method)
+{
+	int ret;
+	GError *error = 0;
+	if (!dbus_g_proxy_call_with_timeout (proxy, method, DBUS_TIMEOUT, &error,
+				G_TYPE_INVALID,
+				G_TYPE_UINT, &ret,
+				G_TYPE_INVALID))
+	{
+		trace("Failed to make dbus call %s: %s", method, error->message);
+		return 0;
+	}
+
+	return ret;
+}
+
 gboolean
 get_banshee_info(TrackInfo* ti)
 {
@@ -91,7 +107,7 @@ get_banshee_info(TrackInfo* ti)
 		trackinfo_set_totalSecs(ti, banshee_dbus_int(proxy, "GetPlayingDuration"));
 		trackinfo_set_currentSecs(ti, banshee_dbus_int(proxy, "GetPlayingPosition"));
 		return TRUE;
-	} else if (dbus_g_running(connection, "org.bansheeproject.Banshee")) { // provide for new interface
+	} else if (dbus_g_running(connection, "org.bansheeproject.Banshee")) { // provide for new interface in banshee 1.0
 		proxy = dbus_g_proxy_new_for_name (connection,
 				"org.bansheeproject.Banshee",
 				"/org/bansheeproject/Banshee/PlayerEngine",
@@ -121,15 +137,21 @@ get_banshee_info(TrackInfo* ti)
 			trace("Failed to make dbus call: %s", error->message);
 			return FALSE;
 		}
-		
-		banshee_hash_str(table, "album", trackinfo_get_gstring_album(ti));
-		banshee_hash_str(table, "artist", trackinfo_get_gstring_artist(ti));
-		banshee_hash_str(table, "name", trackinfo_get_gstring_track(ti));
-		
+
+                process_tag_hashtable(table, ti);
+
+		// banshee_hash_str(table, "album", trackinfo_get_gstring_album(ti));
+		// banshee_hash_str(table, "artist", trackinfo_get_gstring_artist(ti));
+		// banshee_hash_str(table, "name", trackinfo_get_gstring_track(ti));
+
+                // normalize tag name "name" as "track"
+                g_string_assign(trackinfo_get_gstring_track(ti), trackinfo_get_gstring_tag(ti, "name")->str);
+
 		g_hash_table_destroy(table);
-		
-		trackinfo_set_totalSecs(ti, banshee_dbus_int(proxy, "GetLength") / 1000);
-		trackinfo_set_currentSecs(ti, banshee_dbus_int(proxy, "GetPosition") / 1000);
+
+		trackinfo_set_totalSecs(ti, banshee_dbus_uint(proxy, "GetLength") / 1000);
+		trackinfo_set_currentSecs(ti, banshee_dbus_uint(proxy, "GetPosition") / 1000);
+                
 		return TRUE;
 	}
 

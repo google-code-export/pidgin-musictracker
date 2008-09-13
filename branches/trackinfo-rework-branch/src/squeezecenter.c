@@ -720,6 +720,7 @@ void squeezecenter_status_to_musictracker(squeezecenter_Player *pl, TrackInfo* t
 		g_string_assign(trackinfo_get_gstring_track(ti), pl->tinfo.title);
 		g_string_assign(trackinfo_get_gstring_artist(ti), pl->tinfo.artist);
 		g_string_assign(trackinfo_get_gstring_album(ti), pl->tinfo.album);
+		g_string_assign(trackinfo_get_gstring_tag(ti,"genre"), pl->tinfo.genre);
 		trackinfo_set_totalSecs(ti, pl->duration);
 	}
 

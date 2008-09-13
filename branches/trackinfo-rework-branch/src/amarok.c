@@ -64,6 +64,20 @@ get_amarok_info(TrackInfo* ti)
 		dcop_query("dcop amarok default trackCurrentTime", temp);
 		sscanf(temp->str, "%d", &secs);
                 trackinfo_set_currentSecs(ti, secs);
+
+                const char *methodList[] = 
+                  {
+                    "sampleRate", "score", "rating", "trackPlayCounter", "labels", "bitrate", "comment",
+                    "encodedURL", "engine", "genre", "lyrics", "path", "track", "type", "year",
+                    0
+                  };
+
+                for (int i = 0; methodList[i] != 0; i++)
+                  {
+                    char command[STRLEN];
+                    sprintf(command, "dcop amarok default %s", methodList[i]);
+                    dcop_query(command, trackinfo_get_gstring_tag(ti, methodList[i]));
+                  }
 	}
 
         g_string_free(temp, TRUE);
