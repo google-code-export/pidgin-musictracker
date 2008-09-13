@@ -28,6 +28,9 @@
 #include "trackinfo.h"
 #include "utils.h"
 
+// trackinfo contains a hash to hold tags retrieved from the player (if any),
+// key is a char * (always converted to lower-case), value is a GString
+
 //--------------------------------------------------------------------
 
 static
@@ -65,35 +68,8 @@ static void tag_copy_helper(gpointer key, gpointer value, gpointer user_data)
   GHashTable *dest = (GHashTable *)user_data;
   const char *tag = (const char *)key;
   GString *string = (GString *)value;
-  trace("for hash 0x%x duplicating key '%s', value '%s'", dest, tag, string->str);
+  // trace("for hash 0x%x duplicating key '%s', value '%s'", dest, tag, string->str);
   g_hash_table_insert(dest, g_strdup(tag), g_string_new(string->str));
-}
-
-//--------------------------------------------------------------------
-
-TrackInfo *trackinfo_copy(const TrackInfo *ti)
-{
-  TrackInfo *copy_ti = trackinfo_new();
-  copy_ti->status = ti->status;
-  copy_ti->player = ti->player;
-  copy_ti->totalSecs = ti->totalSecs;
-  copy_ti->currentSecs = ti->currentSecs;
-
-  // and copy tags
-  g_hash_table_foreach(ti->tags, tag_copy_helper, copy_ti->tags);
-
-#if 0
-  GHashTableIter iter;
-  const char *tag;
-  GString *value;
-  g_hash_table_iter_init(&iter, ti->tags);
-  while (g_hash_table_iter_next(&iter, (gpointer *)&tag, (gpointer *)&value))
-  {
-    g_hash_table_insert(copy_ti->tags, g_strdup(tag), g_string_new(value->str));
-  }
-#endif
-
-  return copy_ti;
 }
 
 //--------------------------------------------------------------------
@@ -116,15 +92,20 @@ GString *trackinfo_get_gstring_tag(const TrackInfo *ti, const char *tag)
   char *found_key;
   GString *found_value;
 
-  if (g_hash_table_lookup_extended(ti->tags, tag, (gpointer) &found_key, (gpointer) &found_value))
+  // force tag to lower-case
+  gchar *tag_lower = g_ascii_strdown(tag, -1);
+  // XXX: also remove punctuation etc. to help tag normalization?
+
+  if (!g_hash_table_lookup_extended(ti->tags, tag_lower, (gpointer) &found_key, (gpointer) &found_value))
     {
-      return found_value;
+      // not found, insert new key
+      g_hash_table_insert(ti->tags, g_strdup(tag_lower), g_string_new(""));
+      found_value =  g_hash_table_lookup(ti->tags, tag_lower);
     }
-  else
-    {
-      g_hash_table_insert(ti->tags, g_strdup(tag), g_string_new(""));
-      return g_hash_table_lookup(ti->tags, tag);
-    }
+
+  g_free(tag_lower);  
+
+  return found_value;
 }
 
 //--------------------------------------------------------------------

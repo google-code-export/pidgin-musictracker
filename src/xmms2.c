@@ -22,6 +22,7 @@ struct xmmsclientlib
   xmmsc_result_t *(*xmmsc_medialib_get_info)(xmmsc_connection_t *, uint32_t);
   int (*xmmsc_result_get_dict_entry_string)(xmmsc_result_t *res, const char *key, const char **r);
   int (*xmmsc_result_get_dict_entry_int)(xmmsc_result_t *res, const char *key, int32_t *r);
+  int (*xmmsc_result_propdict_foreach)(xmmsc_result_t *res, xmmsc_propdict_foreach_func func, void *user_data);
   void (*xmmsc_result_wait)(xmmsc_result_t *res);
   int (*xmmsc_result_iserror)(xmmsc_result_t *res);
   int (*xmmsc_result_get_uint)(xmmsc_result_t *res, uint32_t *r);
@@ -52,6 +53,7 @@ void *xmms2_dlsym_init(void)
           get_func(xmmsc_medialib_get_info);
           get_func(xmmsc_result_get_dict_entry_string);
           get_func(xmmsc_result_get_dict_entry_int);
+          get_func(xmmsc_result_propdict_foreach);
           get_func(xmmsc_result_wait);                
           get_func(xmmsc_result_iserror);                
           get_func(xmmsc_result_get_uint);
@@ -110,6 +112,33 @@ gboolean get_xmms2_status(xmmsc_connection_t *conn, TrackInfo *ti)
 }
 
 /**
+ * Helper function applied to each key in the media information result
+ */
+static
+void mediainfo_helper(const void *key, xmmsc_result_value_type_t type, const void *value, const char *source, void *user_data)
+{
+  TrackInfo *ti = (TrackInfo *)user_data;
+  
+  switch (type)
+    {
+    case XMMSC_RESULT_VALUE_TYPE_STRING:
+      g_string_assign(trackinfo_get_gstring_tag(ti, key), (char *)value);
+      trace("key '%s' value '%s' source '%s'", key, value, source);
+      break;
+    case XMMSC_RESULT_VALUE_TYPE_INT32:
+    case XMMSC_RESULT_VALUE_TYPE_UINT32:
+      {
+        g_string_printf(trackinfo_get_gstring_tag(ti, key), "%d", value);
+        trace("key '%s' value %d source '%s'", key, value, source);
+      }
+      break;
+    default:
+      trace("unknown type %d", type);
+    }
+}
+
+
+/**
  * Gets the media information of the current track.
  */
 static
@@ -155,15 +184,26 @@ gboolean get_xmms2_mediainfo(xmmsc_connection_t *conn, TrackInfo *ti)
 		return FALSE;
 	}
 
-	if ((*dl.xmmsc_result_get_dict_entry_string)(result, "title", &val)) {
-		g_string_assign(trackinfo_get_gstring_track(ti), val);
-	}
-	if ((*dl.xmmsc_result_get_dict_entry_string)(result, "artist", &val)) {
-		g_string_assign(trackinfo_get_gstring_artist(ti), val);
-	}
-	if ((*dl.xmmsc_result_get_dict_entry_string)(result, "album", &val)) {
-		g_string_assign(trackinfo_get_gstring_album(ti), val);
-	}
+	// if ((*dl.xmmsc_result_get_dict_entry_string)(result, "title", &val)) {
+	//	g_string_assign(trackinfo_get_gstring_track(ti), val);
+	//}
+	//if ((*dl.xmmsc_result_get_dict_entry_string)(result, "artist", &val)) {
+	//	g_string_assign(trackinfo_get_gstring_artist(ti), val);
+	//}
+	//if ((*dl.xmmsc_result_get_dict_entry_string)(result, "album", &val)) {
+	//	g_string_assign(trackinfo_get_gstring_album(ti), val);
+	//}
+
+        if ((*dl.xmmsc_result_propdict_foreach)(result, mediainfo_helper, ti) == 0)
+          {
+            trace("xmmsc_result_propdict_foreach failed");
+          }
+
+        // normalize tag "title" as "track"
+        g_string_assign(trackinfo_get_gstring_track(ti), trackinfo_get_gstring_tag(ti, "title")->str);
+        // normalize tag "date" as "year"
+        g_string_assign(trackinfo_get_gstring_tag(ti, "year"), trackinfo_get_gstring_tag(ti, "date")->str);
+
 	if ((*dl.xmmsc_result_get_dict_entry_int)(result, "duration", &duration)) {
 		trackinfo_set_totalSecs(ti, duration / 1000);
 	}

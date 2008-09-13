@@ -72,9 +72,30 @@ get_exaile_info(TrackInfo* ti)
 
 	if (trackinfo_get_status(ti) != STATUS_OFF) {
 		int mins, secs;
-		exaile_dbus_query(proxy, "get_artist", trackinfo_get_gstring_artist(ti));
-		exaile_dbus_query(proxy, "get_album", trackinfo_get_gstring_album(ti));
-		exaile_dbus_query(proxy, "get_title", trackinfo_get_gstring_track(ti));
+
+                // in exaile 0.2.13, the attributes for a track don't seem to be iterable, so we merely 
+                // attempt to fetch a known list of possible attributes
+                const char *attributeList[] = 
+                  {
+                    "title", "artist", "album", "length", "track", "bitrate", "genre", "year", "rating", 0
+                  };
+                
+                for (int i = 0; attributeList[i] != 0; i++)
+                  {
+                    if (exaile_dbus_query(proxy, attributeList[i], trackinfo_get_gstring_tag(ti, attributeList[i])))
+                      {
+                        trace("attribute '%s' returned '%s'", attributeList[i], trackinfo_get_gstring_tag(ti, attributeList[i])->str);
+                      }
+                  }
+
+		// exaile_dbus_query(proxy, "get_artist", trackinfo_get_gstring_artist(ti));
+                // exaile_dbus_query(proxy, "get_album", trackinfo_get_gstring_album(ti));
+		// exaile_dbus_query(proxy, "get_title", trackinfo_get_gstring_track(ti));
+
+                // normalize tag name "title" as "track"
+                g_string_assign(trackinfo_get_gstring_track(ti), trackinfo_get_gstring_tag(ti, "title")->str);
+
+                // XXX: get_cover_path ???
 
                 GString *buf = g_string_new("");
 		exaile_dbus_query(proxy, "get_length", buf);

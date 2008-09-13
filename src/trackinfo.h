@@ -35,7 +35,6 @@ typedef struct TrackInfo_t
 } TrackInfo;
 
 TrackInfo *trackinfo_new(void);
-TrackInfo *trackinfo_copy(const TrackInfo *ti);
 void trackinfo_destroy(TrackInfo *ti);
 void trackinfo_assign(TrackInfo *lhs, const TrackInfo *rhs);
 
@@ -61,6 +60,7 @@ static inline void trackinfo_set_status(TrackInfo* ti, int status) { ti->status 
 
 gboolean trackinfo_changed(const TrackInfo* one, const TrackInfo* two);
 
+// for convenience
 #define g_string_empty(s) g_string_assign(s, "")
 
 #endif

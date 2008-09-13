@@ -321,3 +321,40 @@ char *GetWindowTitleUtf8(HWND hWnd)
 }
 
 #endif
+
+//--------------------------------------------------------------------
+
+#ifndef WIN32
+// insert a hashtable of tag values into trackinfo
+
+void
+process_tag_hashtable(GHashTable *table, TrackInfo *ti)
+{
+  GHashTableIter iter;
+  gpointer key;
+  GValue *value;
+  g_hash_table_iter_init(&iter, table);
+  while (g_hash_table_iter_next(&iter, &key, (gpointer) &value))
+    {
+      if (value != NULL)
+        {
+          if (G_VALUE_HOLDS_STRING(value))
+            {
+              g_string_assign(trackinfo_get_gstring_tag(ti, key), g_value_get_string(value));
+            }
+          else
+            {
+              // g_strdup_value_contents renders non-ASCII characters as /nnn sequences, so we can't just use it for everything....
+              char *s = g_strdup_value_contents(value);
+              g_string_assign(trackinfo_get_gstring_tag(ti, key), s);
+              g_free(s);
+            }
+          trace("For key '%s' value is '%s'", key, trackinfo_get_gstring_tag(ti, key)->str);
+        }
+    }
+}
+#endif
+
+//--------------------------------------------------------------------
+
+  

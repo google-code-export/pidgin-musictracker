@@ -119,10 +119,46 @@ gboolean get_wmp_info(TrackInfo *ti)
       dhFreeString(version);
     }
 
-  // .currentMedia.getItemInfo()
-  getItemInfo(objWmp, L"WM/AlbumTitle", trackinfo_get_gstring_album(ti));
-  getItemInfo(objWmp, L"Author", trackinfo_get_gstring_artist(ti));
-  getItemInfo(objWmp, L"Title", trackinfo_get_gstring_track(ti));
+  // get_attributeCount to iterate over attributes
+  long count = 0;
+  r = dhGetValue(L"%d", &count, objWmp, L".currentMedia.attributeCount");
+  if (r == 0)
+    {
+      // .currentMedia.getItemInfo() to retrieve attribute
+      long i;
+      for (i = 0; i < count; i++)
+        {
+          BSTR name, value;
+          r = dhGetValue(L"%B", &name, objWmp, L".currentMedia.getAttributeName(%d)", i);
+          if (r == 0)
+            {
+              r = dhGetValue(L"%B", &value, objWmp, L".currentMedia.getItemInfo(%B)", name);
+              if (r == 0)
+                {
+                  char *n = wchar_to_utf8(name);
+                  char *v = wchar_to_utf8(value);
+                  // if the attribute name has a leading "WM/", remove it
+                  if (strncmp(n, "WM/", 3) == 0)
+                    {
+                      g_string_assign(trackinfo_get_gstring_tag(ti, n+3), v);
+                    }
+                  else
+                    {
+                      g_string_assign(trackinfo_get_gstring_tag(ti, n), v);
+                    }
+                  free(v);
+                  free(n);
+                  dhFreeString(name);
+                }
+              dhFreeString(value);
+            }
+        }
+    }
+
+  // tag normalization
+  g_string_assign(trackinfo_get_gstring_album(ti), trackinfo_get_gstring_tag(ti, "AlbumTitle")->str); // normalizes WM/AlbumTitle
+  g_string_assign(trackinfo_get_gstring_artist(ti), trackinfo_get_gstring_tag(ti, "Author")->str);
+  g_string_assign(trackinfo_get_gstring_track(ti), trackinfo_get_gstring_tag(ti, "Title")->str);
 
   // currentMedia.duration
   double duration;

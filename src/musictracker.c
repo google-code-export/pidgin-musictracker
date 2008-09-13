@@ -170,6 +170,53 @@ message_changed(const char *one, const char *two)
 //--------------------------------------------------------------------
 
 static
+char * put_tags(TrackInfo *ti, char *buf)
+{
+  int ovector[6];
+
+  // match for %{.*}, ungreedily
+  pcre *re = regex("(%\\{.*\\})", PCRE_UNGREEDY);
+
+  int count;
+  do 
+    {
+      count = pcre_exec(re, 0, buf, strlen(buf), 0, 0, ovector, 6);
+      trace("pcre_exec returned %d", count);
+
+      if (count > 0)
+        {
+          // extract tag from the match 
+          int tag_length = ovector[3] - ovector[2];
+          char *tag = malloc(tag_length+1);
+          memcpy(tag, buf+ovector[2]+2, tag_length-3);
+          tag[tag_length-3] = 0;
+
+          trace("found tag '%s'", tag);
+          
+          // locate tag in tag hash
+          // (this implcitly generates a new tag containing an empty string if not found)
+          GString *string = trackinfo_get_gstring_tag(ti, tag);
+
+          // replace the found match with value
+          char *newbuf = malloc(strlen(buf) - tag_length + strlen(string->str) + 1);
+
+          memcpy(newbuf, buf, ovector[2]);
+          strcpy(newbuf + ovector[2], string->str);
+          strcat(newbuf, buf+ovector[3]);
+          free(buf);
+          free(tag);
+          buf = newbuf;
+          trace("replaced to give %s", buf);
+        }
+    }
+  while (count >0);
+
+  return buf;
+}
+
+//--------------------------------------------------------------------
+
+static
 char* generate_status(const char *src, TrackInfo *ti)
 {
 	char *status = malloc(strlen(src)+1);
@@ -204,6 +251,9 @@ char* generate_status(const char *src, TrackInfo *ti)
 
         // Music symbol: U+266B 'beamed eighth notes'
 	status = put_field(status, 'm', "\u266b");
+        
+        // scan for %{tag} constructs and replace them with the tag information from the trackinfo, or '' if undefined
+        status = put_tags(ti, status);
 
 	trace("Formatted status: %s", status);
 
@@ -422,12 +472,15 @@ set_userstatus_for_active_accounts (char *userstatus, TrackInfo *ti)
                 accounts        = accounts->next;
         }
 
-        // stash trackinfo in case we need it elsewhere....
+        // keep a copy of the most recent trackinfo in case we need it elsewhere....
         if (mostrecent_ti)
             trackinfo_destroy(mostrecent_ti);
 
         if (ti)
-          mostrecent_ti = trackinfo_copy(ti);
+          {
+            mostrecent_ti = trackinfo_new();
+            trackinfo_assign(mostrecent_ti, ti);
+          }
         else
           mostrecent_ti = 0;
 

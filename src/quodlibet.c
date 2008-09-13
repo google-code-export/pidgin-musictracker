@@ -65,14 +65,32 @@ get_quodlibet_info(TrackInfo* ti)
 	}
 	trackinfo_set_status(ti, g_state);
 
-	quodlibet_hash_str(table, "artist", trackinfo_get_gstring_artist(ti));
-	quodlibet_hash_str(table, "album", trackinfo_get_gstring_album(ti));
-	quodlibet_hash_str(table, "title", trackinfo_get_gstring_track(ti));
+        // process hash table of strings
+        GHashTableIter iter;
+        gpointer key;
+        const char *value;
+        g_hash_table_iter_init(&iter, table);
+        while (g_hash_table_iter_next(&iter, &key, (gpointer) &value))
+          {
+            // if the attribute name has a leading "~#", remove it (numeric value)
+            if (strncmp(key, "~#", 2) == 0)
+              {
+                key = key + 2;
+              }
+
+            g_string_assign(trackinfo_get_gstring_tag(ti, key), value);
+            trace("For key '%s' value is '%s'", key, trackinfo_get_gstring_tag(ti, key)->str);
+          }
+
+        // normalize tag "title" as "track"
+        g_string_assign(trackinfo_get_gstring_track(ti), trackinfo_get_gstring_tag(ti, "title")->str);
+        // normalize tag "date" as "year"
+        g_string_assign(trackinfo_get_gstring_tag(ti, "year"), trackinfo_get_gstring_tag(ti, "date")->str);
 
 	GString *buf = g_string_new("");
         int totalSecs;
 	quodlibet_hash_str(table, "~#length", buf);
-	sscanf(buf->str, "%d", totalSecs);
+	sscanf(buf->str, "%d", &totalSecs);
         trackinfo_set_totalSecs(ti, totalSecs);
         g_string_free(buf, TRUE);
 
