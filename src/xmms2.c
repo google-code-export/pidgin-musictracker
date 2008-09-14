@@ -184,23 +184,11 @@ gboolean get_xmms2_mediainfo(xmmsc_connection_t *conn, TrackInfo *ti)
 		return FALSE;
 	}
 
-	// if ((*dl.xmmsc_result_get_dict_entry_string)(result, "title", &val)) {
-	//	g_string_assign(trackinfo_get_gstring_track(ti), val);
-	//}
-	//if ((*dl.xmmsc_result_get_dict_entry_string)(result, "artist", &val)) {
-	//	g_string_assign(trackinfo_get_gstring_artist(ti), val);
-	//}
-	//if ((*dl.xmmsc_result_get_dict_entry_string)(result, "album", &val)) {
-	//	g_string_assign(trackinfo_get_gstring_album(ti), val);
-	//}
-
         if ((*dl.xmmsc_result_propdict_foreach)(result, mediainfo_helper, ti) == 0)
           {
             trace("xmmsc_result_propdict_foreach failed");
           }
 
-        // normalize tag "title" as "track"
-        g_string_assign(trackinfo_get_gstring_track(ti), trackinfo_get_gstring_tag(ti, "title")->str);
         // normalize tag "date" as "year"
         g_string_assign(trackinfo_get_gstring_tag(ti, "year"), trackinfo_get_gstring_tag(ti, "date")->str);
 

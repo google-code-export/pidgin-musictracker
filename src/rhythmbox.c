@@ -98,11 +98,6 @@ get_rhythmbox_info(TrackInfo* ti)
           {
             get_hash_str(table, "rb:stream-song-title", trackinfo_get_gstring_track(ti));
           }
-        else
-          {
-            // normalize tag name "title" as "track"
-            g_string_assign(trackinfo_get_gstring_track(ti), trackinfo_get_gstring_tag(ti, "title")->str);
-          }
 
 	trackinfo_set_totalSecs(ti, get_hash_uint(table, "duration"));
 	g_hash_table_destroy(table);

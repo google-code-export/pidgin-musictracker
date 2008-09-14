@@ -140,10 +140,6 @@ get_banshee_info(TrackInfo* ti)
 
                 process_tag_hashtable(table, ti);
 
-		// banshee_hash_str(table, "album", trackinfo_get_gstring_album(ti));
-		// banshee_hash_str(table, "artist", trackinfo_get_gstring_artist(ti));
-		// banshee_hash_str(table, "name", trackinfo_get_gstring_track(ti));
-
                 // normalize tag name "name" as "track"
                 g_string_assign(trackinfo_get_gstring_track(ti), trackinfo_get_gstring_tag(ti, "name")->str);
 

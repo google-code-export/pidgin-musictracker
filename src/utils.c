@@ -98,6 +98,7 @@ parse_value(const char *line, const char* key)
 char *
 put_field(char *buf, char identifier, const char *field) 
 {
+	if (!field) field="";
 	int len = strlen(field), len2 = strlen(buf), i, j;
 	char *out;
 

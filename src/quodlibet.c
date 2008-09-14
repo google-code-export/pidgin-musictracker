@@ -82,8 +82,6 @@ get_quodlibet_info(TrackInfo* ti)
             trace("For key '%s' value is '%s'", key, trackinfo_get_gstring_tag(ti, key)->str);
           }
 
-        // normalize tag "title" as "track"
-        g_string_assign(trackinfo_get_gstring_track(ti), trackinfo_get_gstring_tag(ti, "title")->str);
         // normalize tag "date" as "year"
         g_string_assign(trackinfo_get_gstring_tag(ti, "year"), trackinfo_get_gstring_tag(ti, "date")->str);
 

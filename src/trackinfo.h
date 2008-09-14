@@ -38,11 +38,14 @@ TrackInfo *trackinfo_new(void);
 void trackinfo_destroy(TrackInfo *ti);
 void trackinfo_assign(TrackInfo *lhs, const TrackInfo *rhs);
 
-#define trackinfo_get_track(ti) trackinfo_get_gstring_tag(ti, "track")->str
+// somewhat confusingly, the track attribute which is most usually called 'title'
+// we referr to as 'track' in the trackinfo structure, for historical reasons...
+
+#define trackinfo_get_track(ti) trackinfo_get_gstring_tag(ti, "title")->str
 #define trackinfo_get_artist(ti) trackinfo_get_gstring_tag(ti, "artist")->str
 #define trackinfo_get_album(ti) trackinfo_get_gstring_tag(ti, "album")->str
 
-#define trackinfo_get_gstring_track(ti) trackinfo_get_gstring_tag(ti, "track")
+#define trackinfo_get_gstring_track(ti) trackinfo_get_gstring_tag(ti, "title")
 #define trackinfo_get_gstring_artist(ti) trackinfo_get_gstring_tag(ti, "artist")
 #define trackinfo_get_gstring_album(ti) trackinfo_get_gstring_tag(ti, "album")
 

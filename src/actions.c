@@ -66,7 +66,7 @@ action_toggle_status(PurplePluginAction *action)
 	purple_prefs_set_bool("/plugins/core/musictracker/bool_disabled", flag);
 	if (flag)
           {
-            set_userstatus_for_active_accounts("", 0);
+            set_userstatus_for_active_accounts(0);
             label = "Activate Status Changing";
           }
         else

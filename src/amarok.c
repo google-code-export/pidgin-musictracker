@@ -55,9 +55,6 @@ get_amarok_info(TrackInfo* ti)
 	if (s != STATUS_OFF) {
                 int secs;
 		trace("Got valid dcop status... retrieving song info");
-		dcop_query("dcop amarok default artist", trackinfo_get_gstring_artist(ti) );
-		dcop_query("dcop amarok default album", trackinfo_get_gstring_album(ti) );
-		dcop_query("dcop amarok default title", trackinfo_get_gstring_track(ti) );
 		dcop_query("dcop amarok default trackTotalTime", temp);
 		sscanf(temp->str, "%d", &secs);
                 trackinfo_set_totalSecs(ti, secs);
@@ -67,6 +64,7 @@ get_amarok_info(TrackInfo* ti)
 
                 const char *methodList[] = 
                   {
+                    "artist", "album", "title",
                     "sampleRate", "score", "rating", "trackPlayCounter", "labels", "bitrate", "comment",
                     "encodedURL", "engine", "genre", "lyrics", "path", "track", "type", "year",
                     0

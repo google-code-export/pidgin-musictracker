@@ -48,16 +48,6 @@ gboolean get_mpd_info(TrackInfo* ti)
 			continue;
 		}
 
-		//if(song->artist) {
-                //        g_string_assign(trackinfo_get_gstring_artist(ti), song->artist);
-		//}
-		//if(song->album) {
-                //        g_string_assign(trackinfo_get_gstring_album(ti), song->album);
-		//}
-		//if(song->title) {
-                //        g_string_assign(trackinfo_get_gstring_track(ti), song->title);
-		//}
-
 #define TAG(tag) \
                 if (song->tag) {\
                   g_string_assign(trackinfo_get_gstring_tag(ti, #tag), song->tag); \
@@ -68,7 +58,7 @@ gboolean get_mpd_info(TrackInfo* ti)
                 TAG(artist);
                 TAG(title);
                 TAG(album);
-                // TAG(track); // conflicts with normalization
+                TAG(track);
                 TAG(name);
                 TAG(date);
                 TAG(genre);
@@ -76,9 +66,6 @@ gboolean get_mpd_info(TrackInfo* ti)
                 TAG(performer);
                 TAG(disc);
                 TAG(comment);
-
-                // normalize tag name "title" as "track"
-                g_string_assign(trackinfo_get_gstring_track(ti), trackinfo_get_gstring_tag(ti, "title")->str);
 
 		mpd_freeInfoEntity(entity);
 	}

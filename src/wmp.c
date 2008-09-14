@@ -158,7 +158,6 @@ gboolean get_wmp_info(TrackInfo *ti)
   // tag normalization
   g_string_assign(trackinfo_get_gstring_album(ti), trackinfo_get_gstring_tag(ti, "AlbumTitle")->str); // normalizes WM/AlbumTitle
   g_string_assign(trackinfo_get_gstring_artist(ti), trackinfo_get_gstring_tag(ti, "Author")->str);
-  g_string_assign(trackinfo_get_gstring_track(ti), trackinfo_get_gstring_tag(ti, "Title")->str);
 
   // currentMedia.duration
   double duration;
