@@ -88,13 +88,6 @@ get_exaile_info(TrackInfo* ti)
                       }
                   }
 
-		// exaile_dbus_query(proxy, "get_artist", trackinfo_get_gstring_artist(ti));
-                // exaile_dbus_query(proxy, "get_album", trackinfo_get_gstring_album(ti));
-		// exaile_dbus_query(proxy, "get_title", trackinfo_get_gstring_track(ti));
-
-                // normalize tag name "title" as "track"
-                g_string_assign(trackinfo_get_gstring_track(ti), trackinfo_get_gstring_tag(ti, "title")->str);
-
                 // XXX: get_cover_path ???
 
                 GString *buf = g_string_new("");

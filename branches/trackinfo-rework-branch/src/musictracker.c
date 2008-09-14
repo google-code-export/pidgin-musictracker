@@ -211,13 +211,15 @@ char * put_tags(TrackInfo *ti, char *buf)
     }
   while (count >0);
 
+  pcre_free(re);
+
   return buf;
 }
 
 //--------------------------------------------------------------------
 
 static
-char* generate_status(const char *src, TrackInfo *ti)
+char* generate_status(const char *src, TrackInfo *ti, const char *savedstatus)
 {
 	char *status = malloc(strlen(src)+1);
 	strcpy(status, src);
@@ -251,7 +253,10 @@ char* generate_status(const char *src, TrackInfo *ti)
 
         // Music symbol: U+266B 'beamed eighth notes'
 	status = put_field(status, 'm', "\u266b");
-        
+
+        // The status message selected through the UI
+	status = put_field(status, 's', savedstatus);
+
         // scan for %{tag} constructs and replace them with the tag information from the trackinfo, or '' if undefined
         status = put_tags(ti, status);
 
@@ -348,50 +353,41 @@ set_status_tune (PurpleAccount *account, gboolean validStatus, TrackInfo *ti)
 //--------------------------------------------------------------------
 
 gboolean
-set_status (PurpleAccount *account, char *text, TrackInfo *ti)
+set_status (PurpleAccount *account, TrackInfo *ti)
 {
-	PurpleStatus				*status			= NULL;
-	gboolean				b				= FALSE;
+	char buf[STRLEN];
 
-	// check for protocol status format override
-	char buf[100];
-	gboolean overriden = FALSE;
-	const char *override;
-
+        // check for status changing disabled for this account
 	build_pref(buf, PREF_CUSTOM_DISABLED, 
 			purple_account_get_username(account),
 			purple_account_get_protocol_name(account));
 	if (purple_prefs_get_bool(buf)) {
 		trace("Status changing disabled for %s account", purple_account_get_username(account));
-		return TRUE;
-	}
-
-	build_pref(buf, PREF_CUSTOM_FORMAT, 
-			purple_account_get_username(account),
-			purple_account_get_protocol_name(account));
-	override = purple_prefs_get_string(buf);
-	if (ti && (trackinfo_get_status(ti) == STATUS_NORMAL) && override && (*override != 0)) {
-		text = generate_status(override, ti);
-		overriden = TRUE;
 	}
 
         // set 'now playing' status
-        if (set_status_tune(account, *text != 0, ti) && purple_prefs_get_bool(PREF_NOW_LISTENING_ONLY))
+        if (set_status_tune(account, ti != 0, ti) && purple_prefs_get_bool(PREF_NOW_LISTENING_ONLY))
           {
-            if (overriden)
-              free(text);
             return TRUE;
           }
 
-        const char *status_text = text;
-        
-        // if the status is empty, use the current status selected through the UI (if there is one)
-        if (strlen(text) == 0)
-          {
+        // have we requested 'away' status to take priority?
+	PurpleStatus *status = purple_account_get_active_status (account);
+	if (status != NULL)
+	{
+          if (purple_prefs_get_bool(PREF_DISABLE_WHEN_AWAY) && purple_status_is_away(status))
+            {
+              trace("Status is away and we are disabled when away");
+              return TRUE;
+            }
+	}
+
+        // discover the pidgin saved status in use for this account
+        const char *savedmessage = "";
+        {
             PurpleSavedStatus *savedstatus = purple_savedstatus_get_current();
             if (savedstatus)
               {
-                const char *savedmessage = 0;
                 PurpleSavedStatusSub *savedsubstatus = purple_savedstatus_get_substatus(savedstatus, account);
                 if (savedsubstatus)
                   {
@@ -403,58 +399,83 @@ set_status (PurpleAccount *account, char *text, TrackInfo *ti)
                     // don't have an account-specific saved status, use the general one
                     savedmessage = purple_savedstatus_get_message(savedstatus);
                   }
+              }
+        }
 
-                if (savedmessage != 0)
-                  {
-                    trace("empty player status, using current saved status....");
-                    status_text = savedmessage;
-                  }
+
+        char *text = 0;
+        if (ti)
+          {
+            switch (trackinfo_get_status(ti))
+              {
+              case STATUS_OFF:
+                text = generate_status(purple_prefs_get_string(PREF_OFF), ti, savedmessage);
+                break;
+              case STATUS_PAUSED:
+                text = generate_status(purple_prefs_get_string(PREF_PAUSED), ti, savedmessage);
+                break;
+              case STATUS_NORMAL:
+                {
+                  // check for protocol status format override for this account
+                  build_pref(buf, PREF_CUSTOM_FORMAT, 
+                             purple_account_get_username(account),
+                             purple_account_get_protocol_name(account));
+                  const char *override = purple_prefs_get_string(buf);
+                  
+                  if (override && (*override != 0))
+                    {
+                      // if so, use account specific status format
+                      text = generate_status(override, ti, savedmessage);
+                    }
+                  else
+                    {
+                      // otherwise, use the general status format
+                      text = generate_status(purple_prefs_get_string(PREF_FORMAT), ti, savedmessage);
+                    }
+                }
+                
+                break;
+              default:
+                trace("unknown player status %d", trackinfo_get_status(ti));
               }
           }
 
-        // have we requested 'away' status to take priority?
-	status = purple_account_get_active_status (account);
+        if (text == 0)
+          text = strdup("");
 
-	if (status != NULL)
-	{
-          if (purple_prefs_get_bool(PREF_DISABLE_WHEN_AWAY) && purple_status_is_away(status))
-            {
-              trace("Status is away and we are disabled when away");
-              b = FALSE;
-            }
-          else
-            b = TRUE;
-	}
-	else
-		b	= FALSE;
+        // if the status is empty, use the current status selected through the UI (if there is one)
+        if (strlen(text) == 0)
+          {
+            if (savedmessage != 0)
+              {
+                trace("empty player status, using current saved status....");
+                free(text);
+                text = strdup(savedmessage);
+              }
+          }
 
         // set the status message
-	if (b)
-	{
-                if (purple_status_supports_attr (status, "message"))
-		{
-			if ((status_text != NULL) && message_changed(status_text, purple_status_get_attr_string(status, "message")))
-			{
-				trace("Setting %s status to: %s", purple_account_get_username (account), status_text);
-                                GList *attrs = NULL;
-                                attrs = g_list_append(attrs, "message");
-                                attrs = g_list_append(attrs, (gpointer)status_text);
-                                purple_status_set_active_with_attrs_list(status, TRUE, attrs);
-                                g_list_free(attrs);
-                                
-			}
-		}
-	}
+        if (purple_status_supports_attr (status, "message"))
+          {
+            if ((text != NULL) && message_changed(text, purple_status_get_attr_string(status, "message")))
+              {
+                trace("Setting %s status to: %s", purple_account_get_username (account), text);
+                GList *attrs = NULL;
+                attrs = g_list_append(attrs, "message");
+                attrs = g_list_append(attrs, (gpointer)text);
+                purple_status_set_active_with_attrs_list(status, TRUE, attrs);
+                g_list_free(attrs);  
+              }
+          }
 
-	if (overriden)
-		free(text);
+        free(text);
 	return TRUE;
 }
 
 //--------------------------------------------------------------------
 
 void
-set_userstatus_for_active_accounts (char *userstatus, TrackInfo *ti)
+set_userstatus_for_active_accounts (TrackInfo *ti)
 {
         GList                   *accounts               = NULL,
                                         *head                   = NULL;
@@ -467,7 +488,7 @@ set_userstatus_for_active_accounts (char *userstatus, TrackInfo *ti)
                 account         = (PurpleAccount *)accounts->data;
 
                 if (account != NULL)
-                        set_status (account, userstatus, ti);
+                        set_status (account, ti);
 
                 accounts        = accounts->next;
         }
@@ -549,7 +570,7 @@ cb_timeout(gpointer data) {
 
 	if (!b) {
 		trace("Getting info failed. Setting empty status.");
-		set_userstatus_for_active_accounts("", 0);
+		set_userstatus_for_active_accounts(0);
 	}
         else {
 	trim(trackinfo_get_album(ti));
@@ -562,26 +583,7 @@ cb_timeout(gpointer data) {
         utf8_validate(trackinfo_get_track(ti));
         utf8_validate(trackinfo_get_artist(ti));
 
-	char *status = NULL;
-	switch (trackinfo_get_status(ti)) {
-		case STATUS_OFF:
-			status = generate_status(purple_prefs_get_string(PREF_OFF), ti);
-			break;
-		case STATUS_PAUSED:
-			status = generate_status(purple_prefs_get_string(PREF_PAUSED), ti);
-			break;
-		case STATUS_NORMAL:
-			status = generate_status(purple_prefs_get_string(PREF_FORMAT), ti);
-			break;
-		default:
-                  trace("unknown player status %d", trackinfo_get_status(ti));
-	}
-
-        if (status)
-          {
-            set_userstatus_for_active_accounts(status, ti);
-            free(status);
-          }
+        set_userstatus_for_active_accounts(ti);
 
 	trace("Status set for all accounts");
         }
@@ -597,7 +599,7 @@ PurpleCmdRet musictracker_cmd_nowplaying(PurpleConversation *conv, const gchar *
 {
   if (mostrecent_ti && trackinfo_get_status(mostrecent_ti) == STATUS_NORMAL)
     {
-      char *status = generate_status(purple_prefs_get_string(PREF_FORMAT), mostrecent_ti);
+      char *status = generate_status(purple_prefs_get_string(PREF_FORMAT), mostrecent_ti, "");
       PurpleConversationType type = purple_conversation_get_type (conv);
   
       if (type == PURPLE_CONV_TYPE_CHAT)
@@ -677,7 +679,7 @@ plugin_load(PurplePlugin *plugin) {
 static gboolean
 plugin_unload(PurplePlugin *plugin) {
 	trace("Plugin unloaded.");
-        set_userstatus_for_active_accounts("", 0);
+        set_userstatus_for_active_accounts(0);
 	g_run = 0;
         purple_cmd_unregister(cmdid_nowplaying);
         purple_cmd_unregister(cmdid_np);

@@ -120,7 +120,7 @@ void cb_custom_toggled(GtkCellRendererToggle *cell, char *path, gpointer data)
 		gtk_list_store_set(GTK_LIST_STORE(model), &iter, 3, flag, -1);
 		purple_prefs_set_bool(pref, flag);
 		if (flag) {
-			set_status(account, "", 0);
+			set_status(account, 0);
 		}
 	}
 }
@@ -203,6 +203,7 @@ GtkWidget* pref_frame(PurplePlugin *plugin)
 
 	// Popup menu for format
 	format_menu = gtk_menu_new();
+	APPEND_FORMAT_MENU("Status Message", "%s");
 	APPEND_FORMAT_MENU("Artist", "%p");
 	APPEND_FORMAT_MENU("Album", "%a");
 	APPEND_FORMAT_MENU("Title", "%t");

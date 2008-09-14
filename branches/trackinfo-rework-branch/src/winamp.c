@@ -121,10 +121,6 @@ gboolean get_winamp_info(TrackInfo* ti)
             trace("Filename(widechar): %s", f);
             free(f);
 
-            // winamp_get_w(wfilename, "ALBUM", trackinfo_get_gstring_album(ti));
-            // winamp_get_w(wfilename, "ARTIST", trackinfo_get_gstring_artist(ti));
-            // winamp_get_w(wfilename, "TITLE", trackinfo_get_gstring_track(ti));
-
             for (int i = 0; metadataList[i] != 0; i++)
               {
                 winamp_get_w(wfilename, metadataList[i], trackinfo_get_gstring_tag(ti, metadataList[i]));
@@ -139,18 +135,11 @@ gboolean get_winamp_info(TrackInfo* ti)
             ReadProcessMemory(hProcess, address, filename, 512, 0);
             trace("Filename: %s", filename);
 
-            // winamp_get(filename, "ALBUM", trackinfo_get_gstring_album(ti));
-            // winamp_get(filename, "ARTIST", trackinfo_get_gstring_artist(ti));
-            // winamp_get(filename, "TITLE", trackinfo_get_gstring_track(ti));
-
             for (int i = 0; metadataList[i] != 0; i++)
               {
                 winamp_get(filename, metadataList[i], trackinfo_get_gstring_tag(ti, metadataList[i]));
               }
           }
-
-        // normalize tag name "title" as "track"
-        g_string_assign(trackinfo_get_gstring_track(ti), trackinfo_get_gstring_tag(ti, "title")->str);
 
         // if these are all empty, which seems to happen when listening to a stream, try something cruder
         // XXX: really should try to work out how to get winamp to resolve it's tag %streamtitle% for us...

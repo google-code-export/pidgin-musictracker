@@ -20,7 +20,7 @@ gboolean audacious_dbus_string(DBusGProxy *proxy, const char *method, int pos, c
 				G_TYPE_VALUE, &val,
 				G_TYPE_INVALID))
 	{
-		trace("Failed to make dbus call %s: %s", method, error->message);
+		trace("Failed to make dbus call %s(%d,'%s'): %s", method, pos, arg, error->message);
 		return FALSE;
 	}
 
@@ -143,11 +143,5 @@ get_audacious_info(TrackInfo* ti)
               }
           }
 
-        // normalize tag name "title" as "track"
-        g_string_assign(trackinfo_get_gstring_track(ti), trackinfo_get_gstring_tag(ti, "title")->str);
-
-	// audacious_dbus_string(proxy, "SongTuple", pos, "artist",trackinfo_get_gstring_artist(ti));
-        // audacious_dbus_string(proxy, "SongTuple", pos, "album", trackinfo_get_gstring_album(ti));
-	// audacious_dbus_string(proxy, "SongTuple", pos, "title", trackinfo_get_gstring_track(ti));
 	return TRUE;
 }

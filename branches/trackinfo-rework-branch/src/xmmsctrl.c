@@ -18,11 +18,11 @@ char xmmsctrl_lib[STRLEN];
 // is specified such that this is a safe thing to do (always returning the same handle),
 // (provided we don't ever want to dlclose() it, as it does maintain a count of dlopen()s)
 
-void xmmsctrl_init(const char *lib)
+gboolean xmmsctrl_init(const char *lib)
 {
 	trace("%s %s", lib, xmmsctrl_lib);
 	if (strcmp(lib, xmmsctrl_lib) == 0)
-		return;
+		return TRUE;
 
 	void *handle = dlopen(lib, RTLD_NOW);
 	if (handle) {
@@ -33,23 +33,24 @@ void xmmsctrl_init(const char *lib)
 		get_func(xmms_remote_get_playlist_pos);
 		get_func(xmms_remote_get_output_time);
 		strncpy(xmmsctrl_lib, lib, STRLEN);
+                return TRUE;
 	} else {
 		trace("Failed to load library %s", lib);
+                return FALSE;
 	}
 }
 
 gboolean get_xmmsctrl_info(TrackInfo *ti, char *lib, int session)
 {
-	xmmsctrl_init(lib);
+	if (!xmmsctrl_init(lib))
+          return FALSE;
+
 	if (!(xmms_remote_get_playlist_title && xmms_remote_get_playlist_time &&
 			xmms_remote_is_playing && xmms_remote_is_paused &&
 			xmms_remote_get_playlist_pos && xmms_remote_get_output_time)) {
 		trace("xmmsctrl not initialized properly");
 		return FALSE;
 	}
-
-	int pos = (*xmms_remote_get_playlist_pos)(session);
-	trace("Got position %d", pos);
 
 	if ((*xmms_remote_is_playing)(session)) {
 		if ((*xmms_remote_is_paused)(session))
@@ -61,6 +62,9 @@ gboolean get_xmmsctrl_info(TrackInfo *ti, char *lib, int session)
 	trace("Got state %d", trackinfo_get_status(ti));
 
 	if (trackinfo_get_status(ti) != STATUS_OFF) {
+		int pos = (*xmms_remote_get_playlist_pos)(session);
+		trace("Got position %d", pos);
+
 		char *title = (*xmms_remote_get_playlist_title)(session, pos);
 
 		if (title) {
@@ -76,6 +80,7 @@ gboolean get_xmmsctrl_info(TrackInfo *ti, char *lib, int session)
                         pcre *re = regex(regexp, 0);
                         capture_gstring(re, title, strlen(title), trackinfo_get_gstring_artist(ti), trackinfo_get_gstring_album(ti), trackinfo_get_gstring_track(ti));
                         pcre_free(re);
+                        g_free(title);
 		}
 
 		trackinfo_set_totalSecs(ti, (*xmms_remote_get_playlist_time)(session, pos)/1000);
