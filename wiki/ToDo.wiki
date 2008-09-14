@@ -16,3 +16,4 @@
   * Player autodetection should perhaps retry the player it found last time first before trying all the other alternatives?
   * Filter isn't applied to tune status
   * Enable and test !SqueezeCenter code under Windows
+  * Windows uninstaller
