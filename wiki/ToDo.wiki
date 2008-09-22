@@ -17,3 +17,4 @@
   * Filter isn't applied to tune status
   * Enable and test !SqueezeCenter code under Windows
   * Windows uninstaller
+  * Write a patch for pidgin which allows the MSN tune presentation hint to be set as a tune status attribute
