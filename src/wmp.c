@@ -43,22 +43,6 @@ typedef enum WMPPlayState{
   wmppsReconnecting  = 11,
 } WMPPlayState;
 
-static
-void getItemInfo(IDispatch *objWmp, WCHAR *attr, GString *result)
-{
-  BSTR value;
-  BSTR attribute = SysAllocString(attr);
-  HRESULT r = dhGetValue(L"%B", &value, objWmp, L".currentMedia.getItemInfo(%B)", attribute);
-  SysFreeString(attribute);
-  if (r == 0)
-    {
-      char *v = wchar_to_utf8(value);
-      g_string_assign(result, v);
-      dhFreeString(value);
-      free(v);
-    }
-}
-
 gboolean get_wmp_info(TrackInfo *ti)
 {
   HRESULT r;

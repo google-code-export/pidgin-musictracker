@@ -138,9 +138,10 @@ gboolean get_winamp_info(TrackInfo* ti)
                 ReadProcessMemory(hProcess, address, filename, 512, 0);
                 trace("Filename: %s", filename);
                 
-            for (int i = 0; metadataList[i] != 0; i++)
-              {
-                winamp_get(filename, metadataList[i], trackinfo_get_gstring_tag(ti, metadataList[i]));
+                for (int i = 0; metadataList[i] != 0; i++)
+                  {
+                    winamp_get(filename, metadataList[i], trackinfo_get_gstring_tag(ti, metadataList[i]));
+                  }
               }
           }
 
