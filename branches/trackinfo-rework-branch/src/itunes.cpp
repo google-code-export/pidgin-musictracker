@@ -19,8 +19,8 @@ extern "C" {
 #define LONG_GET(bstr, method, result) \
 	res = track->method(&l); \
 	if (res == S_OK) { \
-                g_string_printf(result, "%d", l); \
-                trace("method '%s' returned %d", #method, l); \
+                g_string_printf(result, "%ld", l); \
+                trace("method '%s' returned %ld", #method, l); \
 	}
 
 extern "C" gboolean get_itunes_info(TrackInfo *ti)
