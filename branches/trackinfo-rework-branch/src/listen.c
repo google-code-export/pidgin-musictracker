@@ -47,6 +47,7 @@ get_listen_info(TrackInfo* ti)
     re = regex("^(.*) - \\((.*) - (.*)\\)$", 0);
     capture_gstring(re, buf, strlen(buf), trackinfo_get_gstring_track(ti), trackinfo_get_gstring_album(ti), trackinfo_get_gstring_artist(ti));
     pcre_free(re);
-
+    g_free(buf);
+    
     return TRUE;
 }

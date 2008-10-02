@@ -53,6 +53,7 @@ gboolean get_quodlibet_info(TrackInfo* ti);
 gboolean get_listen_info(TrackInfo* ti);
 gboolean get_xmms2_info(TrackInfo* ti);
 gboolean get_squeezecenter_info(TrackInfo* ti);
+gboolean get_mpris_info(TrackInfo* ti);
 
 void get_xmmsctrl_pref(GtkBox *box);
 void get_xmms2_pref(GtkBox *box);
@@ -88,12 +89,13 @@ struct PlayerInfo g_players[] = {
 #ifdef HAVE_XMMSCLIENT
  	{ "XMMS2", get_xmms2_info, get_xmms2_pref },
 #endif
+ 	{ "MPRIS", get_mpris_info, 0 },
 #else
 	{ "Winamp", get_winamp_info, 0 },
 	{ "Windows Media Player", get_wmp_info, 0 },
 	{ "iTunes", get_itunes_info, 0 },
-	{ "Foobar2000", get_foobar2000_info, 0 },
 	{ "Messenger compatible" , get_msn_compat_info, 0 },
+	{ "Foobar2000", get_foobar2000_info, 0 },
 #endif
 	{ "MPD", get_mpd_info, get_mpd_pref },
  	{ "Last.fm", get_lastfm_info, get_lastfm_pref },
@@ -221,6 +223,8 @@ char * put_tags(TrackInfo *ti, char *buf)
 static
 char* generate_status(const char *src, TrackInfo *ti, const char *savedstatus)
 {
+	trace("Status format: %s", src);
+
 	char *status = malloc(strlen(src)+1);
 	strcpy(status, src);
 	status = put_field(status, 'p', trackinfo_get_artist(ti));
@@ -481,17 +485,27 @@ set_userstatus_for_active_accounts (TrackInfo *ti)
                                         *head                   = NULL;
         PurpleAccount             *account                = NULL;
 
-        head = accounts = purple_accounts_get_all_active ();
-
-        while (accounts != NULL)
-        {
-                account         = (PurpleAccount *)accounts->data;
-
+	gboolean b = purple_prefs_get_bool(PREF_DISABLED);
+	if (b) {
+		trace("Disabled flag on!");
+	}
+        else
+          {
+            head = accounts = purple_accounts_get_all_active ();
+            
+            while (accounts != NULL)
+              {
+                account = (PurpleAccount *)accounts->data;
+                
                 if (account != NULL)
                         set_status (account, ti);
-
-                accounts        = accounts->next;
-        }
+                
+                accounts = accounts->next;
+              }
+            
+            
+            trace("Status set for all accounts");
+          }
 
         // keep a copy of the most recent trackinfo in case we need it elsewhere....
         if (mostrecent_ti)
@@ -501,8 +515,8 @@ set_userstatus_for_active_accounts (TrackInfo *ti)
           {
             mostrecent_ti = trackinfo_new();
             trackinfo_assign(mostrecent_ti, ti);
-          }
-        else
+          }         
+        else        
           mostrecent_ti = 0;
 
         if (head != NULL)
@@ -546,11 +560,7 @@ cb_timeout(gpointer data) {
 	if (g_run == 0)
 		return FALSE;
 
-	gboolean b = purple_prefs_get_bool(PREF_DISABLED);
-	if (b) {
-		trace("Disabled flag on!");
-		return TRUE;
-	}
+        gboolean b = TRUE;
 
         TrackInfo *ti = trackinfo_new();
 	trackinfo_set_status(ti, STATUS_OFF);
@@ -691,7 +701,8 @@ plugin_unload(PurplePlugin *plugin) {
 
 static PidginPluginUiInfo ui_info = {
 	pref_frame,
-	0
+	0,
+        0,0,0,0
 };
 
 static PurplePluginInfo info = {
@@ -724,7 +735,11 @@ static PurplePluginInfo info = {
     &ui_info,
     NULL,
     NULL,
-    actions_list
+    actions_list,
+    NULL,
+    NULL,
+    NULL,
+    NULL
 };
 
 //--------------------------------------------------------------------
