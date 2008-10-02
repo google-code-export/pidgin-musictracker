@@ -30,6 +30,14 @@
 // containing strangely formatted string, for setting the now-playing status of MSN Messenger
 // this might be broken by the sending side only sending to the first window of the class "MsnMsgrUIManager"
 // it finds if there are more than one (for e.g., if the real MSN Messenger is running as well :D)
+//
+// Useful description of the message format: http://kentie.net/article/nowplaying/index.htm
+// although we rely on the fact that players generate a very limited subset of the possible
+// messages to be able to parse the message back into the track details...
+//
+// Winamp seems to generate messages with enabled=1 but all the fields empty when it stops, so we need to
+// check if any fields have non-empty values as well as looking at that flag
+//
 
 static TrackInfo *msnti;
 
@@ -38,13 +46,13 @@ void process_message(wchar_t *MSNTitle)
 {
   char *s = wchar_to_utf8(MSNTitle);
   static char player[STRLEN];
-  char enabled[STRLEN], title[STRLEN], artist[STRLEN], album[STRLEN], uuid[STRLEN];
+  char enabled[STRLEN], format[STRLEN], title[STRLEN], artist[STRLEN], album[STRLEN], uuid[STRLEN];
   
   // this has to be escaped quite carefully to prevent literals being interpreted as metacharacters by the compiler or in the pcre pattern
   // so yes, four \ before a 0 is required to match a literal \0 in the regex :-)
-  pcre *re1 = regex("^(.*)\\\\0Music\\\\0(.*)\\\\0\\{0\\} - \\{1\\}\\\\0(.*)\\\\0(.*)\\\\0(.*)\\\\0(.*)\\\\0$", 0);
+  pcre *re1 = regex("^(.*)\\\\0Music\\\\0(.*)\\\\0(.*)\\\\0(.*)\\\\0(.*)\\\\0(.*)\\\\0(.*)\\\\0$", 0);
   pcre *re2 = regex("^(.*)\\\\0Music\\\\0(.*)\\\\0(.*) - (.*)\\\\0$", 0);
-  if (capture(re1, s, strlen(s), player, enabled, artist, title, album, uuid) > 0)
+  if (capture(re1, s, strlen(s), player, enabled, format, artist, title, album, uuid) > 0)
     {
       if (strlen(uuid) > 0)
         {
@@ -57,7 +65,8 @@ void process_message(wchar_t *MSNTitle)
 
       trace("player '%s', enabled '%s', artist '%s', title '%s', album '%s', uuid '%s'", player, enabled, artist, title, album, uuid);
 
-      if (strcmp(enabled, "1") == 0)
+      if ((strcmp(enabled, "1") == 0) &&
+          ((strlen(artist) > 0) || (strlen(title) > 0) || (strlen(album) > 0)))
         {
           trackinfo_set_player(msnti,player);
           trackinfo_set_status(msnti, STATUS_NORMAL);
@@ -74,7 +83,8 @@ void process_message(wchar_t *MSNTitle)
     {
       trace("player '%s', enabled '%s', artist '%s', title '%s'", player, enabled, artist, title);
 
-      if (strcmp(enabled, "1") == 0)
+      if ((strcmp(enabled, "1") == 0) &&
+          ((strlen(artist) > 0) || (strlen(title) > 0)))
         {
           trackinfo_set_player(msnti, player);
           trackinfo_set_status(msnti, STATUS_NORMAL);

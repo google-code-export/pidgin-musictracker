@@ -85,7 +85,8 @@ gboolean get_winamp_info(TrackInfo* ti)
 		return TRUE;
 	}
 	int version = SendMessage(hWnd, WM_WA_IPC, 0, IPC_GETVERSION);
-	
+	trace("Winamp version %d", version);
+
 	DWORD processId;
 	GetWindowThreadProcessId(hWnd, &processId);
 	hProcess = OpenProcess(PROCESS_ALL_ACCESS, 0, processId);
@@ -131,10 +132,12 @@ gboolean get_winamp_info(TrackInfo* ti)
             // if that fails, fall back to char interface
             // (this is not preferred as it cannot support east asian characters)
             address = (LPCVOID) SendMessage(hWnd, WM_WA_IPC, position, IPC_GETPLAYLISTFILE);
-            char filename[512];
-            ReadProcessMemory(hProcess, address, filename, 512, 0);
-            trace("Filename: %s", filename);
-
+            if ((unsigned int)address > 1)
+              {
+                char filename[512];
+                ReadProcessMemory(hProcess, address, filename, 512, 0);
+                trace("Filename: %s", filename);
+                
             for (int i = 0; metadataList[i] != 0; i++)
               {
                 winamp_get(filename, metadataList[i], trackinfo_get_gstring_tag(ti, metadataList[i]));

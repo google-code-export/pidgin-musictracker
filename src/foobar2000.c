@@ -26,7 +26,7 @@ get_foobar2000_info(TrackInfo* ti)
           {
             ti->status = STATUS_NORMAL;
             pcre *re;
-            re = regex("(.*) - \\[([^#]+)[^\\]]+\\] (.*) \\[foobar2000.*\\]", 0);
+            re = regex("(.*) - (?:\\[([^#]+)[^\\]]+\\] |)(.*) \\[foobar2000.*\\]", 0);
             capture_gstring(re, title, strlen(title), trackinfo_get_gstring_artist(ti), trackinfo_get_gstring_album(ti), trackinfo_get_gstring_track(ti));
             pcre_free(re);
           }

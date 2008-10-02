@@ -9,6 +9,7 @@
 //
 
 static char status[501] = "";
+static double minimum_delta = DBL_MAX;
 
 void
 lastfm_fetch(PurpleUtilFetchUrlData *url_data, gpointer user_data, const gchar *url_text, gsize len, const gchar *data)
@@ -29,8 +30,7 @@ gboolean
 get_lastfm_info(TrackInfo* ti)
 {
 	char url[500]="http://ws.audioscrobbler.com/1.0/user/";
-	char *request, *t;
-	size_t n;
+	char *request;
 	const char *user = purple_prefs_get_string(PREF_LASTFM);
 	if(!strcmp(user,"")) {
 		trace("No last.fm user name");
@@ -63,13 +63,14 @@ get_lastfm_info(TrackInfo* ti)
         pcre *re;
         GString *timestamp_string = g_string_new("");
         // artist and track are separated by a U+2013 EN DASH character
-        re = regex("(.*),(.*) \342€“ (.*)", 0);
+        re = regex("(.*),(.*) \342ï¿½ï¿½ (.*)", 0);
         if (capture_gstring(re, status, strlen(status), timestamp_string, trackinfo_get_gstring_artist(ti), trackinfo_get_gstring_track(ti)))
           { 
             time_t timestamp = atoi(timestamp_string->str);
             double delta = difftime(time(NULL), timestamp);
 
-            trace("Epoch seconds %d", time(NULL));
+            if (delta < minimum_delta) { minimum_delta = delta; }
+            trace("Epoch seconds %d, minimum delta-t %g", time(NULL), minimum_delta );
             trace("Got timestamp %d, delta-t %g, artist '%s', track '%s'", timestamp, delta, trackinfo_get_artist(ti), trackinfo_get_track(ti));
 
             // if the timestamp is more than the quiet interval in the past, assume player is off...

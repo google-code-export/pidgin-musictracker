@@ -84,6 +84,7 @@ get_rhythmbox_info(TrackInfo* ti)
 			return FALSE;
 		}
 	}
+        g_free(uri);
 
 	if (playing)
 		trackinfo_set_status(ti, STATUS_NORMAL);

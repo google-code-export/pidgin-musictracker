@@ -128,7 +128,7 @@ void mediainfo_helper(const void *key, xmmsc_result_value_type_t type, const voi
     case XMMSC_RESULT_VALUE_TYPE_INT32:
     case XMMSC_RESULT_VALUE_TYPE_UINT32:
       {
-        g_string_printf(trackinfo_get_gstring_tag(ti, key), "%d", value);
+        g_string_printf(trackinfo_get_gstring_tag(ti, key), "%d", (int)value);
         trace("key '%s' value %d source '%s'", key, value, source);
       }
       break;
@@ -146,7 +146,6 @@ gboolean get_xmms2_mediainfo(xmmsc_connection_t *conn, TrackInfo *ti)
 {
 	guint id;
 	gint duration;
-	const char *val = NULL;
 	xmmsc_result_t *result = NULL;
 
 	if (!conn || !ti) {
@@ -265,12 +264,12 @@ gboolean get_xmms2_info(TrackInfo *ti)
 	ret = (*dl.xmmsc_connect)(connection, path);
 	if (!ret) {
 		purple_debug_error(PLUGIN_ID,
-		                   "(XMMS2) Connection to %s failed, %s.\n",
-		                   path, (*dl.xmmsc_get_last_error)(connection));
+		                   "(XMMS2) Connection to path '%s' failed, %s.\n",
+		                   path ? path : "" , (*dl.xmmsc_get_last_error)(connection));
 		(*dl.xmmsc_unref)(connection);
 		return FALSE;
 	}
-
+        
 	if (!get_xmms2_status(connection, ti) ||
 	    !get_xmms2_mediainfo(connection, ti) ||
 	    !get_xmms2_playtime(connection, ti)) {
