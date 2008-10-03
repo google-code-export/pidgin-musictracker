@@ -45,9 +45,11 @@ trace(const char *str, ...)
 int
 readline(FILE* file, char *buf, int len)
 {
+	buf[0] = '\0';
 	if (feof(file))
 		return 0;
-	fgets(buf, len, file);
+	if (fgets(buf, len, file) == NULL)
+		return 0;
 	len = strlen(buf);
 	if (len == 0)
 		return 0;
@@ -90,6 +92,7 @@ parse_value(const char *line, const char* key)
 char *
 put_field(char *buf, char identifier, const char *field) 
 {
+	if (!field) field="";
 	int len = strlen(field), len2 = strlen(buf), i, j;
 	char *out;
 
@@ -141,7 +144,7 @@ trim(char *buf)
 
 	*q = 0;
 	--q;
-	while (*q == ' ') {
+	while ((q >= tmp) && (*q == ' ')) {
 		*q = 0;
 		--q;
 	}
@@ -189,6 +192,29 @@ int capture(pcre* re, const char* text, int len, ...)
                 if (length > (STRLEN-1)) { length = STRLEN-1; }
 		strncpy(dest, text+ovector[i*2], length);
 		dest[length] = 0;
+	}
+	va_end(ap);
+	return count-1;
+}
+
+//--------------------------------------------------------------------
+
+/* Captures substrings from given text using regular expr, and copies
+ * them in order to given destinations gstrings. Returns no of subtrings copied
+ */
+int capture_gstring(pcre* re, const char* text, int len, ...)
+{
+	int ovector[20], i;
+	va_list ap;
+	int count = pcre_exec(re, 0, text, len, 0, 0, ovector, 20);
+        trace("pcre_exec: returned %d", count);
+
+	va_start(ap, len);
+	for (i=1; i<count; ++i) {
+		GString *dest = va_arg(ap, GString *);
+                int length = ovector[i*2+1] - ovector[i*2];
+                g_string_empty(dest);
+                g_string_append_len(dest, text+ovector[i*2], length);
 	}
 	va_end(ap);
 	return count-1;
@@ -292,3 +318,40 @@ char *GetWindowTitleUtf8(HWND hWnd)
 }
 
 #endif
+
+//--------------------------------------------------------------------
+
+#ifndef WIN32
+// insert a hashtable of tag values into trackinfo
+
+void
+process_tag_hashtable(GHashTable *table, TrackInfo *ti)
+{
+  GHashTableIter iter;
+  gpointer key;
+  GValue *value;
+  g_hash_table_iter_init(&iter, table);
+  while (g_hash_table_iter_next(&iter, &key, (gpointer) &value))
+    {
+      if (value != NULL)
+        {
+          if (G_VALUE_HOLDS_STRING(value))
+            {
+              g_string_assign(trackinfo_get_gstring_tag(ti, key), g_value_get_string(value));
+            }
+          else
+            {
+              // g_strdup_value_contents renders non-ASCII characters as /nnn sequences, so we can't just use it for everything....
+              char *s = g_strdup_value_contents(value);
+              g_string_assign(trackinfo_get_gstring_tag(ti, key), s);
+              g_free(s);
+            }
+          trace("For key '%s' value is '%s'", key, trackinfo_get_gstring_tag(ti, key)->str);
+        }
+    }
+}
+#endif
+
+//--------------------------------------------------------------------
+
+  

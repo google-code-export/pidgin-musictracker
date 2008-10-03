@@ -39,7 +39,7 @@
 // check if any fields have non-empty values as well as looking at that flag
 //
 
-static struct TrackInfo msnti;
+static TrackInfo *msnti;
 
 static
 void process_message(wchar_t *MSNTitle)
@@ -68,18 +68,15 @@ void process_message(wchar_t *MSNTitle)
       if ((strcmp(enabled, "1") == 0) &&
           ((strlen(artist) > 0) || (strlen(title) > 0) || (strlen(album) > 0)))
         {
-          msnti.player = player;
-          msnti.status = STATUS_NORMAL;
-          strncpy(msnti.artist, artist, STRLEN);
-          msnti.artist[STRLEN-1] = 0;
-          strncpy(msnti.album, album, STRLEN);
-          msnti.album[STRLEN-1] = 0;
-          strncpy(msnti.track, title, STRLEN);
-          msnti.track[STRLEN-1] = 0;
+          trackinfo_set_player(msnti,player);
+          trackinfo_set_status(msnti, STATUS_NORMAL);
+          g_string_assign(trackinfo_get_gstring_artist(msnti), artist);
+          g_string_assign(trackinfo_get_gstring_album(msnti), album);
+          g_string_assign(trackinfo_get_gstring_track(msnti), title);
         }
       else
         {
-          msnti.status = STATUS_OFF;
+          trackinfo_set_status(msnti, STATUS_OFF);
         }
     }
   else if (capture(re2, s, strlen(s), player, enabled, artist, title) > 0)
@@ -89,30 +86,28 @@ void process_message(wchar_t *MSNTitle)
       if ((strcmp(enabled, "1") == 0) &&
           ((strlen(artist) > 0) || (strlen(title) > 0)))
         {
-          msnti.player = player;
-          msnti.status = STATUS_NORMAL;
-          strncpy(msnti.artist, artist, STRLEN);
-          msnti.artist[STRLEN-1] = 0;
-          msnti.album[0] = 0;
-          strncpy(msnti.track, title, STRLEN);
-          msnti.track[STRLEN-1] = 0;
+          trackinfo_set_player(msnti, player);
+          trackinfo_set_status(msnti, STATUS_NORMAL);
+          g_string_assign(trackinfo_get_gstring_artist(msnti),artist);
+          g_string_empty(trackinfo_get_gstring_album(msnti));
+          g_string_assign(trackinfo_get_gstring_track(msnti),title);
         }
       else
         {
-          msnti.status = STATUS_OFF;
+          trackinfo_set_status(msnti, STATUS_OFF);
         }
     }
   else
     {
-      msnti.status = STATUS_OFF;
+      trackinfo_set_status(msnti, STATUS_OFF);
     }
 
   pcre_free(re1);
   pcre_free(re2);
 
-  if ((msnti.player == 0) || (strlen(msnti.player) == 0))
+  if (strlen(trackinfo_get_player(msnti)))
     {
-      msnti.player = "Unknown";
+      trackinfo_set_player(msnti, "Unknown");
     }
 
   free(s);
@@ -141,13 +136,13 @@ LRESULT CALLBACK MSNWinProc(
   }
 }
 
-gboolean get_msn_compat_info(struct TrackInfo *ti)
+gboolean get_msn_compat_info(TrackInfo *ti)
 {
   static HWND MSNWindow = 0;
   
   if (!MSNWindow)
     {
-      memset(&msnti, 0, sizeof(struct TrackInfo));
+      msnti = trackinfo_new();
 
       WNDCLASSEX MSNClass = {sizeof(WNDCLASSEX),0,MSNWinProc,0,0,GetModuleHandle(NULL),NULL,NULL,NULL,NULL,"MsnMsgrUIManager",NULL};
       ATOM a = RegisterClassEx(&MSNClass);
@@ -162,12 +157,12 @@ gboolean get_msn_compat_info(struct TrackInfo *ti)
     }
 
   // did we receive a message with something useful in it?
-  if (msnti.status == STATUS_NORMAL)
+  if (trackinfo_get_status(msnti)== STATUS_NORMAL)
     {
-      *ti = msnti;
+      trackinfo_assign(ti, msnti);
       return TRUE;
     }
-  
+
   return FALSE;
 }
 

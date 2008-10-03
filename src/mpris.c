@@ -73,7 +73,7 @@ typedef struct {
 	DBusGProxy *proxy;
 	gchar *service_name;
 	gchar *player_name;
-	struct TrackInfo ti;
+	TrackInfo *ti;
 } pidginmpris_t;
 
 static GHashTable *players = NULL;
@@ -88,30 +88,32 @@ mpris_debug_dump_helper(gpointer key, gpointer value, gpointer user_data)
 }
 
 static void
-mpris_track_signal_cb(DBusGProxy *player_proxy, GHashTable *table, struct TrackInfo *ti)
+mpris_track_signal_cb(DBusGProxy *player_proxy, GHashTable *table, TrackInfo *ti)
 {
 	GValue *value;
+
+        // XXX: change to iterate hash
 
 	/* fetch values from hash table */
 	value = (GValue *) g_hash_table_lookup(table, "artist");
 	if (value != NULL && G_VALUE_HOLDS_STRING(value)) {
-		g_strlcpy(ti->artist, g_value_get_string(value), STRLEN);
+                g_string_assign(trackinfo_get_gstring_artist(ti), g_value_get_string(value));
 	}
 	value = (GValue *) g_hash_table_lookup(table, "album");
 	if (value != NULL && G_VALUE_HOLDS_STRING(value)) {
-		g_strlcpy(ti->album, g_value_get_string(value), STRLEN);
+                g_string_assign(trackinfo_get_gstring_album(ti), g_value_get_string(value));
 	}
 	value = (GValue *) g_hash_table_lookup(table, "title");
 	if (value != NULL && G_VALUE_HOLDS_STRING(value)) {
-		g_strlcpy(ti->track, g_value_get_string(value), STRLEN);
+                g_string_assign(trackinfo_get_gstring_track(ti), g_value_get_string(value));
 	}
 	value = (GValue *) g_hash_table_lookup(table, "time");
 	if (value != NULL) 
           {
             if (G_VALUE_HOLDS_UINT(value)) {
-              ti->totalSecs =  g_value_get_uint(value);
+              trackinfo_set_totalSecs(ti, g_value_get_uint(value));
             } else if  (G_VALUE_HOLDS_UINT64(value)) {
-              ti->totalSecs =  g_value_get_uint64(value);
+              trackinfo_set_totalSecs(ti, g_value_get_uint64(value));
             }
           }
 
@@ -120,27 +122,27 @@ mpris_track_signal_cb(DBusGProxy *player_proxy, GHashTable *table, struct TrackI
 }
 
 static void
-mpris_status_signal_int_cb(DBusGProxy *player_proxy, gint status, struct TrackInfo *ti)
+mpris_status_signal_int_cb(DBusGProxy *player_proxy, gint status, TrackInfo *ti)
 {
 	mpris_debug("StatusChange %d\n", status);
 
         switch (status)
           {
           case 0:
-            ti->status = STATUS_NORMAL;
+            trackinfo_set_status(ti, STATUS_NORMAL);
             break;
           case 1:
-            ti->status = STATUS_PAUSED;
+            trackinfo_set_status(ti, STATUS_PAUSED);
             break;
           case 2:
           default:
-            ti->status = STATUS_OFF;
+            trackinfo_set_status(ti, STATUS_OFF);
             break;
           }
 }
 
 static void
-mpris_status_signal_struct_cb(DBusGProxy *player_proxy, GValueArray *sigstruct, struct TrackInfo *ti)
+mpris_status_signal_struct_cb(DBusGProxy *player_proxy, GValueArray *sigstruct, TrackInfo *ti)
 {
         int status = -1;
         if (sigstruct)
@@ -154,14 +156,14 @@ mpris_status_signal_struct_cb(DBusGProxy *player_proxy, GValueArray *sigstruct, 
         switch (status)
           {
           case 0:
-            ti->status = STATUS_NORMAL;
+            trackinfo_set_status(ti, STATUS_NORMAL);
             break;
           case 1:
-            ti->status = STATUS_PAUSED;
+            trackinfo_set_status(ti, STATUS_PAUSED);
             break;
           case 2:
           default:
-            ti->status = STATUS_OFF;
+            trackinfo_set_status(ti, STATUS_OFF);
             break;
           }
 }
@@ -231,7 +233,7 @@ player_new(const char *service_name)
   /* connect mpris's dbus signals */
   mpris_connect_dbus_signals(player);
 
-  mpris_status_signal_int_cb(NULL, -1, &(player->ti));
+  mpris_status_signal_int_cb(NULL, -1, player->ti);
 
   /* Try to discover how this player likes to be known */
   DBusGProxy *proxy = dbus_g_proxy_new_for_name(bus, player->service_name, "/", DBUS_MPRIS_PLAYER);
@@ -269,6 +271,9 @@ player_new(const char *service_name)
       player->player_name = g_strdup(service_name + strlen(DBUS_MPRIS_NAMESPACE));
       player->player_name[0] = g_ascii_toupper(player->player_name[0]);
     }
+
+  /* Allocate trackinfo */
+  player->ti = trackinfo_new();
 
   mpris_debug("created player record for service '%s'\n", service_name);
 }
@@ -308,10 +313,10 @@ static void
 mpris_check_player(gpointer key, gpointer value, gpointer user_data)
 { 
   pidginmpris_t *player = (pidginmpris_t *)value;
-  struct TrackInfo *ti = (struct TrackInfo *)user_data;
+  TrackInfo *ti = (TrackInfo *)user_data;
 
   /* If we've already found an active player, don't carry on checking... */
-  if (ti->status != STATUS_OFF)
+  if (trackinfo_get_status(ti) != STATUS_OFF)
     {
       return;
     }
@@ -332,7 +337,7 @@ mpris_check_player(gpointer key, gpointer value, gpointer user_data)
 
         if (result)
           {
-            mpris_status_signal_int_cb(NULL, status, &(player->ti));
+            mpris_status_signal_int_cb(NULL, status, player->ti);
           }
       }
     else
@@ -345,7 +350,7 @@ mpris_check_player(gpointer key, gpointer value, gpointer user_data)
 
         if (result)
           {
-            mpris_status_signal_struct_cb(NULL, s, &(player->ti));
+            mpris_status_signal_struct_cb(NULL, s, player->ti);
             g_value_array_free(s);
           }
       }
@@ -370,7 +375,7 @@ mpris_check_player(gpointer key, gpointer value, gpointer user_data)
                                       DBUS_TIMEOUT*10, &error,
                                       G_TYPE_INVALID, DBUS_TYPE_G_STRING_VALUE_HASHTABLE, &table, 
                                       G_TYPE_INVALID)) {
-      mpris_track_signal_cb(NULL, table, &(player->ti));
+      mpris_track_signal_cb(NULL, table, player->ti);
       g_hash_table_destroy(table);
     }
     else
@@ -392,7 +397,7 @@ mpris_check_player(gpointer key, gpointer value, gpointer user_data)
     if(dbus_g_proxy_call_with_timeout(player->proxy, "PositionGet", DBUS_TIMEOUT*10, &error,
                                       G_TYPE_INVALID, G_TYPE_INT, &position, 
                                       G_TYPE_INVALID)) {
-      player->ti.currentSecs = position/1000;
+      trackinfo_set_currentSecs(player->ti, position/1000);
     }
     else
       {
@@ -407,16 +412,16 @@ mpris_check_player(gpointer key, gpointer value, gpointer user_data)
           }
       }
 
-    player->ti.player = player->player_name;
+    trackinfo_set_player(player->ti, player->player_name);
 
-    if (player->ti.status != STATUS_OFF)
+    if (trackinfo_get_status(player->ti) != STATUS_OFF)
       {
-        *ti = player->ti;
+        trackinfo_assign(ti, player->ti);
       }
   }
 }   
 
-gboolean get_mpris_info(struct TrackInfo* ti)
+gboolean get_mpris_info(TrackInfo* ti)
 {
   if (!bus)
     if (!load_plugin())
@@ -457,10 +462,10 @@ gboolean get_mpris_info(struct TrackInfo* ti)
       g_error_free(error);
     }
 
-  ti->status = STATUS_OFF;
+  trackinfo_set_status(ti, STATUS_OFF);
   
   g_hash_table_foreach(players, mpris_check_player, ti);
  
-  return (ti->status != STATUS_OFF);
+  return (trackinfo_get_status(ti) != STATUS_OFF);
 
 }

@@ -4,12 +4,12 @@
 #include <string.h>
 
 gboolean
-get_hash_str(GHashTable *table, const char *key, char *dest)
+get_hash_str(GHashTable *table, const char *key, GString *dest)
 {
 	GValue* value = (GValue*) g_hash_table_lookup(table, key);
 	if (value != NULL && G_VALUE_HOLDS_STRING(value)) {
-		strncpy(dest, g_value_get_string(value), STRLEN-1);
-                trace("Got info for key '%s' is '%s'", key, dest);
+                g_string_assign(dest, g_value_get_string(value));
+                trace("Got info for key '%s' is '%s'", key, dest->str);
                 return TRUE;
 	}
         return FALSE;
@@ -25,7 +25,7 @@ unsigned int get_hash_uint(GHashTable *table, const char *key)
 }
 
 gboolean
-get_rhythmbox_info(struct TrackInfo* ti)
+get_rhythmbox_info(TrackInfo* ti)
 {
 	DBusGConnection *connection;
 	DBusGProxy *player, *shell;
@@ -57,7 +57,7 @@ get_rhythmbox_info(struct TrackInfo* ti)
 				G_TYPE_BOOLEAN, &playing,
 				G_TYPE_INVALID)) {
 		trace("Failed to get playing state from rhythmbox dbus (%s). Assuming player is off", error->message);
-		ti->status = STATUS_OFF;
+		trackinfo_set_status(ti, STATUS_OFF);
 		return TRUE;
 	}
 	
@@ -77,7 +77,7 @@ get_rhythmbox_info(struct TrackInfo* ti)
 				dbus_g_type_get_map("GHashTable", G_TYPE_STRING, G_TYPE_VALUE),	&table,
 				G_TYPE_INVALID)) {
 		if (!playing) {
-			ti->status = STATUS_OFF;
+			trackinfo_set_status(ti, STATUS_OFF);
 			return TRUE;
 		} else {
 			trace("Failed to get song info from rhythmbox dbus (%s)", error->message);
@@ -87,27 +87,30 @@ get_rhythmbox_info(struct TrackInfo* ti)
         g_free(uri);
 
 	if (playing)
-		ti->status = STATUS_NORMAL;
+		trackinfo_set_status(ti, STATUS_NORMAL);
 	else
-		ti->status = STATUS_PAUSED;
+		trackinfo_set_status(ti, STATUS_PAUSED);
 
+        // iterate over hashtable keys, adding them as tags
+        process_tag_hashtable(table, ti);
 
         // check if streamtitle is nonempty, if so use that as title
-        if (!get_hash_str(table, "rb:stream-song-title", ti->track))
+        if (g_hash_table_lookup(table, "rb:stream-song-title"))
           {
-            get_hash_str(table, "title", ti->track);
-          }        
-        get_hash_str(table, "artist", ti->artist);
-	get_hash_str(table, "album", ti->album);
-	ti->totalSecs = get_hash_uint(table, "duration");
+            get_hash_str(table, "rb:stream-song-title", trackinfo_get_gstring_track(ti));
+          }
+
+	trackinfo_set_totalSecs(ti, get_hash_uint(table, "duration"));
 	g_hash_table_destroy(table);
 
+        int currentSecs;
 	if (!dbus_g_proxy_call_with_timeout(player, "getElapsed", DBUS_TIMEOUT, &error,
 				G_TYPE_INVALID,
-				G_TYPE_UINT, &ti->currentSecs,
+                                G_TYPE_UINT, &currentSecs,
 				G_TYPE_INVALID)) {
 		trace("Failed to get elapsed time from rhythmbox dbus (%s)", error->message);
 	}
+        trackinfo_set_currentSecs(ti, currentSecs);
 
 	return TRUE;
 }

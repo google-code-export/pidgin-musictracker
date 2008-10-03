@@ -35,40 +35,40 @@
 static guint g_tid;
 static PurplePlugin *g_plugin;
 static gboolean g_run=1;
-static struct TrackInfo mostrecent_ti;
+static TrackInfo *mostrecent_ti = 0;
 static PurpleCmdId cmdid_nowplaying;
 static PurpleCmdId cmdid_np;
 
 //--------------------------------------------------------------------
 
 #ifndef WIN32
-gboolean get_amarok_info(struct TrackInfo* ti);
-gboolean get_xmms_info(struct TrackInfo* ti);
-gboolean get_audacious_legacy_info(struct TrackInfo* ti);
-gboolean get_audacious_info(struct TrackInfo* ti);
-gboolean get_rhythmbox_info(struct TrackInfo* ti);
-gboolean get_exaile_info(struct TrackInfo* ti);
-gboolean get_banshee_info(struct TrackInfo* ti);
-gboolean get_quodlibet_info(struct TrackInfo* ti);
-gboolean get_listen_info(struct TrackInfo* ti);
-gboolean get_xmms2_info(struct TrackInfo* ti);
-gboolean get_squeezecenter_info(struct TrackInfo* ti);
-gboolean get_mpris_info(struct TrackInfo* ti);
+gboolean get_amarok_info(TrackInfo* ti);
+gboolean get_xmms_info(TrackInfo* ti);
+gboolean get_audacious_legacy_info(TrackInfo* ti);
+gboolean get_audacious_info(TrackInfo* ti);
+gboolean get_rhythmbox_info(TrackInfo* ti);
+gboolean get_exaile_info(TrackInfo* ti);
+gboolean get_banshee_info(TrackInfo* ti);
+gboolean get_quodlibet_info(TrackInfo* ti);
+gboolean get_listen_info(TrackInfo* ti);
+gboolean get_xmms2_info(TrackInfo* ti);
+gboolean get_squeezecenter_info(TrackInfo* ti);
+gboolean get_mpris_info(TrackInfo* ti);
 
 void get_xmmsctrl_pref(GtkBox *box);
 void get_xmms2_pref(GtkBox *box);
 void get_squeezecenter_pref(GtkBox *box);
 
 #else
-gboolean get_foobar2000_info(struct TrackInfo* ti);
-gboolean get_winamp_info(struct TrackInfo* ti);
-gboolean get_wmp_info(struct TrackInfo* ti);
-gboolean get_itunes_info(struct TrackInfo* ti);
-gboolean get_msn_compat_info(struct TrackInfo *ti);
+gboolean get_foobar2000_info(TrackInfo* ti);
+gboolean get_winamp_info(TrackInfo* ti);
+gboolean get_wmp_info(TrackInfo* ti);
+gboolean get_itunes_info(TrackInfo* ti);
+gboolean get_msn_compat_info(TrackInfo *ti);
 #endif
 
-gboolean get_mpd_info(struct TrackInfo* ti);
-gboolean get_lastfm_info(struct TrackInfo* ti);
+gboolean get_mpd_info(TrackInfo* ti);
+gboolean get_lastfm_info(TrackInfo* ti);
 
 void get_mpd_pref(GtkBox *box);
 void get_lastfm_pref(GtkBox *box);
@@ -171,62 +171,82 @@ message_changed(const char *one, const char *two)
 
 //--------------------------------------------------------------------
 
-static gboolean
-trackinfo_changed(const struct TrackInfo* one, const struct TrackInfo* two)
+static
+char * put_tags(TrackInfo *ti, char *buf)
 {
-  if ((one == NULL) && (two == NULL))
-    return FALSE;
+  int ovector[6];
 
-  if ((one == NULL) || (two == NULL))
-    return TRUE;
+  // match for %{.*}, ungreedily
+  pcre *re = regex("(%\\{.*\\})", PCRE_UNGREEDY);
 
-  if (one->status != two->status)
-    return TRUE;
+  int count;
+  do 
+    {
+      count = pcre_exec(re, 0, buf, strlen(buf), 0, 0, ovector, 6);
+      trace("pcre_exec returned %d", count);
 
-  if (strcmp(one->track, two->track) != 0)
-    return TRUE;
-  
-  if (strcmp(one->artist, two->artist) != 0)
-    return TRUE;
-  
-  if (strcmp(one->album, two->album) != 0)
-    return TRUE;
+      if (count > 0)
+        {
+          // extract tag from the match 
+          int tag_length = ovector[3] - ovector[2];
+          char *tag = malloc(tag_length+1);
+          memcpy(tag, buf+ovector[2]+2, tag_length-3);
+          tag[tag_length-3] = 0;
 
-  // comparing totalSecs is a bit daft since it should be invariant for a given track
-  // really we want to compare those members which correspond to attributes accepted by the tune status...
-  
-  return FALSE;
+          trace("found tag '%s'", tag);
+          
+          // locate tag in tag hash
+          // (this implcitly generates a new tag containing an empty string if not found)
+          GString *string = trackinfo_get_gstring_tag(ti, tag);
+
+          // replace the found match with value
+          char *newbuf = malloc(strlen(buf) - tag_length + strlen(string->str) + 1);
+
+          memcpy(newbuf, buf, ovector[2]);
+          strcpy(newbuf + ovector[2], string->str);
+          strcat(newbuf, buf+ovector[3]);
+          free(buf);
+          free(tag);
+          buf = newbuf;
+          trace("replaced to give %s", buf);
+        }
+    }
+  while (count >0);
+
+  pcre_free(re);
+
+  return buf;
 }
 
 //--------------------------------------------------------------------
 
 static
-char* generate_status(const char *src, struct TrackInfo *ti)
+char* generate_status(const char *src, TrackInfo *ti, const char *savedstatus)
 {
 	trace("Status format: %s", src);
 
 	char *status = malloc(strlen(src)+1);
 	strcpy(status, src);
-	status = put_field(status, 'p', ti->artist);
-	status = put_field(status, 'a', ti->album);
-	status = put_field(status, 't', ti->track);
-	status = put_field(status, 'r', ti->player);
+	status = put_field(status, 'p', trackinfo_get_artist(ti));
+	status = put_field(status, 'a', trackinfo_get_album(ti));
+	status = put_field(status, 't', trackinfo_get_track(ti));
+	status = put_field(status, 'r', trackinfo_get_player(ti));
 
 	// Duration
 	char buf[20];
-	sprintf(buf, "%d:%02d", ti->totalSecs/60, ti->totalSecs%60);
+	sprintf(buf, "%d:%02d", trackinfo_get_totalSecs(ti)/60, trackinfo_get_totalSecs(ti)%60);
 	status = put_field(status, 'd', buf);
 
 	// Current time
-	sprintf(buf, "%d:%02d", ti->currentSecs/60, ti->currentSecs%60);
+	sprintf(buf, "%d:%02d", trackinfo_get_currentSecs(ti)/60, trackinfo_get_currentSecs(ti)%60);
 	status = put_field(status, 'c', buf);
 
 	// Progress bar
 	int i, progress;
-	if (ti->totalSecs == 0)
+	if (trackinfo_get_totalSecs(ti) == 0)
 		progress = 0;
 	else 
-		progress = (int)floor(ti->currentSecs * 10.0 / ti->totalSecs);
+		progress = (int)floor(trackinfo_get_currentSecs(ti) * 10.0 / trackinfo_get_totalSecs(ti));
 	if (progress >= 10)
 		progress = 9;
 	for (i=0; i<10; ++i)
@@ -237,6 +257,12 @@ char* generate_status(const char *src, struct TrackInfo *ti)
 
         // Music symbol: U+266B 'beamed eighth notes'
 	status = put_field(status, 'm', "\u266b");
+
+        // The status message selected through the UI
+	status = put_field(status, 's', savedstatus);
+
+        // scan for %{tag} constructs and replace them with the tag information from the trackinfo, or '' if undefined
+        status = put_tags(ti, status);
 
 	trace("Formatted status: %s", status);
 
@@ -253,7 +279,7 @@ char* generate_status(const char *src, struct TrackInfo *ti)
 // Updates 'user tune' status primitive with current track info
 static
 gboolean
-set_status_tune (PurpleAccount *account, gboolean validStatus, struct TrackInfo *ti)
+set_status_tune (PurpleAccount *account, gboolean validStatus, TrackInfo *ti)
 {
 	PurpleStatus *status			= NULL;
 	PurplePresence* presence = NULL;
@@ -263,7 +289,7 @@ set_status_tune (PurpleAccount *account, gboolean validStatus, struct TrackInfo 
 	{
 		if (ti == NULL)
 			return FALSE;
-		active = (ti->status == STATUS_NORMAL) || (ti->status == STATUS_PAUSED);
+		active = (trackinfo_get_status(ti) == STATUS_NORMAL) || (trackinfo_get_status(ti) == STATUS_PAUSED);
 	}
 	else
 	{		
@@ -281,7 +307,7 @@ set_status_tune (PurpleAccount *account, gboolean validStatus, struct TrackInfo 
 	}
 
         // don't need to do anything if track info hasn't changed
-        if (!trackinfo_changed(ti, &mostrecent_ti))
+        if (!trackinfo_changed(ti, mostrecent_ti))
           {
             trace("trackinfo hasn't changed, not doing anything to tune status");
             return TRUE;
@@ -295,13 +321,13 @@ set_status_tune (PurpleAccount *account, gboolean validStatus, struct TrackInfo 
 	{
                 GList *attrs = NULL;
                 attrs = g_list_append(attrs, PURPLE_TUNE_ARTIST);
-                attrs = g_list_append(attrs, ti->artist);
+                attrs = g_list_append(attrs, trackinfo_get_artist(ti));
                 attrs = g_list_append(attrs, PURPLE_TUNE_TITLE);
-                attrs = g_list_append(attrs, ti->track);
+                attrs = g_list_append(attrs, trackinfo_get_track(ti));
                 attrs = g_list_append(attrs, PURPLE_TUNE_ALBUM);
-                attrs = g_list_append(attrs, ti->album);
+                attrs = g_list_append(attrs, trackinfo_get_album(ti));
                 attrs = g_list_append(attrs, PURPLE_TUNE_TIME);
-                attrs = g_list_append(attrs, (gpointer) (intptr_t) ti->totalSecs);
+                attrs = g_list_append(attrs, (gpointer) (intptr_t) trackinfo_get_totalSecs(ti));
                 purple_status_set_active_with_attrs_list(status, TRUE, attrs);
                 g_list_free(attrs);
 	}
@@ -331,50 +357,41 @@ set_status_tune (PurpleAccount *account, gboolean validStatus, struct TrackInfo 
 //--------------------------------------------------------------------
 
 gboolean
-set_status (PurpleAccount *account, char *text, struct TrackInfo *ti)
+set_status (PurpleAccount *account, TrackInfo *ti)
 {
-	PurpleStatus				*status			= NULL;
-	gboolean				b				= FALSE;
+	char buf[STRLEN];
 
-	// check for protocol status format override
-	char buf[100];
-	gboolean overriden = FALSE;
-	const char *override;
-
+        // check for status changing disabled for this account
 	build_pref(buf, PREF_CUSTOM_DISABLED, 
 			purple_account_get_username(account),
 			purple_account_get_protocol_name(account));
 	if (purple_prefs_get_bool(buf)) {
 		trace("Status changing disabled for %s account", purple_account_get_username(account));
-		return TRUE;
-	}
-
-	build_pref(buf, PREF_CUSTOM_FORMAT, 
-			purple_account_get_username(account),
-			purple_account_get_protocol_name(account));
-	override = purple_prefs_get_string(buf);
-	if (ti && (ti->status == STATUS_NORMAL) && override && (*override != 0)) {
-		text = generate_status(override, ti);
-		overriden = TRUE;
 	}
 
         // set 'now playing' status
-        if (set_status_tune(account, *text != 0, ti) && purple_prefs_get_bool(PREF_NOW_LISTENING_ONLY))
+        if (set_status_tune(account, ti != 0, ti) && purple_prefs_get_bool(PREF_NOW_LISTENING_ONLY))
           {
-            if (overriden)
-              free(text);
             return TRUE;
           }
 
-        const char *status_text = text;
-        
-        // if the status is empty, use the current status selected through the UI (if there is one)
-        if (strlen(text) == 0)
-          {
+        // have we requested 'away' status to take priority?
+	PurpleStatus *status = purple_account_get_active_status (account);
+	if (status != NULL)
+	{
+          if (purple_prefs_get_bool(PREF_DISABLE_WHEN_AWAY) && purple_status_is_away(status))
+            {
+              trace("Status is away and we are disabled when away");
+              return TRUE;
+            }
+	}
+
+        // discover the pidgin saved status in use for this account
+        const char *savedmessage = "";
+        {
             PurpleSavedStatus *savedstatus = purple_savedstatus_get_current();
             if (savedstatus)
               {
-                const char *savedmessage = 0;
                 PurpleSavedStatusSub *savedsubstatus = purple_savedstatus_get_substatus(savedstatus, account);
                 if (savedsubstatus)
                   {
@@ -386,58 +403,83 @@ set_status (PurpleAccount *account, char *text, struct TrackInfo *ti)
                     // don't have an account-specific saved status, use the general one
                     savedmessage = purple_savedstatus_get_message(savedstatus);
                   }
+              }
+        }
 
-                if (savedmessage != 0)
-                  {
-                    trace("empty player status, using current saved status....");
-                    status_text = savedmessage;
-                  }
+
+        char *text = 0;
+        if (ti)
+          {
+            switch (trackinfo_get_status(ti))
+              {
+              case STATUS_OFF:
+                text = generate_status(purple_prefs_get_string(PREF_OFF), ti, savedmessage);
+                break;
+              case STATUS_PAUSED:
+                text = generate_status(purple_prefs_get_string(PREF_PAUSED), ti, savedmessage);
+                break;
+              case STATUS_NORMAL:
+                {
+                  // check for protocol status format override for this account
+                  build_pref(buf, PREF_CUSTOM_FORMAT, 
+                             purple_account_get_username(account),
+                             purple_account_get_protocol_name(account));
+                  const char *override = purple_prefs_get_string(buf);
+                  
+                  if (override && (*override != 0))
+                    {
+                      // if so, use account specific status format
+                      text = generate_status(override, ti, savedmessage);
+                    }
+                  else
+                    {
+                      // otherwise, use the general status format
+                      text = generate_status(purple_prefs_get_string(PREF_FORMAT), ti, savedmessage);
+                    }
+                }
+                
+                break;
+              default:
+                trace("unknown player status %d", trackinfo_get_status(ti));
               }
           }
 
-        // have we requested 'away' status to take priority?
-	status = purple_account_get_active_status (account);
+        if (text == 0)
+          text = strdup("");
 
-	if (status != NULL)
-	{
-          if (purple_prefs_get_bool(PREF_DISABLE_WHEN_AWAY) && purple_status_is_away(status))
-            {
-              trace("Status is away and we are disabled when away");
-              b = FALSE;
-            }
-          else
-            b = TRUE;
-	}
-	else
-		b	= FALSE;
+        // if the status is empty, use the current status selected through the UI (if there is one)
+        if (strlen(text) == 0)
+          {
+            if (savedmessage != 0)
+              {
+                trace("empty player status, using current saved status....");
+                free(text);
+                text = strdup(savedmessage);
+              }
+          }
 
         // set the status message
-	if (b)
-	{
-                if (purple_status_supports_attr (status, "message"))
-		{
-			if ((status_text != NULL) && message_changed(status_text, purple_status_get_attr_string(status, "message")))
-			{
-				trace("Setting %s status to: %s", purple_account_get_username (account), status_text);
-                                GList *attrs = NULL;
-                                attrs = g_list_append(attrs, "message");
-                                attrs = g_list_append(attrs, (gpointer)status_text);
-                                purple_status_set_active_with_attrs_list(status, TRUE, attrs);
-                                g_list_free(attrs);
-                                
-			}
-		}
-	}
+        if (purple_status_supports_attr (status, "message"))
+          {
+            if ((text != NULL) && message_changed(text, purple_status_get_attr_string(status, "message")))
+              {
+                trace("Setting %s status to: %s", purple_account_get_username (account), text);
+                GList *attrs = NULL;
+                attrs = g_list_append(attrs, "message");
+                attrs = g_list_append(attrs, (gpointer)text);
+                purple_status_set_active_with_attrs_list(status, TRUE, attrs);
+                g_list_free(attrs);  
+              }
+          }
 
-	if (overriden)
-		free(text);
+        free(text);
 	return TRUE;
 }
 
 //--------------------------------------------------------------------
 
 void
-set_userstatus_for_active_accounts (char *userstatus, struct TrackInfo *ti)
+set_userstatus_for_active_accounts (TrackInfo *ti)
 {
         GList                   *accounts               = NULL,
                                         *head                   = NULL;
@@ -456,20 +498,29 @@ set_userstatus_for_active_accounts (char *userstatus, struct TrackInfo *ti)
                 account = (PurpleAccount *)accounts->data;
                 
                 if (account != NULL)
-                  set_status (account, userstatus, ti);
+                        set_status (account, ti);
                 
                 accounts = accounts->next;
               }
             
-            if (head != NULL)
-              g_list_free (head);
             
             trace("Status set for all accounts");
           }
-        
-        // stash trackinfo in case we need it elsewhere....
+
+        // keep a copy of the most recent trackinfo in case we need it elsewhere....
+        if (mostrecent_ti)
+            trackinfo_destroy(mostrecent_ti);
+
         if (ti)
-          mostrecent_ti = *ti;
+          {
+            mostrecent_ti = trackinfo_new();
+            trackinfo_assign(mostrecent_ti, ti);
+          }         
+        else        
+          mostrecent_ti = 0;
+
+        if (head != NULL)
+                g_list_free (head);
 }
 
 //--------------------------------------------------------------------
@@ -511,59 +562,43 @@ cb_timeout(gpointer data) {
 
         gboolean b = TRUE;
 
-	struct TrackInfo ti;
-	memset(&ti, 0, sizeof(ti));
-	ti.status = STATUS_OFF;
-	int player = purple_prefs_get_int(PREF_PLAYER);
+        TrackInfo *ti = trackinfo_new();
+	trackinfo_set_status(ti, STATUS_OFF);
 
+	int player = purple_prefs_get_int(PREF_PLAYER);
 	if (player != -1) {
-                ti.player = g_players[player].name;
-		b = (*g_players[player].track_func)(&ti);
+                trackinfo_set_player(ti, g_players[player].name);
+		b = (*g_players[player].track_func)(ti);
 	} else {
 		int i = 0;
-		while (strlen(g_players[i].name) && (!b || ti.status == STATUS_OFF)) {
-                        ti.player = g_players[i].name;
-			b = (*g_players[i].track_func)(&ti);
+		while (strlen(g_players[i].name) && (!b || trackinfo_get_status(ti) == STATUS_OFF)) {
+                        trackinfo_set_player(ti, g_players[i].name);
+			b = (*g_players[i].track_func)(ti);
 			++i;
 		}
 	}
 
 	if (!b) {
 		trace("Getting info failed. Setting empty status.");
-		set_userstatus_for_active_accounts("", 0);
-		return TRUE;
+		set_userstatus_for_active_accounts(0);
 	}
-
-	trim(ti.album);
-	trim(ti.track);
-	trim(ti.artist);
-	trace("%s,%s,%s,%s,%d", ti.player, ti.artist, ti.album, ti.track, ti.status);
+        else {
+	trim(trackinfo_get_album(ti));
+	trim(trackinfo_get_track(ti));
+	trim(trackinfo_get_artist(ti));
+	trace("%s,%s,%s,%s,%d", trackinfo_get_player(ti), trackinfo_get_artist(ti), trackinfo_get_album(ti), trackinfo_get_track(ti), trackinfo_get_status(ti));
 
         // ensure track information is valid utf-8
-        utf8_validate(ti.album);
-        utf8_validate(ti.track);
-        utf8_validate(ti.artist);
+        utf8_validate(trackinfo_get_album(ti));
+        utf8_validate(trackinfo_get_track(ti));
+        utf8_validate(trackinfo_get_artist(ti));
 
-	char *status = NULL;
-	switch (ti.status) {
-		case STATUS_OFF:
-			status = generate_status(purple_prefs_get_string(PREF_OFF), &ti);
-			break;
-		case STATUS_PAUSED:
-			status = generate_status(purple_prefs_get_string(PREF_PAUSED), &ti);
-			break;
-		case STATUS_NORMAL:
-			status = generate_status(purple_prefs_get_string(PREF_FORMAT), &ti);
-			break;
-		default:
-                  trace("unknown player status %d", ti.status);
-	}
+        set_userstatus_for_active_accounts(ti);
 
-        if (status)
-          {
-            set_userstatus_for_active_accounts(status, &ti);
-            free(status);
-          }
+	trace("Status set for all accounts");
+        }
+        
+        trackinfo_destroy(ti);
 
 	return TRUE;
 }
@@ -572,9 +607,9 @@ cb_timeout(gpointer data) {
 
 PurpleCmdRet musictracker_cmd_nowplaying(PurpleConversation *conv, const gchar *cmd, gchar **args, gchar **error, void *data)
 {
-  if (mostrecent_ti.status == STATUS_NORMAL)
+  if (mostrecent_ti && trackinfo_get_status(mostrecent_ti) == STATUS_NORMAL)
     {
-      char *status = generate_status(purple_prefs_get_string(PREF_FORMAT), &mostrecent_ti);
+      char *status = generate_status(purple_prefs_get_string(PREF_FORMAT), mostrecent_ti, "");
       PurpleConversationType type = purple_conversation_get_type (conv);
   
       if (type == PURPLE_CONV_TYPE_CHAT)
@@ -654,7 +689,7 @@ plugin_load(PurplePlugin *plugin) {
 static gboolean
 plugin_unload(PurplePlugin *plugin) {
 	trace("Plugin unloaded.");
-        set_userstatus_for_active_accounts("", 0);
+        set_userstatus_for_active_accounts(0);
 	g_run = 0;
         purple_cmd_unregister(cmdid_nowplaying);
         purple_cmd_unregister(cmdid_np);

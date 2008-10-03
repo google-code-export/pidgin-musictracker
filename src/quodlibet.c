@@ -6,14 +6,13 @@
 
 int g_state = STATUS_NORMAL;
 
-void quodlibet_hash_str(GHashTable *table, const char *key, char *dest)
+void quodlibet_hash_str(GHashTable *table, const char *key, GString *dest)
 {
 	const char *value = (const char*) g_hash_table_lookup(table, key);
 	if (value != NULL) {
-		strncpy(dest, value, STRLEN-1);
-		dest[STRLEN-1] = 0;
+                g_string_assign(dest, value);
 	} else
-		dest[0] = 0;
+		g_string_empty(dest);
 }
 
 void cb_quodlibet_paused(DBusGProxy *proxy, gpointer data)
@@ -23,12 +22,11 @@ void cb_quodlibet_paused(DBusGProxy *proxy, gpointer data)
 }
 
 gboolean
-get_quodlibet_info(struct TrackInfo* ti)
+get_quodlibet_info(TrackInfo* ti)
 {
 	DBusGConnection *connection;
 	DBusGProxy *player;
 	GError *error = 0;
-	char buf[STRLEN];
 	static gboolean connected = FALSE;
 
 	connection = dbus_g_bus_get (DBUS_BUS_SESSION, &error);
@@ -39,7 +37,6 @@ get_quodlibet_info(struct TrackInfo* ti)
 	}
 
 	if (!dbus_g_running(connection, "net.sacredchao.QuodLibet")) {
-		ti->status = STATUS_OFF;
 		return TRUE;
 	}
 
@@ -63,16 +60,38 @@ get_quodlibet_info(struct TrackInfo* ti)
 				G_TYPE_INVALID, 
 				dbus_g_type_get_map("GHashTable", G_TYPE_STRING, G_TYPE_STRING), &table,
 				G_TYPE_INVALID)) {
-		ti->status = STATUS_OFF;
+		trackinfo_set_status(ti, STATUS_OFF);
 		return TRUE;
 	}
-	ti->status = g_state;
+	trackinfo_set_status(ti, g_state);
 
-	quodlibet_hash_str(table, "artist", ti->artist);
-	quodlibet_hash_str(table, "album", ti->album);
-	quodlibet_hash_str(table, "title", ti->track);
+        // process hash table of strings
+        GHashTableIter iter;
+        gpointer key;
+        const char *value;
+        g_hash_table_iter_init(&iter, table);
+        while (g_hash_table_iter_next(&iter, &key, (gpointer) &value))
+          {
+            // if the attribute name has a leading "~#", remove it (numeric value)
+            if (strncmp(key, "~#", 2) == 0)
+              {
+                key = key + 2;
+              }
+
+            g_string_assign(trackinfo_get_gstring_tag(ti, key), value);
+            trace("For key '%s' value is '%s'", key, trackinfo_get_gstring_tag(ti, key)->str);
+          }
+
+        // normalize tag "date" as "year"
+        g_string_assign(trackinfo_get_gstring_tag(ti, "year"), trackinfo_get_gstring_tag(ti, "date")->str);
+
+	GString *buf = g_string_new("");
+        int totalSecs;
 	quodlibet_hash_str(table, "~#length", buf);
-	sscanf(buf, "%d", &ti->totalSecs);
+	sscanf(buf->str, "%d", &totalSecs);
+        trackinfo_set_totalSecs(ti, totalSecs);
+        g_string_free(buf, TRUE);
+
 	g_hash_table_destroy(table);
 
 	return TRUE;

@@ -22,6 +22,7 @@ struct xmmsclientlib
   xmmsc_result_t *(*xmmsc_medialib_get_info)(xmmsc_connection_t *, uint32_t);
   int (*xmmsc_result_get_dict_entry_string)(xmmsc_result_t *res, const char *key, const char **r);
   int (*xmmsc_result_get_dict_entry_int)(xmmsc_result_t *res, const char *key, int32_t *r);
+  int (*xmmsc_result_propdict_foreach)(xmmsc_result_t *res, xmmsc_propdict_foreach_func func, void *user_data);
   void (*xmmsc_result_wait)(xmmsc_result_t *res);
   int (*xmmsc_result_iserror)(xmmsc_result_t *res);
   int (*xmmsc_result_get_uint)(xmmsc_result_t *res, uint32_t *r);
@@ -52,6 +53,7 @@ void *xmms2_dlsym_init(void)
           get_func(xmmsc_medialib_get_info);
           get_func(xmmsc_result_get_dict_entry_string);
           get_func(xmmsc_result_get_dict_entry_int);
+          get_func(xmmsc_result_propdict_foreach);
           get_func(xmmsc_result_wait);                
           get_func(xmmsc_result_iserror);                
           get_func(xmmsc_result_get_uint);
@@ -71,7 +73,7 @@ void *xmms2_dlsym_init(void)
  * Gets the playback status.
  */
 static
-gboolean get_xmms2_status(xmmsc_connection_t *conn, struct TrackInfo *ti)
+gboolean get_xmms2_status(xmmsc_connection_t *conn, TrackInfo *ti)
 {
 	guint status;
 	xmmsc_result_t *result = NULL;
@@ -94,13 +96,13 @@ gboolean get_xmms2_status(xmmsc_connection_t *conn, struct TrackInfo *ti)
 
 	switch (status) {
 	case XMMS_PLAYBACK_STATUS_STOP:
-		ti->status = STATUS_OFF;
+		trackinfo_set_status(ti, STATUS_OFF);
 		break;
 	case XMMS_PLAYBACK_STATUS_PLAY:
-		ti->status = STATUS_NORMAL;
+		trackinfo_set_status(ti, STATUS_NORMAL);
 		break;
 	case XMMS_PLAYBACK_STATUS_PAUSE:
-		ti->status = STATUS_PAUSED;
+		trackinfo_set_status(ti, STATUS_PAUSED);
 		break;
 	}
 
@@ -110,14 +112,40 @@ gboolean get_xmms2_status(xmmsc_connection_t *conn, struct TrackInfo *ti)
 }
 
 /**
+ * Helper function applied to each key in the media information result
+ */
+static
+void mediainfo_helper(const void *key, xmmsc_result_value_type_t type, const void *value, const char *source, void *user_data)
+{
+  TrackInfo *ti = (TrackInfo *)user_data;
+  
+  switch (type)
+    {
+    case XMMSC_RESULT_VALUE_TYPE_STRING:
+      g_string_assign(trackinfo_get_gstring_tag(ti, key), (char *)value);
+      trace("key '%s' value '%s' source '%s'", key, value, source);
+      break;
+    case XMMSC_RESULT_VALUE_TYPE_INT32:
+    case XMMSC_RESULT_VALUE_TYPE_UINT32:
+      {
+        g_string_printf(trackinfo_get_gstring_tag(ti, key), "%d", (int)value);
+        trace("key '%s' value %d source '%s'", key, value, source);
+      }
+      break;
+    default:
+      trace("unknown type %d", type);
+    }
+}
+
+
+/**
  * Gets the media information of the current track.
  */
 static
-gboolean get_xmms2_mediainfo(xmmsc_connection_t *conn, struct TrackInfo *ti)
+gboolean get_xmms2_mediainfo(xmmsc_connection_t *conn, TrackInfo *ti)
 {
 	guint id;
 	gint duration;
-	const char *val = NULL;
 	xmmsc_result_t *result = NULL;
 
 	if (!conn || !ti) {
@@ -155,17 +183,16 @@ gboolean get_xmms2_mediainfo(xmmsc_connection_t *conn, struct TrackInfo *ti)
 		return FALSE;
 	}
 
-	if ((*dl.xmmsc_result_get_dict_entry_string)(result, "title", &val)) {
-		strcpy(ti->track, val);
-	}
-	if ((*dl.xmmsc_result_get_dict_entry_string)(result, "artist", &val)) {
-		strcpy(ti->artist, val);
-	}
-	if ((*dl.xmmsc_result_get_dict_entry_string)(result, "album", &val)) {
-		strcpy(ti->album, val);
-	}
+        if ((*dl.xmmsc_result_propdict_foreach)(result, mediainfo_helper, ti) == 0)
+          {
+            trace("xmmsc_result_propdict_foreach failed");
+          }
+
+        // normalize tag "date" as "year"
+        g_string_assign(trackinfo_get_gstring_tag(ti, "year"), trackinfo_get_gstring_tag(ti, "date")->str);
+
 	if ((*dl.xmmsc_result_get_dict_entry_int)(result, "duration", &duration)) {
-		ti->totalSecs = duration / 1000;
+		trackinfo_set_totalSecs(ti, duration / 1000);
 	}
 
 	(*dl.xmmsc_result_unref)(result);
@@ -177,7 +204,7 @@ gboolean get_xmms2_mediainfo(xmmsc_connection_t *conn, struct TrackInfo *ti)
  * Gets the playback time.
  */
 static
-gboolean get_xmms2_playtime(xmmsc_connection_t *conn, struct TrackInfo *ti)
+gboolean get_xmms2_playtime(xmmsc_connection_t *conn, TrackInfo *ti)
 {
 	guint playtime;
 	xmmsc_result_t *result = NULL;
@@ -198,14 +225,14 @@ gboolean get_xmms2_playtime(xmmsc_connection_t *conn, struct TrackInfo *ti)
 		return FALSE;
 	}
 
-	ti->currentSecs = playtime / 1000;
+	trackinfo_set_currentSecs(ti, playtime / 1000);
 
 	(*dl.xmmsc_result_unref)(result);
 
 	return TRUE;
 }
 
-gboolean get_xmms2_info(struct TrackInfo *ti)
+gboolean get_xmms2_info(TrackInfo *ti)
 {
 	xmmsc_connection_t *connection = NULL;
 	const gchar *path = NULL;
@@ -242,7 +269,7 @@ gboolean get_xmms2_info(struct TrackInfo *ti)
 		(*dl.xmmsc_unref)(connection);
 		return FALSE;
 	}
-
+        
 	if (!get_xmms2_status(connection, ti) ||
 	    !get_xmms2_mediainfo(connection, ti) ||
 	    !get_xmms2_playtime(connection, ti)) {

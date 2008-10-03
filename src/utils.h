@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <pcre.h>
+#include <trackinfo.h>
 
 #ifndef WIN32
 #include <dbus/dbus-glib.h>
@@ -19,6 +20,7 @@ void build_pref(char *dest, const char *format, const char* str1, const char* st
 
 pcre* regex(const char* pattern, int options);
 int capture(pcre* re, const char *text, int len, ...);
+int capture_gstring(pcre* re, const char* text, int len, ...);
 
 #ifndef WIN32
 gboolean dbus_g_running(DBusGConnection *connection, const char *name);
@@ -28,5 +30,7 @@ gboolean dbus_g_running(DBusGConnection *connection, const char *name);
 char *wchar_to_utf8(wchar_t *wstring);
 char *GetWindowTitleUtf8(HWND hWnd);
 #endif
+
+void process_tag_hashtable(GHashTable *table, TrackInfo *ti);
 
 #endif // _UTILS_H_

@@ -5,6 +5,7 @@
 #include <glib.h>
 #include <gtk/gtk.h>
 #include "purple.h"
+#include "trackinfo.h"
 
 #define PLUGIN_ID "core-musictracker"
 #define STRLEN 100
@@ -45,28 +46,17 @@ static const char * const PREF_SQUEEZECENTER_USER = "/plugins/core/musictracker/
 static const char * const PREF_SQUEEZECENTER_PASSWORD = "/plugins/core/musictracker/string_squeezecenter_password";
 static const char * const PREF_SQUEEZECENTER_PLAYERS = "/plugins/core/musictracker/string_squeezecenter_players";
 
-struct TrackInfo
-{
-	char track[STRLEN];
-	char artist[STRLEN];
-	char album[STRLEN];
-	const char* player;
-	int status;
-	int totalSecs;
-	int currentSecs;
-};
-
 struct PlayerInfo
 {
 	const char *name;
-	gboolean (*track_func)(struct TrackInfo *ti);
+	gboolean (*track_func)(TrackInfo *ti);
 	void (*pref_func)(GtkBox *container);
 };
 
 extern struct PlayerInfo g_players[];
 GtkWidget* pref_frame(PurplePlugin *plugin);
 
-gboolean set_status (PurpleAccount *account, char *text, struct TrackInfo *ti);
-void set_userstatus_for_active_accounts (char *userstatus, struct TrackInfo *ti);
+gboolean set_status (PurpleAccount *account, TrackInfo *ti);
+void set_userstatus_for_active_accounts (TrackInfo *ti);
 
 #endif // _MUSICTRACKER_H_

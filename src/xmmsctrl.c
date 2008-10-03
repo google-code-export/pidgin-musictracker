@@ -18,11 +18,11 @@ char xmmsctrl_lib[STRLEN];
 // is specified such that this is a safe thing to do (always returning the same handle),
 // (provided we don't ever want to dlclose() it, as it does maintain a count of dlopen()s)
 
-void xmmsctrl_init(const char *lib)
+gboolean xmmsctrl_init(const char *lib)
 {
 	trace("%s %s", lib, xmmsctrl_lib);
 	if (strcmp(lib, xmmsctrl_lib) == 0)
-		return;
+		return TRUE;
 
 	void *handle = dlopen(lib, RTLD_NOW);
 	if (handle) {
@@ -33,14 +33,18 @@ void xmmsctrl_init(const char *lib)
 		get_func(xmms_remote_get_playlist_pos);
 		get_func(xmms_remote_get_output_time);
 		strncpy(xmmsctrl_lib, lib, STRLEN);
+                return TRUE;
 	} else {
 		trace("Failed to load library %s", lib);
+                return FALSE;
 	}
 }
 
-gboolean get_xmmsctrl_info(struct TrackInfo *ti, char *lib, int session)
+gboolean get_xmmsctrl_info(TrackInfo *ti, char *lib, int session)
 {
-	xmmsctrl_init(lib);
+	if (!xmmsctrl_init(lib))
+          return FALSE;
+
 	if (!(xmms_remote_get_playlist_title && xmms_remote_get_playlist_time &&
 			xmms_remote_is_playing && xmms_remote_is_paused &&
 			xmms_remote_get_playlist_pos && xmms_remote_get_output_time)) {
@@ -48,19 +52,19 @@ gboolean get_xmmsctrl_info(struct TrackInfo *ti, char *lib, int session)
 		return FALSE;
 	}
 
-	int pos = (*xmms_remote_get_playlist_pos)(session);
-	trace("Got position %d", pos);
-
 	if ((*xmms_remote_is_playing)(session)) {
 		if ((*xmms_remote_is_paused)(session))
-			ti->status = STATUS_PAUSED;
+			trackinfo_set_status(ti, STATUS_PAUSED);
 		else
-			ti->status = STATUS_NORMAL;
+			trackinfo_set_status(ti, STATUS_NORMAL);
 	} else
-		ti->status = STATUS_OFF;
-	trace("Got state %d", ti->status);
+		trackinfo_set_status(ti, STATUS_OFF);
+	trace("Got state %d", trackinfo_get_status(ti));
 
-	if (ti->status != STATUS_OFF) {
+	if (trackinfo_get_status(ti) != STATUS_OFF) {
+		int pos = (*xmms_remote_get_playlist_pos)(session);
+		trace("Got position %d", pos);
+
 		char *title = (*xmms_remote_get_playlist_title)(session, pos);
 
 		if (title) {
@@ -74,17 +78,18 @@ gboolean get_xmmsctrl_info(struct TrackInfo *ti, char *lib, int session)
                         char regexp[100];
                         sprintf(regexp, "^(.*)\\%s(.*)\\%s(.*)$", sep, sep);
                         pcre *re = regex(regexp, 0);
-                        capture(re, title, strlen(title), ti->artist, ti->album, ti->track);
+                        capture_gstring(re, title, strlen(title), trackinfo_get_gstring_artist(ti), trackinfo_get_gstring_album(ti), trackinfo_get_gstring_track(ti));
                         pcre_free(re);
+                        g_free(title);
 		}
 
-		ti->totalSecs = (*xmms_remote_get_playlist_time)(session, pos)/1000;
-		ti->currentSecs = (*xmms_remote_get_output_time)(session)/1000;
+		trackinfo_set_totalSecs(ti, (*xmms_remote_get_playlist_time)(session, pos)/1000);
+		trackinfo_set_currentSecs(ti, (*xmms_remote_get_output_time)(session)/1000);
 	}
 	return TRUE;
 }
 
-gboolean get_xmms_info(struct TrackInfo *ti)
+gboolean get_xmms_info(TrackInfo *ti)
 {
 	gboolean b = get_xmmsctrl_info(ti, "libxmms.so", 0);
 	if (!b)
@@ -92,13 +97,13 @@ gboolean get_xmms_info(struct TrackInfo *ti)
 	return b;
 }
 
-gboolean get_audacious_legacy_info(struct TrackInfo *ti)
+gboolean get_audacious_legacy_info(TrackInfo *ti)
 {
 	gboolean b = get_xmmsctrl_info(ti, "libaudacious.so", 0);
 	if (!b)
 		b = get_xmmsctrl_info(ti, "libaudacious.so.3", 0);
         if (b)
-          ti->player = "Audacious";
+          trackinfo_set_player(ti, "Audacious");
 	return b;
 }
 

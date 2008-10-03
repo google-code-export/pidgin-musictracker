@@ -9,7 +9,7 @@ More documentation about the interface from audacious 1.4:
 src/audacious/objects.xml from http://svn.atheme.org/audacious/trunk (can be found through www.google.com/codesearch)
 */
 
-gboolean audacious_dbus_string(DBusGProxy *proxy, const char *method, int pos, const char *arg, char* dest)
+gboolean audacious_dbus_string(DBusGProxy *proxy, const char *method, int pos, const char *arg, GString* dest)
 {
 	GValue val;
 	memset(&val, 0, sizeof(GValue));
@@ -21,14 +21,19 @@ gboolean audacious_dbus_string(DBusGProxy *proxy, const char *method, int pos, c
 				G_TYPE_VALUE, &val,
 				G_TYPE_INVALID))
 	{
-		trace("Failed to make dbus call %s: %s", method, error->message);
+		trace("Failed to make dbus call %s(%d,'%s'): %s", method, pos, arg, error->message);
 		return FALSE;
 	}
 
 	if (G_VALUE_TYPE(&val) == G_TYPE_STRING) {
-		strncpy(dest, g_value_get_string(&val), STRLEN);
-		dest[STRLEN-1] = 0;
+                g_string_assign(dest, g_value_get_string(&val));
 	}
+        else {
+          char *s = g_strdup_value_contents(&val);
+          g_string_assign(dest, s);
+          g_free(s);
+        }
+
 	g_value_unset(&val);
 	return TRUE;
 }
@@ -67,7 +72,7 @@ int audacious_dbus_int(DBusGProxy *proxy, const char *method, int pos)
 }
 
 gboolean
-get_audacious_info(struct TrackInfo* ti)
+get_audacious_info(TrackInfo* ti)
 {
 	DBusGConnection *connection;
 	DBusGProxy *proxy;
@@ -83,7 +88,7 @@ get_audacious_info(struct TrackInfo* ti)
 	}
 
 	if (!dbus_g_running(connection, "org.atheme.audacious")) {
-		ti->status = STATUS_OFF;
+		trackinfo_set_status(ti, STATUS_OFF);
 		return TRUE;
 	}
 
@@ -101,25 +106,43 @@ get_audacious_info(struct TrackInfo* ti)
 		return FALSE;
 	}
 
-        ti->player = "Audacious";
+        trackinfo_set_player(ti, "Audacious");
         
 	if (strcmp(status, "stopped") == 0) {
-		ti->status = STATUS_OFF;
+		trackinfo_set_status(ti, STATUS_OFF);
 		return TRUE;
 	} else if (strcmp(status, "playing") == 0) {
-		ti->status = STATUS_NORMAL;
+		trackinfo_set_status(ti, STATUS_NORMAL);
 	} else {
-		ti->status = STATUS_PAUSED;
+		trackinfo_set_status(ti, STATUS_PAUSED);
 	}
 	
 	// Find the position in the playlist
 	pos = audacious_dbus_uint(proxy, "Position");
 	
-	ti->currentSecs = audacious_dbus_uint(proxy, "Time")/1000;
-	ti->totalSecs = audacious_dbus_int(proxy, "SongLength", pos);
-	
-	audacious_dbus_string(proxy, "SongTuple", pos, "artist", ti->artist);
-	audacious_dbus_string(proxy, "SongTuple", pos, "album", ti->album);
-	audacious_dbus_string(proxy, "SongTuple", pos, "title", ti->track);
+	trackinfo_set_currentSecs(ti,audacious_dbus_uint(proxy, "Time")/1000);
+	trackinfo_set_totalSecs(ti, audacious_dbus_int(proxy, "SongLength", pos));
+
+	// in Audacious 1.4, the Tuple list for the track doesn't seem to be iterable, so we merely 
+        // attempt to fetch a known list of possible tuples
+        // later Audacious 1.5 provides GetTupleFields method to retrieve a list of standard tuple fields
+        // which is presumably similar to this list
+        const char *tupleFieldList[] = 
+          {
+            "artist"         , "title"          , "album"          , "comment"        , "genre"          ,
+            "track"          , "track-number"   , "length"         , "year"           , "quality"        ,
+            "codec"          , "file-name"      , "file-path"      , "file-ext"       , "song-artist"    ,
+            "mtime"          , "formatter"      , "performer"      , "copyright"      , "date"           ,
+            "subsong-id"     , "subsong-num"    , 0 
+          };
+
+        for (int i = 0; tupleFieldList[i] != 0; i++)
+          {
+            if (audacious_dbus_string(proxy, "SongTuple", pos, tupleFieldList[i], trackinfo_get_gstring_tag(ti, tupleFieldList[i])))
+              {
+                trace("tuple field '%s' returned '%s'", tupleFieldList[i], trackinfo_get_gstring_tag(ti, tupleFieldList[i])->str);
+              }
+          }
+
 	return TRUE;
 }
