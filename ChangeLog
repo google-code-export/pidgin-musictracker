@@ -1,6 +1,14 @@
 ChangeLog for MusicTracker Pidgin Plugin
 ========================================
 
+2008-10-03 (Version 0.5.0)
+	* Rework trackinfo collection to be more flexible, update all player interfaces to retrieve whatever extra track information is available from that player (if any)
+	* Allow the addition of "{%tag}" in format string to represent an arbitrary tag. Tags available may vary by player and source.
+	* Rewrite status message generation to allow the addition of "%s" as the pidgin saved status and clarify the logic a lot
+	* Fix a bug with track time data from banshee 1.0, a uint not int
+	* Fix some issues found by Valgrind
+	* Tidy up xmms to reduce debug spam a bit
+
 2008-09-22 (Version 0.4.10)
 	* Fix terrible bug introduced by change for issue #32, which utterly broke tune status support (issue #36)
 
