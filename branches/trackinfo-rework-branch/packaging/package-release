@@ -2,6 +2,7 @@
 # shell script for automating musictracker project releases
 # $1 = 'release' or 'snapshot'
 # $2 = version number for release
+# $3 = branch to release from, defaults to trunk
 
 # clean
 rm -r *
@@ -16,12 +17,20 @@ else
  WORKDIR=pidgin-musictracker-$VERSION
 fi
 
+# check for non-trunk release
+if [ -z $3 ]
+then
+ BRANCH=trunk
+else
+ BRANCH=branches/$3
+fi
+
 # export source from svn
 if [ $1 != "release" ]
 then
- svn export https://pidgin-musictracker.googlecode.com/svn/trunk $WORKDIR
+ svn export https://pidgin-musictracker.googlecode.com/svn/$BRANCH $WORKDIR
 else
- svn copy https://pidgin-musictracker.googlecode.com/svn/trunk/ https://pidgin-musictracker.googlecode.com/svn/tags/$VERSION -m "Tagging release version $VERSION"
+ svn copy https://pidgin-musictracker.googlecode.com/svn/$BRANCH https://pidgin-musictracker.googlecode.com/svn/tags/$VERSION -m "Tagging release version $VERSION"
  svn export https://pidgin-musictracker.googlecode.com/svn/tags/$VERSION $WORKDIR
 fi
 
