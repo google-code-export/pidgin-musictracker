@@ -18,3 +18,5 @@
   * Enable and test !SqueezeCenter code under Windows
   * Windows uninstaller
   * Write a patch for pidgin which allows the MSN tune presentation hint to be set as a tune status attribute
+
+_(Please do not put feature requests in the comments. Start a new issue or vote for an existing one instead)_
