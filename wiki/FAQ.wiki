@@ -30,9 +30,9 @@ Needless to say, this was a complete crock and was re-writtten for 0.4.6
  
 foobar2000 player support is pretty fragile
 
-* The title format needs to be the default "[%album artist% - ]['['%album%[ CD%discnumber%][ #%tracknumber%]']' ]%title%[ '//' %track artist%]"
-* The player paused state isn't detected
-* It doesn't work when player is set to minimize to tray
+  * The title format needs to be the default "[%album artist% - ]['['%album%[ CD%discnumber%][ #%tracknumber%]']' ]%title%[ '//' %track artist%]"
+  * The player paused state isn't detected
+  * It doesn't work when player is set to minimize to tray
 
 You can use the [http://chron.visiondesigns.de/foobar2000/#foo_winamp_spam winamp spam] component
 
