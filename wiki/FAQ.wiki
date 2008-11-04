@@ -40,6 +40,8 @@ With later versions of musictracker not using winamp_spam acutally works better,
 
 = How do I build the Subversion source? =
 
+Usually, you don't!  The source tarballs available on the downloads page are nearly always a much better choice.  If you must have absolutely the lastest source, try the snapshots page.  But if you really want to build from subversion:
+
 {{{
 echo my-hacked-up-version >version
 ./reconf
