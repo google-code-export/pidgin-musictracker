@@ -1,0 +1,96 @@
+#summary ChangeLog
+
+*Changes 0.4.12*
+  * Relax and refine the regex used for matching MSN "now listening" messages; track info from VLC should work again (issue 46)
+  * Remove a fixed size buffer from capture() utility function
+  * Add a per-account "tune status is broken" configuration to work around the problem that libpurple tells us googletalk accounts have tune status, but it doesn't actually work (and I can't work out a good way to detect this situation automatically) *Note:* This is on by default for all XMPP accounts, for bon-GoogleTalk XMPP accounts with working XEP-0118 you should clear this setting.
+  * Merge some fixes to problems found with valgrind (fixes warnings when compiled with -D_FORTIFY_SOURCE=2) (issue 44)
+  * Remove m4 directory from build, we don't actually make any macros (stops ebuild installing empty /usr/share/aclocal), see gentoo bug #180771
+  * Update and correct dbus-glib dependency in .ebuild
+  * Fix a crash when data retrieval from last.fm fails (issue 35)
+
+*Changes in 0.4.11*
+  * Fix "status doesn't clear when status changing is deactivated" bug (issue #37), more collateral breakage from change for issue #32
+  * Reorder menu actions so disable/enable is the first one, as it's probably the most used
+
+*Changes in 0.4.10*
+  * Fix terrible bug introduced by change for issue #32, which utterly broke tune status support (e.g."now listening" in MSN) (issue #36)
+
+*Changes in 0.4.9*
+  * Update configure check for dbus-glib to 0.73, needed for dbus_g_proxy_call_with_timeout (issue #34)
+  * Fix /nowplaying to get correct information when status changing is disabled (issue #32)
+  * Fix a problem with the msn compatibility message handler which behaved badly when Winamp had stopped in auto-detect mode
+  * Avoid a crash mode in winamp message handling seen with musikCube (due to it's limited Winamp compatibility interface)
+  * Fix crash with audacious caused by a rather obvious mistake (issue #28, issue #33)
+  * Audit uses of G_TYPE_STRING returned from a dbus call and fix a couple of leaks
+  * Make MPRIS player detection fully dynamic, scanning for org.mpris. service names; add an additional hint needed for dragonplayer to work.
+  * Generalize MSN message support a little bit more
+  * Avoid a potential null dereference in xmms2 debug output
+  * Rewrite MPRIS debug code to avoid use of GHashTableIter, so we work with all GLib > 2.0.0, and so don't have a different GLib dependency to pidgin itself
+
+*Changes in 0.4.8*
+  * Add patch from Phillip Camp for !SqueezeCenter/!SlimServer support 
+  * Fix a crash which could occur if an account is added whilst musictracker is loaded
+  * Add a fallback method for getting track information by catching messages intended to pass that info to MSN Messenger.  Tested with VLC 0.8.6i (you need to turn on the "MSN Now-Playing" control interface), Media Player Classic (turn on 'Send "Now Playing" information to MSN Messenger'), Songbird + !LiveTweeter add-on, hopefully works with other stuff as well.  This is now the preferred interface for foobar2000, as it works better than reading the window title and guessing :-)
+  * Fix foobar2000 title parsing for the case where the track has no album information
+  * Add MPRIS-compliant player track information support.  Lightly tested with VLC 0.9.1 (you need to turn on "D-Bus Control Interface" in settings), BMPx 0.40, Audacious 1.4.  Feedback wanted!
+
+*Changes in 0.4.7*
+  * Correct the way we retrieve track artist info from WMP (issue #16)
+  * Fix a problem where tune status could sometimes get left with stale data (e.g. if player was closed whilst pidgin was closed)
+  * Apply patch from hyperair adding a timeout to dbus calls, so they cannot block indefinitely (hanging pidgin) if something has gone wrong in the target application (issue #13)
+  * Fix restoring saved status so it correctly restores account-specific saved status (issue #11)
+  * Attempt to avoid being told "MSN: Friendly name changes too rapidly" when player is stopped
+  * Some more tidying up
+  * Update libmpdclient to latest svn (revision 7402) (this fixes a file descriptor leak when an IPv6-enabled MPD is running) (#137, maybe issue #12?)
+  * Enable MPD client in windows build
+  * Fix type conversion warnings when building for x64 (issue #18)
+  * Use dopen/dlsym to access XMMS2 client library, so it doesn't become a run-time dependency if we build with XMMS2 support enabled
+
+*Changes in 0.4.6*
+  * Rewrite WMP support using disphelper from http://disphelper.sourceforge.net/ and WMPuICE by Christian Mueller from http://www.mediatexx.com.  Hopefully this rewrite has several advantages: It works without needing any changes of configuration of WMP, now uses a wide-char interface so should be able to transport unicode chars successfully.  Feedback wanted!
+  * Restore support for non-widechar Winamp interface, as a fall-back if preferred interface fails.  This restores compatability with older versions of Winamp, and the Winamp-compatible interface which !MediaMonkey supports 
+
+*Changes in 0.4.5*
+  * Various fixes to avoid crash modes where track information is longer than expected
+  * Compilation warnings fixes
+  * Improve foobar2000 and winamp interface code to work better for track info using east asian characters.  *Note:* Winamp 5.13 (circa 2006) or later is now required.  I suppose I could put some legacy compatability code in for those people who must use Winamp 2 :-).  Windows Media Player still needs work in this area, everything else should be fine.
+  * Do PCRE_STATIC properly (only applies to windows builds and tells us to use a static library)
+  * Improve last.fm feed interface: infer player is off if scrobble timestamp is older than a configurable interval, configure polling interval as well
+  * Add some possibly needed pcre_free()s
+
+*Changes in 0.4.4* "I suppose I should fix that...."
+  * Store musictracker per-account preferences using both screen name and protocol as the key, so that multiple accounts with the same screen name on different protocols may have different musictracker status formatting setttings.  *Note:* No attempt is made to migrate existing per-account settings, it's ambigious which account they belong to and I'm lazy :S (issue #2)
+  * Strip windows DLL before making installer (so it's not huge!) (issue #4)
+  * Restore UI selected status when musictracker is unloaded (#114)
+  * Fix tune status support to work with msnp15, coming in pidgin 2.5.0, add UI to disable personal message changing if we have tune status (issue #3) *Note:* pidgin 2.5.0 isn't released yet, so this won't do anything unless you are running a development version. Don't run development versions of pidgin unless you are willing to keep both pieces when it breaks :-)
+  * Add ability to disable status changing whilst away
+  * Add a simple implementation of a "/nowplaying" or "/np" command
+  * Fix way amarok and iTunes interface code deals with times greater than 60 minutes (#22)
+  * Fix exaile interface code to retrieve current position in track correctly (was broken!)
+  * Tidy up some debug output and general cruft
+  * Add a bit of defensive code against a possible crash (issue #5)
+
+*Changes in 0.4.3* "patch frenzy"
+  * patch from chet.the.gray for Listen player support (#13)
+  * patch from puthali.HB for Last.fm feed support (#48)
+  * patch from patrick.dessalle for Audacious 1.4 support (#86)
+  * patch from hyperair for Banshee 1.0 support (#87)
+  * patch from thelrix for XMPP user tune support (#96)
+  * patch from !ZeeGeek for XMMS2 player support (#121)
+  * Rhythmbox: Slightly improve the way we report information for streams (#35), based on a patch by eemil.lagerspetz
+  * Improve "Toggle status changing" action so it has a dynamic menu item which reflects the current Enabled/Disabled state (#39), based on a patch by TorresMAT
+  * Winamp: don't screw up titles which contain hyphens, try to still do something useful with streams (#59) based on a patch by leonardo.monteiro.fernandes
+  * amarok: Check for running dcopserver to avoid problems when dcop blocks for long enough that we appear to hang pidgin (#68), Don't spam stderr with "call failed" errors from trying to dcop amarok
+  * Add missing header include to fix Gentoo QA notice on build (#138)
+
+*Changes in 0.4.2*
+  * Fix finding window for Foobar2000 0.9.5.3 and later
+  * Don't crash if track info from player isn't valid UTF-8!
+  * Get UTF-8 track info from iTunes and WMP
+  * Avoid damaging valid UTF-8 track info when removing unprintable characters
+  * If the track info message is empty, try to restore the status message selected in UI (e.g. for when your player stopped message is empty)
+  * Remove use of modified MSN protocol plugin to append now-playing info to nickname (I suggest you use pidgin 2.5.0 or later or [http://code.google.com/p/msn-pecan/ msn-pecan] which supports personal messages)
+  * Fixed to build with latest purple
+
+A full [http://code.google.com/p/pidgin-musictracker/source/browse/trunk/ChangeLog Changelog] is available.
