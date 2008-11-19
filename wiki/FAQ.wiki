@@ -13,6 +13,12 @@ Adding yourself to your own buddy list (if permitted by the protocol) may be one
 
 You must exit pidgin to run the installer if you have a previous version of musictracker installed.
 
+= How do I uninstall musictracker? =
+
+Run regsvr32 /u "C:\Program Files\Pidgin\wmpuice.dll"
+Delete C:\Program Files\Pidgin\plugins\musictracker.dll
+Delete C:\Program Files\Pidgin\wmpuice.dll
+
 = Doesn't work with Windows Media Player (0.4.5 and earlier)=
 
 Sigh.
