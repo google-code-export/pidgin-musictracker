@@ -38,13 +38,11 @@ You can use the [http://chron.visiondesigns.de/foobar2000/#foo_winamp_spam winam
 
 With later versions of musictracker not using winamp_spam acutally works better, as some winamp messages we use aren't implemented, and foobar2000 sends "now playing" messages for MSN, which we now catch.
 
-= How do I build the Subversion source? =
+= How do I build from source =
 
-Usually, you don't!  The source tarballs available on the downloads page are nearly always a much better choice.  If you must have absolutely the lastest source, try the snapshots page.  But if you really want to build from subversion:
+Download and unpack the pidgin-musictracker-n.n.nn.tar.bz2 source package, then
 
 {{{
-echo my-hacked-up-version >version
-./reconf
 ./configure
 make
 }}}
@@ -52,7 +50,6 @@ make
 for Windows
 
 {{{
-echo my-hacked-up-version >version
 cd src
 make -f Makefile.mingw installer
 }}}
@@ -60,6 +57,17 @@ make -f Makefile.mingw installer
 For the Windows build, as we currently rely on some of the pidgin build infrastructure,  you'll also need the pidgin source at the relative path ../pidgin,  with a win32-dev/ which has been populated by the Windows build dependency fetcher, winpidgin-build-fetcher.sh.  This source needs to be buildable, i.e. have an appropriate config.h and local.mak.
 
 We don't provide and install a dynamic libpcre, so a static libpcre also needs to be made available, one approach is to place that in a directory under win32-dev/ and add that directory to the LIB_PATH set in local.mak
+
+= How to I build the source from subversion? =
+
+Usually, you don't!  The source tarballs available on the downloads page are nearly always a much better choice.  If you must have absolutely the lastest source, try the snapshots page.  But if you really want to build from subversion:
+
+Perform the following steps before ./configure
+
+{{{
+echo my-hacked-up-version >version
+./reconf
+}}}
 
 = My Question isn't answered here! Help! =
 
