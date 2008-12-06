@@ -11,9 +11,9 @@ Adding yourself to your own buddy list (if permitted by the protocol) may be one
 
 = Windows installer fails "Error opening the file for writing musictracker.dll" =
 
-*  You must exit pidgin to run the installer if you have a previous version of musictracker installed.
+You must exit pidgin to run the installer if you have a previous version of musictracker installed.
 
-*  If you have installed pidgin somewhere other than the default location of  "C:\Program Files\Pidgin", you must tell the musictracker installer the correct location for pidgin.
+If you have installed pidgin somewhere other than the default location of  "C:\Program Files\Pidgin", you must tell the musictracker installer the correct location for pidgin.
 
 = How do I uninstall musictracker? =
 
