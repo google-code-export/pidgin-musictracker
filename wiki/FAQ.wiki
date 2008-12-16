@@ -23,6 +23,11 @@ Delete C:\Program Files\Pidgin\plugins\musictracker.dll
 
 Delete C:\Program Files\Pidgin\wmpuice.dll
 
+= How do I get my status to go back to the pidgin status message when player stops? =
+
+Change the "Stopped/Off" Status Format in the musictracker plugin configuration to an
+empty string.
+
 = Doesn't work with Windows Media Player (0.4.5 and earlier)=
 
 Sigh.
