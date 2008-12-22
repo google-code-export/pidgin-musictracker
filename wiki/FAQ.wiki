@@ -28,6 +28,13 @@ Delete C:\Program Files\Pidgin\wmpuice.dll
 Change the "Stopped/Off" Status Format in the musictracker plugin configuration to an
 empty string.
 
+= Player name is shown as "unknown" =
+
+It is a limitation of the "MSN compatible" now playing interface that the player name is
+not available, so %r is replaced with "unknown" in this case.
+
+A useful [http://kentie.net/article/nowplaying/index.htm description of this interface]
+
 = Doesn't work with Windows Media Player (0.4.5 and earlier)=
 
 Sigh.
@@ -65,7 +72,6 @@ make
 for Windows
 
 {{{
-cd src
 make -f Makefile.mingw installer
 }}}
 
