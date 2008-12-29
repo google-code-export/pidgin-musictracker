@@ -9,6 +9,12 @@ This behaviour, whilst failing to provide clearly needed user feedback, is by de
 
 Adding yourself to your own buddy list (if permitted by the protocol) may be one way of seeing your own status, or enabling the [http://plugins.guifications.org/trac/wiki/mystatusbox MyStatusBox] plugin from the [http://plugins.guifications.org/trac/wiki/PluginPack Pidgin Plugin Pack]
 
+= MSN status messages aren't working at all =
+
+musictracker 0.4.1 installs a custom libmsn.dll/.so, which is now quite old and doesn't support MSN custom status messages.  If this libmsn is still on your system, MSN custom status messages won't work.  This could happen if you installed pidgin, then installed musictracker 0.4.1, then updated musictracker.
+
+The solution is to reinstall pidgin.
+
 = Windows installer fails "Error opening the file for writing musictracker.dll" =
 
 You must exit pidgin to run the installer if you have a previous version of musictracker installed.
@@ -78,6 +84,7 @@ make -f Makefile.mingw installer
 For the Windows build, as we currently rely on some of the pidgin build infrastructure,  you'll also need the pidgin source at the relative path ../pidgin,  with a win32-dev/ which has been populated by the Windows build dependency fetcher, winpidgin-build-fetcher.sh.  This source needs to be buildable, i.e. have an appropriate config.h and local.mak.
 
 We don't provide and install a dynamic libpcre, so a static libpcre also needs to be made available, one approach is to place that in a directory under win32-dev/ and add that directory to the LIB_PATH set in local.mak
+
 
 = How to I build the source from subversion? =
 
