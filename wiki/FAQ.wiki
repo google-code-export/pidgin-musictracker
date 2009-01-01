@@ -1,7 +1,8 @@
 #summary Frequently Asked Questions
 #labels Featured
 
-= I installed musictracker, started my player and my status doesn't change =
+==1==
+*I installed musictracker, started my player and my status doesn't change*
 
 Your outgoing status message is changed, as your correspondents should be able to tell you, but the status message shown in the pidgin UI is not updated.
 
@@ -9,39 +10,43 @@ This behaviour, whilst failing to provide clearly needed user feedback, is by de
 
 Adding yourself to your own buddy list (if permitted by the protocol) may be one way of seeing your own status, or enabling the [http://plugins.guifications.org/trac/wiki/mystatusbox MyStatusBox] plugin from the [http://plugins.guifications.org/trac/wiki/PluginPack Pidgin Plugin Pack]
 
-= MSN status messages aren't working at all =
+==2==
+*MSN status messages aren't working at all*
 
 musictracker 0.4.1 installs a custom libmsn.dll/.so, which is now quite old and doesn't support MSN custom status messages.  If this libmsn is still on your system, MSN custom status messages won't work.  This could happen if you installed pidgin, then installed musictracker 0.4.1, then updated musictracker.
 
 The solution is to reinstall pidgin.
-
-= Windows installer fails "Error opening the file for writing musictracker.dll" =
+==3==
+* Windows installer fails "Error opening the file for writing musictracker.dll" *
 
 You must exit pidgin to run the installer if you have a previous version of musictracker installed.
 
 If you have installed pidgin somewhere other than the default location of  "C:\Program Files\Pidgin", you must tell the musictracker installer the correct location for pidgin.
 
-= How do I uninstall musictracker? =
+==4==
+*How do I uninstall musictracker? *
 
-Run regsvr32 /u "C:\Program Files\Pidgin\wmpuice.dll"
+  * Delete C:\Program Files\Pidgin\plugins\musictracker.dll
+  * Run regsvr32 /u "C:\Program Files\Pidgin\wmpuice.dll"
+  * Delete C:\Program Files\Pidgin\wmpuice.dll
+  * Delete any musictracker.mo files from C:\Program Files\Pidgin\locale\`*`\LC_MESSAGES
 
-Delete C:\Program Files\Pidgin\plugins\musictracker.dll
-
-Delete C:\Program Files\Pidgin\wmpuice.dll
-
-= How do I get my status to go back to the pidgin status message when player stops? =
+==5==
+* How do I get my status to go back to the pidgin status message when player stops? *
 
 Change the "Stopped/Off" Status Format in the musictracker plugin configuration to an
 empty string.
 
-= Player name is shown as "unknown" =
+==6==
+* Player name is shown as "unknown" *
 
 It is a limitation of the "MSN compatible" now playing interface that the player name is
 not available, so %r is replaced with "unknown" in this case.
 
 A useful [http://kentie.net/article/nowplaying/index.htm description of this interface]
 
-= Doesn't work with Windows Media Player (0.4.5 and earlier)=
+==7==
+* Doesn't work with Windows Media Player (0.4.5 and earlier)*
 
 Sigh.
 
@@ -54,7 +59,8 @@ I've removed wmp9.dll from the pidgin-musictrcker installer as the distribution 
 
 Needless to say, this was a complete crock and was re-writtten for 0.4.6
 
-= Doesn't work with foobar2000 (artist/track/title are blank) =
+==8==
+* Doesn't work with foobar2000 (artist/track/title are blank) *
  
 foobar2000 player support is pretty fragile
 
@@ -64,9 +70,10 @@ foobar2000 player support is pretty fragile
 
 You can use the [http://chron.visiondesigns.de/foobar2000/#foo_winamp_spam winamp spam] component
 
-With later versions of musictracker not using winamp_spam acutally works better, as some winamp messages we use aren't implemented, and foobar2000 sends "now playing" messages for MSN, which we now catch.
+With later versions of musictracker not using winamp_spam actually works better, as some winamp messages we use aren't implemented, and foobar2000 sends "now playing" messages for MSN, which we now catch.
 
-= How do I build from source =
+==9==
+* How do I build from source? *
 
 Download and unpack the pidgin-musictracker-n.n.nn.tar.bz2 source package, then
 
@@ -85,8 +92,8 @@ For the Windows build, as we currently rely on some of the pidgin build infrastr
 
 We don't provide and install a dynamic libpcre, so a static libpcre also needs to be made available, one approach is to place that in a directory under win32-dev/ and add that directory to the LIB_PATH set in local.mak
 
-
-= How to I build the source from subversion? =
+==10==
+* How to I build the source from subversion? *
 
 Usually, you don't!  The source tarballs available on the downloads page are nearly always a much better choice.  If you must have absolutely the lastest source, try the snapshots page.  But if you really want to build from subversion:
 
@@ -97,7 +104,7 @@ echo my-hacked-up-version >version
 ./reconf
 }}}
 
-= My Question isn't answered here! Help! =
+== My Question isn't answered here! Help! ==
 
 Please send a mail to the pidigin-musictracker general discussion mailing list if you have a question.
 
