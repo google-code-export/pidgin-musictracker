@@ -61,7 +61,7 @@ Needless to say, this was a complete crock and was re-writtten for 0.4.6
 
 ==8==
 * Doesn't work with foobar2000 (artist/track/title are blank) *
- 
+
 foobar2000 player support is pretty fragile
 
   * The title format needs to be the default "[%album artist% - ]['['%album%[ CD%discnumber%][ #%tracknumber%]']' ]%title%[ '//' %track artist%]"
