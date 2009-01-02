@@ -12,6 +12,8 @@ Adding yourself to your own buddy list (if permitted by the protocol) may be one
 
 ==2==
 *MSN status messages aren't working at all*
+*MSN disconnects when I set invisible status*
+*MSN protocol behaves strangely*
 
 musictracker 0.4.1 installs a custom libmsn.dll/.so, which is now quite old and doesn't support MSN custom status messages.  If this libmsn is still on your system, MSN custom status messages won't work.  This could happen if you installed pidgin, then installed musictracker 0.4.1, then updated musictracker.
 
