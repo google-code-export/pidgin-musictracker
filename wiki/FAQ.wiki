@@ -106,6 +106,17 @@ echo my-hacked-up-version >version
 ./reconf
 }}}
 
+==11==
+* Where are the linux binary packages? *
+
+There are links to a few sources of binary packages on the main page.  
+
+I would be nice have them for all major distros, but ... :effort:
+
+The downloads page offers a "Linux x86 plugin binary".  This shouldn't work for anyone but me, but usually does.  You can drop the .so into /usr/lib/pidgin/ or ~/.purple/plugins/
+
+Debian (and Debian-derived distros e.g. Ubuntu) will need a symlink to /usr/lib/libpcre.so.3 called libpcre.so.0 for this binary to work.
+
 == My Question isn't answered here! Help! ==
 
 Please send a mail to the pidigin-musictracker general discussion mailing list if you have a question.
