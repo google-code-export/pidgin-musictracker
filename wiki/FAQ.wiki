@@ -113,9 +113,9 @@ There are links to a few sources of binary packages on the main page.
 
 I would be nice have them for all major distros, but ... :effort:
 
-The downloads page offers a "Linux x86 plugin binary".  This shouldn't work for anyone but me, but usually does.  You can drop the .so into /usr/lib/pidgin/ or ~/.purple/plugins/
+The downloads page offers a "Linux x86 plugin binary".  This shouldn't work for anyone but me, but usually does.  You can drop the .so into /usr/lib/pidgin/ or ~/.purple/plugins/.
 
-Debian (and Debian-derived distros e.g. Ubuntu) will need a symlink to /usr/lib/libpcre.so.3 called libpcre.so.0 for this binary to work.
+Debian (and Debian-derived distros e.g. Ubuntu) will need to 'sudo ln -s /usr/lib/libpcre.so.3 /usr/lib/libpcre.so.0' for this binary to work.
 
 == My Question isn't answered here! Help! ==
 
