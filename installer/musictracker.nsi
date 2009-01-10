@@ -25,8 +25,8 @@ Section "" ;No components page, name is not important
   ; Put files there
   File /oname=plugins\musictracker.dll ..\src\musictracker.dll
   File /oname=wmpuice.dll wmpuice.dll
-  File /oname=locale\it\LC_MESSAGES\musictracker.mo ..\po\it.gmo
-  File /oname=locale\de\LC_MESSAGES\musictracker.mo ..\po\de.gmo
+
+  !include po_list.nsi
 
   RegDLL wmpuice.dll  
 
