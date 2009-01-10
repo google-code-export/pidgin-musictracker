@@ -9,7 +9,8 @@ rm -r *
 # assign a version number
 if [ $1 != "release" ]
 then
- VERSION=snapshot-`date -u +%Y%m%d%H%M%S`
+ export SNAPSHOT=`date -u +%Y%m%d%H%M%S`
+ VERSION=snapshot-$SNAPSHOT
  WORKDIR=pidgin-musictracker-snapshot
 else
  VERSION=$2
@@ -46,21 +47,26 @@ ln -s ~/pidgin pidgin
 (cd $WORKDIR/ ; ./configure --prefix=/usr ; make)
 tar -cjf pidgin-musictracker-$VERSION-bin.tar.bz2 -C ./$WORKDIR/src/.libs musictracker.so
 
-# upload files
 if [ $1 != "release" ]
 then
+ # upload files to my webhost
  scp $UPLOAD_CREDENTIALS \
      pidgin-musictracker-$VERSION.ebuild \
      pidgin-musictracker-$VERSION-bin.tar.bz2 \
      $WORKDIR/installer/pidgin-musictracker-$VERSION.exe \
      pidgin-musictracker-$VERSION.tar.bz2 \
      $UPLOAD_TARGET/pidgin-musictracker-snapshot
+
+ # send files to launchpad
+ rm -r $WORKDIR
+ ~/launchpad-ppa
 else
  #  use googlecode_upload.py to upload the files
  ~/googlecode_upload.py -s "Gentoo Linux ebuild"      -p pidgin-musictracker -l Featured,Beta,OpSys-Linux,Type-Package     pidgin-musictracker-$VERSION.ebuild 
  ~/googlecode_upload.py -s "Linux x86 plugin binary"  -p pidgin-musictracker -l          Beta,OpSys-Linux,Type-Executable  pidgin-musictracker-$VERSION-bin.tar.bz2
  ~/googlecode_upload.py -s "Windows plugin installer" -p pidgin-musictracker -l Featured,Beta,OpSys-Windows,Type-Installer $WORKDIR/installer/pidgin-musictracker-$VERSION.exe
  ~/googlecode_upload.py -s "Source package"           -p pidgin-musictracker -l Featured,Beta,OpSys-All,Type-Source        pidgin-musictracker-$VERSION.tar.bz2
+
  # remember this version number to use as the base for ppa package names
  echo $VERSION >~/.pidgin-musictracker-release-version
 fi

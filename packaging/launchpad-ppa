@@ -5,12 +5,11 @@
 #
 
 LAST_VERSION=`cat ~/.pidgin-musictracker-release-version`
-SNAPSHOT=`date -u +%Y%m%d%H%M%S`
 PV=$LAST_VERSION-2~ppa$SNAPSHOT
 LAUNCHPAD_PUBLIC_KEY=0x7633C10E
 
 # unpack
-tar -jxf pidgin-musictracker-*.tar.bz2
+tar -jxf pidgin-musictracker-snapshot-$SNAPSHOT.tar.bz2
 
 # repack with name in expected format for debian package
 # repack as .gz not .bz2 as the build infrastructure doesn't support .bz2 atm...
@@ -18,7 +17,7 @@ mv pidgin-musictracker-snapshot pidgin-musictracker_${PV}
 tar -zcf pidgin-musictracker_${PV}.tar.gz pidgin-musictracker_${PV}
 
 # apply debianization patch by Craig Small <csmall@debian.org>
-(cd pidgin-musictracker_${PV} ; cat ../pidgin-musictracker-debianize.diff | patch -p1 )
+(cd pidgin-musictracker_${PV} ; cat packaging/pidgin-musictracker-debianize.diff | patch -p1 )
 
 # rewrite the changelog
 # set the version, identify myself as the uploader, say this is snapshot
