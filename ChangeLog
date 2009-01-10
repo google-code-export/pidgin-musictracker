@@ -1,6 +1,18 @@
 ChangeLog for MusicTracker Pidgin Plugin
 ========================================
 
+2009-01-10 (Version 0.4.14)
+	* Correct encoding for it.po to UTF-8; Set the codeset for musictracker domain to UTF-8 (issue 69)
+	* Adjust WM_COPYDATA message parsing yet again, so it works with the format used by TTplayer as well (part of issue 70)
+	* Try to make it a bit clearer in the player selection dropdown that the Amarok DCOP interface is only for Amarok 1 (Amarok 2 uses the MPRIS interface)
+	* Avoid a potential initial crash in lastfm feed code
+	* Apply patch for Vagelume player support by Juan A. Suarez Romero (issue 72)
+	* Apply patch for MOC support by Peter Vizi (issue 74)
+	* Updated .ebuild file, add ./configure options --enable-xmm2 and --disable-xmms2 to allow control of if XMMS2 client support is built in or not (issue 77)
+	* Align Win32 build flags with those used by pidgin
+	* Fix some more warnings
+	* Add some more translations contributed via launchpad (https://translations.launchpad.net/pidgin-musictracker/trunk/+pots/musictracker)
+
 2008-12-22 (Version 0.4.13)
 	* Fix filter to operate on whole words only (issue 51)
 	* Fix filter to operate on 'now listening', not just the status message
