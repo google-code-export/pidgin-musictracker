@@ -5,9 +5,9 @@ pidigin-musictracker now supports a translatable UI.
 
 Additional translations are welcome. 
 
-Translation is hosted on [https://translations.launchpad.net/pidgin-musictracker/trunk/+pots/musictracker Launchpad]
+Translation is done online at [https://translations.launchpad.net/pidgin-musictracker/trunk/+pots/musictracker Launchpad]
 
-_Steps for if you don't want to use Launchpad_
+_Alternatively, if you don't want to use Launchpad_
 
 The file [http://code.google.com/p/pidgin-musictracker/source/browse/trunk#trunk/po po/musictracker.pot] is a template containing all the translatable messages.
 
