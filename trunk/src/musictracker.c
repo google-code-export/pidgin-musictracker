@@ -694,7 +694,7 @@ static PurplePluginInfo info = {
     NULL,
     PURPLE_PRIORITY_DEFAULT,
 
-    PLUGIN_ID,
+    "gtk-jturney-musictracker",
     "MusicTracker",
     VERSION,
 

@@ -6,7 +6,7 @@
 #include <gtk/gtk.h>
 #include "purple.h"
 
-#define PLUGIN_ID "core-musictracker"
+#define PLUGIN_ID "musictracker"
 #define STRLEN 100
 
 #define STATUS_OFF 0
