@@ -319,7 +319,7 @@ GtkWidget* pref_frame(PurplePlugin *plugin)
 
 	renderer = gtk_cell_renderer_toggle_new();
 	g_signal_connect(G_OBJECT(renderer), "toggled", G_CALLBACK(cb_broken_nowlistening_toggled), (gpointer) GTK_TREE_MODEL(liststore));
-	gtk_tree_view_insert_column_with_attributes(GTK_TREE_VIEW(treeview), -1, _("Broken 'now listening'"),
+	gtk_tree_view_insert_column_with_attributes(GTK_TREE_VIEW(treeview), -1, _("Don't use 'now listening'"),
 			renderer, "active", 4, NULL);
 
 
@@ -350,7 +350,7 @@ GtkWidget* pref_frame(PurplePlugin *plugin)
 
 	hbox = gtk_hbox_new(FALSE, 5);
 	gtk_box_pack_start(GTK_BOX(vbox2), hbox, FALSE, FALSE, 0);
-	widget = gtk_check_button_new_with_label(_("Don't change status message if protocol has working 'now listening'"));
+	widget = gtk_check_button_new_with_label(_("Don't change status message if protocol has 'now listening'"));
 	gtk_box_pack_start(GTK_BOX(hbox), widget, TRUE, TRUE, 0);
 	gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(widget), purple_prefs_get_bool(PREF_NOW_LISTENING_ONLY));
 	g_signal_connect(G_OBJECT(widget), "toggled", G_CALLBACK(cb_misc_toggled), (gpointer) PREF_NOW_LISTENING_ONLY);

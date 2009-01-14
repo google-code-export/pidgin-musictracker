@@ -763,6 +763,11 @@ init_plugin(PurplePlugin *plugin) {
 #endif /* ENABLE_NLS */
 
         // initialize translated plugin details
+        /* 
+           TRANSLATORS: this string controls the name musictracker appears as under the Tools menu
+           It's probably a good idea to treat 'MusicTracker' as a proper name, transliterate but don't translate
+         */
+        info.name        = _("MusicTracker");
         info.summary     = _("MusicTracker Plugin for Pidgin");
         info.description = g_strdup_printf("%s\n%s\n%s",
                                            _("The MusicTracker Plugin allows you to customize your status message with information about currently playing song from your music player. Portions initially adopted from pidgin-currenttrack project."),
