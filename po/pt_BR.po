@@ -269,7 +269,7 @@ msgstr ""
 
 #: src/musictracker.c:802
 msgid "MusicTracker Plugin for Pidgin"
-msgstr "MusickTracker"
+msgstr ""
 
 #: src/musictracker.c:804
 msgid ""
@@ -277,7 +277,7 @@ msgid ""
 "information about currently playing song from your music player. Portions "
 "initially adopted from pidgin-currenttrack project."
 msgstr ""
-"O MusickTracker permite que você personalize sua mensagem de status com "
+"O MusicTracker permite que você personalize sua mensagem de status com "
 "informações sobre a música que está sendo executada no seu player. "
 "Inicialmente foi uma \"adaptação de idéias\" do projeto \"currenttrack\" do "
 "pidgin."
