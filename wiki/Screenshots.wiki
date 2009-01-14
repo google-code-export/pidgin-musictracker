@@ -1,7 +1,9 @@
-# Screenshots
+#summary Screenshots
 
-A couple of screenshots of the configuration dialog box
+Configuration dialog box under windows, with per-account customization open
 
-http://code.google.com/p/pidgin-musictracker/wiki/musictracker_config_dialog_windows.png
-http://code.google.com/p/pidgin-musictracker/wiki/musictracker_config_dialog_with_popup_kde.png
+<img src="http://pidgin-musictracker.googlecode.com/svn/wiki/musictracker_config_dialog_windows.png"/>
 
+Configuration dialog box under KDE 3.5, with format "add" button menu active
+
+<img src="http://pidgin-musictracker.googlecode.com/svn/wiki/musictracker_config_dialog_with_popup_kde.png"/>
