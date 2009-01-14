@@ -1,4 +1,5 @@
-#summary Screenshots
+#summary Screenshots of pidigin-musictracker
+#labels Featured
 
 Configuration dialog box under windows, with per-account customization open
 
