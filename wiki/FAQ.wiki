@@ -135,7 +135,7 @@ playing' information, tick the "Don't change status message if protocol has
 working 'now listening'" option in the musictracker configuration.  This will cause musictracker to just send the 'now listening' element and not update
 the status message.
 
-Because musictracker needs help at the moment in some cases (specifically !GoogleTalk/XMPP) in determining if the 'now listening' element works properly or not, it is also possible to disable use of it in the account specific configuration.  At the moment, this is automatically turned on for all Googletalk and XMPP accounts.  This is correct for !GoogleTalk, but for non-!GoogleTalk XMPP accounts with working XEP-0118 you may wish to clear that setting to enable musictracker to use the 'now listening' support.
+Because musictracker needs help at the moment in some cases (specifically !GoogleTalk/XMPP) in determining if the 'now listening' element works properly or not, it is also possible to disable use of it in the account specific configuration.  At the moment, it is automatically disabled for all Googletalk and XMPP accounts.  This is correct for !GoogleTalk, but for non-!GoogleTalk XMPP accounts with working XEP-0118 you may wish to clear that setting to enable musictracker to use the 'now listening' support.
 
 == My Question isn't answered here! Help! ==
 
