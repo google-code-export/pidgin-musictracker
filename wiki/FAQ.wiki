@@ -113,7 +113,7 @@ There are links to binary packages for some distros on the main page.
 
 It would be nice have them for all major distros, but ... :effort:
 
-The downloads page offers a "Linux x86 plugin binary".  This shouldn't work anywhere but on the computer I used to built it, but often does.  Only people who are happy to troubleshoot their own problems in installing  it should be using it (and such people should be more than competent to build from source anyhow).  
+The downloads page offers a "Linux x86 plugin binary".  This shouldn't work anywhere but on the computer I used to build it, but often does.  Only people who are happy to troubleshoot their own problems should be installing that (and such people should be more than competent to build from source anyhow).  
 
 You can drop the .so into /usr/lib/pidgin/ or ~/.purple/plugins/.
 
