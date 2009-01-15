@@ -109,13 +109,15 @@ echo my-hacked-up-version >version
 ==11==
 * Where are the linux binary packages? *
 
-There are links to a few sources of binary packages on the main page.  
+There are links to binary packages for some distros on the main page.  
 
-I would be nice have them for all major distros, but ... :effort:
+It would be nice have them for all major distros, but ... :effort:
 
-The downloads page offers a "Linux x86 plugin binary".  This shouldn't work for anyone but me, but usually does.  You can drop the .so into /usr/lib/pidgin/ or ~/.purple/plugins/.
+The downloads page offers a "Linux x86 plugin binary".  This shouldn't work anywhere but on the computer I used to built it, but often does.  Only people who are happy to troubleshoot their own problems in installing  it should be using it (and such people should be more than competent to build from source anyhow).  
 
-Debian (and Debian-derived distros e.g. Ubuntu) will need to 'sudo ln -s /usr/lib/libpcre.so.3 /usr/lib/libpcre.so.0' for this binary to work.
+You can drop the .so into /usr/lib/pidgin/ or ~/.purple/plugins/.
+
+Debian (and Debian-derived distros e.g. Ubuntu) will also need to 'sudo ln -s /usr/lib/libpcre.so.3 /usr/lib/libpcre.so.0' for this binary to work.
 
 ==12==
 * What does a "protocol has 'now listening'" mean? *
