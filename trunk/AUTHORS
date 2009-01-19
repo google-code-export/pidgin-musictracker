@@ -12,3 +12,7 @@ ZeeGeek - XMMS2 support
 Phillip Camp - SqueezeCenter/SlimServer support
 Juan A. Suarez Romero <jasuarez@igalia.com> - Vagalume support
 peter.vizi - MOC support
+
+Translations are provided via Launchpad's Rosetta service and the authors(s) of
+each translation can be found under the description for that translation at
+https://translations.launchpad.net/pidgin-musictracker/trunk/+pots/musictracker
