@@ -64,15 +64,17 @@ Needless to say, this was a complete crock and was re-writtten for 0.4.6
 ==8==
 * Doesn't work with foobar2000 (artist/track/title are blank) *
 
-foobar2000 player support is pretty fragile
+Direct foobar2000 player support is pretty fragile
 
   * The title format needs to be the default "[%album artist% - ]['['%album%[ CD%discnumber%][ #%tracknumber%]']' ]%title%[ '//' %track artist%]"
   * The player paused state isn't detected
   * It doesn't work when player is set to minimize to tray
 
-You can use the [http://chron.visiondesigns.de/foobar2000/#foo_winamp_spam winamp spam] component
+However, foobar2000 is much better supported either via the [http://chron.visiondesigns.de/foobar2000/#foo_winamp_spam winamp spam] component (but this is still not perfect as some winamp messages we use aren't implemented) , or (better) via foobar2000 sending "now playing" messages for MSN, which we now catch.
 
-With later versions of musictracker not using winamp_spam actually works better, as some winamp messages we use aren't implemented, and foobar2000 sends "now playing" messages for MSN, which we now catch.
+So, with current versions of musictracker, the recommendation is to set player to 'auto-detect' or 'Messenger compatible', and not install the winamp-spam component.
+
+The direct foobar2000 support will be removed at some future date.
 
 ==9==
 * How do I build from source? *
