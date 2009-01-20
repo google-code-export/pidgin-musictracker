@@ -146,3 +146,5 @@ Please send a mail to the pidigin-musictracker general discussion mailing list i
 If you find a bug or have an enhancement request, put it into the Google Code issues tracker
 
 _(Please to not post bug reports in the comments. Start a new issue instead)_
+
+*Bug reports added as comments here will just be deleted.  Raise an issue instead*
