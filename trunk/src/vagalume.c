@@ -243,23 +243,25 @@ initialize_plugin(void)
 
   /* Add dbus filters to listen changes in Vagalume */
   connection = dbus_bus_get(DBUS_BUS_SESSION, NULL);
-  dbus_bus_add_match(connection,
-                     "type='signal', interface='"
-                     DBUS_VGL_IFACE
-                     "', member='notify'",
-                     NULL);
-  dbus_connection_add_filter(connection,
-                             dbus_handler,
-                             NULL,
-                             NULL);
+  if (connection)
+    {
+      dbus_bus_add_match(connection,
+                         "type='signal', interface='"
+                         DBUS_VGL_IFACE
+                         "', member='notify'",
+                         NULL);
+      dbus_connection_add_filter(connection,
+                                 dbus_handler,
+                                 NULL,
+                                 NULL);
+      check_and_fill_cache(connection);
 
-  check_and_fill_cache(connection);
+      /* Check every once in a while if Vagalume is running, and
+       * update the cache approppriately. Thus, if Vagalume is
+       * killed we can update the cache. */
 
-  /* Check every once in a while if Vagalume is running, and
-   * update the cache approppriately. Thus, if Vagalume is
-   * killed we can update the cache. */
-
-  g_timeout_add_seconds(CHECK_INTERVAL, (GSourceFunc) check_and_fill_cache, connection);
+      g_timeout_add_seconds(CHECK_INTERVAL, (GSourceFunc) check_and_fill_cache, connection);
+    }
 
   initialized = TRUE;
 }
