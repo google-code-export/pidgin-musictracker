@@ -153,6 +153,10 @@ trackinfo_changed(const struct TrackInfo* one, const struct TrackInfo* two)
   if ((one == NULL) && (two == NULL))
     return FALSE;
 
+  // a null trackinfo is stored in mostrecent_ti as a STATUS_OFF one...
+  if ((one == NULL) && (two != NULL) && (two->status == STATUS_OFF))
+    return FALSE;
+
   if ((one == NULL) || (two == NULL))
     return TRUE;
 
@@ -300,6 +304,7 @@ set_status_tune (PurpleAccount *account, gboolean validStatus, struct TrackInfo 
                 // sets the changed flag, making this call non-idempotent (in the sense that it may
                 // cause protocol to do all the work of sending the status again, even though it
                 // hasn't actually changed).  Explicitly resetting the attributes works around that...
+                // (See http://developer.pidgin.im/ticket/7081)
                 GList *attrs = NULL;
                 attrs = g_list_append(attrs, PURPLE_TUNE_ARTIST);
                 attrs = g_list_append(attrs, 0);
@@ -308,6 +313,18 @@ set_status_tune (PurpleAccount *account, gboolean validStatus, struct TrackInfo 
                 attrs = g_list_append(attrs, PURPLE_TUNE_ALBUM);
                 attrs = g_list_append(attrs, 0);
                 attrs = g_list_append(attrs, PURPLE_TUNE_TIME);
+                attrs = g_list_append(attrs, 0);
+                attrs = g_list_append(attrs, PURPLE_TUNE_GENRE);
+                attrs = g_list_append(attrs, 0);
+                attrs = g_list_append(attrs, PURPLE_TUNE_COMMENT);
+                attrs = g_list_append(attrs, 0);
+                attrs = g_list_append(attrs, PURPLE_TUNE_TRACK);
+                attrs = g_list_append(attrs, 0);
+                attrs = g_list_append(attrs, PURPLE_TUNE_YEAR);
+                attrs = g_list_append(attrs, 0);
+                attrs = g_list_append(attrs, PURPLE_TUNE_URL);
+                attrs = g_list_append(attrs, 0);
+                attrs = g_list_append(attrs, PURPLE_TUNE_FULL);
                 attrs = g_list_append(attrs, 0);
                 purple_status_set_active_with_attrs_list(status, FALSE, attrs);
                 g_list_free(attrs);
@@ -458,6 +475,8 @@ set_userstatus_for_active_accounts (char *userstatus, struct TrackInfo *ti)
         // stash trackinfo in case we need it elsewhere....
         if (ti)
           mostrecent_ti = *ti;
+        else
+          mostrecent_ti.status = STATUS_OFF;
 }
 
 //--------------------------------------------------------------------

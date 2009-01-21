@@ -13,7 +13,7 @@
 #define STATUS_PAUSED 1
 #define STATUS_NORMAL 2
 
-#define INTERVAL 10000
+#define INTERVAL 15000
 #define DBUS_TIMEOUT 100
 
 // Global preferences
