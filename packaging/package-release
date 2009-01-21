@@ -67,6 +67,11 @@ else
  ~/googlecode_upload.py -s "Windows plugin installer" -p pidgin-musictracker -l Featured,Beta,OpSys-Windows,Type-Installer $WORKDIR/installer/pidgin-musictracker-$VERSION.exe
  ~/googlecode_upload.py -s "Source package"           -p pidgin-musictracker -l Featured,Beta,OpSys-All,Type-Source        pidgin-musictracker-$VERSION.tar.bz2
 
+ # upload source tarball to release area on my webhost as well
+ scp $UPLOAD_CREDENTIALS \
+     pidgin-musictracker-$VERSION.tar.bz2 \
+     $UPLOAD_TARGET/pidgin-musictracker
+
  # remember this version number to use as the base for ppa package names
  echo $VERSION >~/.pidgin-musictracker-release-version
 fi
