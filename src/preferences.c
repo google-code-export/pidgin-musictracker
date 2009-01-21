@@ -165,10 +165,9 @@ void cb_custom_toggled(GtkCellRendererToggle *cell, char *path, gpointer data)
 		g_value_unset(&value);
 
 		gtk_list_store_set(GTK_LIST_STORE(model), &iter, 3, flag, -1);
+                // clear status before we update the preference
+                set_status(account, "", 0);
 		purple_prefs_set_bool(pref, flag);
-		if (flag) {
-			set_status(account, "", 0);
-		}
 	}
 }
 
