@@ -70,7 +70,7 @@ struct PlayerInfo g_players[] = {
 	{ "Winamp", get_winamp_info, 0 },
 	{ "Windows Media Player", get_wmp_info, 0 },
 	{ "iTunes", get_itunes_info, 0 },
-	{ "Messenger compatible" , get_msn_compat_info, get_msn_compat_pref },
+	{ "Messenger compatible interface" , get_msn_compat_info, get_msn_compat_pref },
 	{ "Foobar2000", get_foobar2000_info, 0 },
 #endif
 	{ "MPD", get_mpd_info, get_mpd_pref },
