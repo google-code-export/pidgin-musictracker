@@ -48,7 +48,7 @@ gboolean get_moc_info(struct TrackInfo* ti) {
   char* pch; // used for tokenizing
   char temp[BUFF_SIZE]; // store response from mocp
   char* ret;
-  FILE* pipe = popen("mocp -Q '%song ;%artist ;%album ;%state;%ts ;%cs ;%file ; '", "r");
+  FILE* pipe = popen("mocp -Q '%song ;%artist ;%album ;%state;%ts ;%cs ;%file ; ' 2>/dev/null", "r");
 
   if (!pipe) {
     trace("No mocp");
