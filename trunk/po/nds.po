@@ -1,4 +1,4 @@
-# Spanish translation for pidgin-musictracker
+# German, Low translation for pidgin-musictracker
 # Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
 # This file is distributed under the same license as the pidgin-musictracker package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
@@ -7,10 +7,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pidgin-musictracker\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/pidgin-musictracker/issues/\n"
-"POT-Creation-Date: 2009-01-19 21:41+0000\n"
-"PO-Revision-Date: 2009-01-13 15:27+0000\n"
-"Last-Translator: Williams Orellana <williams.orellana@gmail.com>\n"
-"Language-Team: Spanish <es@li.org>\n"
+"POT-Creation-Date: 2009-01-26 17:49+0000\n"
+"PO-Revision-Date: 2009-01-22 19:24+0000\n"
+"Last-Translator: r0m <Unknown>\n"
+"Language-Team: German, Low <nds@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -19,37 +19,37 @@ msgstr ""
 
 #: src/actions.c:65
 msgid "Status to Set When Player is off:"
-msgstr "Establecer el estado cuando el reproductor este apagado:"
+msgstr "Status der gesetzt wird, wenn kein Player geöffnet ist:"
 
 #: src/actions.c:83 src/actions.c:109
 msgid "Activate Status Changing"
-msgstr "Cambiar el estado a activo"
+msgstr "Aktiviere den Statuswechsel"
 
 #: src/actions.c:87 src/actions.c:109
 msgid "Deactivate Status Changing"
-msgstr "Cambiar el estado a inactivo"
+msgstr "Deaktiviere den Statuswechsel"
 
 #: src/actions.c:112
 msgid "Change Player-Off Status..."
-msgstr "Cambiar el estado a reproductor apagado..."
+msgstr "Wechsle den geschlossenen Player Status"
 
 #: src/lastfm.c:134
 msgid "Username:"
-msgstr "Nombre de Usuario:"
+msgstr "Benutzername:"
 
 #: src/lastfm.c:143
 msgid "poll interval:"
-msgstr ""
+msgstr "Umfrageintervall:"
 
 #: src/lastfm.c:148
 msgid ""
 "This is the interval (in seconds) at which we check the Last.fm feed for "
 "changes"
-msgstr ""
+msgstr "Dies ist der Intervall (in Sekunden), der Last.fm auf Updates prüft"
 
 #: src/lastfm.c:155
 msgid "quiet interval:"
-msgstr ""
+msgstr "stiller Intervall:"
 
 #: src/lastfm.c:160
 msgid ""
@@ -60,129 +60,126 @@ msgstr ""
 
 #: src/mpd.c:113
 msgid "Hostname:"
-msgstr "Nombre del equipo:"
+msgstr "Rechnername:"
 
 #: src/mpd.c:121
 msgid "Port:"
-msgstr "Puerto:"
+msgstr "Port:"
 
 #: src/mpd.c:129
 msgid "Password:"
-msgstr "Contraseña:"
+msgstr "Passwort"
 
 #: src/preferences.c:243
 msgid "Player:"
-msgstr "Reproductor:"
+msgstr "Player:"
 
 #: src/preferences.c:249
 msgid "Auto-detect"
-msgstr "Auto-detectar"
+msgstr "Automatische Erkennung"
 
 #: src/preferences.c:259
 msgid "Artist"
-msgstr "Artista"
+msgstr "Künstler"
 
 #: src/preferences.c:260
 msgid "Album"
-msgstr "Álbum"
+msgstr "Album"
 
 #: src/preferences.c:261
 msgid "Title"
-msgstr "Título"
+msgstr "Titel"
 
 #: src/preferences.c:262
 msgid "Track Duration"
-msgstr "Duración de la Pista"
+msgstr "Track dauer"
 
 #: src/preferences.c:263
 msgid "Elapsed Track Time"
-msgstr "Tiempo Transcurrido de la Pista"
+msgstr "Vergangene Track Zeit"
 
 #: src/preferences.c:264
 msgid "Progress Bar"
-msgstr "Barra de progreso"
+msgstr "Ladebalken"
 
 #: src/preferences.c:265
 msgid "Player"
-msgstr "Reproductor"
+msgstr "Player"
 
 #: src/preferences.c:266
 msgid "Music Symbol (may not display on some networks)"
-msgstr "Simbolo musical (puede no ser mostrado en algunas redes)"
+msgstr "Musik-Symbol (funktioniert nicht mit allen Netzwerken)"
 
 #: src/preferences.c:270
 msgid "Status Format"
-msgstr "Formato de Estado"
+msgstr "Statusformatierung"
 
 #: src/preferences.c:277
 msgid "Playing:"
-msgstr "Escuchando:"
+msgstr "Aktuell läuft"
 
 #: src/preferences.c:278
 msgid "Paused:"
-msgstr "Pausado:"
+msgstr "Pausiert:"
 
 #: src/preferences.c:279
 msgid "Stopped/Off:"
-msgstr "Detenido/Apagado:"
+msgstr "Gestoppt:"
 
 #: src/preferences.c:303
 msgid "Screen Name"
-msgstr "Nombre en pantalla"
+msgstr "Anzeigename"
 
 #: src/preferences.c:305
 msgid "Protocol"
-msgstr "Protocolo"
+msgstr "Protokoll"
 
 #: src/preferences.c:311
 msgid "Playing Status Format"
-msgstr "Formato de Estado de Reproducción"
+msgstr "Gespieltes Statusformat"
 
 #: src/preferences.c:316
 msgid "Disable"
-msgstr "Deshabilitado"
+msgstr "deaktivieren"
 
 #: src/preferences.c:322
 msgid "Don't use 'now listening'"
-msgstr ""
+msgstr "Benutze nicht 'hört gerade'"
 
 #: src/preferences.c:326
 msgid ""
 "Customize playing status format, or disable status changing altogether for "
 "specific accounts"
 msgstr ""
-"Personalizar el formato estado de reproducción, cambiar o desactivar por "
-"completo el estado de cuentas específicas"
 
 #: src/preferences.c:336
 msgid "Other settings"
-msgstr "Otros ajustes"
+msgstr "Andere Einstellungen"
 
 #: src/preferences.c:346
 msgid "Don't change status message when away"
-msgstr "No cambie el mensaje de estado cuando este ausente"
+msgstr "Nicht die Statusnachricht verändern, wenn abwesend"
 
 #: src/preferences.c:353
 msgid "Don't change status message if protocol has 'now listening'"
 msgstr ""
-"No cambie el mensaje de estado si el protocolo tiene activo \"escuchando "
-"ahora\""
+"Nicht Statusnachricht wechseln, wenn 'hört gerade' Protocol angeschaltet ist"
 
 #: src/preferences.c:359
 msgid "Status Filter"
-msgstr "Filtro de Estado"
+msgstr "Statusfilter"
 
 #: src/preferences.c:369
 msgid "Enable status filter"
-msgstr "Actival el Filtro de Estado"
+msgstr "Aktiviere den Statusfilter"
 
 #: src/preferences.c:376
 msgid "Blacklist (comma-delimited):"
-msgstr "Lista Negra (delimitada por comas):"
+msgstr "Ignorierliste"
 
 #: src/preferences.c:385
 msgid "Mask character:"
-msgstr "Máscara de carácter:"
+msgstr ""
 
 #: src/squeezecenter.c:58
 msgid ""
@@ -200,19 +197,19 @@ msgstr ""
 
 #: src/squeezecenter.c:860
 msgid "Player Order:"
-msgstr ""
+msgstr "Player Reihenfolge"
 
 #: src/squeezecenter.c:868
 msgid "CLI User:"
-msgstr ""
+msgstr "CLI Benutzer"
 
 #: src/squeezecenter.c:876
 msgid "CLI Password:"
-msgstr ""
+msgstr "CLI Passwort"
 
 #: src/squeezecenter.c:888
 msgid "Server:"
-msgstr "Servidor:"
+msgstr "Server:"
 
 #: src/squeezecenter.c:893
 msgid "Squeezecenter Version:"
@@ -220,7 +217,7 @@ msgstr ""
 
 #: src/squeezecenter.c:898
 msgid "Players:"
-msgstr "Reproductores:"
+msgstr ""
 
 #: src/squeezecenter.c:901
 #, c-format
@@ -229,15 +226,15 @@ msgstr ""
 
 #: src/squeezecenter.c:910
 msgid "Last Command:"
-msgstr "Último comando:"
+msgstr "Letzter Befehl:"
 
 #: src/squeezecenter.c:915
 msgid "Last Reply:"
-msgstr ""
+msgstr "Letzte Antwort:"
 
 #: src/squeezecenter.c:921
 msgid "Last Error:"
-msgstr "Último Error:"
+msgstr "Letzter Fehler:"
 
 #: src/xmmsctrl.c:125
 msgid "Title Delimiter Character:"
@@ -255,14 +252,14 @@ msgstr ""
 
 #. TRANSLATORS: this string controls the name musictracker appears as under the Tools menu
 #. It's probably a good idea to treat 'MusicTracker' as a proper name, transliterate but don't translate
-#. 
+#.
 #: src/musictracker.c:770
 msgid "MusicTracker"
 msgstr ""
 
 #: src/musictracker.c:771
 msgid "MusicTracker Plugin for Pidgin"
-msgstr "Plugin MusicTracker para Pidgin"
+msgstr ""
 
 #: src/musictracker.c:773
 msgid ""
@@ -270,20 +267,18 @@ msgid ""
 "information about currently playing song from your music player. Portions "
 "initially adopted from pidgin-currenttrack project."
 msgstr ""
-"El plugin MusicTracker te permite personalizar tu mensaje de estado con "
-"información sobre la canción que se está reproduciendo desde tu reproductor "
-"de música. Porciones inicialmente adoptadas del proyecto pidgin-currenttrack."
 
 #: src/musictracker.c:775
 msgid ""
 "WMP support via WMPuICE by Christian Mueller from http://www.mediatexx.com."
 msgstr ""
+"WMP Unterstützung via WMPuICE von Christian Mueller seitens http://www."
+"mediatexx.com."
 
 #: src/musictracker.c:779
 msgid ""
 "Fix translation bugs at http://translations.launchpad.net/pidgin-"
 "musictracker/trunk/+pots/musictracker"
 msgstr ""
-"Corregir los errores de traducción en "
-"http://translations.launchpad.net/pidgin-"
+"Verbessere Übersetzungsfehler auf: http://translations.launchpad.net/pidgin-"
 "musictracker/trunk/+pots/musictracker"
