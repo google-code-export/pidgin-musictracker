@@ -238,7 +238,7 @@ set_status_tune (PurpleAccount *account, gboolean validStatus, struct TrackInfo 
 	{
 		if (ti == NULL)
 			return FALSE;
-		active = (ti->status == STATUS_NORMAL) || (ti->status == STATUS_PAUSED);
+		active = (ti->status == STATUS_NORMAL);
 	}
 	else
 	{		
