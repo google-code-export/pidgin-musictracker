@@ -82,7 +82,7 @@ The direct foobar2000 support will be removed at some future date.
 Download and unpack the pidgin-musictracker-n.n.nn.tar.bz2 source package, then
 
 {{{
-./configure
+./configure --prefix=/usr
 make
 }}}
 
