@@ -249,9 +249,10 @@ gboolean dbus_g_running(DBusGConnection *connection, const char *name)
  * care to strip forward slashes which have special meaning
  */
 
-void build_pref(char *dest, const char *format, const char* str1, const char* str2)
+char *
+build_pref(const char *format, const char* str1, const char* str2)
 {
-	char buf1[strlen(str1)], buf2[strlen(str2)];
+	char buf1[strlen(str1)+1], buf2[strlen(str2)+1];
 
 	int i=0, j=0, len;
 
@@ -270,7 +271,9 @@ void build_pref(char *dest, const char *format, const char* str1, const char* st
 	}
 	buf2[j] = 0;
 
-	sprintf(dest, format, buf1, buf2);
+        char *dest = g_strdup_printf(format, buf1, buf2);
+        trace("build_pref: %s", dest);
+        return dest;
 }
 
 //--------------------------------------------------------------------

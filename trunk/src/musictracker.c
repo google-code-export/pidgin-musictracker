@@ -262,11 +262,13 @@ set_status_tune (PurpleAccount *account, gboolean validStatus, struct TrackInfo 
         // this is particularly a problem for googletalk, which really expects tune info
         // to replace the status message, and lots of peopple use...
         //
-	char buf[100];
-	build_pref(buf, PREF_BROKEN_NOWLISTENING, 
-			purple_account_get_username(account),
-			purple_account_get_protocol_name(account));
-	if (purple_prefs_get_bool(buf))
+	char *buf = build_pref(PREF_BROKEN_NOWLISTENING,
+                               purple_account_get_username(account),
+                               purple_account_get_protocol_name(account));
+        gboolean dont_use_tune_status = purple_prefs_get_bool(buf);
+        g_free(buf);
+
+	if (dont_use_tune_status)
           {
             trace("Won't try to use status tune on account '%s' protocol '%s', I've been told it's broken", purple_account_get_username(account), purple_account_get_protocol_name(account));
             return FALSE;
@@ -342,22 +344,26 @@ set_status (PurpleAccount *account, char *text, struct TrackInfo *ti)
 	gboolean				b				= FALSE;
 
 	// check for protocol status format override
-	char buf[100];
 	gboolean overriden = FALSE;
 	const char *override;
 
-	build_pref(buf, PREF_CUSTOM_DISABLED, 
+        char *buf = build_pref(PREF_CUSTOM_DISABLED,
 			purple_account_get_username(account),
 			purple_account_get_protocol_name(account));
-	if (purple_prefs_get_bool(buf)) {
+        gboolean status_changing_disabled = purple_prefs_get_bool(buf);
+        g_free(buf);
+
+	if (status_changing_disabled) {
 		trace("Status changing disabled for %s account", purple_account_get_username(account));
 		return TRUE;
 	}
 
-	build_pref(buf, PREF_CUSTOM_FORMAT, 
+	buf = build_pref(PREF_CUSTOM_FORMAT,
 			purple_account_get_username(account),
 			purple_account_get_protocol_name(account));
 	override = purple_prefs_get_string(buf);
+        g_free(buf);
+
 	if (ti && (ti->status == STATUS_NORMAL) && override && (*override != 0)) {
 		text = generate_status(override, ti);
 		overriden = TRUE;
@@ -618,7 +624,7 @@ PurpleCmdRet musictracker_cmd_nowplaying(PurpleConversation *conv, const gchar *
 
 static gboolean
 plugin_load(PurplePlugin *plugin) {
-	trace("Plugin loaded.");
+	trace("Plugin loading.");
 	g_tid = purple_timeout_add(INTERVAL, &cb_timeout, 0);
 	g_plugin = plugin;
 
@@ -626,22 +632,28 @@ plugin_load(PurplePlugin *plugin) {
 	GList *accounts = purple_accounts_get_all();
 	while (accounts) {
 		PurpleAccount *account = (PurpleAccount*) accounts->data;
-		char buf[100];
-		build_pref(buf, PREF_CUSTOM_FORMAT, 
-					purple_account_get_username(account),
-					purple_account_get_protocol_name(account));
+                trace("Checking if we need to set default preferences for %s on protocol %s", purple_account_get_username(account),
+                      purple_account_get_protocol_name(account));
+
+		char *buf = build_pref(PREF_CUSTOM_FORMAT,
+                                       purple_account_get_username(account),
+                                       purple_account_get_protocol_name(account));
 		if (!purple_prefs_exists(buf)) {
 			purple_prefs_add_string(buf, "");
 		}
-		build_pref(buf, PREF_CUSTOM_DISABLED, 
-					purple_account_get_username(account),
-					purple_account_get_protocol_name(account));
+                g_free(buf);
+
+		buf = build_pref(PREF_CUSTOM_DISABLED,
+                                 purple_account_get_username(account),
+                                 purple_account_get_protocol_name(account));
 		if (!purple_prefs_exists(buf)) {
 			purple_prefs_add_bool(buf, FALSE);
 		}
-		build_pref(buf, PREF_BROKEN_NOWLISTENING, 
-					purple_account_get_username(account),
-					purple_account_get_protocol_name(account));
+                g_free(buf);
+
+		buf = build_pref(PREF_BROKEN_NOWLISTENING,
+                                 purple_account_get_username(account),
+                                 purple_account_get_protocol_name(account));
 		if (!purple_prefs_exists(buf)) {
                         // use a crude guess for the initial state of the broken now listening flag...
                         // there's no good way to do this automatically, hence the reason for offloading
@@ -655,11 +667,13 @@ plugin_load(PurplePlugin *plugin) {
                             purple_prefs_add_bool(buf, FALSE);
                           }
 		}
+                g_free(buf);
 
 		accounts = accounts->next;
 	}
 
         // register the 'nowplaying' commmand
+	trace("Registering nowplaying command.");
         cmdid_nowplaying = purple_cmd_register("nowplaying",
                             "", 
                             PURPLE_CMD_P_DEFAULT,
@@ -679,6 +693,7 @@ plugin_load(PurplePlugin *plugin) {
                             NULL);
 
 	g_run = 1;
+	trace("Plugin loaded.");
     return TRUE;
 }
 

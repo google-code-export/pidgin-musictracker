@@ -100,11 +100,10 @@ void cb_custom_edited(GtkCellRendererText *renderer, char *path, char *str, gpoi
                 account = g_value_get_pointer(&value);
                 g_value_unset(&value);
 
-		char pref[STRLEN];
-		build_pref(pref, PREF_CUSTOM_FORMAT, purple_account_get_username(account), purple_account_get_protocol_name(account));
-
+		char *pref = build_pref(PREF_CUSTOM_FORMAT, purple_account_get_username(account), purple_account_get_protocol_name(account));
 		gtk_list_store_set(GTK_LIST_STORE(model), &iter, 2, str, -1);
 		purple_prefs_set_string(pref, str);
+                g_free(pref);
 	}
 }
 
@@ -122,20 +121,18 @@ void cb_broken_nowlistening_toggled(GtkCellRendererToggle *cell, char *path, gpo
       assert(G_VALUE_HOLDS_POINTER(&value));
       account = g_value_get_pointer(&value);
       g_value_unset(&value);
-      
+
       gboolean flag;
-      char pref[STRLEN];
-      
-      build_pref(pref, PREF_BROKEN_NOWLISTENING, purple_account_get_username(account), purple_account_get_protocol_name(account));
-      
+      char * pref = build_pref(PREF_BROKEN_NOWLISTENING, purple_account_get_username(account), purple_account_get_protocol_name(account));
       memset(&value, 0, sizeof(value));
       gtk_tree_model_get_value(model, &iter, 4, &value);
       assert(G_VALUE_HOLDS_BOOLEAN(&value));
       flag = !g_value_get_boolean(&value);
       g_value_unset(&value);
-      
+
       gtk_list_store_set(GTK_LIST_STORE(model), &iter, 4, flag, -1);
       purple_prefs_set_bool(pref, flag);
+      g_free(pref);
     }
 }
 
@@ -154,9 +151,7 @@ void cb_custom_toggled(GtkCellRendererToggle *cell, char *path, gpointer data)
                 g_value_unset(&value);
 
 		gboolean flag;
-		char pref[STRLEN];
-
-		build_pref(pref, PREF_CUSTOM_DISABLED, purple_account_get_username(account), purple_account_get_protocol_name(account));
+		char *pref = build_pref(PREF_CUSTOM_DISABLED, purple_account_get_username(account), purple_account_get_protocol_name(account));
 
 		memset(&value, 0, sizeof(value));
 		gtk_tree_model_get_value(model, &iter, 3, &value);
@@ -168,6 +163,7 @@ void cb_custom_toggled(GtkCellRendererToggle *cell, char *path, gpointer data)
                 // clear status before we update the preference
                 set_status(account, "", 0);
 		purple_prefs_set_bool(pref, flag);
+                g_free(pref);
 	}
 }
 
@@ -286,16 +282,20 @@ GtkWidget* pref_frame(PurplePlugin *plugin)
 		const char *username = purple_account_get_username(account);
                 const char *protocolname = purple_account_get_protocol_name(account);
 
-		char buf1[100], buf2[100], buf3[100];
-		build_pref(buf1, PREF_CUSTOM_FORMAT, username, protocolname);
-		build_pref(buf2, PREF_CUSTOM_DISABLED, username, protocolname);
-		build_pref(buf3, PREF_BROKEN_NOWLISTENING, username, protocolname);
+		char *buf1 = build_pref(PREF_CUSTOM_FORMAT, username, protocolname);
+		char *buf2 = build_pref(PREF_CUSTOM_DISABLED, username, protocolname);
+		char *buf3 = build_pref(PREF_BROKEN_NOWLISTENING, username, protocolname);
 		trace("%s %s", buf1, purple_prefs_get_string(buf1));
 
 		gtk_list_store_append(liststore, &iter);
 		gtk_list_store_set(liststore, &iter, 0, username, 1, purple_account_get_protocol_name(account),
 				2, purple_prefs_get_string(buf1), 3, purple_prefs_get_bool(buf2),
 				4, purple_prefs_get_bool(buf3), 5, account, -1);
+
+                g_free(buf1);
+                g_free(buf2);
+                g_free(buf3);
+                
 		accounts = accounts->next;
 	}
 	treeview = gtk_tree_view_new_with_model(GTK_TREE_MODEL(liststore));
