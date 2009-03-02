@@ -4,8 +4,7 @@ Name "MusicTracker Plugin for Pidgin"
 ; The file to write
 OutFile "pidgin-musictracker-${VERSION}.exe"
 
-; The default installation directory
-InstallDir $PROGRAMFILES\Pidgin
+!define PIDGIN_REG_KEY                          "SOFTWARE\pidgin"
 
 ;--------------------------------
 
@@ -32,3 +31,26 @@ Section "" ;No components page, name is not important
 
 SectionEnd ; end the section
 
+;--------------------------------
+
+; based on the .onInit function from pidgin's .nsi script
+Function .onInit
+
+; If install path was set on the command, use it.
+StrCmp $INSTDIR "" 0 instdir_done
+
+; If pidgin is currently installed, we should default to where it is currently installed
+ClearErrors
+ReadRegStr $INSTDIR HKCU "${PIDGIN_REG_KEY}" ""
+IfErrors +2
+StrCmp $INSTDIR "" 0 instdir_done
+ClearErrors
+ReadRegStr $INSTDIR HKLM "${PIDGIN_REG_KEY}" ""
+IfErrors +2
+StrCmp $INSTDIR "" 0 instdir_done
+
+; The default installation directory
+StrCpy $INSTDIR "$PROGRAMFILES\Pidgin"
+
+  instdir_done:
+FunctionEnd
