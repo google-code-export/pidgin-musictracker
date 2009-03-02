@@ -137,7 +137,7 @@ If you don't want musictracker to set the status message for protocols where can
 playing' information, tick the "Don't change status message if protocol has
 'now listening'" option in the musictracker configuration.  This will cause musictracker to just send the 'now listening' element and not update the status message.
 
-It is also possible to disable use of it in the account specific configuration.  At the moment, it is automatically disabled for all Googletalk and XMPP accounts.  This is useful for !GoogleTalk, as the 'now listening' element is not implemented in the standard XMPP way and doesn't work well with pidgin, but for non-!GoogleTalk XMPP accounts with working XEP-0118 you may wish to clear that setting to enable musictracker to use the 'now listening' support.
+It is also possible to disable use of it in the account specific configuration.  At the moment, it is automatically disabled for all Googletalk and XMPP accounts.  This is useful for !GoogleTalk, as the 'now listening' element is not implemented in the standard XMPP way and doesn't work that well with musictracker, but for non-!GoogleTalk XMPP accounts with working XEP-0118 you may wish to clear that setting to enable musictracker to use the 'now listening' support.
 
 ==13==
 * How do I generate a debug log when pidgin is crashing? *
