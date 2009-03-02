@@ -101,7 +101,9 @@ installer: $(INSTALLER)
 
 $(PO_INSTALL_SCRIPT): ../po/LINGUAS
 	echo "; Automatically generated installer script include for translation .mo files" > $(PO_INSTALL_SCRIPT)
-	for i in `cat ../po/LINGUAS` ; do if [ -e ../po/$$i.gmo -a $$i != "en@quot" -a $$i != "en@boldquot" ] ; then echo "File /oname=locale\\$$i\\LC_MESSAGES\\musictracker.mo ..\\po\\$$i.gmo" >>$(PO_INSTALL_SCRIPT) ; fi ; done
+	for i in `cat ../po/LINGUAS` ; do if [ -e ../po/$$i.gmo -a $$i != "en@quot" -a $$i != "en@boldquot" ] ; then \
+             echo "CreateDirectory \$$INSTDIR\\locale\\$$i\\LC_MESSAGES" >>$(PO_INSTALL_SCRIPT) ; \
+             echo "File /oname=locale\\$$i\\LC_MESSAGES\\musictracker.mo ..\\po\\$$i.gmo" >>$(PO_INSTALL_SCRIPT) ; fi ; done
 
 $(INSTALLER): $(TARGET).dll $(INSTALL_SCRIPT) $(PO_INSTALL_SCRIPT)
 	strip $(TARGET).dll
