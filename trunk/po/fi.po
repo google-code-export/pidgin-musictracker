@@ -279,10 +279,7 @@ msgid ""
 msgstr ""
 
 #: src/musictracker.c:779
+#, c-format
 msgid ""
-"Fix translation bugs at http://translations.launchpad.net/pidgin-"
-"musictracker/trunk/+pots/musictracker"
-msgstr ""
-"Korjaa käännöksen virheitä osoitteessa "
-"http://translations.launchpad.net/pidgin-"
-"musictracker/trunk/+pots/musictracker"
+"Fix translation bugs at %s"
+msgstr "Korjaa käännöksen virheitä osoitteessa %s"

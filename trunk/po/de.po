@@ -297,9 +297,7 @@ msgstr ""
 "Mueller(http://www.mediatexx.com)"
 
 #: src/musictracker.c:779
+#, c-format
 msgid ""
-"Fix translation bugs at http://translations.launchpad.net/pidgin-"
-"musictracker/trunk/+pots/musictracker"
-msgstr ""
-"Übersetzungsfehler können auf http://translations.launchpad.net/pidgin-"
-"musictracker/trunk/+pots/musictracker behoben werden"
+"Fix translation bugs at %s"
+msgstr "Übersetzungsfehler können auf %s"
