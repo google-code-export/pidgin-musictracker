@@ -29,8 +29,8 @@ gboolean winamp_get_w(const wchar_t *filename, const wchar_t *key, char *dest)
 
 	SIZE_T bytesRead;
         wchar_t wdest[STRLEN];
-	ReadProcessMemory(hProcess, winamp_value, wdest, STRLEN-1, &bytesRead);
-	wdest[bytesRead] = 0;
+	ReadProcessMemory(hProcess, winamp_value, wdest, (STRLEN-1)*sizeof(wchar_t), &bytesRead);
+	wdest[bytesRead/sizeof(wchar_t)] = 0;
 
         WideCharToMultiByte(CP_UTF8, 0, wdest, -1, dest, STRLEN, NULL, NULL);
  	trace("Got info '%s', return value %d", dest, rc);
