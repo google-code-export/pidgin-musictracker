@@ -1,4 +1,4 @@
-# German, Low translation for pidgin-musictracker
+# Polish translation for pidgin-musictracker
 # Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
 # This file is distributed under the same license as the pidgin-musictracker package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
@@ -6,11 +6,11 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: pidgin-musictracker\n"
-"Report-Msgid-Bugs-To: http://code.google.com/p/pidgin-musictracker/issues/\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-01-26 19:02+0000\n"
-"PO-Revision-Date: 2009-01-22 19:24+0000\n"
-"Last-Translator: r0m <Unknown>\n"
-"Language-Team: German, Low <nds@li.org>\n"
+"PO-Revision-Date: 2009-01-28 11:15+0000\n"
+"Last-Translator: Mateusz Szyper <mateyko5@o2.pl>\n"
+"Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -19,37 +19,37 @@ msgstr ""
 
 #: src/actions.c:65
 msgid "Status to Set When Player is off:"
-msgstr "Status der gesetzt wird, wenn kein Player geöffnet ist:"
+msgstr "Status do ustawienia gdy Odtwarzacz jest wyłączony"
 
 #: src/actions.c:83 src/actions.c:109
 msgid "Activate Status Changing"
-msgstr "Aktiviere den Statuswechsel"
+msgstr "Aktywuj Zmienianie Statusu"
 
 #: src/actions.c:87 src/actions.c:109
 msgid "Deactivate Status Changing"
-msgstr "Deaktiviere den Statuswechsel"
+msgstr "Dezaktywuj Zmienianie Statusu"
 
 #: src/actions.c:112
 msgid "Change Player-Off Status..."
-msgstr "Wechsle den geschlossenen Player Status"
+msgstr ""
 
 #: src/lastfm.c:134
 msgid "Username:"
-msgstr "Benutzername:"
+msgstr "Nazwa użytkownika"
 
 #: src/lastfm.c:143
 msgid "poll interval:"
-msgstr "Umfrageintervall:"
+msgstr ""
 
 #: src/lastfm.c:148
 msgid ""
 "This is the interval (in seconds) at which we check the Last.fm feed for "
 "changes"
-msgstr "Dies ist der Intervall (in Sekunden), der Last.fm auf Updates prüft"
+msgstr ""
 
 #: src/lastfm.c:155
 msgid "quiet interval:"
-msgstr "stiller Intervall:"
+msgstr ""
 
 #: src/lastfm.c:160
 msgid ""
@@ -60,91 +60,91 @@ msgstr ""
 
 #: src/mpd.c:113
 msgid "Hostname:"
-msgstr "Rechnername:"
+msgstr "Nazwa hosta:"
 
 #: src/mpd.c:121
 msgid "Port:"
-msgstr "Port:"
+msgstr "Port"
 
 #: src/mpd.c:129
 msgid "Password:"
-msgstr "Passwort"
+msgstr "Hasło:"
 
 #: src/preferences.c:243
 msgid "Player:"
-msgstr "Player:"
+msgstr ""
 
 #: src/preferences.c:249
 msgid "Auto-detect"
-msgstr "Automatische Erkennung"
+msgstr ""
 
 #: src/preferences.c:259
 msgid "Artist"
-msgstr "Künstler"
+msgstr ""
 
 #: src/preferences.c:260
 msgid "Album"
-msgstr "Album"
+msgstr ""
 
 #: src/preferences.c:261
 msgid "Title"
-msgstr "Titel"
+msgstr ""
 
 #: src/preferences.c:262
 msgid "Track Duration"
-msgstr "Track dauer"
+msgstr ""
 
 #: src/preferences.c:263
 msgid "Elapsed Track Time"
-msgstr "Vergangene Track Zeit"
+msgstr ""
 
 #: src/preferences.c:264
 msgid "Progress Bar"
-msgstr "Ladebalken"
+msgstr ""
 
 #: src/preferences.c:265
 msgid "Player"
-msgstr "Player"
+msgstr ""
 
 #: src/preferences.c:266
 msgid "Music Symbol (may not display on some networks)"
-msgstr "Musik-Symbol (funktioniert nicht mit allen Netzwerken)"
+msgstr ""
 
 #: src/preferences.c:270
 msgid "Status Format"
-msgstr "Statusformatierung"
+msgstr ""
 
 #: src/preferences.c:277
 msgid "Playing:"
-msgstr "Aktuell läuft"
+msgstr ""
 
 #: src/preferences.c:278
 msgid "Paused:"
-msgstr "Pausiert:"
+msgstr ""
 
 #: src/preferences.c:279
 msgid "Stopped/Off:"
-msgstr "Gestoppt:"
+msgstr ""
 
 #: src/preferences.c:303
 msgid "Screen Name"
-msgstr "Anzeigename"
+msgstr ""
 
 #: src/preferences.c:305
 msgid "Protocol"
-msgstr "Protokoll"
+msgstr ""
 
 #: src/preferences.c:311
 msgid "Playing Status Format"
-msgstr "Gespieltes Statusformat"
+msgstr ""
 
 #: src/preferences.c:316
 msgid "Disable"
-msgstr "deaktivieren"
+msgstr ""
 
 #: src/preferences.c:322
 msgid "Don't use 'now listening'"
-msgstr "Benutze nicht 'hört gerade'"
+msgstr ""
 
 #: src/preferences.c:326
 msgid ""
@@ -154,28 +154,27 @@ msgstr ""
 
 #: src/preferences.c:336
 msgid "Other settings"
-msgstr "Andere Einstellungen"
+msgstr ""
 
 #: src/preferences.c:346
 msgid "Don't change status message when away"
-msgstr "Nicht die Statusnachricht verändern, wenn abwesend"
+msgstr ""
 
 #: src/preferences.c:353
 msgid "Don't change status message if protocol has 'now listening'"
 msgstr ""
-"Nicht Statusnachricht wechseln, wenn 'hört gerade' Protocol angeschaltet ist"
 
 #: src/preferences.c:359
 msgid "Status Filter"
-msgstr "Statusfilter"
+msgstr ""
 
 #: src/preferences.c:369
 msgid "Enable status filter"
-msgstr "Aktiviere den Statusfilter"
+msgstr ""
 
 #: src/preferences.c:376
 msgid "Blacklist (comma-delimited):"
-msgstr "Ignorierliste"
+msgstr ""
 
 #: src/preferences.c:385
 msgid "Mask character:"
@@ -197,19 +196,19 @@ msgstr ""
 
 #: src/squeezecenter.c:860
 msgid "Player Order:"
-msgstr "Player Reihenfolge"
+msgstr ""
 
 #: src/squeezecenter.c:868
 msgid "CLI User:"
-msgstr "CLI Benutzer"
+msgstr ""
 
 #: src/squeezecenter.c:876
 msgid "CLI Password:"
-msgstr "CLI Passwort"
+msgstr ""
 
 #: src/squeezecenter.c:888
 msgid "Server:"
-msgstr "Server:"
+msgstr "Serwer:"
 
 #: src/squeezecenter.c:893
 msgid "Squeezecenter Version:"
@@ -217,7 +216,7 @@ msgstr ""
 
 #: src/squeezecenter.c:898
 msgid "Players:"
-msgstr ""
+msgstr "Gracze:"
 
 #: src/squeezecenter.c:901
 #, c-format
@@ -226,15 +225,15 @@ msgstr ""
 
 #: src/squeezecenter.c:910
 msgid "Last Command:"
-msgstr "Letzter Befehl:"
+msgstr ""
 
 #: src/squeezecenter.c:915
 msgid "Last Reply:"
-msgstr "Letzte Antwort:"
+msgstr ""
 
 #: src/squeezecenter.c:921
 msgid "Last Error:"
-msgstr "Letzter Fehler:"
+msgstr ""
 
 #: src/xmmsctrl.c:125
 msgid "Title Delimiter Character:"
@@ -272,13 +271,9 @@ msgstr ""
 msgid ""
 "WMP support via WMPuICE by Christian Mueller from http://www.mediatexx.com."
 msgstr ""
-"WMP Unterstützung via WMPuICE von Christian Mueller seitens "
-"http://www.mediatexx.com."
 
 #: src/musictracker.c:779
 msgid ""
 "Fix translation bugs at http://translations.launchpad.net/pidgin-"
 "musictracker/trunk/+pots/musictracker"
 msgstr ""
-"Verbessere Übersetzungsfehler auf: http://translations.launchpad.net/pidgin-"
-"musictracker/trunk/+pots/musictracker"
