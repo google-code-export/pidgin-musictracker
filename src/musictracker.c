@@ -788,14 +788,24 @@ init_plugin(PurplePlugin *plugin) {
          */
         info.name        = _("MusicTracker");
         info.summary     = _("MusicTracker Plugin for Pidgin");
+
+        /*
+           TRANSLATORS: %s will be replaced with the URL of the translation site, currently
+           http://translations.launchpad.net/pidgin-musictracker/trunk/+pots/musictracker
+         */
+        char *translation_bugs = g_strdup_printf(_("Fix translation bugs at %s"),
+                                                 "http://translations.launchpad.net/pidgin-musictracker/trunk/+pots/musictracker");
+
         info.description = g_strdup_printf("%s\n%s\n%s",
                                            _("The MusicTracker Plugin allows you to customize your status message with information about currently playing song from your music player. Portions initially adopted from pidgin-currenttrack project."),
-#ifdef WIN32                        
+#ifdef WIN32
                                            _("WMP support via WMPuICE by Christian Mueller from http://www.mediatexx.com."),
 #else
                                            "",
 #endif
-                                           _("Fix translation bugs at http://translations.launchpad.net/pidgin-musictracker/trunk/+pots/musictracker"));
+                                           translation_bugs);
+
+        g_free(translation_bugs);
 }
 
 //--------------------------------------------------------------------
