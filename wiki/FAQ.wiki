@@ -142,7 +142,7 @@ Because musictracker needs help at the moment in some cases (specifically !Googl
 ==13==
 * How do I generate a debug log when pidgin is crashing? *
 
-See the [[http://developer.pidgin.im/wiki/TipsForBugReports tips for bug reports]] on the pidgin website for clear instructions.  Raise an issue *here* and attach the debug.log and pidgin.rpt files.
+See the [[http://developer.pidgin.im/wiki/TipsForBugReports tips for bug reports] on the pidgin website for clear instructions.  Raise an issue *here* and attach the debug.log and pidgin.rpt files.
 
 == My Question isn't answered here! Help! ==
 
