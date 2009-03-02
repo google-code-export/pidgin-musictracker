@@ -124,20 +124,18 @@ Debian (and Debian-derived distros e.g. Ubuntu) will also need to 'sudo ln -s /u
 ==12==
 * What does a "protocol has 'now listening'" mean? *
 
-Some protocols (e.g. MSN) have a separate way of indicating 'now listening' information, so musictracker can potentially send the track information in two different ways: in your status message, and (for some protocols) in special 'now listening' element.
-
-By default, musictracker will try to use both of these.
-
-Internally, pidgin calls this 'now listening' data a 'tune status'.
+Some protocols (e.g. MSN) have a separate way of indicating 'now listening' information, so musictracker can potentially send the track information in two different ways: in your status message, and (for some protocols) in special 'now listening' element.  
+Internally, pidgin calls this 'now listening' data a 'tune status'.  By default, musictracker will try to use both of these.
 
 Pidgin will show a music symbol next to a contact from whom it is receiving 'now playing' information, and if you hover the mouse over the contact, it will show you the 'now listening' and 'status' information in a tooltip.
 
+Note that this 'now listening' is not usually a free text field, so the formatting you have configured in musictracker cannot be applied, e.g. for MSN, the format of this 'now listening' information is usually 'title-artist' or 'artist-title(album)'.
+
 If you don't want musictracker to set the status message for protocols where can send 'now
 playing' information, tick the "Don't change status message if protocol has
-working 'now listening'" option in the musictracker configuration.  This will cause musictracker to just send the 'now listening' element and not update
-the status message.
+'now listening'" option in the musictracker configuration.  This will cause musictracker to just send the 'now listening' element and not update the status message.
 
-Because musictracker needs help at the moment in some cases (specifically !GoogleTalk/XMPP) in determining if the 'now listening' element works properly or not, it is also possible to disable use of it in the account specific configuration.  At the moment, it is automatically disabled for all Googletalk and XMPP accounts.  This is correct for !GoogleTalk, but for non-!GoogleTalk XMPP accounts with working XEP-0118 you may wish to clear that setting to enable musictracker to use the 'now listening' support.
+It is also possible to disable use of it in the account specific configuration.  At the moment, it is automatically disabled for all Googletalk and XMPP accounts.  This is useful for !GoogleTalk, as the 'now listening' element is not implemented in the standard XMPP way and doesn't work well with pidgin, but for non-!GoogleTalk XMPP accounts with working XEP-0118 you may wish to clear that setting to enable musictracker to use the 'now listening' support.
 
 ==13==
 * How do I generate a debug log when pidgin is crashing? *
