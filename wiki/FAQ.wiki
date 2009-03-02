@@ -139,6 +139,11 @@ the status message.
 
 Because musictracker needs help at the moment in some cases (specifically !GoogleTalk/XMPP) in determining if the 'now listening' element works properly or not, it is also possible to disable use of it in the account specific configuration.  At the moment, it is automatically disabled for all Googletalk and XMPP accounts.  This is correct for !GoogleTalk, but for non-!GoogleTalk XMPP accounts with working XEP-0118 you may wish to clear that setting to enable musictracker to use the 'now listening' support.
 
+==13==
+* How do I generate a debug log when pidgin is crashing? *
+
+See the [[http://developer.pidgin.im/wiki/TipsForBugReports tips for bug reports]] on the pidgin website for clear instructions.  Raise an issue *here* and attach the debug.log and pidgin.rpt files.
+
 == My Question isn't answered here! Help! ==
 
 Please send a mail to the pidigin-musictracker general discussion mailing list if you have a question.
