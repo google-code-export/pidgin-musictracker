@@ -122,14 +122,16 @@ You can drop the .so into /usr/lib/pidgin/ or ~/.purple/plugins/.
 Debian (and Debian-derived distros e.g. Ubuntu) will also need to 'sudo ln -s /usr/lib/libpcre.so.3 /usr/lib/libpcre.so.0' for this binary to work.
 
 ==12==
-* What does a "protocol has 'now listening'" mean? *
+* What does a "protocol has 'now listening'" mean? *<br>
+* Why is (some other IM client) showing the 'now listening' twice? *<br>
+* Why is the format 'title-artist' or 'artist-title(album)', not what I set? *
 
 Some protocols (e.g. MSN) have a separate way of indicating 'now listening' information, so musictracker can potentially send the track information in two different ways: in your status message, and (for some protocols) in special 'now listening' element.  
 Internally, pidgin calls this 'now listening' data a 'tune status'.  By default, musictracker will try to use both of these.
 
 Pidgin will show a music symbol next to a contact from whom it is receiving 'now playing' information.  If you hover the mouse over the contact, pidgin will show you both the 'now listening' (if the contact has one) and the status message in a tooltip.  (Recent pidign also displays the 'now listening' information under the contact, in the space the status message would be, if the status message is empty).
 
-Note that this 'now listening' is not usually a free text field, so the formatting you have configured in musictracker cannot be applied, e.g. for MSN, the format of this 'now listening' information is usually 'title-artist' or 'artist-title(album)'.
+Note that this 'now listening' data is not usually a free text field, so the formatting you have configured in musictracker cannot be applied, e.g. for MSN, the format of this 'now listening' information is usually 'title-artist' or 'artist-title(album)'.
 
 If you don't want musictracker to set the status message for protocols where can send 'now
 playing' information, tick the "Don't change status message if protocol has
