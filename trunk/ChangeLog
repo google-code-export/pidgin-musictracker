@@ -1,6 +1,22 @@
 ChangeLog for MusicTracker Pidgin Plugin
 ========================================
 
+2009-03-02 (Version 0.4.15)
+	* Use a proper plugin ID and stop bogusly claiming to be a core plugin in debug output
+	* Change "Broken 'now listening'" to "Don't use 'now listening'" to clarify and make it's use more general (issue 86)
+	* Avoid a warning from a debug build of dbus library if dbus connection could not be established
+ 	* Tweak a few strings for clarity
+	* Try harder to avoid "MSN Error: Friendly name changes too rapidly" (issue 78)
+	* Fix sequence of actions so that the per-protocol disable setting clears the status message immediately when it's set (issue 85)
+	* Avoid spamming 'sh: mocp: not found' to stderr in autodetect mode when mocp isn't installed (issue 96)
+	* Don't set 'now playing' when player is paused (issue 92)
+	* Make the Windows installer slightly more knowlegable about where pidgin is installed, to help picking our install directory
+	* Properly install translations for languages pidgin doesn't have translations of (issue 97)
+	* Add/update some more translations contributed via launchpad (added: Czech, Esperanto, Finnish, French, German (Low), Hebrew, Polish, Slovenian, Spanish; updated: German, Portugese (Brazilian))
+	* Fix a random crash at plugin load (issue 106)
+	* Remove the use of fixed sized buffers for preference name formatting, which could be causing crashes with longish usernames
+	* Fix a bug causing some track information from winamp longer than 50 characters to end in garbage characters (issue 102)
+
 2009-01-10 (Version 0.4.14)
 	* Correct encoding for it.po to UTF-8; Set the codeset for musictracker domain to UTF-8 (issue 69)
 	* Adjust WM_COPYDATA message parsing yet again, so it works with the format used by TTplayer as well (part of issue 70)
