@@ -79,15 +79,18 @@ action_toggle_status(PurplePluginAction *action)
 
 	if (flag)
           {
-            set_userstatus_for_active_accounts("", 0);
+            // clear track information in status before we disable status changing
+            clear_track_information();
+            purple_prefs_set_bool("/plugins/core/musictracker/bool_disabled", flag);
             label = _("Activate Status Changing");
           }
         else
           {
+            // restore track information in status after we enable status changing
+            purple_prefs_set_bool("/plugins/core/musictracker/bool_disabled", flag);
+            restore_track_information();
             label = _("Deactivate Status Changing");
           }
-
-	purple_prefs_set_bool("/plugins/core/musictracker/bool_disabled", flag);
 
         // update label for action
         g_free(action->label);
