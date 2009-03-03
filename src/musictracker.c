@@ -446,6 +446,7 @@ set_status (PurpleAccount *account, char *text, struct TrackInfo *ti)
 
 //--------------------------------------------------------------------
 
+static
 void
 set_userstatus_for_active_accounts (char *userstatus, struct TrackInfo *ti)
 {
@@ -455,7 +456,7 @@ set_userstatus_for_active_accounts (char *userstatus, struct TrackInfo *ti)
 
 	gboolean b = purple_prefs_get_bool(PREF_DISABLED);
 	if (b) {
-		trace("Disabled flag on!");
+		trace("status changing has been disabled");
 	}
         else
           {
@@ -516,6 +517,55 @@ static void utf8_validate(char* text)
 
 //--------------------------------------------------------------------
 
+static
+void
+set_track_information(struct TrackInfo *ti)
+{
+  char *status = NULL;
+
+  switch (ti->status)
+    {
+    case STATUS_OFF:
+      status = generate_status(purple_prefs_get_string(PREF_OFF), ti);
+      break;
+
+    case STATUS_PAUSED:
+      status = generate_status(purple_prefs_get_string(PREF_PAUSED), ti);
+      break;
+
+    case STATUS_NORMAL:
+      status = generate_status(purple_prefs_get_string(PREF_FORMAT), ti);
+      break;
+
+    default:
+      trace("unknown player status %d", ti->status);
+    }
+
+  if (status)
+    {
+      set_userstatus_for_active_accounts(status, ti);
+      free(status);
+    }
+}
+
+//--------------------------------------------------------------------
+
+void
+restore_track_information(void)
+{
+  set_track_information(&mostrecent_ti);
+}
+
+//--------------------------------------------------------------------
+
+void
+clear_track_information(void)
+{
+  set_userstatus_for_active_accounts("", 0);
+}
+
+//--------------------------------------------------------------------
+
 static gboolean
 cb_timeout(gpointer data) {
 	if (g_run == 0)
@@ -564,26 +614,7 @@ cb_timeout(gpointer data) {
             filter(ti.album);
 	}
 
-	char *status = NULL;
-	switch (ti.status) {
-		case STATUS_OFF:
-			status = generate_status(purple_prefs_get_string(PREF_OFF), &ti);
-			break;
-		case STATUS_PAUSED:
-			status = generate_status(purple_prefs_get_string(PREF_PAUSED), &ti);
-			break;
-		case STATUS_NORMAL:
-			status = generate_status(purple_prefs_get_string(PREF_FORMAT), &ti);
-			break;
-		default:
-                  trace("unknown player status %d", ti.status);
-	}
-
-        if (status)
-          {
-            set_userstatus_for_active_accounts(status, &ti);
-            free(status);
-          }
+        set_track_information(&ti);
 
 	return TRUE;
 }

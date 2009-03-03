@@ -69,7 +69,8 @@ extern struct PlayerInfo g_players[];
 GtkWidget* pref_frame(PurplePlugin *plugin);
 
 gboolean set_status (PurpleAccount *account, char *text, struct TrackInfo *ti);
-void set_userstatus_for_active_accounts (char *userstatus, struct TrackInfo *ti);
+void restore_track_information(void);
+void clear_track_information(void);
 
 //--------------------------------------------------------------------
 
