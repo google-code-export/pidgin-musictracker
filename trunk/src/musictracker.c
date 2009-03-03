@@ -576,19 +576,26 @@ cb_timeout(gpointer data) {
 	struct TrackInfo ti;
 	memset(&ti, 0, sizeof(ti));
 	ti.status = STATUS_OFF;
+
 	int player = purple_prefs_get_int(PREF_PLAYER);
 
-	if (player != -1) {
-                ti.player = g_players[player].name;
-		b = (*g_players[player].track_func)(&ti);
-	} else {
-		int i = 0;
-		while (strlen(g_players[i].name) && (!b || ti.status == STATUS_OFF)) {
-                        ti.player = g_players[i].name;
-			b = (*g_players[i].track_func)(&ti);
-			++i;
-		}
-	}
+	if (player != -1)
+          {
+            trace("trying '%s'", g_players[player].name);
+            ti.player = g_players[player].name;
+            b = (*g_players[player].track_func)(&ti);
+          }
+        else
+          {
+            int i = 0;
+            while (strlen(g_players[i].name) && (!b || ti.status == STATUS_OFF))
+              {
+                trace("trying '%s'", g_players[i].name);
+                ti.player = g_players[i].name;
+                b = (*g_players[i].track_func)(&ti);
+                ++i;
+            }
+          }
 
 	if (!b) {
 		trace("Getting info failed. Setting empty status.");
