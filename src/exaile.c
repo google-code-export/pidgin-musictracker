@@ -75,7 +75,7 @@ get_exaile_info(struct TrackInfo* ti)
 		exaile_dbus_query(proxy, "get_title", ti->track);
 
 		exaile_dbus_query(proxy, "get_length", buf);
-		if (sscanf(buf, "%d:%d", &mins, &secs)) {
+		if (sscanf(buf, "%d:%d", &mins, &secs) == 2) {
 			ti->totalSecs = mins*60 + secs;	
 		}
 

@@ -109,7 +109,7 @@ get_dbusbird_info(struct TrackInfo* ti)
     int hours, mins, secs;
 
     dbusbird_dbus_string(proxy, "getLength", buf);
-    if (sscanf(buf, "%d:%d:%d", &hours, &mins, &secs))
+    if (sscanf(buf, "%d:%d:%d", &hours, &mins, &secs) == 3)
       {
         ti->totalSecs = hours * 3600 + mins*60 + secs;
       }
