@@ -38,8 +38,7 @@
 #define _(String) dgettext (PACKAGE, String)
 
 static guint g_tid;
-static PurplePlugin *g_plugin;
-static gboolean g_run=1;
+static gboolean g_run = 0;
 static struct TrackInfo mostrecent_ti;
 static PurpleCmdId cmdid_nowplaying;
 static PurpleCmdId cmdid_np;
@@ -626,7 +625,9 @@ static gboolean
 plugin_load(PurplePlugin *plugin) {
 	trace("Plugin loading.");
 	g_tid = purple_timeout_add(INTERVAL, &cb_timeout, 0);
-	g_plugin = plugin;
+
+        // make the mostrecent track information something invalid so it will always get updated the first time...
+        mostrecent_ti.status = -1;
 
 	// custom status format for each account
 	GList *accounts = purple_accounts_get_all();
