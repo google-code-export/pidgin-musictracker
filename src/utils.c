@@ -227,22 +227,37 @@ gboolean dbus_g_running(DBusGConnection *connection, const char *name)
 	GError *error = 0;
 	gboolean running = FALSE;
 
-	trace(name);
 	dbus = dbus_g_proxy_new_for_name(connection,
 			"org.freedesktop.DBus",
 			"/org/freedesktop/DBus",
 			"org.freedesktop.DBus");
 
-	dbus_g_proxy_call_with_timeout(dbus, "NameHasOwner", DBUS_TIMEOUT, &error,
-			G_TYPE_STRING, name,
-			G_TYPE_INVALID,
-			G_TYPE_BOOLEAN, &running,
-			G_TYPE_INVALID);
+        if (dbus)
+          {
+            if (dbus_g_proxy_call_with_timeout(dbus, "NameHasOwner", DBUS_TIMEOUT, &error,
+                                               G_TYPE_STRING, name,
+                                               G_TYPE_INVALID,
+                                               G_TYPE_BOOLEAN, &running,
+                                               G_TYPE_INVALID))
+              {
+                trace("dbus name '%s' %s", name, running ? "has an owner" : "has no owner");
+                return running;
+              }
+            else
+              {
+                trace("dbus NameHasOwner for %s failed %s", error->message);
+                g_error_free(error);
+              }
+          }
+        else
+          {
+            trace("Failed to connect to Dbus");
+          }
 
-	return running;
+        return FALSE;
 }
 #endif
-			
+
 //--------------------------------------------------------------------
 
 /* Builds a preference string according to the given format, taking

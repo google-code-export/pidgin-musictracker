@@ -19,10 +19,13 @@ gboolean get_mpd_info(struct TrackInfo* ti)
 	const char * hostname = purple_prefs_get_string(PREF_MPD_HOSTNAME);
 	const char * port = purple_prefs_get_string(PREF_MPD_PORT);
 	const char * password = purple_prefs_get_string(PREF_MPD_PASSWORD);
-	if(hostname == NULL)		
+
+	if(hostname == NULL)
 		hostname = "localhost";
 	if(port == NULL)
 		port = "6600";
+
+        trace("Attempting to connect to MPD at %s:%s", hostname, port);
 	mpd_Connection * conn = mpd_newConnection(hostname,atoi(port),10);
 	if(conn->error) {
 		trace("Failed to connect to MPD server");
