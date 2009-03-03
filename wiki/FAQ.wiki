@@ -144,6 +144,11 @@ It is also possible to disable use of it in the account specific configuration. 
 
 See the [http://developer.pidgin.im/wiki/TipsForBugReports tips for bug reports] on the pidgin website for clear instructions.  Raise an issue *here* and attach the debug.log and pidgin.rpt files.
 
+==14==
+*'now listening' doesn't work on WLM (msn-pecan)*
+
+In the lastest versions of msn-pecan, it seems you need to turn on 'Use independent personal messages' in the WLM account options to send 'now listening' information.
+
 == My Question isn't answered here! Help! ==
 
 Please send a mail to the pidigin-musictracker general discussion mailing list if you have a question.
