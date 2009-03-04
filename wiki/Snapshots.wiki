@@ -2,4 +2,4 @@
 
 Development snapshots are generated daily and can be found for [http://www.dronecode.org.uk/pidgin-musictracker-snapshot/?M=D download here]
 
-Builds are also requested of debian packages from these snapshots at [http://launchpad.net/~jon-turney/+archive Launchpad]
+Builds are also requested of .deb packages from these snapshots at [http://launchpad.net/~jon-turney/+archive Launchpad]
