@@ -147,7 +147,7 @@ See the [http://developer.pidgin.im/wiki/TipsForBugReports tips for bug reports]
 ==14==
 *'now listening' doesn't work on WLM (msn-pecan)*
 
-In the lastest versions of msn-pecan, it seems you need to turn on 'Use independent personal messages' in the WLM account options to send 'now listening' information.
+In some versions of msn-pecan, it seems you need to turn on 'Use independent personal messages' in the WLM account options to send 'now listening' information.  This option seems to have disappeared in the latest msn-pecan, we hope it works without it ;-)
 
 == My Question isn't answered here! Help! ==
 
