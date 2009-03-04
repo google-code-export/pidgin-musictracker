@@ -42,7 +42,7 @@ musictracker_la_LIBADD = $(GLIB_LIBS) $(GTK_LIBS) $(DBUS_LIBS) @LTLIBINTL@
 AM_CPPFLAGS = \
         -DDATADIR=\"$(PIDGIN_DATADIR)\" \
 	-DLOCALEDIR=\"$(localedir)\" \
-	-Werror -W -Wall -Wno-unused-parameter \
+	$(WERROR_CFLAGS) -W -Wall -Wno-unused-parameter \
 	-std=gnu99 \
         $(PIDGIN_CFLAGS) \
         $(GLIB_CFLAGS) \

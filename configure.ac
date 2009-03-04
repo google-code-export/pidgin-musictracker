@@ -60,7 +60,7 @@ AC_SUBST(DBUS_CFLAGS)
 AC_SUBST(DBUS_LIBS)
 
 AC_ARG_ENABLE(xmms2,
-[  --enable-xmms2          Enable XMMS2 support (default: auto)],
+[  --enable-xmms2          Enable XMMS2 support (default=auto)],
         enable_xmms2=$enableval, enable_xmms2=auto)
 
 if test "x$enable_xmms2" = "xauto" ; then
@@ -75,6 +75,19 @@ if test "x$enable_xmms2" = "xyes" ; then
 	AC_SUBST(XMMSCLIENT_CFLAGS)
 	AC_SUBST(XMMSCLIENT_LIBS)
 fi
+
+# We want warnings to be treated as errors,
+# unless the --disable-werror configure option was used.
+AC_ARG_ENABLE(werror,
+ AC_HELP_STRING([--disable-werror], [do not use -Werror compiler flag (default=yes)]))
+
+WERROR_CFLAGS=""
+if test x"$enable_werror" != xno
+then
+        WERROR_CFLAGS="-Werror"
+fi
+
+AC_SUBST(WERROR_CFLAGS)
 
 AC_CHECK_LIB(pcre,pcre_exec,,AC_MSG_ERROR([
 *** PCRE library is needed; please make sure you have the PCRE development
