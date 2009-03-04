@@ -1,0 +1,47 @@
+#!/bin/sh -x
+# shell script to upload to Fedora Koji
+#
+# somewhat clunky as it written to run on something that isn't a red hat system...
+#
+
+# setup topdir to point to rpm/
+RPM_TOPDIR=`pwd`/rpm
+echo "%_topdir $RPM_TOPDIR" >rpmmacros
+echo "macrofiles: rpmmacros" >rpmrc
+
+rm -rf $RPM_TOPDIR
+mkdir -p $RPM_TOPDIR/SOURCES
+mkdir -p $RPM_TOPDIR/SRPMS
+
+LAST_VERSION=`cat ~/.pidgin-musictracker-release-version`
+PV=$LAST_VERSION.$SNAPSHOT
+
+# unpack
+tar -jxf pidgin-musictracker-snapshot-$SNAPSHOT.tar.bz2
+
+# repack with the expected source path (just the version)
+# (there's is probably a better way, if we can say the source path in the .spec file)
+mv pidgin-musictracker-snapshot pidgin-musictracker-${LAST_VERSION}
+tar -jcf pidgin-musictracker-${PV}.tar.bz2 pidgin-musictracker-${LAST_VERSION}
+
+# place source archive in SOURCES
+cp pidgin-musictracker-${PV}.tar.bz2 $RPM_TOPDIR/SOURCES/pidgin-musictracker-$PV.tar.bz2
+
+# update version, release and source name/location in the spec file
+sed -i -e "s/Version:        .*/Version:        $LAST_VERSION/g" pidgin-musictracker.spec
+sed -i -e "s/Release:        .*/Release:        1.${SNAPSHOT}svn%{?dist}/g" pidgin-musictracker.spec
+sed -i -e "s,Source0:        .*,Source0:        http://www.dronecode.org.uk/pidgin-musictracker-snapshot/%{name}-$PV.tar.bz2,g" pidgin-musictracker.spec
+grep -E "(Version|Release|Source0)" pidgin-musictracker.spec
+
+# build the source RPM
+rpmbuild --rcfile=rpmrc -bs pidgin-musictracker.spec --sign --nodeps
+
+# request build on koji
+koji build --scratch dist-f9 $RPM_TOPDIR/SRPMS/pidgin-musictracker-$LAST_VERSION-1.${SNAPSHOT}svn.src.rpm --arch-override=i386
+
+# clean up
+rm -rf pidgin-musictracker-${LAST_VERSION}
+rm -rf pidgin-musictracker-${PV}.tar.bz2
+rm -rf $RPM_TOPDIR/
+rm -rf rpmrc
+rm -rf rpmmacros
