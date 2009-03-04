@@ -2,6 +2,10 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
+EAPI="2"
+
+inherit autotools
+
 DESCRIPTION="A Pidgin now playing plugin to publicise the songs you are listening to in your status message"
 HOMEPAGE="http://code.google.com/p/pidgin-musictracker/"
 SRC_URI="http://pidgin-musictracker.googlecode.com/files/${P}.tar.bz2"
@@ -15,10 +19,15 @@ DEPEND=">=net-im/pidgin-2.0.0
 	>=dev-libs/dbus-glib-0.73
 	dev-libs/libpcre
 	>=sys-devel/gettext-0.17"
+RDEPEND="${DEPEND}"
 
-src_compile() {
+src_prepare() {
+	sed -i -e "s/-Werror//g" src/Makefile.am || die "sed failed"
+	eautoreconf
+}
+
+src_configure() {
 	econf $(use_enable debug) || die "econf failure"
-	emake || die "emake failed"
 }
 
 src_install() {
