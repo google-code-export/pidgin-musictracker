@@ -7,6 +7,8 @@ Additional translations are welcome.
 
 Translation is done online at [https://translations.launchpad.net/pidgin-musictracker/trunk/+pots/musictracker Launchpad]
 
+You will need to create a Launchpad account to add to translations
+
 _Alternatively, if you don't want to use Launchpad_
 
 The file [http://code.google.com/p/pidgin-musictracker/source/browse/trunk#trunk/po po/musictracker.pot] is a template containing all the translatable messages.
