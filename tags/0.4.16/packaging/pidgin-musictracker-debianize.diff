@@ -1,0 +1,279 @@
+--- pidgin-musictracker-0.4.12.orig/debian/dirs
++++ pidgin-musictracker-0.4.12/debian/dirs
+@@ -0,0 +1 @@
++usr/lib/pidgin
+--- pidgin-musictracker-0.4.12.orig/debian/control
++++ pidgin-musictracker-0.4.12/debian/control
+@@ -0,0 +1,30 @@
++Source: pidgin-musictracker
++Section: net
++Priority: extra
++Maintainer: Jon TURNEY <jon.turney@dronecode.org.uk>
++Build-Depends: debhelper (>= 5), autotools-dev, pidgin-dev, libdbus-glib-1-dev, libpcre3-dev, libxmmsclient-dev
++Standards-Version: 3.8.0
++
++Package: pidgin-musictracker
++Architecture: any
++Depends: ${shlibs:Depends}
++Description: Plugin for Pidgin which displays the current music track in your status
++ MusicTracker is a plugin for Pidgin (previously known as Gaim) which displays
++ the music track currently playing in the status message of various accounts
++ such as AIM, Yahoo, MSN, Gtalk (Jabber), etc., i.e. any protocol Pidgin
++ supports custom statuses on.
++ .
++ Features
++  * Currently supported players: Amarok, Audacious, Banshee, Exaile, 
++    Last.fm feed, Listen, MPD, Quod Libet, Rhythmbox, SqueezeCenter, 
++    XMMS, XMMS2
++  * Supports MPRIS DBus interface for BMPx and VLC players
++  * Allows you to customize the status string with various fields extracted 
++    from your media player such as artist, album, track, duration, 
++    progress bar, etc.
++  * Different status messages for various media player states such as 
++  Playing, Paused and Stopped.
++  * Supports per-account status format customization.
++  * Optional Profanity filter for words in the status. 
++  * Auto-detects which player is in use.
++Homepage: http://code.google.com/p/pidgin-musictracker/
+--- pidgin-musictracker-0.4.12.orig/debian/watch
++++ pidgin-musictracker-0.4.12/debian/watch
+@@ -0,0 +1,9 @@
++# Watch file used for pidgin-musictracker
++# Rename this file to "watch" and then you can run the "uscan" command
++# to check for upstream updates and more.
++# See uscan(1) for format
++
++# Compulsory line, this is a version 3 file
++version=3
++
++http://code.google.com/p/pidgin-musictracker/ http://pidgin-musictracker.googlecode.com/files/pidgin-musictracker-([\d.]*)\.tar\.bz2
+--- pidgin-musictracker-0.4.12.orig/debian/copyright
++++ pidgin-musictracker-0.4.12/debian/copyright
+@@ -0,0 +1,103 @@
++This package was debianized by Craig Small <csmall@debian.org> on
++Tue, 26 Jun 2007 12:21:55 +1000.
++
++It was downloaded from http://code.google.com/p/pidgin-musictracker/
++
++Upstream Authors: 
++    Arijit De <de.arijit@gmail.com>
++    Erik de Jong - MPD support
++    Warren Dukes <warren.dukes@gmail.com> - libmpdclient.c,h
++    Sabin Iacob (m0n5t3r) <iacobs@m0n5t3r.info> - mpris
++    Jon TURNEY <jon.turney@dronecode.org.uk>
++    Phillip Camp <phillip.camp@gmail.com>
++    Nullsoft, Inc.
++
++
++
++Copyright: 
++	Copyright 2006,2007 Arijit De <de.arijit@gmail.com>
++    Copyright 2008 Jon TURNEY <jon.turney@dronecode.org.uk>
++
++    Copyright 2003-2006 by Warren Dukes <warren.dukes@gmail.com>
++	 (for libmpdclient.c,h)
++	
++    Copyright 2007 Sabin Iacob (m0n5t3r) <iacobs@m0n5t3r.info>
++      (for mpris.c)
++
++    Copyright 2008 Phillip Camp <phillip.camp@gmail.com>
++      (for squeezecenter.c)
++
++    Copyright (C) 2006 Nullsoft, Inc.
++      (for wa_ipc.h)
++
++License:
++
++For the majority of musictracker code:
++
++    This package is free software; you can redistribute it and/or modify
++    it under the terms of the GNU General Public License as published by
++    the Free Software Foundation; either version 2 of the License, or
++    (at your option) any later version.
++ 
++    This package is distributed in the hope that it will be useful,
++    but WITHOUT ANY WARRANTY; without even the implied warranty of
++    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++    GNU General Public License for more details.
++ 
++    You should have received a copy of the GNU General Public License
++    along with this package; if not, write to the Free Software
++    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
++
++On Debian systems, the complete text of the GNU General
++Public License can be found in `/usr/share/common-licenses/GPL'.
++
++For libmpdclient.c,h:
++   Redistribution and use in source and binary forms, with or without
++   modification, are permitted provided that the following conditions
++   are met:
++
++   - Redistributions of source code must retain the above copyright
++   notice, this list of conditions and the following disclaimer.
++
++   - Redistributions in binary form must reproduce the above copyright
++   notice, this list of conditions and the following disclaimer in the
++   documentation and/or other materials provided with the distribution.
++
++   - Neither the name of the Music Player Daemon nor the names of its
++   contributors may be used to endorse or promote products derived from
++   this software without specific prior written permission.
++
++   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
++   ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
++   LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
++   A PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE FOUNDATION OR
++   CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
++   EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
++   PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
++   PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
++   LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
++   NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
++   SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++
++For wa_ipc.h:
++    This software is provided 'as-is', without any express or implied 
++    warranty. In no event will the authors be held liable for any damages 
++    arising from the use of this software. 
++
++    Permission is granted to anyone to use this software for any purpose, 
++    including commercial applications, and to alter it and redistribute it 
++    freely, subject to the following restrictions:
++
++      1. The origin of this software must not be misrepresented; you must 
++         not claim that you wrote the original software. If you use this 
++         software in a product, an acknowledgment in the product 
++         documentation would be appreciated but is not required.
++
++      2. Altered source versions must be plainly marked as such, and must 
++         not be misrepresented as being the original software.
++
++      3. This notice may not be removed or altered from any source 
++         distribution.
++
++The Debian packaging is (C) 2007,2008 Craig Small <csmall@debian.org> and
++is licensed under the GPL, see above.
+--- pidgin-musictracker-0.4.12.orig/debian/compat
++++ pidgin-musictracker-0.4.12/debian/compat
+@@ -0,0 +1 @@
++5
+--- pidgin-musictracker-0.4.12.orig/debian/rules
++++ pidgin-musictracker-0.4.12/debian/rules
+@@ -0,0 +1,109 @@
++#!/usr/bin/make -f
++# -*- makefile -*-
++# Sample debian/rules that uses debhelper.
++# This file was originally written by Joey Hess and Craig Small.
++# As a special exception, when this file is copied by dh-make into a
++# dh-make output file, you may use that output file without restriction.
++# This special exception was added by Craig Small in version 0.37 of dh-make.
++
++# Uncomment this to turn on verbose mode.
++#export DH_VERBOSE=1
++
++
++# These are used for cross-compiling and for saving the configure script
++# from having to guess our platform (since we know it already)
++DEB_HOST_GNU_TYPE   ?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
++DEB_BUILD_GNU_TYPE  ?= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
++
++
++CFLAGS = -Wall -g
++
++# Remove unused parameters - added 0.4.8 - cs
++CFLAGS += -Wno-unused-parameter
++
++ifneq (,$(findstring noopt,$(DEB_BUILD_OPTIONS)))
++	CFLAGS += -O0
++else
++	CFLAGS += -O2
++endif
++
++config.status: configure
++	dh_testdir
++	# Add here commands to configure the package.
++ifneq "$(wildcard /usr/share/misc/config.sub)" ""
++	cp -f /usr/share/misc/config.sub config.sub
++endif
++ifneq "$(wildcard /usr/share/misc/config.guess)" ""
++	cp -f /usr/share/misc/config.guess config.guess
++endif
++	# Cannot have defs in LDFLAGS as it is a module
++	./configure --host=$(DEB_HOST_GNU_TYPE) --build=$(DEB_BUILD_GNU_TYPE) --prefix=/usr --mandir=\$${prefix}/share/man --infodir=\$${prefix}/share/info CFLAGS="$(CFLAGS)" 
++
++
++build: build-stamp
++
++build-stamp:  config.status
++	dh_testdir
++
++	# Add here commands to compile the package.
++	$(MAKE)
++
++	touch $@
++
++clean:
++	dh_testdir
++	dh_testroot
++	rm -f build-stamp 
++
++	# Add here commands to clean up after the build process.
++	[ ! -f Makefile ] || $(MAKE) distclean
++	rm -f config.sub config.guess
++	dh_clean 
++
++install: build
++	dh_testdir
++	dh_testroot
++	dh_clean -k 
++	dh_installdirs
++
++	# Add here commands to install the package into debian/musictracker.
++	/usr/bin/install -c src/.libs/musictracker.so $(CURDIR)/debian/pidgin-musictracker/usr/lib/pidgin/musictracker.so
++
++
++# Build architecture-independent files here.
++binary-indep: build install
++# We have nothing to do by default.
++
++# Build architecture-dependent files here.
++binary-arch: build install
++	dh_testdir
++	dh_testroot
++	dh_installchangelogs ChangeLog
++	dh_installdocs
++	dh_installexamples
++#	dh_install
++#	dh_installmenu
++#	dh_installdebconf	
++#	dh_installlogrotate
++#	dh_installemacsen
++#	dh_installpam
++#	dh_installmime
++#	dh_python
++#	dh_installinit
++#	dh_installcron
++#	dh_installinfo
++	dh_installman
++	dh_link
++	dh_strip
++	dh_compress
++	dh_fixperms
++#	dh_perl
++#	dh_makeshlibs
++	dh_installdeb
++	dh_shlibdeps
++	dh_gencontrol
++	dh_md5sums
++	dh_builddeb
++
++binary: binary-indep binary-arch
++.PHONY: build clean binary-indep binary-arch binary install 
+--- pidgin-musictracker-0.4.12.orig/debian/musictracker.substvars
++++ pidgin-musictracker-0.4.12/debian/musictracker.substvars
+@@ -0,0 +1 @@
++shlibs:Depends=libatk1.0-0 (>= 1.13.2), libc6 (>= 2.6-1), libcairo2 (>=1.4.0), libdbus-1-3 (>= 1.1.1), libdbus-glib-1-2 (>= 0.74), libfontconfig1 (>= 2.4.0), libglib2.0-0 (>= 2.12.9), libgtk2.0-0 (>= 2.10.12-3), libpango1.0-0 (>= 1.16.5), libpcre3 (>= 4.5), libx11-6, libxcursor1 (>> 1.1.2), libxext6, libxfixes3 (>= 1:4.0.1), libxi6, libxinerama1, libxrandr2 (>= 2:1.2.0), libxrender1
+--- pidgin-musictracker-0.4.12.orig/debian/docs
++++ pidgin-musictracker-0.4.12/debian/docs
+@@ -0,0 +1 @@
++README
