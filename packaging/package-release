@@ -9,6 +9,17 @@ rm -r *
 # assign a version number
 if [ $1 != "release" ]
 then
+ # get trunk svn revision
+ SVN_REV=`svn info https://pidgin-musictracker.googlecode.com/svn/trunk | grep Revision | cut -d':' -f2 | tr -d ' '`
+ echo "Trunk is at svn revision $SVN_REV"
+
+ # don't do anything if it hasn't changed since last time we ran
+ if [ `cat ~/.pidgin-musictracker-subversion-revision` = $SVN_REV ]
+ then
+   echo "svn revision unchanged"
+   exit 0
+ fi
+
  export SNAPSHOT=`date -u +%Y%m%d%H%M%S`
  VERSION=snapshot-$SNAPSHOT
  WORKDIR=pidgin-musictracker-snapshot
@@ -60,6 +71,9 @@ then
  # send files to launchpad
  rm -r $WORKDIR
  ~/launchpad-ppa
+
+ # remember this svn revision number for checking when it changes
+ echo $SVN_REV >~/.pidgin-musictracker-subversion-revision
 else
  #  use googlecode_upload.py to upload the files
  ~/googlecode_upload.py -s "Gentoo Linux ebuild"      -p pidgin-musictracker -l          Beta,OpSys-Linux,Type-Package     pidgin-musictracker-$VERSION.ebuild 
