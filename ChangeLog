@@ -1,6 +1,15 @@
 ChangeLog for MusicTracker Pidgin Plugin
 ========================================
 
+2009-03-05 (Version 0.4.16)
+	* Correct a toolchain issue so binaries don't crash will "illegal instruction" on pentium III and earlier processors (issue 76)
+	* Various packaging script improvements, add an initial attempt at RPM .spec file
+ 	* For packaging convenience, add a --disable-werror configure option
+	* Be a bit more careful checking if a dbus name has an owner, and add a bit more logging (appears to resolve issue 103)
+	* Cause the status to update immediately after status changing is activated (rather than not until the next time the track information changes) (issue 100)
+	* Audit uses of sccanf() for checking the return value correctly
+	* Fix annoying "close pidgin, close player, open pidgin, 'now listening' doesn't get cleared" bug (again), reintroduced by r271 (also fixed by pidgin 2.5.5 which properly understands tune status shouldn't be saved)
+
 2009-03-02 (Version 0.4.15)
 	* Use a proper plugin ID and stop bogusly claiming to be a core plugin in debug output
 	* Change "Broken 'now listening'" to "Don't use 'now listening'" to clarify and make it's use more general (issue 86)
