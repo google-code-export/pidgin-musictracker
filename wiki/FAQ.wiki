@@ -66,7 +66,7 @@ Needless to say, this was a complete crock and was re-writtten for 0.4.6
 
 Direct foobar2000 player support is pretty fragile
 
-  * The title format needs to be the default "[%album artist% - ]['['%album%[ CD%discnumber%][ #%tracknumber%]']' ]%title%[ '//' %track artist%]"
+  * The title format needs to be the default "`[%album artist% - ]['['%album%[ CD%discnumber%][ #%tracknumber%]']' ]%title%[ '//' %track artist%]`"
   * The player paused state isn't detected
   * It doesn't work when player is set to minimize to tray
 
