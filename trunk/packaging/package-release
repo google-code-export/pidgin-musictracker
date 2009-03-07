@@ -20,7 +20,7 @@ then
    exit 0
  fi
 
- export SNAPSHOT=`date -u +%Y%m%d%H%M%S`
+ export SNAPSHOT=`date -u +%Y%m%d`svn$SVN_REV
  VERSION=snapshot-$SNAPSHOT
  WORKDIR=pidgin-musictracker-snapshot
 else
