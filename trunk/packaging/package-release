@@ -70,9 +70,11 @@ then
      pidgin-musictracker-$VERSION.tar.bz2 \
      $UPLOAD_TARGET/pidgin-musictracker-snapshot
 
- # send files to launchpad
  rm -r $WORKDIR
+ # request a build on launchpad
  ~/launchpad-ppa
+ # request a build on koji
+ ~/fedora-koji
 
  # remember this svn revision number for checking when it changes
  echo $SVN_REV >~/.pidgin-musictracker-subversion-revision

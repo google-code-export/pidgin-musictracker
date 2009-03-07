@@ -28,6 +28,7 @@ tar -jcf pidgin-musictracker-${PV}.tar.bz2 pidgin-musictracker-${LAST_VERSION}
 cp pidgin-musictracker-${PV}.tar.bz2 $RPM_TOPDIR/SOURCES/pidgin-musictracker-$PV.tar.bz2
 
 # update version, release and source name/location in the spec file
+cp pidgin-musictracker-${LAST_VERSION}/packaging/pidgin-musictracker.spec .
 sed -i -e "s/Version:        .*/Version:        $LAST_VERSION/g" pidgin-musictracker.spec
 sed -i -e "s/Release:        .*/Release:        1.${SNAPSHOT}svn%{?dist}/g" pidgin-musictracker.spec
 sed -i -e "s,Source0:        .*,Source0:        http://www.dronecode.org.uk/pidgin-musictracker-snapshot/%{name}-$PV.tar.bz2,g" pidgin-musictracker.spec
@@ -45,3 +46,4 @@ rm -rf pidgin-musictracker-${PV}.tar.bz2
 rm -rf $RPM_TOPDIR/
 rm -rf rpmrc
 rm -rf rpmmacros
+rm -rf pidgin-musictracker.spec
