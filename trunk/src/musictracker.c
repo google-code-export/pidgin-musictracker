@@ -666,6 +666,7 @@ plugin_load(PurplePlugin *plugin) {
 
         // make the mostrecent track information something invalid so it will always get updated the first time...
         mostrecent_ti.status = -1;
+	mostrecent_ti.player = "";
 
 	// custom status format for each account
 	GList *accounts = purple_accounts_get_all();
