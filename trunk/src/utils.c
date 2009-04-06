@@ -245,7 +245,7 @@ gboolean dbus_g_running(DBusGConnection *connection, const char *name)
               }
             else
               {
-                trace("dbus NameHasOwner for %s failed %s", error->message);
+                trace("dbus NameHasOwner for %s failed %s", name, error->message);
                 g_error_free(error);
               }
           }
