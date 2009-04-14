@@ -23,7 +23,7 @@ The solution is to reinstall pidgin.
 
 You must exit pidgin to run the installer if you have a previous version of musictracker installed.
 
-If you have installed pidgin somewhere other than the default location of  "C:\Program Files\Pidgin", you must tell the musictracker installer the correct location for pidgin.
+If you have installed pidgin somewhere other than the default location of  "C:\Program Files\Pidgin", you must tell the musictracker installer the correct location for pidgin. (Since 0.4.15, the Windows installer should be clever enough to find where pidgin was installed correctly)
 
 ==4==
 *How do I uninstall musictracker? *
