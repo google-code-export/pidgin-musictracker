@@ -6,15 +6,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: pidgin-musictracker\n"
-"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2009-01-26 19:02+0000\n"
-"PO-Revision-Date: 2009-02-15 16:53+0000\n"
-"Last-Translator: GoldenDragon <Unknown>\n"
+"Report-Msgid-Bugs-To: http://code.google.com/p/pidgin-musictracker/issues/\n"
+"POT-Creation-Date: 2009-03-02 19:32+0000\n"
+"PO-Revision-Date: 2009-03-02 20:21+0000\n"
+"Last-Translator: Jon TURNEY <jon.turney@dronecode.org.uk>\n"
 "Language-Team: Finnish <fi@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2009-03-02 18:28+0000\n"
+"X-Launchpad-Export-Date: 2009-04-14 15:48+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: src/actions.c:65
@@ -72,114 +72,113 @@ msgstr "Portti:"
 msgid "Password:"
 msgstr "Salasana:"
 
-#: src/preferences.c:243
+#: src/preferences.c:242
 msgid "Player:"
 msgstr "Soitin:"
 
-#: src/preferences.c:249
+#: src/preferences.c:248
 msgid "Auto-detect"
 msgstr "Tunnista automaattisesti"
 
-#: src/preferences.c:259
+#: src/preferences.c:258
 msgid "Artist"
 msgstr "Esittäjä"
 
-#: src/preferences.c:260
+#: src/preferences.c:259
 msgid "Album"
 msgstr "Levy"
 
-#: src/preferences.c:261
+#: src/preferences.c:260
 msgid "Title"
 msgstr "Kappale"
 
-#: src/preferences.c:262
+#: src/preferences.c:261
 msgid "Track Duration"
 msgstr "Raidan kesto"
 
-#: src/preferences.c:263
+#: src/preferences.c:262
 msgid "Elapsed Track Time"
 msgstr "Raidan kulunut aika"
 
-#: src/preferences.c:264
+#: src/preferences.c:263
 msgid "Progress Bar"
 msgstr "Edistymispalkki"
 
-#: src/preferences.c:265
+#: src/preferences.c:264
 msgid "Player"
 msgstr "Soitin"
 
-#: src/preferences.c:266
+#: src/preferences.c:265
 msgid "Music Symbol (may not display on some networks)"
 msgstr ""
 
-#: src/preferences.c:270
+#: src/preferences.c:269
 msgid "Status Format"
 msgstr "Tilan muoto"
 
-#: src/preferences.c:277
+#: src/preferences.c:276
 msgid "Playing:"
 msgstr "Soimassa:"
 
-#: src/preferences.c:278
+#: src/preferences.c:277
 msgid "Paused:"
 msgstr "Tauotettu:"
 
-#: src/preferences.c:279
+#: src/preferences.c:278
 msgid "Stopped/Off:"
 msgstr "Pysäytetty/Pois päältä"
 
-#: src/preferences.c:303
+#: src/preferences.c:302
 msgid "Screen Name"
 msgstr "Näyttönimi"
 
-#: src/preferences.c:305
+#: src/preferences.c:304
 msgid "Protocol"
 msgstr "Yhteyskäytäntö"
 
-#: src/preferences.c:311
+#: src/preferences.c:310
 msgid "Playing Status Format"
 msgstr ""
 
-#: src/preferences.c:316
+#: src/preferences.c:315
 msgid "Disable"
 msgstr "Poista käytöstä"
 
-#: src/preferences.c:322
+#: src/preferences.c:321
 msgid "Don't use 'now listening'"
 msgstr "Älä käytä \"nyt kuuntelemassa\""
 
-#: src/preferences.c:326
+#: src/preferences.c:325
 msgid ""
 "Customize playing status format, or disable status changing altogether for "
 "specific accounts"
 msgstr ""
 
-#: src/preferences.c:336
+#: src/preferences.c:335
 msgid "Other settings"
 msgstr "Muut asetukset"
 
-#: src/preferences.c:346
+#: src/preferences.c:345
 msgid "Don't change status message when away"
 msgstr "Älä vaihda tilaviestiä poissaollessa"
 
-#: src/preferences.c:353
+#: src/preferences.c:352
 msgid "Don't change status message if protocol has 'now listening'"
-msgstr ""
-"Älä vaihda tilaviestiä jos yhteyskäytännöllä on \"nyt kuuntelemassa\""
+msgstr "Älä vaihda tilaviestiä jos yhteyskäytännöllä on \"nyt kuuntelemassa\""
 
-#: src/preferences.c:359
+#: src/preferences.c:358
 msgid "Status Filter"
 msgstr "Tilasuodin"
 
-#: src/preferences.c:369
+#: src/preferences.c:368
 msgid "Enable status filter"
 msgstr "Ota tilasuodin käyttöön"
 
-#: src/preferences.c:376
+#: src/preferences.c:375
 msgid "Blacklist (comma-delimited):"
 msgstr "Musta lista (pilkuin eroteltu):"
 
-#: src/preferences.c:385
+#: src/preferences.c:384
 msgid "Mask character:"
 msgstr ""
 
@@ -254,16 +253,24 @@ msgstr ""
 
 #. TRANSLATORS: this string controls the name musictracker appears as under the Tools menu
 #. It's probably a good idea to treat 'MusicTracker' as a proper name, transliterate but don't translate
-#. 
-#: src/musictracker.c:770
+#.
+#: src/musictracker.c:789
 msgid "MusicTracker"
 msgstr "MusicTracker"
 
-#: src/musictracker.c:771
+#: src/musictracker.c:790
 msgid "MusicTracker Plugin for Pidgin"
 msgstr "Pidginin MusicTracker-liitännäinen"
 
-#: src/musictracker.c:773
+#. TRANSLATORS: %s will be replaced with the URL of the translation site, currently
+#. http://translations.launchpad.net/pidgin-musictracker/trunk/+pots/musictracker
+#.
+#: src/musictracker.c:796
+#, c-format
+msgid "Fix translation bugs at %s"
+msgstr "Korjaa käännöksen virheitä osoitteessa %s"
+
+#: src/musictracker.c:800
 msgid ""
 "The MusicTracker Plugin allows you to customize your status message with "
 "information about currently playing song from your music player. Portions "
@@ -273,13 +280,7 @@ msgstr ""
 "musiikkisoittimessasi soivan kappaleen tiedoilla. Osia lainattu aluksi "
 "pidgin-currenttrack -projektista."
 
-#: src/musictracker.c:775
+#: src/musictracker.c:802
 msgid ""
 "WMP support via WMPuICE by Christian Mueller from http://www.mediatexx.com."
 msgstr ""
-
-#: src/musictracker.c:779
-#, c-format
-msgid ""
-"Fix translation bugs at %s"
-msgstr "Korjaa käännöksen virheitä osoitteessa %s"
