@@ -1,24 +1,23 @@
-#!/bin/sh -x
+#!/bin/sh
 # shell script for automating musictracker project releases
 # $1 = 'release' or 'snapshot'
 # $2 = version number for release
 
 # clean
-rm -r *
+rm -rf *
 
 # assign a version number
 if [ $1 != "release" ]
 then
  # get trunk svn revision
  SVN_REV=`svn info https://pidgin-musictracker.googlecode.com/svn/trunk | grep Revision | cut -d':' -f2 | tr -d ' '`
- echo "Trunk is at svn revision $SVN_REV"
 
  # don't do anything if it hasn't changed since last time we ran
  if [ `cat ~/.pidgin-musictracker-subversion-revision` = $SVN_REV ]
  then
-   echo "svn revision unchanged"
    exit 0
  fi
+ echo "Trunk is at svn revision $SVN_REV"
 
  export SNAPSHOT=`date -u +%Y%m%d`svn$SVN_REV
  VERSION=snapshot-$SNAPSHOT
