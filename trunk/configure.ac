@@ -94,6 +94,8 @@ AC_CHECK_LIB(pcre,pcre_exec,,AC_MSG_ERROR([
 *** files installed. The latest version of PCRE is always available at
 *** http://www.pcre.org/.]))
 
+AC_PREFIX_DEFAULT(`pkg-config --variable=prefix pidgin`)
+
 AC_CONFIG_FILES([ po/Makefile.in
    Makefile
    README
