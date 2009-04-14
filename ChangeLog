@@ -1,6 +1,13 @@
 ChangeLog for MusicTracker Pidgin Plugin
 ========================================
 
+2009-04-14 (Version 0.4.17)
+	* Avoid confusion for those building from source by installing into the prefix which pidgin was configured with by default (issue 116)
+	* Add/update some more translations contributed via launchpad (added: Dutch(nl), Norwegian bokmal(nb); updated: German(de), Italian(it), Spanish(es))
+	* Fix a terrible crash-causing brown-paper bag bug.  pidgin trac ticket #8756
+	* Make sure mostrecent_ti.player is initialized to something, avoiding a crash if you activate status changing before you've played anything. (Issue 107)
+	* Snapshot script changes to request RPM buid on Koji; only do snapshot builds after a change is commited; use svn rev number in snapshot name
+
 2009-03-05 (Version 0.4.16)
 	* Correct a toolchain issue so binaries don't crash will "illegal instruction" on pentium III and earlier processors (issue 76)
 	* Various packaging script improvements, add an initial attempt at RPM .spec file
