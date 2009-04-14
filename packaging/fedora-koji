@@ -29,16 +29,16 @@ cp pidgin-musictracker-${PV}.tar.bz2 $RPM_TOPDIR/SOURCES/pidgin-musictracker-$PV
 
 # update version, release and source name/location in the spec file
 cp pidgin-musictracker-${LAST_VERSION}/packaging/pidgin-musictracker.spec .
-sed -i -e "s/Version:        .*/Version:        $LAST_VERSION/g" pidgin-musictracker.spec
-sed -i -e "s/Release:        .*/Release:        1.${SNAPSHOT}svn%{?dist}/g" pidgin-musictracker.spec
-sed -i -e "s,Source0:        .*,Source0:        http://www.dronecode.org.uk/pidgin-musictracker-snapshot/%{name}-$PV.tar.bz2,g" pidgin-musictracker.spec
+sed -i -e "s/Version:.*/Version: $LAST_VERSION/g" pidgin-musictracker.spec
+sed -i -e "s/Release:.*/Release: 1.${SNAPSHOT}%{?dist}/g" pidgin-musictracker.spec
+sed -i -e "s,Source0:.*,Source0: http://www.dronecode.org.uk/pidgin-musictracker-snapshot/%{name}-$PV.tar.bz2,g" pidgin-musictracker.spec
 grep -E "(Version|Release|Source0)" pidgin-musictracker.spec
 
 # build the source RPM
 rpmbuild --rcfile=rpmrc -bs pidgin-musictracker.spec --sign --nodeps
 
 # request build on koji
-koji build --scratch dist-f9 $RPM_TOPDIR/SRPMS/pidgin-musictracker-$LAST_VERSION-1.${SNAPSHOT}svn.src.rpm
+koji build --scratch dist-f9 $RPM_TOPDIR/SRPMS/pidgin-musictracker-$LAST_VERSION-1.${SNAPSHOT}.src.rpm
 
 # clean up
 rm -rf pidgin-musictracker-${LAST_VERSION}
