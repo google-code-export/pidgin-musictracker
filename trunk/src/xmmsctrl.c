@@ -7,47 +7,39 @@
 #include "gettext.h"
 #define _(String) dgettext (PACKAGE, String)
 
-gchar *(*xmms_remote_get_playlist_title)(gint session, gint pos);
-gint (*xmms_remote_get_playlist_time)(gint session, gint pos);
-gboolean (*xmms_remote_is_playing)(gint session);
-gboolean (*xmms_remote_is_paused)(gint session);
-gint (*xmms_remote_get_playlist_pos)(gint session);
-gint (*xmms_remote_get_output_time)(gint session);
-
 #define get_func(name) name = dlsym(handle, #name)
-char xmmsctrl_lib[STRLEN];
 
-// XXX: this code is somewhat sub-optimal: if both libaudacious.so and libxmms.so exist,
-// this will call dlopen() over and over again for the same library. Fortunately dlopen()
-// is specified such that this is a safe thing to do (always returning the same handle),
-// (provided we don't ever want to dlclose() it, as it does maintain a count of dlopen()s)
-
-gboolean xmmsctrl_init(const char *lib)
+void *xmmsctrl_init(const char *lib)
 {
-	trace("%s %s", lib, xmmsctrl_lib);
-	if (strcmp(lib, xmmsctrl_lib) == 0)
-		return TRUE;
-
 	void *handle = dlopen(lib, RTLD_NOW);
 	if (handle) {
-		get_func(xmms_remote_get_playlist_title);
-		get_func(xmms_remote_get_playlist_time);
-		get_func(xmms_remote_is_playing);
-		get_func(xmms_remote_is_paused);
-		get_func(xmms_remote_get_playlist_pos);
-		get_func(xmms_remote_get_output_time);
-		strncpy(xmmsctrl_lib, lib, STRLEN);
-                return TRUE;
+		trace("Loaded library %s", lib);
+                return handle;
 	} else {
-		trace("Failed to load library %s", lib);
-                return FALSE;
+                return 0;
 	}
 }
 
-gboolean get_xmmsctrl_info(struct TrackInfo *ti, char *lib, int session)
+gboolean get_xmmsctrl_info(struct TrackInfo *ti, void *handle, int session)
 {
-	if (!xmmsctrl_init(lib))
-          return FALSE;
+        gchar *(*xmms_remote_get_playlist_title)(gint session, gint pos);
+        gint (*xmms_remote_get_playlist_time)(gint session, gint pos);
+        gboolean (*xmms_remote_is_playing)(gint session);
+        gboolean (*xmms_remote_is_paused)(gint session);
+        gint (*xmms_remote_get_playlist_pos)(gint session);
+        gint (*xmms_remote_get_output_time)(gint session);
+
+	if (!handle)
+          {
+            return FALSE;
+          }
+
+        get_func(xmms_remote_get_playlist_title);
+        get_func(xmms_remote_get_playlist_time);
+        get_func(xmms_remote_is_playing);
+        get_func(xmms_remote_is_paused);
+        get_func(xmms_remote_get_playlist_pos);
+        get_func(xmms_remote_get_output_time);
 
 	if (!(xmms_remote_get_playlist_title && xmms_remote_get_playlist_time &&
 			xmms_remote_is_playing && xmms_remote_is_paused &&
@@ -95,20 +87,53 @@ gboolean get_xmmsctrl_info(struct TrackInfo *ti, char *lib, int session)
 
 gboolean get_xmms_info(struct TrackInfo *ti)
 {
-	gboolean b = get_xmmsctrl_info(ti, "libxmms.so", 0);
-	if (!b)
-		b = get_xmmsctrl_info(ti, "libxmms.so.1", 0);
-	return b;
+        static void *libxmms_handle = 0;
+
+        if (!libxmms_handle)
+          {
+            libxmms_handle = xmmsctrl_init("libxmms.so");
+            if (!libxmms_handle)
+              {
+                libxmms_handle = xmmsctrl_init("libxmms.so.1");
+              }
+          }
+
+        if (libxmms_handle)
+          {
+            return get_xmmsctrl_info(ti, libxmms_handle, 0);
+          }
+        else
+          {
+            trace("Failed to load libxmms.so");
+          }
+
+        return FALSE;
 }
 
 gboolean get_audacious_legacy_info(struct TrackInfo *ti)
 {
-	gboolean b = get_xmmsctrl_info(ti, "libaudacious.so", 0);
-	if (!b)
-		b = get_xmmsctrl_info(ti, "libaudacious.so.3", 0);
-        if (b)
-          ti->player = "Audacious";
-	return b;
+        static void *libaudacious_handle = 0;
+
+        if (!libaudacious_handle)
+          {
+            libaudacious_handle = xmmsctrl_init("libaudacious.so");
+            if (!libaudacious_handle)
+              {
+                libaudacious_handle = xmmsctrl_init("libaudacious.so.3");
+              }
+          }
+
+        if (libaudacious_handle)
+          {
+            ti->player = "Audacious";
+            return get_xmmsctrl_info(ti, libaudacious_handle, 0);
+          }
+        else
+          {
+            trace("Failed to load libaudacious.so");
+          }
+
+        return FALSE;
 }
 
 void cb_xmms_sep_changed(GtkEditable *editable, gpointer data)
