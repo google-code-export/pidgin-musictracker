@@ -47,6 +47,22 @@ int banshee_dbus_int(DBusGProxy *proxy, const char *method)
 	return ret;
 }
 
+unsigned int banshee_dbus_uint(DBusGProxy *proxy, const char *method)
+{
+	unsigned int ret;
+	GError *error = 0;
+	if (!dbus_g_proxy_call_with_timeout (proxy, method, DBUS_TIMEOUT, &error,
+				G_TYPE_INVALID,
+				G_TYPE_UINT, &ret,
+				G_TYPE_INVALID))
+	{
+		trace("Failed to make dbus call %s: %s", method, error->message);
+		return 0;
+	}
+
+	return ret;
+}
+
 gboolean
 get_banshee_info(struct TrackInfo* ti)
 {
@@ -93,7 +109,7 @@ get_banshee_info(struct TrackInfo* ti)
 		ti->totalSecs = banshee_dbus_int(proxy, "GetPlayingDuration");
 		ti->currentSecs = banshee_dbus_int(proxy, "GetPlayingPosition");
 		return TRUE;
-	} else if (dbus_g_running(connection, "org.bansheeproject.Banshee")) { // provide for new interface
+	} else if (dbus_g_running(connection, "org.bansheeproject.Banshee")) { // provide for new interface in banshee 1.0
 		proxy = dbus_g_proxy_new_for_name (connection,
 				"org.bansheeproject.Banshee",
 				"/org/bansheeproject/Banshee/PlayerEngine",
@@ -124,8 +140,8 @@ get_banshee_info(struct TrackInfo* ti)
 		
 		g_hash_table_destroy(table);
 		
-		ti->totalSecs = banshee_dbus_int(proxy, "GetLength") / 1000;
-		ti->currentSecs = banshee_dbus_int(proxy, "GetPosition") / 1000;
+		ti->totalSecs = banshee_dbus_uint(proxy, "GetLength") / 1000;
+		ti->currentSecs = banshee_dbus_uint(proxy, "GetPosition") / 1000;
 		return TRUE;
 	}
 
