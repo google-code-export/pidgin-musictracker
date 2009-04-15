@@ -278,10 +278,7 @@ msgstr ""
 #.
 #: src/musictracker.c:789
 msgid "MusicTracker"
-msgstr ""
-"TRADUCTORES: esta cadena controla el nombre con el cual musictracker aparece "
-"en el menú de Herramientas, probablemente es una buena idea tratar "
-"'MusicTracker' como un nombre propio, transcribelo, no lo traduzcas"
+msgstr "MusicTracker"
 
 #: src/musictracker.c:790
 msgid "MusicTracker Plugin for Pidgin"
