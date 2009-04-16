@@ -151,7 +151,7 @@ In some versions of msn-pecan, it seems you need to turn on 'Use independent per
 ==15==
 * Artist and Title are swapped when using the Last.fm client *
 
-The Last.fm client sends data using the MSN WM_COPYDATA interface, but for some reason, the it sends the artist and track name in the opposite order to most things, and there doesn't seem to be a good way to autodetect this.  
+The [http://www.last.fm/download Last.fm client] sends data using the MSN WM_COPYDATA interface, but for some reason, it sends the artist and track name in the opposite order to most things, and there doesn't seem to be a good way to autodetect this.  
 
 Maybe the offical MSN client can, but I don't know how it does that...  until someone can tell me how, users of Last.fm client will need to open the musictracker plugin configuration dialog, select "Messenger compatible interface" in the player drop down list, press the "properties" button and tick "Swap artist and title".
 
