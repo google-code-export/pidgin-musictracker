@@ -1,4 +1,5 @@
 #summary Frequently Asked Questions
+#labels Featured
 
 ==1==
 *I installed musictracker, started my player and my status doesn't change*
