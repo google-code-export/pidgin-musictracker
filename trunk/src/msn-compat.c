@@ -53,13 +53,15 @@ void process_message(wchar_t *MSNTitle)
   static char player[STRLEN] = "";
   char enabled[STRLEN], format[STRLEN], title[STRLEN], artist[STRLEN], album[STRLEN], uuid[STRLEN];
   enabled[0] = '0';
-  
+  format[0] = 0;
+
   // this has to be escaped quite carefully to prevent literals being interpreted as metacharacters by the compiler or in the pcre pattern
   // so yes, four \ before a 0 is required to match a literal \0 in the regex :-)
   // and marking the regex as ungreedy is a lot easier than writing \\\\0([^\\\\0]*)\\\\0 :)
   pcre *re1 = regex("^(.*)\\\\0Music\\\\0(.*)\\\\0(.*)\\\\0(.*)\\\\0(.*)\\\\0(.*)\\\\0(.*)\\\\0", PCRE_UNGREEDY);
   pcre *re2 = regex("^(.*)\\\\0Music\\\\0(.*)\\\\0(.*)\\\\0(.*)\\\\0(.*)\\\\0(.*)\\\\0", PCRE_UNGREEDY);
-  pcre *re3 = regex("^(.*)\\\\0Music\\\\0(.*)\\\\0(.*) - (.*)\\\\0$", 0);
+  pcre *re3 = regex("^(.*)\\\\0Music\\\\0(.*)\\\\0(.*)\\\\0(.*)\\\\0(.*)\\\\0", PCRE_UNGREEDY);
+  pcre *re4 = regex("^(.*)\\\\0Music\\\\0(.*)\\\\0(.*) - (.*)\\\\0$", 0);
 
   if (capture(re1, s, strlen(s), player, enabled, format, title, artist, album, uuid) > 0)
     {
@@ -73,9 +75,9 @@ void process_message(wchar_t *MSNTitle)
       strncpy(msnti.track, title, STRLEN);
       msnti.track[STRLEN-1] = 0;
     }
-  else if (capture(re2, s, strlen(s), player, enabled, format, artist, title) > 0)
+  else if (capture(re2, s, strlen(s), player, enabled, format, artist, title, album) > 0)
     {
-      trace("player '%s', enabled '%s', format '%s', title '%s', artist '%s'", player, enabled, format, title, artist);
+      trace("player '%s', enabled '%s', format '%s', title '%s', artist '%s', album '%s'", player, enabled, format, title, artist, album);
 
       msnti.player = player;
       strncpy(msnti.artist, artist, STRLEN);
@@ -85,10 +87,21 @@ void process_message(wchar_t *MSNTitle)
       strncpy(msnti.track, title, STRLEN);
       msnti.track[STRLEN-1] = 0;
     }
-  else if (capture(re3, s, strlen(s), player, enabled, artist, title) > 0)
+  else if (capture(re3, s, strlen(s), player, enabled, format, artist, title) > 0)
+    {
+      // Spotify likes this format
+      trace("player '%s', enabled '%s', format '%s', title '%s', artist '%s' ", player, enabled, format, title, artist);
+
+      msnti.player = player;
+      strncpy(msnti.artist, artist, STRLEN);
+      msnti.artist[STRLEN-1] = 0;
+      strncpy(msnti.track, title, STRLEN);
+      msnti.track[STRLEN-1] = 0;
+    }
+  else if (capture(re4, s, strlen(s), player, enabled, artist, title) > 0)
     {
       trace("player '%s', enabled '%s', artist '%s', title '%s'", player, enabled, artist, title);
-      
+
       msnti.player = player;
       strncpy(msnti.artist, artist, STRLEN);
       msnti.artist[STRLEN-1] = 0;
@@ -104,6 +117,7 @@ void process_message(wchar_t *MSNTitle)
   pcre_free(re1);
   pcre_free(re2);
   pcre_free(re3);
+  pcre_free(re4);
 
   //
   // Winamp seems to generate messages with enabled=1 but all the fields empty when it stops, so we need to
@@ -124,7 +138,12 @@ void process_message(wchar_t *MSNTitle)
   // (As "{0} - {1}","artist","title" and "{1} - {0}","title","artist" are equivalent,
   //  but which field is actually artist and title isn't described by the message)
   //
-  if (purple_prefs_get_bool(PREF_MSN_SWAP_ARTIST_TITLE))
+  // We guess that "{1} - {0}" indicates the opposite order to the one we are expecting,
+  // but provide a configuration option to override this
+  //
+  // This seems to help with problematic players: Spotify, Last.fm player
+  //
+  if ((strcmp("{1} - {0}", format) == 0) || purple_prefs_get_bool(PREF_MSN_SWAP_ARTIST_TITLE))
   {
     char swap[STRLEN];
     strncpy(swap, msnti.artist, STRLEN);
@@ -133,6 +152,8 @@ void process_message(wchar_t *MSNTitle)
     msnti.artist[STRLEN-1] = 0;
     strncpy(msnti.track, swap, STRLEN);
     msnti.track[STRLEN-1] = 0;
+
+    trace("swapping order to artist '%s' and title '%s'", msnti.artist, msnti.track);
   }
 
   //
