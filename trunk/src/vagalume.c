@@ -41,6 +41,10 @@
 
 #define CHECK_INTERVAL 60
 
+#if !GLIB_CHECK_VERSION(2,14,0)
+ #define g_timeout_add_seconds(time, callback, data)  g_timeout_add(time * 1000, callback, data)
+#endif
+
 static struct TrackInfo cached_track;
 static gboolean initialized = FALSE;
 static gboolean running = FALSE;
