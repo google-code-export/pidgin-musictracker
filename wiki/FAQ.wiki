@@ -74,7 +74,7 @@ These limitations are pretty much intractable, given the way that direct foobar2
 
 Fortunately however, foobar2000 is much better supported either via the [http://chron.visiondesigns.de/foobar2000/#foo_winamp_spam winamp spam] component (but this is still not perfect as some winamp messages we use aren't yet implemented) , or (better still) via foobar2000 sending "now playing" messages for MSN, which we can now catch.
 
-So, with current versions of musictracker, the *recommendation* is to set player to 'auto-detect' (which tries 'Messenger comaptible' before 'foobar2000') or 'Messenger compatible', and not install the winamp-spam component.
+So, with current versions of musictracker, the *recommendation* is to set player to 'auto-detect' (which tries 'Messenger compatible' before 'foobar2000') or 'Messenger compatible', and not install the winamp-spam component.
 
 The direct foobar2000 support will be removed at some future date.
 
