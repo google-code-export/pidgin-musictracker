@@ -70,7 +70,7 @@ Direct foobar2000 player support is pretty fragile
   * The player paused state isn't detected
   * It doesn't work when player is set to minimize to tray
 
-These limiations are pretty much intractable, given the way that direct foobar2000 suppport works (effectively by looking at the foobar2000 window title and guessing)
+These limitations are pretty much intractable, given the way that direct foobar2000 suppport works (effectively by looking at the foobar2000 window title and guessing)
 
 Fortunately however, foobar2000 is much better supported either via the [http://chron.visiondesigns.de/foobar2000/#foo_winamp_spam winamp spam] component (but this is still not perfect as some winamp messages we use aren't yet implemented) , or (better still) via foobar2000 sending "now playing" messages for MSN, which we can now catch.
 
