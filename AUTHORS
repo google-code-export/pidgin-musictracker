@@ -12,6 +12,8 @@ ZeeGeek - XMMS2 support
 Phillip Camp - SqueezeCenter/SlimServer support
 Juan A. Suarez Romero <jasuarez@igalia.com> - Vagalume support
 peter.vizi - MOC support
+chewi - Updated XMMS2 support for XMMS2 0.6 rv-split
+
 
 Translations are provided via Launchpad's Rosetta service and the authors(s) of
 each translation can be found under the description for that translation at
