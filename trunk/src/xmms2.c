@@ -20,13 +20,16 @@ struct xmmsclientlib
   xmmsc_result_t *(*xmmsc_playback_current_id)(xmmsc_connection_t *c);
   xmmsc_result_t *(*xmmsc_playback_playtime)(xmmsc_connection_t *c);
   xmmsc_result_t *(*xmmsc_medialib_get_info)(xmmsc_connection_t *, uint32_t);
-  int (*xmmsc_result_get_dict_entry_string)(xmmsc_result_t *res, const char *key, const char **r);
-  int (*xmmsc_result_get_dict_entry_int)(xmmsc_result_t *res, const char *key, int32_t *r);
+  int (*xmmsv_dict_entry_get_string)(xmmsv_t *val, const char *key, const char **r);
+  int (*xmmsv_dict_entry_get_int)(xmmsv_t *val, const char *key, int32_t *r);
   void (*xmmsc_result_wait)(xmmsc_result_t *res);
-  int (*xmmsc_result_iserror)(xmmsc_result_t *res);
-  int (*xmmsc_result_get_uint)(xmmsc_result_t *res, uint32_t *r);
-  const char *(*xmmsc_result_get_error)(xmmsc_result_t *res);
+  xmmsv_t *(*xmmsc_result_get_value)(xmmsc_result_t *res);
+  int (*xmmsv_get_uint)(xmmsv_t *val, uint32_t *r);
+  int (*xmmsv_get_string)(const xmmsv_t *val, const char **r);
+  int (*xmmsv_get_error)(xmmsv_t *val, const char **errbuf);
   void (*xmmsc_result_unref)(xmmsc_result_t *res);
+  xmmsv_t *(*xmmsv_propdict_to_dict)(xmmsv_t *propdict, const char **src_prefs);
+  void (*xmmsv_unref)(xmmsv_t *val);
 };
 
 static struct xmmsclientlib dl;
@@ -50,13 +53,16 @@ void *xmms2_dlsym_init(void)
           get_func(xmmsc_playback_current_id);
           get_func(xmmsc_playback_playtime);
           get_func(xmmsc_medialib_get_info);
-          get_func(xmmsc_result_get_dict_entry_string);
-          get_func(xmmsc_result_get_dict_entry_int);
-          get_func(xmmsc_result_wait);                
-          get_func(xmmsc_result_iserror);                
-          get_func(xmmsc_result_get_uint);
-          get_func(xmmsc_result_get_error);
+          get_func(xmmsv_dict_entry_get_string);
+          get_func(xmmsv_dict_entry_get_int);
+          get_func(xmmsc_result_wait);
+          get_func(xmmsc_result_get_value);
+          get_func(xmmsv_get_uint);
+          get_func(xmmsv_get_error);
           get_func(xmmsc_result_unref);
+          get_func(xmmsv_get_string);
+          get_func(xmmsv_propdict_to_dict);
+          get_func(xmmsv_unref);
           dl.handle = handle;
         }
       else
@@ -74,7 +80,9 @@ static
 gboolean get_xmms2_status(xmmsc_connection_t *conn, struct TrackInfo *ti)
 {
 	guint status;
+	const char *errbuf = NULL;
 	xmmsc_result_t *result = NULL;
+	xmmsv_t *value = NULL;
 
 	if (!conn || !ti) {
 		return FALSE;
@@ -82,12 +90,13 @@ gboolean get_xmms2_status(xmmsc_connection_t *conn, struct TrackInfo *ti)
 
 	result = (*dl.xmmsc_playback_status)(conn);
 	(*dl.xmmsc_result_wait)(result);
+	value = (*dl.xmmsc_result_get_value)(result);
 
-	if ((*dl.xmmsc_result_iserror)(result) ||
-	    !(*dl.xmmsc_result_get_uint)(result, &status)) {
+	if ((*dl.xmmsv_get_error)(value, &errbuf) ||
+	    !(*dl.xmmsv_get_uint)(value, &status)) {
 		purple_debug_error(PLUGIN_ID,
 		                   "(XMMS2) Failed to get playback status,"
-		                   " %s.\n", (*dl.xmmsc_result_get_error)(result));
+		                   " %s.\n", errbuf);
 		(*dl.xmmsc_result_unref)(result);
 		return FALSE;
 	}
@@ -118,7 +127,9 @@ gboolean get_xmms2_mediainfo(xmmsc_connection_t *conn, struct TrackInfo *ti)
 	guint id;
 	gint duration;
 	const char *val = NULL;
+	const char *errbuf = NULL;
 	xmmsc_result_t *result = NULL;
+	xmmsv_t *value = NULL;
 
 	if (!conn || !ti) {
 		return FALSE;
@@ -126,12 +137,13 @@ gboolean get_xmms2_mediainfo(xmmsc_connection_t *conn, struct TrackInfo *ti)
 
 	result = (*dl.xmmsc_playback_current_id)(conn);
 	(*dl.xmmsc_result_wait)(result);
+	value = (*dl.xmmsc_result_get_value)(result);
 
-	if ((*dl.xmmsc_result_iserror)(result) ||
-	    !(*dl.xmmsc_result_get_uint)(result, &id)) {
+	if ((*dl.xmmsv_get_error)(value, &errbuf) ||
+	    !(*dl.xmmsv_get_uint)(value, &id)) {
 		purple_debug_error(PLUGIN_ID,
 		                   "(XMMS2) Failed to get current ID, %s.\n",
-		                   (*dl.xmmsc_result_get_error)(result));
+		                   errbuf);
 		(*dl.xmmsc_result_unref)(result);
 		return FALSE;
 	}
@@ -146,28 +158,33 @@ gboolean get_xmms2_mediainfo(xmmsc_connection_t *conn, struct TrackInfo *ti)
 
 	result = (*dl.xmmsc_medialib_get_info)(conn, id);
 	(*dl.xmmsc_result_wait)(result);
+	value = (*dl.xmmsc_result_get_value)(result);
 
-	if ((*dl.xmmsc_result_iserror)(result)) {
+	if ((*dl.xmmsv_get_error)(value, &errbuf)) {
 		purple_debug_error(PLUGIN_ID,
 		                   "(XMMS2) Failed to get media info, %s.\n",
-		                   (*dl.xmmsc_result_get_error)(result));
+		                   errbuf);
 		(*dl.xmmsc_result_unref)(result);
 		return FALSE;
 	}
 
-	if ((*dl.xmmsc_result_get_dict_entry_string)(result, "title", &val)) {
+        /* transform propdict dict-of-dicts into a regular dict */
+        xmmsv_t *dict = (*dl.xmmsv_propdict_to_dict)(value, NULL);
+
+	if ((*dl.xmmsv_dict_entry_get_string)(dict, "title", &val)) {
 		strcpy(ti->track, val);
 	}
-	if ((*dl.xmmsc_result_get_dict_entry_string)(result, "artist", &val)) {
+	if ((*dl.xmmsv_dict_entry_get_string)(dict, "artist", &val)) {
 		strcpy(ti->artist, val);
 	}
-	if ((*dl.xmmsc_result_get_dict_entry_string)(result, "album", &val)) {
+	if ((*dl.xmmsv_dict_entry_get_string)(dict, "album", &val)) {
 		strcpy(ti->album, val);
 	}
-	if ((*dl.xmmsc_result_get_dict_entry_int)(result, "duration", &duration)) {
+	if ((*dl.xmmsv_dict_entry_get_int)(dict, "duration", &duration)) {
 		ti->totalSecs = duration / 1000;
 	}
 
+	(*dl.xmmsv_unref)(dict);
 	(*dl.xmmsc_result_unref)(result);
 
 	return TRUE;
@@ -180,7 +197,9 @@ static
 gboolean get_xmms2_playtime(xmmsc_connection_t *conn, struct TrackInfo *ti)
 {
 	guint playtime;
+	const char *errbuf = NULL;
 	xmmsc_result_t *result = NULL;
+	xmmsv_t *value = NULL;
 
 	if (!conn || !ti) {
 		return FALSE;
@@ -188,12 +207,13 @@ gboolean get_xmms2_playtime(xmmsc_connection_t *conn, struct TrackInfo *ti)
 
 	result = (*dl.xmmsc_playback_playtime)(conn);
 	(*dl.xmmsc_result_wait)(result);
+	value = (*dl.xmmsc_result_get_value)(result);
 
-	if ((*dl.xmmsc_result_iserror)(result) ||
-	    !(*dl.xmmsc_result_get_uint)(result, &playtime)) {
+	if ((*dl.xmmsv_get_error)(value, &errbuf) ||
+	    !(*dl.xmmsv_get_uint)(value, &playtime)) {
 		purple_debug_error(PLUGIN_ID,
 		                   "(XMMS2) Failed to get playback time, %s.\n",
-		                   (*dl.xmmsc_result_get_error)(result));
+		                   errbuf);
 		(*dl.xmmsc_result_unref)(result);
 		return FALSE;
 	}
