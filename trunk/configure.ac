@@ -64,12 +64,12 @@ AC_ARG_ENABLE(xmms2,
         enable_xmms2=$enableval, enable_xmms2=auto)
 
 if test "x$enable_xmms2" = "xauto" ; then
-	PKG_CHECK_MODULES([XMMSCLIENT], [xmms2-client >= 0.5],enable_xmms2=yes,enable_xmms2=no)
+	PKG_CHECK_MODULES([XMMSCLIENT], [xmms2-client >= 0.6],enable_xmms2=yes,enable_xmms2=no)
 fi
 
 if test "x$enable_xmms2" = "xyes" ; then
-	PKG_CHECK_MODULES([XMMSCLIENT], [xmms2-client >= 0.5],[AC_DEFINE(HAVE_XMMSCLIENT, 1, "XMMS2 Client")],AC_MSG_ERROR([
-	*** XMMS2 is required to build XMMS2 support for MusicTracker; please make sure
+	PKG_CHECK_MODULES([XMMSCLIENT], [xmms2-client >= 0.6],[AC_DEFINE(HAVE_XMMSCLIENT, 1, "XMMS2 Client")],AC_MSG_ERROR([
+	*** XMMS2 0.6+ is required to build XMMS2 support for MusicTracker; please make sure
 	*** you have the XMMS2 development files installed. The latest version of XMMS2
 	*** is always available at http://wiki.xmms2.xmms.se/.]))
 	AC_SUBST(XMMSCLIENT_CFLAGS)
