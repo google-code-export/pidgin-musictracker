@@ -63,7 +63,7 @@ void process_message(wchar_t *MSNTitle)
   pcre *re3 = regex("^(.*)\\\\0Music\\\\0(.*)\\\\0(.*)\\\\0(.*)\\\\0(.*)\\\\0", PCRE_UNGREEDY);
   pcre *re4 = regex("^(.*)\\\\0Music\\\\0(.*)\\\\0(.*) - (.*)\\\\0$", 0);
 
-  if (capture(re1, s, strlen(s), player, enabled, format, title, artist, album, uuid) > 0)
+  if (capture(re1, s, strlen(s), player, enabled, format, artist, title, album, uuid) > 0)
     {
       trace("player '%s', enabled '%s', format '%s', title '%s', artist '%s', album '%s', uuid '%s'", player, enabled, format, title, artist, album, uuid);
 
@@ -75,7 +75,7 @@ void process_message(wchar_t *MSNTitle)
       strncpy(msnti.track, title, STRLEN);
       msnti.track[STRLEN-1] = 0;
     }
-  else if (capture(re2, s, strlen(s), player, enabled, format, artist, title, album) > 0)
+  else if (capture(re2, s, strlen(s), player, enabled, format, title, artist, album) > 0)
     {
       trace("player '%s', enabled '%s', format '%s', title '%s', artist '%s', album '%s'", player, enabled, format, title, artist, album);
 
@@ -87,7 +87,7 @@ void process_message(wchar_t *MSNTitle)
       strncpy(msnti.track, title, STRLEN);
       msnti.track[STRLEN-1] = 0;
     }
-  else if (capture(re3, s, strlen(s), player, enabled, format, artist, title) > 0)
+  else if (capture(re3, s, strlen(s), player, enabled, format, title, artist) > 0)
     {
       // Spotify likes this format
       trace("player '%s', enabled '%s', format '%s', title '%s', artist '%s' ", player, enabled, format, title, artist);
@@ -138,12 +138,10 @@ void process_message(wchar_t *MSNTitle)
   // (As "{0} - {1}","artist","title" and "{1} - {0}","title","artist" are equivalent,
   //  but which field is actually artist and title isn't described by the message)
   //
-  // We guess that "{1} - {0}" indicates the opposite order to the one we are expecting,
-  // but provide a configuration option to override this
+  // From testing, the order we expect seems to be the popular consensus, but provide
+  // a configuration option to override this as I've got this wrong at least once...
   //
-  // This seems to help with problematic players: Spotify, Last.fm player
-  //
-  if ((strcmp("{1} - {0}", format) == 0) || purple_prefs_get_bool(PREF_MSN_SWAP_ARTIST_TITLE))
+  if (purple_prefs_get_bool(PREF_MSN_SWAP_ARTIST_TITLE))
   {
     char swap[STRLEN];
     strncpy(swap, msnti.artist, STRLEN);
