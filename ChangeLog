@@ -1,6 +1,19 @@
 ChangeLog for MusicTracker Pidgin Plugin
 ========================================
 
+2009-05-11 (Version 0.4.18)
+	* Fix the Spanish translation, so that the translation of 'MusicTracker' menu item is not a translation of the instructions to translators for translating the 'MusicTracker' menu item, but a translation of the 'MusicTracker' menu item.
+	* Fix a bug preventing track time retrieval from banshee 1.0; it's a uint not an int
+	* Tidy up XMMS interface to reduce debug output spam and fix a memory leak
+	* Avoid a dlopen() leak if libaudacious.so and libxmms.so are both present
+	* Rewrite status message generation to allow the addition of "%s" in the message format as the pidgin saved status and clarify the logic a lot (issue 19)
+	* More adjustments to MSN compatible WM_COPYDATA message catcher, to deal with the message in the form Spotify sends (issue 128).
+	* Correct a mistake in the WM_COPYDATA parser which meant album information wasn't captured in one possible format.
+	* It seems that the MSN compatible WM_COPYDATA parser was incorrect and the artist and title were swapped in lots of cases; try to impove this so the "swap artist and title" preference shouldn't need to be turned on.
+	* Minor corrections and additions to French (fr) and Spanish (es) translations. Add partial Indonesian(id) translation, contributed via launchpad
+	* Add a fallback to g_timeout_add() when built with GLib versions prior to 2.14.0, which do not have g_timeout_add_seconds() (issue 125)
+	* Apply a patch to fix XMMS2 0.6 track information retrieval from chewi (issue 71).  This change is incompatible with XMMS2 <0.5
+
 2009-04-14 (Version 0.4.17)
 	* Avoid confusion for those building from source by installing into the prefix which pidgin was configured with by default (issue 116)
 	* Add/update some more translations contributed via launchpad (added: Dutch(nl), Norwegian bokmal(nb); updated: German(de), Italian(it), Spanish(es))
