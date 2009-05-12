@@ -45,9 +45,6 @@ echo $VERSION >$WORKDIR/version
 # generate .tar.bz2 file
 tar -cjf pidgin-musictracker-$VERSION.tar.bz2 $WORKDIR
 
-# generate .ebuild file
-cp $WORKDIR/packaging/pidgin-musictracker.ebuild pidgin-musictracker-$VERSION.ebuild
-
 # build win32
 # (this symlink is needed as we depend on pidgin source for some make infrastructure)
 ln -s ~/pidgin pidgin
@@ -63,7 +60,6 @@ if [ $1 != "release" ]
 then
  # upload files to my webhost
  scp $UPLOAD_CREDENTIALS \
-     pidgin-musictracker-$VERSION.ebuild \
      pidgin-musictracker-$VERSION-bin.tar.bz2 \
      $WORKDIR/installer/pidgin-musictracker-$VERSION.exe \
      pidgin-musictracker-$VERSION.tar.bz2 \
@@ -79,7 +75,6 @@ then
  echo $SVN_REV >~/.pidgin-musictracker-subversion-revision
 else
  #  use googlecode_upload.py to upload the files
- ~/googlecode_upload.py -s "Gentoo Linux ebuild"      -p pidgin-musictracker -l          Beta,OpSys-Linux,Type-Package     pidgin-musictracker-$VERSION.ebuild 
  ~/googlecode_upload.py -s "Linux x86 plugin binary"  -p pidgin-musictracker -l          Beta,OpSys-Linux,Type-Executable  pidgin-musictracker-$VERSION-bin.tar.bz2
  ~/googlecode_upload.py -s "Windows plugin installer" -p pidgin-musictracker -l Featured,Beta,OpSys-Windows,Type-Installer $WORKDIR/installer/pidgin-musictracker-$VERSION.exe
  ~/googlecode_upload.py -s "Source package"           -p pidgin-musictracker -l Featured,Beta,OpSys-All,Type-Source        pidgin-musictracker-$VERSION.tar.bz2
