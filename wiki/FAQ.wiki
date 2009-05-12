@@ -76,6 +76,7 @@ Fortunately however, foobar2000 is much better supported either via
   * the [http://chron.visiondesigns.de/foobar2000/#foo_winamp_spam winamp spam] component (but this is still not perfect as some winamp messages we use aren't yet implemented)
   * the [http://amip.tools-for.net/wiki/ AMIP] component has "MSN Messenger integration" which, when enabled sends "now playing" messages for MSN, which musictracker can catch.  It seems to be necessary to swap the artist and title order (either by swapping the title and artist format fields in the AMIP configuration tool, or using musictracker's setting to do that; AMIP's "MSN Live Messenger (8.x) compatibility" settting is only needed for MSN Messenger 8.x betas and shouldn't be turned on for use with musictracker)
   * the offical last.fm foo_audioscrobbler component passes the now playing data from foobar2000 to the last.fm client, which sends "now playing" messages for MSN, which musictracker can catch. (Installing the [http://www.last.fm/download last.fm] client will automatically install scrobbler plugins for all your players, including the foobar scrobbler component)
+  * other foobar components designed to send now playing information to MSN messenger should also work.
 
 So, with current versions of musictracker, the *recommendation* is to set player to 'auto-detect' (which tries 'Messenger compatible' before 'foobar2000') and install one of these components to help the track information get passed to musictracker.
 
