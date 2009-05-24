@@ -229,7 +229,7 @@
 +	dh_installdirs
 +
 +	# Add here commands to install the package into debian/musictracker.
-+	/usr/bin/install -c src/.libs/musictracker.so $(CURDIR)/debian/pidgin-musictracker/usr/lib/pidgin/musictracker.so
++	$(MAKE) install DESTDIR=$(CURDIR)/debian/pidgin-musictracker
 +
 +
 +# Build architecture-independent files here.
