@@ -5,8 +5,11 @@
 #
 
 LAST_VERSION=`cat ~/.pidgin-musictracker-release-version`
-PV=$LAST_VERSION-2~ppa$SNAPSHOT
 LAUNCHPAD_PUBLIC_KEY=0x7633C10E
+
+launchpad_build()
+{
+PV=$LAST_VERSION-2~ppa$SNAPSHOT~${RELEASE}1
 
 # unpack
 tar -jxf pidgin-musictracker-snapshot-$SNAPSHOT.tar.bz2
@@ -21,7 +24,7 @@ tar -zcf pidgin-musictracker_${PV}.tar.gz pidgin-musictracker_${PV}
 
 # rewrite the changelog
 # set the version, identify myself as the uploader, say this is snapshot
-echo "pidgin-musictracker (${PV}) hardy; urgency=low" >pidgin-musictracker_${PV}/debian/changelog
+echo "pidgin-musictracker (${PV}) $RELEASE; urgency=low" >pidgin-musictracker_${PV}/debian/changelog
 echo "" >>pidgin-musictracker_${PV}/debian/changelog
 echo "  * Snapshot $SNAPSHOT" >>pidgin-musictracker_${PV}/debian/changelog
 echo "" >>pidgin-musictracker_${PV}/debian/changelog
@@ -50,3 +53,10 @@ dput my-ppa pidgin-musictracker_${PV}_source.changes
 
 # clean up
 rm -rf pidgin-musictracker_${PV}*
+}
+
+# request a launchpad build against all active ubuntu releases
+for RELEASE in hardy intrepid jaunty
+do
+ launchpad_build
+done
