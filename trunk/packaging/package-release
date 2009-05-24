@@ -40,7 +40,7 @@ fi
 echo $VERSION >$WORKDIR/version
 
 # run autotools
-(cd $WORKDIR ; ./reconf)
+(cd $WORKDIR ; ./autogen.sh)
 
 # generate .tar.bz2 file
 tar -cjf pidgin-musictracker-$VERSION.tar.bz2 $WORKDIR
