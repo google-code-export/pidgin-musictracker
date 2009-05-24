@@ -111,7 +111,7 @@ Perform the following steps before ./configure
 
 {{{
 echo my-hacked-up-version >version
-./reconf
+./autogen.sh
 }}}
 
 ==11==
