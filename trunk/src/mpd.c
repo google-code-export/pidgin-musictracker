@@ -14,7 +14,8 @@
 #include "gettext.h"
 #define _(String) dgettext (PACKAGE, String)
 
-gboolean get_mpd_info(struct TrackInfo* ti)
+void
+get_mpd_info(struct TrackInfo* ti)
 {
 	const char * hostname = purple_prefs_get_string(PREF_MPD_HOSTNAME);
 	const char * port = purple_prefs_get_string(PREF_MPD_PORT);
@@ -30,7 +31,7 @@ gboolean get_mpd_info(struct TrackInfo* ti)
 	if(conn->error) {
 		trace("Failed to connect to MPD server");
 		mpd_closeConnection(conn);
-		return FALSE;
+		return;
 	}
 
 	// Send password if it is not empty
@@ -47,7 +48,7 @@ gboolean get_mpd_info(struct TrackInfo* ti)
 	mpd_sendCommandListEnd(conn);
 	if((status = mpd_getStatus(conn))==NULL) {
 		trace("Error: %s\n",conn->errorStr);
-		return FALSE;
+		return;
 		mpd_closeConnection(conn);
 	}
 	ti->currentSecs = status->elapsedTime;
@@ -76,28 +77,27 @@ gboolean get_mpd_info(struct TrackInfo* ti)
 	if(conn->error) {
 		trace("Error: %s",conn->errorStr);
 		mpd_closeConnection(conn);
-		return FALSE;
+		return;
 	}
 	mpd_finishCommand(conn);
 	if(conn->error) {
 		trace("Error: %s",conn->errorStr);
 		mpd_closeConnection(conn);
-		return FALSE;
+		return;
 	}
 	switch(status->state) {
 		case MPD_STATUS_STATE_STOP:
-			ti->status = STATUS_OFF;
+			ti->status = PLAYER_STATUS_STOPPED;
 			break;
 		case MPD_STATUS_STATE_PAUSE:
-			ti->status = STATUS_PAUSED;
+			ti->status = PLAYER_STATUS_PAUSED;
 			break;
 		case MPD_STATUS_STATE_PLAY:
-			ti->status = STATUS_NORMAL;
+			ti->status = PLAYER_STATUS_PLAYING;
 			break;
 	}
 	mpd_freeStatus(status);
 	mpd_closeConnection(conn);
-	return TRUE;
 }
 
 static

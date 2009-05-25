@@ -152,8 +152,8 @@ trackinfo_changed(const struct TrackInfo* one, const struct TrackInfo* two)
   if ((one == NULL) && (two == NULL))
     return FALSE;
 
-  // a null trackinfo is stored in mostrecent_ti as a STATUS_OFF one...
-  if ((one == NULL) && (two != NULL) && (two->status == STATUS_OFF))
+  // a null trackinfo is stored in mostrecent_ti as a PLAYER_STATUS_CLOSED one...
+  if ((one == NULL) && (two != NULL) && (two->status <= PLAYER_STATUS_CLOSED))
     return FALSE;
 
   if ((one == NULL) || (two == NULL))
@@ -240,7 +240,7 @@ set_status_tune (PurpleAccount *account, gboolean validStatus, struct TrackInfo 
 	{
 		if (ti == NULL)
 			return FALSE;
-		active = (ti->status == STATUS_NORMAL);
+		active = (ti->status == PLAYER_STATUS_PLAYING);
 	}
 	else
 	{		
@@ -397,15 +397,19 @@ set_status (PurpleAccount *account, struct TrackInfo *ti)
           {
             switch (ti->status)
               {
-              case STATUS_OFF:
+              case PLAYER_STATUS_CLOSED:
+                text = generate_status("", ti, savedmessage);
+                break;
+
+              case PLAYER_STATUS_STOPPED:
                 text = generate_status(purple_prefs_get_string(PREF_OFF), ti, savedmessage);
                 break;
 
-              case STATUS_PAUSED:
+              case PLAYER_STATUS_PAUSED:
                 text = generate_status(purple_prefs_get_string(PREF_PAUSED), ti, savedmessage);
                 break;
 
-              case STATUS_NORMAL:
+              case PLAYER_STATUS_PLAYING:
                 {
                   // check for protocol status format override for this account
                   buf = build_pref(PREF_CUSTOM_FORMAT,
@@ -503,7 +507,7 @@ set_userstatus_for_active_accounts (struct TrackInfo *ti)
         if (ti)
           mostrecent_ti = *ti;
         else
-          mostrecent_ti.status = STATUS_OFF;
+          mostrecent_ti.status = PLAYER_STATUS_CLOSED;
 }
 
 //--------------------------------------------------------------------
@@ -568,37 +572,48 @@ cb_timeout(gpointer data) {
 	if (g_run == 0)
 		return FALSE;
 
-        gboolean b = TRUE;
-
 	struct TrackInfo ti;
-	memset(&ti, 0, sizeof(ti));
-	ti.status = STATUS_OFF;
 
 	int player = purple_prefs_get_int(PREF_PLAYER);
 
 	if (player != -1)
           {
+            // a specific player is configured
             trace("trying '%s'", g_players[player].name);
+            memset(&ti, 0, sizeof(ti));
+            ti.status = PLAYER_STATUS_CLOSED;
             ti.player = g_players[player].name;
-            b = (*g_players[player].track_func)(&ti);
+            (*g_players[player].track_func)(&ti);
           }
         else
           {
+            // try to autodetect an active player
             int i = 0;
-            while (strlen(g_players[i].name) && (!b || ti.status == STATUS_OFF))
+            while (strlen(g_players[i].name))
               {
                 trace("trying '%s'", g_players[i].name);
+                memset(&ti, 0, sizeof(ti));
+                ti.status = PLAYER_STATUS_CLOSED;
                 ti.player = g_players[i].name;
-                b = (*g_players[i].track_func)(&ti);
+                (*g_players[i].track_func)(&ti);
+
+                // XXX: to maintain historical behaviour we stop looking at the first player which is paused or playing
+                // we could try harder and continue to look for a player which is playing if we found one which was paused...
+                if (ti.status > PLAYER_STATUS_STOPPED)
+                  {
+                    break;
+                  }
+
                 ++i;
             }
           }
 
-	if (!b) {
+	if (ti.status == PLAYER_STATUS_CLOSED)
+          {
 		trace("Getting info failed. Setting empty status.");
 		set_userstatus_for_active_accounts(0);
 		return TRUE;
-	}
+          }
 
 	trim(ti.album);
 	trim(ti.track);
@@ -628,7 +643,7 @@ cb_timeout(gpointer data) {
 static
 PurpleCmdRet musictracker_cmd_nowplaying(PurpleConversation *conv, const gchar *cmd, gchar **args, gchar **error, void *data)
 {
-  if (mostrecent_ti.status == STATUS_NORMAL)
+  if (mostrecent_ti.status == PLAYER_STATUS_PLAYING)
     {
       char *status = generate_status(purple_prefs_get_string(PREF_FORMAT), &mostrecent_ti, "");
       PurpleConversationType type = purple_conversation_get_type (conv);

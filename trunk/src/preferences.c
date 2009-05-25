@@ -272,7 +272,7 @@ GtkWidget* pref_frame(PurplePlugin *plugin)
 	gtk_container_add(GTK_CONTAINER(align2), vbox2);
 	ADD_FORMAT_ENTRY(vbox2, _("Playing:"), PREF_FORMAT);
 	ADD_FORMAT_ENTRY(vbox2, _("Paused:"), PREF_PAUSED);
-	ADD_FORMAT_ENTRY(vbox2, _("Stopped/Off:"), PREF_OFF);
+	ADD_FORMAT_ENTRY(vbox2, _("Stopped:"), PREF_OFF);
 
 	// Protocol-specific formats
 	liststore = gtk_list_store_new(6, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_BOOLEAN, G_TYPE_BOOLEAN, G_TYPE_POINTER);

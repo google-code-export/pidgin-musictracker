@@ -12,34 +12,40 @@ extern "C" {
  		SysFreeString(bstr); \
 	}
 
-extern "C" gboolean get_itunes_info(struct TrackInfo *ti)
+extern "C" void
+get_itunes_info(struct TrackInfo *ti)
 {
+        ti->status = PLAYER_STATUS_CLOSED;
+
 	if (!FindWindow("iTunes", NULL)) {
-		ti->status = STATUS_OFF;
-		return TRUE;
+
+		return;
 	}
 
-    IiTunes *itunes;
+	IiTunes *itunes;
 	if (CoCreateInstance(CLSID_iTunesApp, NULL, CLSCTX_LOCAL_SERVER, IID_IiTunes, (PVOID *) &itunes) != S_OK) {
 		trace("Failed to get iTunes COM interface");
-		return FALSE;
+		return;
 	}
 
 	ITPlayerState state;
 	if (itunes->get_PlayerState(&state) != S_OK)
-		return FALSE;
+		return;
 	if (state == ITPlayerStatePlaying)
-		ti->status = STATUS_NORMAL;
+		ti->status = PLAYER_STATUS_PLAYING;
 	else if (state == ITPlayerStateStopped)
-		ti->status = STATUS_PAUSED;
+		ti->status = PLAYER_STATUS_PAUSED;
+	else
+		ti->status = PLAYER_STATUS_STOPPED;
+        // XXX: Hmmm... how do we distinguish stopped and paused states?
 
 	IITTrack *track;
 	HRESULT res = itunes->get_CurrentTrack(&track);
 	if (res == S_FALSE) {
-		ti->status = STATUS_OFF;
-		return TRUE;
+		ti->status = PLAYER_STATUS_STOPPED;
+		return;
 	} else if (res != S_OK)
-		return FALSE;
+		return;
 
 	BSTR bstr;
 	track->get_Artist(&bstr);
@@ -56,7 +62,5 @@ extern "C" gboolean get_itunes_info(struct TrackInfo *ti)
 	long position = 0;
 	itunes->get_PlayerPosition(&position);
 	ti->currentSecs = position;
-
-	return TRUE;
 }
 

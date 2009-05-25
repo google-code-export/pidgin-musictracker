@@ -84,6 +84,8 @@ gboolean get_xmms2_status(xmmsc_connection_t *conn, struct TrackInfo *ti)
 	xmmsc_result_t *result = NULL;
 	xmmsv_t *value = NULL;
 
+        ti->status = PLAYER_STATUS_CLOSED;
+
 	if (!conn || !ti) {
 		return FALSE;
 	}
@@ -103,13 +105,13 @@ gboolean get_xmms2_status(xmmsc_connection_t *conn, struct TrackInfo *ti)
 
 	switch (status) {
 	case XMMS_PLAYBACK_STATUS_STOP:
-		ti->status = STATUS_OFF;
+		ti->status = PLAYER_STATUS_STOPPED;
 		break;
 	case XMMS_PLAYBACK_STATUS_PLAY:
-		ti->status = STATUS_NORMAL;
+		ti->status = PLAYER_STATUS_PLAYING;
 		break;
 	case XMMS_PLAYBACK_STATUS_PAUSE:
-		ti->status = STATUS_PAUSED;
+		ti->status = PLAYER_STATUS_PAUSED;
 		break;
 	}
 
@@ -225,7 +227,8 @@ gboolean get_xmms2_playtime(xmmsc_connection_t *conn, struct TrackInfo *ti)
 	return TRUE;
 }
 
-gboolean get_xmms2_info(struct TrackInfo *ti)
+void
+get_xmms2_info(struct TrackInfo *ti)
 {
 	xmmsc_connection_t *connection = NULL;
 	const gchar *path = NULL;
@@ -234,7 +237,7 @@ gboolean get_xmms2_info(struct TrackInfo *ti)
         // have we successfully loaded the xmmsclient library and resolved symbols
         if (!xmms2_dlsym_init())
           {
-            return FALSE;
+            return;
           }
 
 	connection = (*dl.xmmsc_init)("musictracker");
@@ -242,7 +245,7 @@ gboolean get_xmms2_info(struct TrackInfo *ti)
 	if (!connection) {
 		purple_debug_error(PLUGIN_ID, "(XMMS2)"
 		                   " Connection initialization failed.\n");
-		return FALSE;
+		return;
 	}
 
 	path = getenv("XMMS_PATH");
@@ -260,19 +263,17 @@ gboolean get_xmms2_info(struct TrackInfo *ti)
 		                   "(XMMS2) Connection to path '%s' failed, %s.\n",
 		                   path ? path : "" , (*dl.xmmsc_get_last_error)(connection));
 		(*dl.xmmsc_unref)(connection);
-		return FALSE;
+		return;
 	}
 
 	if (!get_xmms2_status(connection, ti) ||
 	    !get_xmms2_mediainfo(connection, ti) ||
 	    !get_xmms2_playtime(connection, ti)) {
 		(*dl.xmmsc_unref)(connection);
-		return FALSE;
+		return;
 	}
 
 	(*dl.xmmsc_unref)(connection);
-
-	return TRUE;
 }
 
 static

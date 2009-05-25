@@ -68,14 +68,16 @@ gboolean winamp_get(const char *filename, const char *key, char *dest)
         return (rc != 1);
 }
 
-gboolean get_winamp_info(struct TrackInfo* ti)
+void
+get_winamp_info(struct TrackInfo* ti)
 {
+	ti->status = PLAYER_STATUS_CLOSED;
 	hWnd = FindWindow("Winamp v1.x", NULL);
 	if (!hWnd) {
 		trace("Failed to find winamp window. Assuming player is off");
-		ti->status = STATUS_OFF;
-		return TRUE;
+		return;
 	}
+
 	int version = SendMessage(hWnd, WM_WA_IPC, 0, IPC_GETVERSION);
 	trace("Winamp version %d", version);
 
@@ -85,11 +87,11 @@ gboolean get_winamp_info(struct TrackInfo* ti)
 
 	int playing = SendMessage(hWnd, WM_WA_IPC, 1, IPC_ISPLAYING);
 	if (playing == 0)
-		ti->status = STATUS_OFF;
+		ti->status = PLAYER_STATUS_STOPPED;
 	else if (playing == 3)
-		ti->status = STATUS_PAUSED;
+		ti->status = PLAYER_STATUS_PAUSED;
 	else
-		ti->status = STATUS_NORMAL;
+		ti->status = PLAYER_STATUS_PLAYING;
 
 	ti->totalSecs = SendMessage(hWnd, WM_WA_IPC, 1, IPC_GETOUTPUTTIME);
 	ti->currentSecs = SendMessage(hWnd, WM_WA_IPC, 0, IPC_GETOUTPUTTIME)/1000;
@@ -140,6 +142,4 @@ gboolean get_winamp_info(struct TrackInfo* ti)
             pcre_free(re);
             free(title);
           }
-
-	return TRUE;
 }

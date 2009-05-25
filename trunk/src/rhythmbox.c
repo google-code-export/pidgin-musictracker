@@ -24,7 +24,7 @@ unsigned int get_hash_uint(GHashTable *table, const char *key)
 	return 0;
 }
 
-gboolean
+void
 get_rhythmbox_info(struct TrackInfo* ti)
 {
 	DBusGConnection *connection;
@@ -35,11 +35,11 @@ get_rhythmbox_info(struct TrackInfo* ti)
 	if (connection == NULL) {
 		trace("Failed to open connection to dbus: %s\n", error->message);
 		g_error_free (error);
-		return FALSE;
+		return;
 	}
 
 	if (!dbus_g_running(connection, "org.gnome.Rhythmbox")) {
-		return FALSE;
+		return;
 	}
 
 	shell = dbus_g_proxy_new_for_name(connection,
@@ -56,9 +56,9 @@ get_rhythmbox_info(struct TrackInfo* ti)
 				G_TYPE_INVALID,
 				G_TYPE_BOOLEAN, &playing,
 				G_TYPE_INVALID)) {
-		trace("Failed to get playing state from rhythmbox dbus (%s). Assuming player is off", error->message);
-		ti->status = STATUS_OFF;
-		return TRUE;
+		trace("Failed to get playing state from rhythmbox dbus (%s). Assuming player is stopped", error->message);
+		ti->status = PLAYER_STATUS_STOPPED;
+		return;
 	}
 	
 	char *uri;
@@ -67,7 +67,7 @@ get_rhythmbox_info(struct TrackInfo* ti)
 				G_TYPE_STRING, &uri,
 				G_TYPE_INVALID)) {
 		trace("Failed to get song uri from rhythmbox dbus (%s)", error->message);
-		return FALSE;
+		return;
 	}
 
 	GHashTable *table;
@@ -77,19 +77,18 @@ get_rhythmbox_info(struct TrackInfo* ti)
 				dbus_g_type_get_map("GHashTable", G_TYPE_STRING, G_TYPE_VALUE),	&table,
 				G_TYPE_INVALID)) {
 		if (!playing) {
-			ti->status = STATUS_OFF;
-			return TRUE;
+			ti->status = PLAYER_STATUS_STOPPED;
 		} else {
 			trace("Failed to get song info from rhythmbox dbus (%s)", error->message);
-			return FALSE;
 		}
+                return;
 	}
         g_free(uri);
 
 	if (playing)
-		ti->status = STATUS_NORMAL;
+		ti->status = PLAYER_STATUS_PLAYING;
 	else
-		ti->status = STATUS_PAUSED;
+		ti->status = PLAYER_STATUS_PAUSED;
 
 
         // check if streamtitle is nonempty, if so use that as title
@@ -108,6 +107,4 @@ get_rhythmbox_info(struct TrackInfo* ti)
 				G_TYPE_INVALID)) {
 		trace("Failed to get elapsed time from rhythmbox dbus (%s)", error->message);
 	}
-
-	return TRUE;
 }

@@ -61,7 +61,7 @@ dbusbird_dbus_string(DBusGProxy *proxy, const char *method, char* dest)
   return TRUE;
 }
 
-gboolean
+void
 get_dbusbird_info(struct TrackInfo* ti)
 {
   DBusGConnection *connection;
@@ -69,16 +69,17 @@ get_dbusbird_info(struct TrackInfo* ti)
   GError *error = 0;
   char status[STRLEN];
 
+  ti->status = PLAYER_STATUS_CLOSED;
+
   connection = dbus_g_bus_get (DBUS_BUS_SESSION, &error);
   if (connection == NULL) {
     trace("Failed to open connection to dbus: %s\n", error->message);
     g_error_free (error);
-    return FALSE;
+    return;
   }
   
   if (!dbus_g_running(connection, "org.mozilla.songbird")) {
-    ti->status = STATUS_OFF;
-    return TRUE;
+    return;
   }
   
   proxy = dbus_g_proxy_new_for_name (connection,
@@ -88,20 +89,20 @@ get_dbusbird_info(struct TrackInfo* ti)
   
   if (!dbusbird_dbus_string(proxy, "getStatus", status))
     {
-      return FALSE;
+      return;
     }
   
   ti->player = "Songbird";
         
   if (strcmp(status, "stopped") == 0) {
-    ti->status = STATUS_OFF;
-    return TRUE;
+    ti->status = PLAYER_STATUS_STOPPED;
+    return;
   } else if (strcmp(status, "playing") == 0) {
-    ti->status = STATUS_NORMAL;
+    ti->status = PLAYER_STATUS_PLAYING;
   } else { // paused
-    ti->status = STATUS_PAUSED;
+    ti->status = PLAYER_STATUS_PAUSED;
   }
-	
+
   ti->currentSecs = 0;
 
   {
@@ -118,6 +119,4 @@ get_dbusbird_info(struct TrackInfo* ti)
   dbusbird_dbus_string(proxy, "getArtist", ti->artist);
   dbusbird_dbus_string(proxy, "getAlbum", ti->album);
   dbusbird_dbus_string(proxy, "getTitle", ti->track);
-        
-  return (ti->status != STATUS_OFF);
 }

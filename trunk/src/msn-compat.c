@@ -111,7 +111,7 @@ void process_message(wchar_t *MSNTitle)
     }
   else
     {
-      msnti.status = STATUS_OFF;
+      msnti.status = PLAYER_STATUS_STOPPED;
     }
 
   pcre_free(re1);
@@ -126,11 +126,11 @@ void process_message(wchar_t *MSNTitle)
   if ((strncmp(enabled, "1", 1) == 0) &&
       ((strlen(msnti.artist) > 0) || (strlen(msnti.track) > 0) || (strlen(msnti.album) > 0)))
     {
-      msnti.status = STATUS_NORMAL;
+      msnti.status = PLAYER_STATUS_PLAYING;
     }
   else
     {
-      msnti.status = STATUS_OFF;
+      msnti.status = PLAYER_STATUS_STOPPED;
     }
 
   //
@@ -188,7 +188,8 @@ LRESULT CALLBACK MSNWinProc(
   }
 }
 
-gboolean get_msn_compat_info(struct TrackInfo *ti)
+void
+get_msn_compat_info(struct TrackInfo *ti)
 {
   static HWND MSNWindow = 0;
   
@@ -209,13 +210,10 @@ gboolean get_msn_compat_info(struct TrackInfo *ti)
     }
 
   // did we receive a message with something useful in it?
-  if (msnti.status == STATUS_NORMAL)
+  if (msnti.status == PLAYER_STATUS_PLAYING)
     {
       *ti = msnti;
-      return TRUE;
     }
-  
-  return FALSE;
 }
 
 static

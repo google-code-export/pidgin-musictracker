@@ -4,7 +4,7 @@
 #include <stdint.h>
 #include <string.h>
 
-int g_state = STATUS_NORMAL;
+int g_state = PLAYER_STATUS_STOPPED;
 
 void quodlibet_hash_str(GHashTable *table, const char *key, char *dest)
 {
@@ -22,7 +22,7 @@ void cb_quodlibet_paused(DBusGProxy *proxy, gpointer data)
 	trace("quodlibet paused: %d", g_state);
 }
 
-gboolean
+void
 get_quodlibet_info(struct TrackInfo* ti)
 {
 	DBusGConnection *connection;
@@ -31,16 +31,17 @@ get_quodlibet_info(struct TrackInfo* ti)
 	char buf[STRLEN];
 	static gboolean connected = FALSE;
 
+        ti->status = PLAYER_STATUS_CLOSED;
+
 	connection = dbus_g_bus_get (DBUS_BUS_SESSION, &error);
 	if (connection == NULL) {
 		trace("Failed to open connection to dbus: %s\n", error->message);
 		g_error_free (error);
-		return FALSE;
+		return;
 	}
 
 	if (!dbus_g_running(connection, "net.sacredchao.QuodLibet")) {
-		ti->status = STATUS_OFF;
-		return TRUE;
+		return;
 	}
 
 	player = dbus_g_proxy_new_for_name(connection,
@@ -51,10 +52,10 @@ get_quodlibet_info(struct TrackInfo* ti)
 	if (!connected) {
 		dbus_g_proxy_add_signal(player, "Paused", G_TYPE_INVALID);
 		dbus_g_proxy_connect_signal(player, "Paused", G_CALLBACK(cb_quodlibet_paused), 
-				(gpointer) STATUS_PAUSED, 0);
+				(gpointer) PLAYER_STATUS_PAUSED, 0);
 		dbus_g_proxy_add_signal(player, "Unpaused", G_TYPE_INVALID);
 		dbus_g_proxy_connect_signal(player, "Unpaused", G_CALLBACK(cb_quodlibet_paused), 
-				(gpointer) STATUS_NORMAL, 0);
+				(gpointer) PLAYER_STATUS_PLAYING, 0);
 		connected = TRUE;
 	}
 
@@ -63,8 +64,8 @@ get_quodlibet_info(struct TrackInfo* ti)
 				G_TYPE_INVALID, 
 				dbus_g_type_get_map("GHashTable", G_TYPE_STRING, G_TYPE_STRING), &table,
 				G_TYPE_INVALID)) {
-		ti->status = STATUS_OFF;
-		return TRUE;
+		ti->status = PLAYER_STATUS_STOPPED;
+		return;
 	}
 	ti->status = g_state;
 
@@ -74,6 +75,4 @@ get_quodlibet_info(struct TrackInfo* ti)
 	quodlibet_hash_str(table, "~#length", buf);
 	sscanf(buf, "%d", &ti->totalSecs);
 	g_hash_table_destroy(table);
-
-	return TRUE;
 }

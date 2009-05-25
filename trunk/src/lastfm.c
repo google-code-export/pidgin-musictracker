@@ -40,7 +40,7 @@ lastfm_fetch(PurpleUtilFetchUrlData *url_data, gpointer user_data, const gchar *
     }
 }
 
-gboolean
+void
 get_lastfm_info(struct TrackInfo* ti)
 {
 	char url[500]="http://ws.audioscrobbler.com/1.0/user/";
@@ -48,7 +48,7 @@ get_lastfm_info(struct TrackInfo* ti)
 	const char *user = purple_prefs_get_string(PREF_LASTFM);
 	if(!strcmp(user,"")) {
 		trace("No last.fm user name");
-		return FALSE;
+                return;
 	}
 	trace("Got user name: %s",user);
 
@@ -82,7 +82,6 @@ get_lastfm_info(struct TrackInfo* ti)
           {
             time_t timestamp = atoi(timestamp_string);
             double delta = difftime(time(NULL), timestamp);
-            ti->status=STATUS_NORMAL;
 
             if (delta < minimum_delta) { minimum_delta = delta; }
             trace("Epoch seconds %d, minimum delta-t %g", time(NULL), minimum_delta );
@@ -91,17 +90,15 @@ get_lastfm_info(struct TrackInfo* ti)
             // if the timestamp is more than the quiet interval in the past, assume player is off...
             if (delta < purple_prefs_get_int(PREF_LASTFM_QUIET))
               {
-                ti->status=STATUS_NORMAL;
+                ti->status = PLAYER_STATUS_PLAYING;
               }
             else
               {
-                ti->status=STATUS_OFF;
+                ti->status = PLAYER_STATUS_STOPPED;
               }
             
           }
         pcre_free(re);
-
-	return (ti->status == STATUS_NORMAL);
 }
 
 static
