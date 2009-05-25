@@ -20,5 +20,7 @@
   * Windows uninstaller
   * Write a patch for pidgin which allows the MSN tune presentation hint to be set as a tune status attribute
   * ~~Make UI translateable~~
+  * If the media player is playing video, ignore it
+  * Put a separate (hideable) pane into the Pidgin buddy window, so we can show that we are doing something (as it's less than clear we should change the status selector, and interacting it has some difficulties)?  Could show music emblem, player type, status, track details?
 
 _(Please do not put feature requests in the comments. Start a new issue or vote for an existing one instead)_
