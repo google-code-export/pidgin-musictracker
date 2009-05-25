@@ -57,7 +57,7 @@ Player (accessible from the little arrow underneath Now Playing, Plugins, Other)
 
 This plugin is implemented by wmp9.dll and seems to provide the hook needed for reporting WMP status messages.
 
-I've removed wmp9.dll from the pidgin-musictrcker installer as the distribution rights are unclear.  Googling for "True Launch Bar" should find it :-)
+I've removed wmp9.dll from the pidgin-musictracker installer as the distribution rights are unclear.  Googling for "True Launch Bar" should find it :-)
 
 Needless to say, this was a complete crock and was re-writtten for 0.4.6
 
