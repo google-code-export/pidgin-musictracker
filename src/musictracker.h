@@ -9,9 +9,10 @@
 #define PLUGIN_ID "musictracker"
 #define STRLEN 100
 
-#define STATUS_OFF 0
-#define STATUS_PAUSED 1
-#define STATUS_NORMAL 2
+#define PLAYER_STATUS_CLOSED -1
+#define PLAYER_STATUS_STOPPED 0
+#define PLAYER_STATUS_PAUSED 1
+#define PLAYER_STATUS_PLAYING 2
 
 #define INTERVAL 15000
 #define DBUS_TIMEOUT 100
@@ -61,7 +62,7 @@ struct TrackInfo
 struct PlayerInfo
 {
 	const char *name;
-	gboolean (*track_func)(struct TrackInfo *ti);
+	void (*track_func)(struct TrackInfo *ti);
 	void (*pref_func)(GtkBox *container);
 };
 
@@ -75,38 +76,38 @@ void clear_track_information(void);
 //--------------------------------------------------------------------
 
 #ifndef WIN32
-gboolean get_amarok_info(struct TrackInfo* ti);
-gboolean get_xmms_info(struct TrackInfo* ti);
-gboolean get_audacious_legacy_info(struct TrackInfo* ti);
-gboolean get_audacious_info(struct TrackInfo* ti);
-gboolean get_rhythmbox_info(struct TrackInfo* ti);
-gboolean get_exaile_info(struct TrackInfo* ti);
-gboolean get_moc_info(struct TrackInfo* ti);
-gboolean get_banshee_info(struct TrackInfo* ti);
-gboolean get_vagalume_info(struct TrackInfo* ti);
-gboolean get_quodlibet_info(struct TrackInfo* ti);
-gboolean get_listen_info(struct TrackInfo* ti);
-gboolean get_xmms2_info(struct TrackInfo* ti);
-gboolean get_squeezecenter_info(struct TrackInfo* ti);
-gboolean get_mpris_info(struct TrackInfo* ti);
-gboolean get_dbusbird_info(struct TrackInfo* ti);
+void get_amarok_info(struct TrackInfo* ti);
+void get_xmms_info(struct TrackInfo* ti);
+void get_audacious_legacy_info(struct TrackInfo* ti);
+void get_audacious_info(struct TrackInfo* ti);
+void get_rhythmbox_info(struct TrackInfo* ti);
+void get_exaile_info(struct TrackInfo* ti);
+void get_moc_info(struct TrackInfo* ti);
+void get_banshee_info(struct TrackInfo* ti);
+void get_vagalume_info(struct TrackInfo* ti);
+void get_quodlibet_info(struct TrackInfo* ti);
+void get_listen_info(struct TrackInfo* ti);
+void get_xmms2_info(struct TrackInfo* ti);
+void get_squeezecenter_info(struct TrackInfo* ti);
+void get_mpris_info(struct TrackInfo* ti);
+void get_dbusbird_info(struct TrackInfo* ti);
 
 void get_xmmsctrl_pref(GtkBox *box);
 void get_xmms2_pref(GtkBox *box);
 void get_squeezecenter_pref(GtkBox *box);
 
 #else
-gboolean get_foobar2000_info(struct TrackInfo* ti);
-gboolean get_winamp_info(struct TrackInfo* ti);
-gboolean get_wmp_info(struct TrackInfo* ti);
-gboolean get_itunes_info(struct TrackInfo* ti);
-gboolean get_msn_compat_info(struct TrackInfo *ti);
+void get_foobar2000_info(struct TrackInfo* ti);
+void get_winamp_info(struct TrackInfo* ti);
+void get_wmp_info(struct TrackInfo* ti);
+void get_itunes_info(struct TrackInfo* ti);
+void get_msn_compat_info(struct TrackInfo *ti);
 
 void get_msn_compat_pref(GtkBox *box);
 #endif
 
-gboolean get_mpd_info(struct TrackInfo* ti);
-gboolean get_lastfm_info(struct TrackInfo* ti);
+void get_mpd_info(struct TrackInfo* ti);
+void get_lastfm_info(struct TrackInfo* ti);
 
 void get_mpd_pref(GtkBox *box);
 void get_lastfm_pref(GtkBox *box);

@@ -106,7 +106,7 @@ clean_cached(void)
   cached_track.track[0] = '\0';
   cached_track.artist[0] = '\0';
   cached_track.album[0] = '\0';
-  cached_track.status = STATUS_OFF;
+  cached_track.status = PLAYER_STATUS_STOPPED;
   cached_track.totalSecs = 0;
   cached_track.currentSecs = 0;
 
@@ -173,7 +173,7 @@ dbus_handler(DBusConnection *connection,
     strncpy(cached_track.track, unescaped_title, STRLEN-1);
     strncpy(cached_track.artist, unescaped_artist, STRLEN-1);
     strncpy(cached_track.album, unescaped_album, STRLEN-1);
-    cached_track.status = STATUS_NORMAL;
+    cached_track.status = PLAYER_STATUS_PLAYING;
 
     /* Make sure they're NULL terminated in case of
      * overflow */
@@ -270,7 +270,7 @@ initialize_plugin(void)
   initialized = TRUE;
 }
 
-gboolean
+void
 get_vagalume_info(struct TrackInfo* ti)
 {
   if (!initialized) {
@@ -278,7 +278,7 @@ get_vagalume_info(struct TrackInfo* ti)
   }
 
   if (!running) {
-    return FALSE;
+    return;
   }
 
   strncpy(ti->track, cached_track.track, STRLEN-1);
@@ -288,6 +288,4 @@ get_vagalume_info(struct TrackInfo* ti)
   ti->status = cached_track.status;
   ti->totalSecs = cached_track.totalSecs;
   ti->currentSecs = cached_track.currentSecs;
-
-  return TRUE;
 }

@@ -711,7 +711,8 @@ void squeezecenter_status_to_musictracker(squeezecenter_Player *pl,struct TrackI
 	trim(name);
 	ti->player = name;
 	ti->currentSecs = pl->time;
-	ti->status = STATUS_OFF;
+	ti->status = PLAYER_STATUS_STOPPED;
+
         if (pl->remote == 1) {
 	        trace("squeezecenter remote streaming");
 		g_strlcpy(ti->track,pl->current_title,STRLEN);
@@ -728,24 +729,24 @@ void squeezecenter_status_to_musictracker(squeezecenter_Player *pl,struct TrackI
 	   trace("squeezecenter player on");
 	   switch(pl->mode[1]) {
 	      case 'l': //Play
-		ti->status = STATUS_NORMAL;
+		ti->status = PLAYER_STATUS_PLAYING;
 	      break;
 	      case 'a': //Pause
-		ti->status = STATUS_PAUSED;
+		ti->status = PLAYER_STATUS_PAUSED;
 	      break;
 	      case 't': //stop
-		ti->status = STATUS_OFF;
+		ti->status = PLAYER_STATUS_STOPPED;
 	      break;
 	   }
 	} else {
-		ti->status = STATUS_OFF;
+		ti->status = PLAYER_STATUS_STOPPED;
 	}
         trace("squeezecenter musictracker status %d(%c)",ti->status,pl->mode[1]);
 }
 
 /* music tracker interfaces */
-
-gboolean get_squeezecenter_info(struct TrackInfo* ti)
+void
+get_squeezecenter_info(struct TrackInfo* ti)
 {
 	char const * server = purple_prefs_get_string(PREF_SQUEEZECENTER_SERVER);
 	char const * user = purple_prefs_get_string(PREF_SQUEEZECENTER_USER);
@@ -770,22 +771,22 @@ gboolean get_squeezecenter_info(struct TrackInfo* ti)
         //conn  chreck
 
 	if(!get_squeezecenter_connection(&squeezecenter,server,SQUEEZECENTER_TIMEOUT,&last)) {
-          return FALSE;
+          return;
         }
 
 	if(squeezecenter.sock <= 0) {
-	   return FALSE;
+	   return;
 	}
 
 	switch(ret = squeezecenter_connected(&squeezecenter)) {
 	   case -1: //error
 	      trace("squeezecenter connection error");
 	      squeezecenter_disconnect(&squeezecenter);
-	      return FALSE;
+	      return;
            break;
 	   case 0: //peding
 	      trace("squeezecenter connection pending");
-	      return FALSE;
+	      return;
 	   break;
 	   default:
 	      trace("squeezecenter connected (%d)",ret);
@@ -795,7 +796,7 @@ gboolean get_squeezecenter_info(struct TrackInfo* ti)
 	   trace("squeezecenter preamble");
 	   if( squeezecenter_connection_preamble(&squeezecenter,user,password) != TRUE) {
 	       trace("squeezecenter preamble user/passord fail");
-	       return FALSE; 
+	       return; 
 	   }
 	}
 
@@ -804,12 +805,12 @@ gboolean get_squeezecenter_info(struct TrackInfo* ti)
         if(!squeezecenter_get_player_count(&squeezecenter)) {
 	        trace("squeezecenter player count failed");
 	        squeezecenter_disconnect(&squeezecenter);
-		return FALSE;
+		return;
 	}
 
 	if(squeezecenter.players <=0) {
 	        trace("squeezecenter no players");
-		return FALSE;
+		return;
 	}
 
 	if((!squeezecenter.players_array) || last_players != squeezecenter.players ) {
@@ -828,9 +829,6 @@ gboolean get_squeezecenter_info(struct TrackInfo* ti)
 	trace("squeezecenter musictracker mash");
         squeezecenter_status_to_musictracker(pl,ti);
 	trace("squeezecenter exit");
-
-        return TRUE;
-
 }
 
 void cb_squeezecenter_changed(GtkWidget *entry, gpointer data)

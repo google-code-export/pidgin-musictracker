@@ -66,7 +66,7 @@ int audacious_dbus_int(DBusGProxy *proxy, const char *method, int pos)
 	return ret;
 }
 
-gboolean
+void
 get_audacious_info(struct TrackInfo* ti)
 {
 	DBusGConnection *connection;
@@ -75,16 +75,17 @@ get_audacious_info(struct TrackInfo* ti)
 	char *status = 0;
 	int pos = 0;
 
+        ti->status = PLAYER_STATUS_CLOSED;;
+
 	connection = dbus_g_bus_get (DBUS_BUS_SESSION, &error);
 	if (connection == NULL) {
 		trace("Failed to open connection to dbus: %s\n", error->message);
 		g_error_free (error);
-		return FALSE;
+		return;
 	}
 
 	if (!dbus_g_running(connection, "org.atheme.audacious")) {
-		ti->status = STATUS_OFF;
-		return TRUE;
+		return;
 	}
 
 	proxy = dbus_g_proxy_new_for_name (connection,
@@ -98,18 +99,18 @@ get_audacious_info(struct TrackInfo* ti)
 				G_TYPE_INVALID))
 	{
 		trace("Failed to make dbus call: %s", error->message);
-		return FALSE;
+		return;
 	}
 
         ti->player = "Audacious";
         
 	if (strcmp(status, "stopped") == 0) {
-		ti->status = STATUS_OFF;
-		return TRUE;
+		ti->status = PLAYER_STATUS_STOPPED;
+		return;
 	} else if (strcmp(status, "playing") == 0) {
-		ti->status = STATUS_NORMAL;
+		ti->status = PLAYER_STATUS_PLAYING;
 	} else {
-		ti->status = STATUS_PAUSED;
+		ti->status = PLAYER_STATUS_PAUSED;
 	}
 	
 	// Find the position in the playlist
@@ -121,5 +122,4 @@ get_audacious_info(struct TrackInfo* ti)
 	audacious_dbus_string(proxy, "SongTuple", pos, "artist", ti->artist);
 	audacious_dbus_string(proxy, "SongTuple", pos, "album", ti->album);
 	audacious_dbus_string(proxy, "SongTuple", pos, "title", ti->track);
-	return TRUE;
 }

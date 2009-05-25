@@ -127,14 +127,14 @@ mpris_status_signal_int_cb(DBusGProxy *player_proxy, gint status, struct TrackIn
         switch (status)
           {
           case 0:
-            ti->status = STATUS_NORMAL;
+            ti->status = PLAYER_STATUS_PLAYING;
             break;
           case 1:
-            ti->status = STATUS_PAUSED;
+            ti->status = PLAYER_STATUS_PAUSED;
             break;
           case 2:
           default:
-            ti->status = STATUS_OFF;
+            ti->status = PLAYER_STATUS_STOPPED;
             break;
           }
 }
@@ -154,14 +154,14 @@ mpris_status_signal_struct_cb(DBusGProxy *player_proxy, GValueArray *sigstruct, 
         switch (status)
           {
           case 0:
-            ti->status = STATUS_NORMAL;
+            ti->status = PLAYER_STATUS_PLAYING;
             break;
           case 1:
-            ti->status = STATUS_PAUSED;
+            ti->status = PLAYER_STATUS_PAUSED;
             break;
           case 2:
           default:
-            ti->status = STATUS_OFF;
+            ti->status = PLAYER_STATUS_STOPPED;
             break;
           }
 }
@@ -311,7 +311,7 @@ mpris_check_player(gpointer key, gpointer value, gpointer user_data)
   struct TrackInfo *ti = (struct TrackInfo *)user_data;
 
   /* If we've already found an active player, don't carry on checking... */
-  if (ti->status != STATUS_OFF)
+  if (ti->status != PLAYER_STATUS_CLOSED)
     {
       return;
     }
@@ -409,18 +409,19 @@ mpris_check_player(gpointer key, gpointer value, gpointer user_data)
 
     player->ti.player = player->player_name;
 
-    if (player->ti.status != STATUS_OFF)
+    if (player->ti.status != PLAYER_STATUS_CLOSED)
       {
         *ti = player->ti;
       }
   }
 }   
 
-gboolean get_mpris_info(struct TrackInfo* ti)
+void
+get_mpris_info(struct TrackInfo* ti)
 {
   if (!bus)
     if (!load_plugin())
-      return FALSE;
+      return;
 
   /* Look for "org.mpris.*" service names on the bus */
   GError *error = 0;
@@ -457,10 +458,7 @@ gboolean get_mpris_info(struct TrackInfo* ti)
       g_error_free(error);
     }
 
-  ti->status = STATUS_OFF;
+  ti->status = PLAYER_STATUS_CLOSED;
   
   g_hash_table_foreach(players, mpris_check_player, ti);
- 
-  return (ti->status != STATUS_OFF);
-
 }

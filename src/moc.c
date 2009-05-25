@@ -44,15 +44,18 @@
  *
  * @return @c FALSE if mocp could not be started, @c TRUE otherwise
  */
-gboolean get_moc_info(struct TrackInfo* ti) {
+void
+get_moc_info(struct TrackInfo* ti) {
   char* pch; // used for tokenizing
   char temp[BUFF_SIZE]; // store response from mocp
   char* ret;
   FILE* pipe = popen("mocp -Q '%song ;%artist ;%album ;%state;%ts ;%cs ;%file ; ' 2>/dev/null", "r");
 
+  ti->status = PLAYER_STATUS_CLOSED;
+
   if (!pipe) {
     trace("No mocp");
-    return FALSE;
+    return;
   }
 
   ret = fgets(temp, BUFF_SIZE, pipe);
@@ -60,7 +63,7 @@ gboolean get_moc_info(struct TrackInfo* ti) {
 
   if (ret == NULL) {
     trace("Error with pipe");
-    return FALSE;
+    return;
   }
   trace("mocp -Q returned '%s'", temp);
 
@@ -85,16 +88,16 @@ gboolean get_moc_info(struct TrackInfo* ti) {
   pch = strtok(NULL, ";"); // state
   if (pch != NULL) {
     if (strcmp(pch, "STOP") == 0) {
-      ti->status = STATUS_OFF;
+      ti->status = PLAYER_STATUS_STOPPED;
     } else if (strcmp(pch, "PLAY") == 0) {
-      ti->status = STATUS_NORMAL;
+      ti->status = PLAYER_STATUS_PLAYING;
     } else if (strcmp(pch, "PAUSED") == 0) {
-      ti->status = STATUS_PAUSED;
+      ti->status = PLAYER_STATUS_PAUSED;
     } else {
-      ti->status = STATUS_OFF;
+      ti->status = PLAYER_STATUS_STOPPED;
     }
   } else {
-    ti->status = STATUS_OFF;
+    ti->status = PLAYER_STATUS_STOPPED;
   }
   pch = strtok(NULL, ";"); // ts
   if (pch != NULL) {
@@ -118,7 +121,6 @@ gboolean get_moc_info(struct TrackInfo* ti) {
       ti->totalSecs = ti->currentSecs;
     }
   }
-  return TRUE;
 }
 
 // -*- tab-width: 2; -*-

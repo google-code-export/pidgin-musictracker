@@ -50,14 +50,14 @@ gboolean get_xmmsctrl_info(struct TrackInfo *ti, void *handle, int session)
 
 	if ((*xmms_remote_is_playing)(session)) {
 		if ((*xmms_remote_is_paused)(session))
-			ti->status = STATUS_PAUSED;
+			ti->status = PLAYER_STATUS_PAUSED;
 		else
-			ti->status = STATUS_NORMAL;
+			ti->status = PLAYER_STATUS_PLAYING;
 	} else
-		ti->status = STATUS_OFF;
+		ti->status = PLAYER_STATUS_STOPPED;
 	trace("Got state %d", ti->status);
 
-	if (ti->status != STATUS_OFF) {
+	if (ti->status != PLAYER_STATUS_STOPPED) {
  		int pos = (*xmms_remote_get_playlist_pos)(session);
  		trace("Got position %d", pos);
 
@@ -85,7 +85,8 @@ gboolean get_xmmsctrl_info(struct TrackInfo *ti, void *handle, int session)
 	return TRUE;
 }
 
-gboolean get_xmms_info(struct TrackInfo *ti)
+void
+get_xmms_info(struct TrackInfo *ti)
 {
         static void *libxmms_handle = 0;
 
@@ -100,17 +101,16 @@ gboolean get_xmms_info(struct TrackInfo *ti)
 
         if (libxmms_handle)
           {
-            return get_xmmsctrl_info(ti, libxmms_handle, 0);
+            get_xmmsctrl_info(ti, libxmms_handle, 0);
           }
         else
           {
             trace("Failed to load libxmms.so");
           }
-
-        return FALSE;
 }
 
-gboolean get_audacious_legacy_info(struct TrackInfo *ti)
+void
+get_audacious_legacy_info(struct TrackInfo *ti)
 {
         static void *libaudacious_handle = 0;
 
@@ -126,14 +126,12 @@ gboolean get_audacious_legacy_info(struct TrackInfo *ti)
         if (libaudacious_handle)
           {
             ti->player = "Audacious";
-            return get_xmmsctrl_info(ti, libaudacious_handle, 0);
+            get_xmmsctrl_info(ti, libaudacious_handle, 0);
           }
         else
           {
             trace("Failed to load libaudacious.so");
           }
-
-        return FALSE;
 }
 
 void cb_xmms_sep_changed(GtkEditable *editable, gpointer data)

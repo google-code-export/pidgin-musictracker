@@ -26,7 +26,7 @@ gboolean exaile_dbus_query(DBusGProxy *proxy, const char *method, char* dest)
 	return TRUE;
 }
 
-gboolean
+void
 get_exaile_info(struct TrackInfo* ti)
 {
 	DBusGConnection *connection;
@@ -34,16 +34,16 @@ get_exaile_info(struct TrackInfo* ti)
 	GError *error = 0;
 	char buf[STRLEN], status[STRLEN];
 
+        ti->status = PLAYER_STATUS_CLOSED;
+
 	connection = dbus_g_bus_get (DBUS_BUS_SESSION, &error);
 	if (connection == NULL) {
 		trace("Failed to open connection to dbus: %s\n", error->message);
 		g_error_free (error);
-		return FALSE;
 	}
 
 	if (!dbus_g_running(connection, "org.exaile.DBusInterface")) {
-		ti->status = STATUS_OFF;
-		return TRUE;
+		return;
 	}
 
 	proxy = dbus_g_proxy_new_for_name (connection,
@@ -55,20 +55,19 @@ get_exaile_info(struct TrackInfo* ti)
 	// the current (0.2.6) Exaile version
 	if (!exaile_dbus_query(proxy, "query", buf)) {
 		trace("Failed to call Exaile dbus method. Assuming player is OFF");
-		ti->status = STATUS_OFF;
-		return TRUE;
+		return;
 	}
 
 	if (sscanf(buf, "status: %s", status) == 1) {
 		if (!strcmp(status, "playing"))
-			ti->status = STATUS_NORMAL;
+			ti->status = PLAYER_STATUS_PLAYING;
 		else
-			ti->status = STATUS_PAUSED;
+			ti->status = PLAYER_STATUS_PAUSED;
 	} else {
-		ti->status = STATUS_OFF;
+		ti->status = PLAYER_STATUS_STOPPED;
 	}
 
-	if (ti->status != STATUS_OFF) {
+	if (ti->status != PLAYER_STATUS_STOPPED) {
 		int mins, secs;
 		exaile_dbus_query(proxy, "get_artist", ti->artist);
 		exaile_dbus_query(proxy, "get_album", ti->album);
@@ -91,5 +90,4 @@ get_exaile_info(struct TrackInfo* ti)
                 trace("exaile_dbus_query: 'current_position' => %d", percentage);
 		ti->currentSecs = percentage*ti->totalSecs/100;
 	}
-	return TRUE;
 }

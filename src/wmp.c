@@ -60,7 +60,8 @@ void getItemInfo(IDispatch *objWmp, WCHAR *attr, char *result)
     }
 }
 
-gboolean get_wmp_info(struct TrackInfo *ti)
+void
+get_wmp_info(struct TrackInfo *ti)
 {
   HRESULT r;
   DISPATCH_OBJ(objWmpuice);
@@ -73,7 +74,7 @@ gboolean get_wmp_info(struct TrackInfo *ti)
   if (r != 0)
     {
       trace("Could not create WMPuICE object (WMPuICE not installed?)");
-      return FALSE;
+      return;
     }
 
   r = dhGetValue(L"%o", &objWmp, objWmpuice, L".Core");
@@ -81,7 +82,7 @@ gboolean get_wmp_info(struct TrackInfo *ti)
     {
       SAFE_RELEASE(objWmpuice);
       trace("No WMP core IDispatch (WMP not running?)");
-      return FALSE;
+      return;
     }
 
   // playState
@@ -95,18 +96,18 @@ gboolean get_wmp_info(struct TrackInfo *ti)
         case wmppsPlaying:
         case wmppsScanForward:
         case wmppsScanReverse:
-          ti->status = STATUS_NORMAL;
+          ti->status = PLAYER_STATUS_PLAYING;
           break;
 
         case wmppsPaused:
-          ti->status = STATUS_PAUSED;
+          ti->status = PLAYER_STATUS_PAUSED;
           break;
 
         case wmppsStopped:
         case wmppsMediaEnded:
         case wmppsReady:
         default:
-          ti->status = STATUS_OFF;
+          ti->status = PLAYER_STATUS_STOPPED;
         }
     }
 
@@ -146,6 +147,4 @@ gboolean get_wmp_info(struct TrackInfo *ti)
   SAFE_RELEASE(objWmp);
   SAFE_RELEASE(objWmpuice);
   dhUninitialize(TRUE);
-
-  return TRUE;
 }

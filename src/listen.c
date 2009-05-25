@@ -3,7 +3,7 @@
 #include "utils.h"
 #include <string.h>
 
-gboolean
+void
 get_listen_info(struct TrackInfo* ti)
 {
     DBusGConnection *connection;
@@ -12,17 +12,18 @@ get_listen_info(struct TrackInfo* ti)
     char *buf = 0;
     pcre *re;
 
+    ti->status = PLAYER_STATUS_CLOSED;
+
     connection = dbus_g_bus_get (DBUS_BUS_SESSION, &error);
     if (connection == NULL) {
         trace("Failed to open connection to dbus: %s\n", error->message);
         g_error_free (error);
-        return FALSE;
+        return;
     }
 
     if (!dbus_g_running(connection, "org.gnome.Listen")) {
         trace("org.gnome.Listen not running");
-        ti->status = STATUS_OFF;
-        return TRUE;
+        return;
     }
 
     proxy = dbus_g_proxy_new_for_name(connection,
@@ -36,19 +37,17 @@ get_listen_info(struct TrackInfo* ti)
                            G_TYPE_INVALID))
     {
         trace("Failed to make dbus call: %s", error->message);
-        return FALSE;
+        return;
     }
 
     if (strcmp(buf, "") == 0) {
-        ti->status = STATUS_PAUSED;
-        return TRUE;
+        ti->status = PLAYER_STATUS_PAUSED;
+        return;
     }
 
-    ti->status = STATUS_NORMAL;
+    ti->status = PLAYER_STATUS_PLAYING;
     re = regex("^(.*) - \\((.*) - (.*)\\)$", 0);
     capture(re, buf, strlen(buf), ti->track, ti->album, ti->artist);
     pcre_free(re);
     g_free(buf);
-    
-    return TRUE;
 }

@@ -63,7 +63,7 @@ unsigned int banshee_dbus_uint(DBusGProxy *proxy, const char *method)
 	return ret;
 }
 
-gboolean
+void
 get_banshee_info(struct TrackInfo* ti)
 {
 	DBusGConnection *connection;
@@ -76,7 +76,7 @@ get_banshee_info(struct TrackInfo* ti)
 	if (connection == NULL) {
 		trace("Failed to open connection to dbus: %s\n", error->message);
 		g_error_free (error);
-		return FALSE;
+		return;
 	}
 
 	if (dbus_g_running(connection,"org.gnome.Banshee")) {
@@ -91,16 +91,16 @@ get_banshee_info(struct TrackInfo* ti)
 					G_TYPE_INVALID))
 		{
 			trace("Failed to make dbus call: %s", error->message);
-			return FALSE;
+			return;
 		}
 
 		if (status == -1) {
-			ti->status = STATUS_OFF;
-			return TRUE;
+			ti->status = PLAYER_STATUS_STOPPED;
+			return;
 		} else if (status == 1)
-			ti->status = STATUS_NORMAL;
+			ti->status = PLAYER_STATUS_PLAYING;
 		else
-			ti->status = STATUS_PAUSED;
+			ti->status = PLAYER_STATUS_PAUSED;
 
 		banshee_dbus_string(proxy, "GetPlayingArtist", ti->artist);
 		banshee_dbus_string(proxy, "GetPlayingAlbum", ti->album);
@@ -108,7 +108,7 @@ get_banshee_info(struct TrackInfo* ti)
 
 		ti->totalSecs = banshee_dbus_int(proxy, "GetPlayingDuration");
 		ti->currentSecs = banshee_dbus_int(proxy, "GetPlayingPosition");
-		return TRUE;
+		return;
 	} else if (dbus_g_running(connection, "org.bansheeproject.Banshee")) { // provide for new interface in banshee 1.0
 		proxy = dbus_g_proxy_new_for_name (connection,
 				"org.bansheeproject.Banshee",
@@ -117,12 +117,12 @@ get_banshee_info(struct TrackInfo* ti)
 		
 		banshee_dbus_string(proxy, "GetCurrentState", szStatus);
 		if (strcmp(szStatus, "idle") == 0) {
-			ti->status = STATUS_OFF;
-			return TRUE;
+			ti->status = PLAYER_STATUS_STOPPED;
+			return;
 		} else if (strcmp(szStatus, "playing") == 0)
-			ti->status = STATUS_NORMAL;
+			ti->status = PLAYER_STATUS_PLAYING;
 		else
-			ti->status = STATUS_PAUSED;
+			ti->status = PLAYER_STATUS_PAUSED;
 		
 		GHashTable* table;
 		if (!dbus_g_proxy_call_with_timeout (proxy, "GetCurrentTrack", DBUS_TIMEOUT, &error,
@@ -131,7 +131,7 @@ get_banshee_info(struct TrackInfo* ti)
 					G_TYPE_INVALID))
 		{
 			trace("Failed to make dbus call: %s", error->message);
-			return FALSE;
+			return;
 		}
 		
 		banshee_hash_str(table, "album", ti->album);
@@ -142,9 +142,8 @@ get_banshee_info(struct TrackInfo* ti)
 		
 		ti->totalSecs = banshee_dbus_uint(proxy, "GetLength") / 1000;
 		ti->currentSecs = banshee_dbus_uint(proxy, "GetPosition") / 1000;
-		return TRUE;
+		return;
 	}
 
-        ti->status = STATUS_OFF;
-        return FALSE;
+        ti->status = PLAYER_STATUS_CLOSED;
 }
