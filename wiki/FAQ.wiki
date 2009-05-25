@@ -61,6 +61,23 @@ I've removed wmp9.dll from the pidgin-musictrcker installer as the distribution 
 
 Needless to say, this was a complete crock and was re-writtten for 0.4.6
 
+* Doesn't work with Windows Media Player (0.4.6 and later)*
+
+Since 0.4.6, the [http://www.mediatexx.com/download/addons.htm WMPuICE] plug-in to WMP is used to retrieve now playing information from WMP.
+
+This has a number of advantages over the previous implementation:
+  * Supports a wide-char interface to transport unicode chars successfully
+  * Should work without needing any changes of configuration of WMP
+  * The author of the DLL (Christian Mueller) clearly permits it to be redistributed (with acknowlegement)
+
+Note that the Windows Media Player SDK has an "Excluded Licenses" clause, so it's possible it's not permissible to link it with musictracker's GPL-ed code.  In any event, remoting an existing WMP instance (rather than starting a new one) via the COM interface requires some technical jumping through hoops which I'm quite happy to leave to others...
+
+If you have trouble getting this to work, you may find that the following help:
+  * Run the command 'regsvr32 "C:\Program Files\Pidgin\wmpuice.dll"'
+  * Open Windows Media Player, go into options, the Plug-ins tab, select "Background" then check the "uICE WMP Plug-in". Click Ok and restart Windows Media Player.
+
+These actions should have been performed by the musictracker installer. They won't have occured if you have a portable installation of pidgin or similar.
+
 ==8==
 * Doesn't work with foobar2000 (artist/track/title are blank) *
 
@@ -156,11 +173,12 @@ See the [http://developer.pidgin.im/wiki/TipsForBugReports tips for bug reports]
 In some versions of msn-pecan, it seems you need to turn on 'Use independent personal messages' in the WLM account options to send 'now listening' information.  This option seems to have disappeared in the latest msn-pecan, we hope it works without it ;-)
 
 ==15==
-* Artist and Title are swapped when using the Last.fm client *
+* Artist and Title are swapped *
 
-The [http://www.last.fm/download Last.fm client] sends data using the MSN WM_COPYDATA interface, but for some reason, it sends the artist and track name in the opposite order to most things, and there doesn't seem to be a good way to autodetect this.  
+There doesn't seem to be a definitive ordering for these elements in the 'MSN compatible' WM_COPYDATA interface.  So some players appear to send the artist and track name in the opposite order to that expected by musictracker, and there doesn't seem to be a good way to autodetect this.  
 
-Maybe the offical MSN client can, but I don't know how it does that...  until someone can tell me how, users of Last.fm client will need to open the musictracker plugin configuration dialog, select "Messenger compatible interface" in the player drop down list, press the "properties" button and tick "Swap artist and title".
+Maybe the offical MSN client can, but I don't know how it does that...  until someone can tell me how, users of such players will either need to 
+open the musictracker plugin configuration dialog, select "Messenger compatible interface" in the player drop down list, press the "properties" button and tick "Swap artist and title", or look for a similar configuration in the player.
 
 == My Question isn't answered here! Help! ==
 
