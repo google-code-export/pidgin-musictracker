@@ -211,6 +211,7 @@ void cb_misc_toggled(GtkToggleButton *button, gpointer data)
 	gtk_box_pack_start(GTK_BOX(hbox), widget, TRUE, TRUE, 0); \
 	gtk_entry_set_text(GTK_ENTRY(widget), purple_prefs_get_string(type)); \
 	g_signal_connect(G_OBJECT(widget), "changed", G_CALLBACK(cb_format_changed), (gpointer) type); \
+	gtk_widget_set_tooltip_text(widget, _("Leave blank for an unchanged status message")); \
 	widget2 = gtk_button_new_from_stock(GTK_STOCK_ADD); \
 	gtk_box_pack_start(GTK_BOX(hbox), widget2, FALSE, FALSE, 0); \
 	g_signal_connect(G_OBJECT(widget2), "clicked", G_CALLBACK(cb_format_clicked), (gpointer) widget);
