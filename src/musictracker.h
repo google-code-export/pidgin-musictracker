@@ -108,9 +108,11 @@ void get_msn_compat_pref(GtkBox *box);
 
 void get_mpd_info(struct TrackInfo* ti);
 void get_lastfm_info(struct TrackInfo* ti);
+void get_lastfm_ws_info(struct TrackInfo* ti);
 
 void get_mpd_pref(GtkBox *box);
 void get_lastfm_pref(GtkBox *box);
+void get_lastfm_ws_pref(GtkBox *box);
 
 //--------------------------------------------------------------------
 

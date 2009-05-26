@@ -14,10 +14,11 @@
 void
 trace(const char *str, ...)
 {
-	char buf[500];
 	va_list ap;
 	va_start(ap, str);
-	vsnprintf(buf, 500, str, ap);
+	int n = vsnprintf(NULL, 0, str, ap);
+	char buf[n+2];
+	vsnprintf(buf, n+1, str, ap);
 	va_end(ap);
 
 	gboolean logging = purple_prefs_get_bool(PREF_LOG);

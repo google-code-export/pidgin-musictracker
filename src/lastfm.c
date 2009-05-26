@@ -12,6 +12,7 @@
 #define _(String) dgettext (PACKAGE, String)
 
 #define INTERVAL_SECONDS (INTERVAL/1000)
+#define USER_AGENT "pidgin-musictracker/" VERSION
 
 // 
 // See http://www.audioscrobbler.net/data/webservices/ for documentation on the last.fm (legacy) webservices
@@ -44,7 +45,6 @@ void
 get_lastfm_info(struct TrackInfo* ti)
 {
 	char url[500]="http://ws.audioscrobbler.com/1.0/user/";
-	char *request;
 	const char *user = purple_prefs_get_string(PREF_LASTFM);
 	if(!strcmp(user,"")) {
 		trace("No last.fm user name");
@@ -64,11 +64,7 @@ get_lastfm_info(struct TrackInfo* ti)
 		strcat(url,user);
 		strcat(url,"/recenttracks.txt");
 		trace("URL is %s", url);
-		request = g_strdup_printf("GET %s HTTP/1.0\r\n"
-				"HOST: %s\r\n\r\n",
-				url,"ws.audioscrobbler.com");
-		trace("Request is %s",request);
-		purple_util_fetch_url_request(url,TRUE,NULL,FALSE,NULL,FALSE,lastfm_fetch,NULL);
+		purple_util_fetch_url_request(url,TRUE,USER_AGENT,FALSE,NULL,FALSE,lastfm_fetch,NULL);
           }
         count = count + INTERVAL_SECONDS;
 
@@ -96,7 +92,7 @@ get_lastfm_info(struct TrackInfo* ti)
               {
                 ti->status = PLAYER_STATUS_STOPPED;
               }
-            
+            ti->player = "Last.fm";
           }
         pcre_free(re);
 }
