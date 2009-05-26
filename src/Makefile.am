@@ -36,7 +36,7 @@ musictracker_la_SOURCES = musictracker.c \
 						  dbusbird.c \
 						  moc.c
 
-musictracker_la_LDFLAGS = -module -avoid-version
+musictracker_la_LDFLAGS = -module -avoid-version -Wl,--as-needed
 musictracker_la_LIBADD = $(GLIB_LIBS) $(GTK_LIBS) $(DBUS_LIBS) @LTLIBINTL@
 
 AM_CPPFLAGS = \
