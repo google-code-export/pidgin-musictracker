@@ -16,6 +16,14 @@ GtkWidget *format_menu;
 GtkWidget *format_entry;
 GtkWidget *filter_list, *filter_mask;
 
+#if !GTK_CHECK_VERSION(2,12,0)
+#define gtk_widget_set_tooltip_text(widget, tip) \
+  {                                              \
+  GtkTooltips *tips = gtk_tooltips_new();        \
+  gtk_tooltips_set_tip(tips, widget, tip, NULL); \
+  }
+#endif
+
 static
 void cb_player_changed(GtkWidget *widget, gpointer data)
 {
