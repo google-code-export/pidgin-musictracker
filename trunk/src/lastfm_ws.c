@@ -130,7 +130,7 @@ get_lastfm_ws_info(struct TrackInfo* ti)
       char *url = g_strdup_printf(LASTFM_WS_URL, user, LASTFM_WS_API_KEY);
       trace("URL is %s", url);
 
-      purple_util_fetch_url_request_len(url, TRUE, USER_AGENT, FALSE, NULL, FALSE, -1, lastfm_ws_fetch, NULL);
+      purple_util_fetch_url_request(url, TRUE, USER_AGENT, FALSE, NULL, FALSE, lastfm_ws_fetch, NULL);
 
       g_free(url);
     }
