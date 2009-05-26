@@ -1,6 +1,7 @@
 # List of source files which contain translatable strings.
 src/actions.c
 src/lastfm.c
+src/lastfm_ws.c
 src/mpd.c
 src/preferences.c
 src/squeezecenter.c

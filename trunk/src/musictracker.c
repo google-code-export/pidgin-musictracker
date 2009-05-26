@@ -73,7 +73,8 @@ struct PlayerInfo g_players[] = {
 	{ "Foobar2000", get_foobar2000_info, 0 },
 #endif
 	{ "MPD", get_mpd_info, get_mpd_pref },
- 	{ "Last.fm", get_lastfm_info, get_lastfm_pref },
+ 	{ "Last.fm (API 2.0)", get_lastfm_ws_info, get_lastfm_ws_pref },
+ 	{ "Last.fm (API 1.0)", get_lastfm_info, get_lastfm_pref },
 	{ "", 0, 0 } // dummy to end the array
 };
 
