@@ -20,7 +20,9 @@
   * Windows uninstaller
   * Write a patch for pidgin which allows the MSN tune presentation hint to be set as a tune status attribute
   * ~~Make UI translateable~~
-  * If the media player is playing video, ignore it
-  * Put a separate (hideable) pane into the Pidgin buddy window, so we can show that we are doing something (as it's less than clear we should change the status selector, and interacting it has some difficulties)?  Could show music emblem, player type, status, track details?
+  * If the media player is playing video, provide an option to ignore it
+  * Address FAQ #1 by putting a separate (hideable) pane into the Pidgin buddy window, so we can show that we are doing something (as it's less than clear we should change the status selector, and interacting with it has some difficulties)?  Could show music emblem, player type and status, track details?  This gives some feedback in the glorious future when the default is to change tune status only...
+  * Alternatively, address FAQ #1 by working out how to interact with the pidgin status selector cleanly.  Probably requires core changes to teach purple not to remember statuses set by musictracker...
+  * Replace handwritten dbus code with code generated using dbus-binding-tool or similar
 
 _(Please do not put feature requests in the comments. Start a new issue or vote for an existing one instead)_
