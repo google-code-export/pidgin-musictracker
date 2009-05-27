@@ -55,9 +55,12 @@ void data_from_node(xmlnode *track, const char *name, char *result)
   if (node)
     {
       char *value = xmlnode_get_data(node);
-      strncpy(result, value, STRLEN);
-      result[STRLEN-1] = 0;
-      g_free(value);
+      if (value)
+        {
+          strncpy(result, value, STRLEN);
+          result[STRLEN-1] = 0;
+          g_free(value);
+        }
     }
 }
 
