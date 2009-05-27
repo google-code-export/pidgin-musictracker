@@ -71,7 +71,7 @@ lastfm_ws_fetch(PurpleUtilFetchUrlData *url_data, gpointer user_data, const gcha
   trace("Fetched %d bytes of data %s", len, error_message ? error_message : "");
   if (url_text)
     {
-      trace(url_text);
+      trace("%s", url_text);
       xmlnode *response = xmlnode_from_str(url_text, -1);
       if (response)
         {

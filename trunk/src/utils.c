@@ -16,9 +16,7 @@ trace(const char *str, ...)
 {
 	va_list ap;
 	va_start(ap, str);
-	int n = vsnprintf(NULL, 0, str, ap);
-	char buf[n+2];
-	vsnprintf(buf, n+1, str, ap);
+	char *buf = g_strdup_vprintf(str, ap);
 	va_end(ap);
 
 	gboolean logging = purple_prefs_get_bool(PREF_LOG);
@@ -36,6 +34,7 @@ trace(const char *str, ...)
 	}
 
 	purple_debug_info(PLUGIN_ID, "%s\n", buf);
+	g_free(buf);
 }
 
 //--------------------------------------------------------------------
