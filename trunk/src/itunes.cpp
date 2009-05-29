@@ -39,7 +39,7 @@ get_itunes_info(struct TrackInfo *ti)
 		ti->status = PLAYER_STATUS_STOPPED;
 
         // state ITPlayerStateStopped && get_CurrentTrack() succeeds -> PLAYER_STATUS_PAUSED
-        // state ITPlayerStateStopped && get_CurrentTrack() fails -> PLAYER_STATUS_PAUSED
+        // state ITPlayerStateStopped && get_CurrentTrack() fails -> PLAYER_STATUS_STOPPED
 
 	IITTrack *track;
 	HRESULT res = itunes->get_CurrentTrack(&track);
