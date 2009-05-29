@@ -9,6 +9,7 @@
 #define PLUGIN_ID "musictracker"
 #define STRLEN 100
 
+#define PLAYER_STATUS_INVALID INT_MIN
 #define PLAYER_STATUS_CLOSED -1
 #define PLAYER_STATUS_STOPPED 0
 #define PLAYER_STATUS_PAUSED 1
