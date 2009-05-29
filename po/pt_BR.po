@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pidgin-musictracker\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/pidgin-musictracker/issues/\n"
-"POT-Creation-Date: 2009-05-26 12:47+0100\n"
-"PO-Revision-Date: 2009-03-02 20:22+0000\n"
+"POT-Creation-Date: 2009-05-29 14:49+0100\n"
+"PO-Revision-Date: 2009-05-29 14:49+0100\n"
 "Last-Translator: Jon TURNEY <jon.turney@dronecode.org.uk>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -16,6 +16,43 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2009-04-14 15:48+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
+
+#. TRANSLATORS: this string controls the name musictracker appears as under the Tools menu
+#. It's probably a good idea to treat 'MusicTracker' as a proper name, transliterate but don't translate
+#.
+#: src/musictracker.c:857
+msgid "MusicTracker"
+msgstr "MusicTracker"
+
+#: src/musictracker.c:858
+msgid "MusicTracker Plugin for Pidgin"
+msgstr "MusicTracker Plugin para o Pidgin"
+
+#. TRANSLATORS: %s will be replaced with the URL of the translation site, currently
+#. http://translations.launchpad.net/pidgin-musictracker/trunk/+pots/musictracker
+#.
+#: src/musictracker.c:864
+#, c-format
+msgid "Fix translation bugs at %s"
+msgstr "Erros de tradução no %s"
+
+#: src/musictracker.c:868
+msgid ""
+"The MusicTracker Plugin allows you to customize your status message with "
+"information about currently playing song from your music player. Portions "
+"initially adopted from pidgin-currenttrack project."
+msgstr ""
+"O MusicTracker permite que você personalize sua mensagem de status com "
+"informações sobre a música que está sendo executada no seu player. "
+"Inicialmente foi uma \"adaptação de idéias\" do projeto \"currenttrack\" do "
+"pidgin."
+
+#: src/musictracker.c:870
+msgid ""
+"WMP support via WMPuICE by Christian Mueller from http://www.mediatexx.com."
+msgstr ""
+"Suporte para WMP (Windows Media Player) via WMPuICE escrito por Christian "
+"Mueller da http://www.mediatexx.com."
 
 #: src/actions.c:65
 msgid "Status to Set When Player is off:"
@@ -33,26 +70,145 @@ msgstr "Desativar Mudança de Status"
 msgid "Change Player-Off Status..."
 msgstr "Mudar o Status do player para OFF"
 
-#: src/lastfm.c:131
+#: src/preferences.c:222
+msgid "Leave blank for an unchanged status message"
+msgstr ""
+
+#: src/preferences.c:247
+msgid "Player:"
+msgstr "Player:"
+
+#: src/preferences.c:253
+msgid "Auto-detect"
+msgstr "Auto-detectar"
+
+#: src/preferences.c:263
+msgid "Artist"
+msgstr "Artista"
+
+#: src/preferences.c:264
+msgid "Album"
+msgstr "Álbum"
+
+#: src/preferences.c:265
+msgid "Title"
+msgstr "Título"
+
+#: src/preferences.c:266
+msgid "Track Duration"
+msgstr "Duração"
+
+#: src/preferences.c:267
+msgid "Elapsed Track Time"
+msgstr "Tempo estimado de duração"
+
+#: src/preferences.c:268
+msgid "Progress Bar"
+msgstr "Barra de Progresso"
+
+#: src/preferences.c:269
+msgid "Player"
+msgstr "Player"
+
+#: src/preferences.c:270
+msgid "Music Symbol (may not display on some networks)"
+msgstr "Ícone da música (Pode não ser exibido em algumas redes)"
+
+#: src/preferences.c:271
+msgid "Status Message"
+msgstr ""
+
+#: src/preferences.c:275
+msgid "Status Format"
+msgstr "Formato de exibição do Status"
+
+#: src/preferences.c:282
+msgid "Playing:"
+msgstr "Tocando:"
+
+#: src/preferences.c:283
+msgid "Paused:"
+msgstr "Pausado:"
+
+#: src/preferences.c:284
+msgid "Stopped:"
+msgstr "Parado:"
+
+#: src/preferences.c:312
+msgid "Screen Name"
+msgstr "Nome de exibição"
+
+#: src/preferences.c:314
+msgid "Protocol"
+msgstr "Protocolo"
+
+#: src/preferences.c:320
+msgid "Playing Status Format"
+msgstr "Fomato de exibição do Status"
+
+#: src/preferences.c:325
+msgid "Disable"
+msgstr "Desabilitar"
+
+#: src/preferences.c:331
+msgid "Don't use 'now listening'"
+msgstr "'Ouvindo agora' perdido"
+
+#: src/preferences.c:335
+msgid ""
+"Customize playing status format, or disable status changing altogether for "
+"specific accounts"
+msgstr ""
+"Personalize o status de exibição ou desabilite a mudança de status para "
+"algumas contas específicas."
+
+#: src/preferences.c:345
+msgid "Other settings"
+msgstr "Outras configurações"
+
+#: src/preferences.c:355
+msgid "Don't change status message when away"
+msgstr "Não mudar o status quando estiver ausente"
+
+#: src/preferences.c:362
+msgid "Don't change status message if protocol has 'now listening'"
+msgstr "Não mudar o status se o protocolo estiver em uso."
+
+#: src/preferences.c:368
+msgid "Status Filter"
+msgstr "Filtro de Status"
+
+#: src/preferences.c:378
+msgid "Enable status filter"
+msgstr "Habilitar Filtro de Status"
+
+#: src/preferences.c:385
+msgid "Blacklist (comma-delimited):"
+msgstr "Lista negra (delimitado por vírgulas)"
+
+#: src/preferences.c:394
+msgid "Mask character:"
+msgstr "Caractere demarcador."
+
+#: src/lastfm.c:127 src/lastfm_ws.c:169
 msgid "Username:"
 msgstr "Usuário:"
 
-#: src/lastfm.c:140
+#: src/lastfm.c:136 src/lastfm_ws.c:178
 msgid "poll interval:"
 msgstr "Frequencia das Atualizações."
 
-#: src/lastfm.c:145
-msgid ""
-"This is the interval (in seconds) at which we check the Last.fm feed for "
-"changes"
+#: src/lastfm.c:141 src/lastfm_ws.c:183
+#, fuzzy
+msgid "This is the interval (in seconds) at which we check Last.fm for changes"
 msgstr ""
 "Esta é a frequência (em segundos) que nós checamos as mudanças do Last.fm"
 
-#: src/lastfm.c:152
+#: src/lastfm.c:148
 msgid "quiet interval:"
 msgstr "Intervalo silencioso:"
 
-#: src/lastfm.c:157
+#: src/lastfm.c:153
 msgid ""
 "This is the interval (in seconds) after the track has been scrobbled which "
 "we assume the track is playing for. Unless another track is scrobbled after "
@@ -73,122 +229,6 @@ msgstr "Porta:"
 #: src/mpd.c:132
 msgid "Password:"
 msgstr "Senha:"
-
-#: src/preferences.c:238
-msgid "Player:"
-msgstr "Player:"
-
-#: src/preferences.c:244
-msgid "Auto-detect"
-msgstr "Auto-detectar"
-
-#: src/preferences.c:254
-msgid "Artist"
-msgstr "Artista"
-
-#: src/preferences.c:255
-msgid "Album"
-msgstr "Álbum"
-
-#: src/preferences.c:256
-msgid "Title"
-msgstr "Título"
-
-#: src/preferences.c:257
-msgid "Track Duration"
-msgstr "Duração"
-
-#: src/preferences.c:258
-msgid "Elapsed Track Time"
-msgstr "Tempo estimado de duração"
-
-#: src/preferences.c:259
-msgid "Progress Bar"
-msgstr "Barra de Progresso"
-
-#: src/preferences.c:260
-msgid "Player"
-msgstr "Player"
-
-#: src/preferences.c:261
-msgid "Music Symbol (may not display on some networks)"
-msgstr "Ícone da música (Pode não ser exibido em algumas redes)"
-
-#: src/preferences.c:262
-msgid "Status Message"
-msgstr ""
-
-#: src/preferences.c:266
-msgid "Status Format"
-msgstr "Formato de exibição do Status"
-
-#: src/preferences.c:273
-msgid "Playing:"
-msgstr "Tocando:"
-
-#: src/preferences.c:274
-msgid "Paused:"
-msgstr "Pausado:"
-
-#: src/preferences.c:275
-msgid "Stopped:"
-msgstr "Parado:"
-
-#: src/preferences.c:303
-msgid "Screen Name"
-msgstr "Nome de exibição"
-
-#: src/preferences.c:305
-msgid "Protocol"
-msgstr "Protocolo"
-
-#: src/preferences.c:311
-msgid "Playing Status Format"
-msgstr "Fomato de exibição do Status"
-
-#: src/preferences.c:316
-msgid "Disable"
-msgstr "Desabilitar"
-
-#: src/preferences.c:322
-msgid "Don't use 'now listening'"
-msgstr "'Ouvindo agora' perdido"
-
-#: src/preferences.c:326
-msgid ""
-"Customize playing status format, or disable status changing altogether for "
-"specific accounts"
-msgstr ""
-"Personalize o status de exibição ou desabilite a mudança de status para "
-"algumas contas específicas."
-
-#: src/preferences.c:336
-msgid "Other settings"
-msgstr "Outras configurações"
-
-#: src/preferences.c:346
-msgid "Don't change status message when away"
-msgstr "Não mudar o status quando estiver ausente"
-
-#: src/preferences.c:353
-msgid "Don't change status message if protocol has 'now listening'"
-msgstr "Não mudar o status se o protocolo estiver em uso."
-
-#: src/preferences.c:359
-msgid "Status Filter"
-msgstr "Filtro de Status"
-
-#: src/preferences.c:369
-msgid "Enable status filter"
-msgstr "Habilitar Filtro de Status"
-
-#: src/preferences.c:376
-msgid "Blacklist (comma-delimited):"
-msgstr "Lista negra (delimitado por vírgulas)"
-
-#: src/preferences.c:385
-msgid "Mask character:"
-msgstr "Caractere demarcador."
 
 #: src/squeezecenter.c:58
 msgid ""
@@ -270,40 +310,3 @@ msgstr ""
 "três campos utilizando todos os três players. Se você modificar o '|' "
 "depois, então o '|' no '%p | %a | %t' deve ser modificado pelo caractere "
 "escolhido por você."
-
-#. TRANSLATORS: this string controls the name musictracker appears as under the Tools menu
-#. It's probably a good idea to treat 'MusicTracker' as a proper name, transliterate but don't translate
-#.
-#: src/musictracker.c:860
-msgid "MusicTracker"
-msgstr "MusicTracker"
-
-#: src/musictracker.c:861
-msgid "MusicTracker Plugin for Pidgin"
-msgstr "MusicTracker Plugin para o Pidgin"
-
-#. TRANSLATORS: %s will be replaced with the URL of the translation site, currently
-#. http://translations.launchpad.net/pidgin-musictracker/trunk/+pots/musictracker
-#.
-#: src/musictracker.c:867
-#, c-format
-msgid "Fix translation bugs at %s"
-msgstr "Erros de tradução no %s"
-
-#: src/musictracker.c:871
-msgid ""
-"The MusicTracker Plugin allows you to customize your status message with "
-"information about currently playing song from your music player. Portions "
-"initially adopted from pidgin-currenttrack project."
-msgstr ""
-"O MusicTracker permite que você personalize sua mensagem de status com "
-"informações sobre a música que está sendo executada no seu player. "
-"Inicialmente foi uma \"adaptação de idéias\" do projeto \"currenttrack\" do "
-"pidgin."
-
-#: src/musictracker.c:873
-msgid ""
-"WMP support via WMPuICE by Christian Mueller from http://www.mediatexx.com."
-msgstr ""
-"Suporte para WMP (Windows Media Player) via WMPuICE escrito por Christian "
-"Mueller da http://www.mediatexx.com."
