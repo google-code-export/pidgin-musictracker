@@ -273,7 +273,7 @@ set_status_tune (PurpleAccount *account, gboolean validStatus, struct TrackInfo 
 
 	if (dont_use_tune_status)
           {
-            trace("Won't try to use status tune on account '%s' protocol '%s', I've been told it's broken", purple_account_get_username(account), purple_account_get_protocol_name(account));
+            trace("Won't try to use status tune on account '%s' protocol '%s', I've been told not to", purple_account_get_username(account), purple_account_get_protocol_name(account));
             return FALSE;
           }
 
