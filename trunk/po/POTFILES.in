@@ -1,9 +1,9 @@
 # List of source files which contain translatable strings.
+src/musictracker.c
 src/actions.c
+src/preferences.c
 src/lastfm.c
 src/lastfm_ws.c
 src/mpd.c
-src/preferences.c
 src/squeezecenter.c
 src/xmmsctrl.c
-src/musictracker.c

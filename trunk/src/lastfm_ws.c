@@ -180,7 +180,7 @@ void get_lastfm_ws_pref(GtkBox *box)
   gtk_box_pack_start(GTK_BOX(hbox), widget, TRUE, TRUE, 0);
   g_signal_connect(G_OBJECT(widget), "value-changed", G_CALLBACK(cb_lastfm_ws_interval_changed), (gpointer) PREF_LASTFM_INTERVAL);
 
-  label = gtk_label_new(_("This is the interval (in seconds) at which we check the Last.fm API for changes"));
+  label = gtk_label_new(_("This is the interval (in seconds) at which we check Last.fm for changes"));
   gtk_label_set_line_wrap(GTK_LABEL(label), TRUE);
   gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 0);
 }
