@@ -115,7 +115,7 @@ for Windows
 make -f Makefile.mingw installer
 }}}
 
-For the Windows build, as we currently rely on some of the pidgin build infrastructure,  you'll also need the pidgin source at the relative path ../pidgin,  with a win32-dev/ which has been populated by the Windows build dependency fetcher, winpidgin-build-fetcher.sh.  This source needs to be buildable, i.e. have an appropriate config.h and local.mak.
+For the Windows build, as we currently rely on some of the pidgin build infrastructure,  you'll also need the pidgin source at the relative path ../pidgin,  with a win32-dev/ which has been populated by the Windows build dependency fetcher, winpidgin-build-fetcher.sh.  This source needs to be buildable, i.e. have an appropriate config.h and local.mak.  See [http://developer.pidgin.im/wiki/BuildingWinPidgin Pidgin for Windows Build Instructions] for more details.
 
 We don't provide and install a dynamic libpcre, so a static libpcre also needs to be made available, one approach is to place that in a directory under win32-dev/ and add that directory to the LIB_PATH set in local.mak
 
