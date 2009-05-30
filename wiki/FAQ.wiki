@@ -120,7 +120,7 @@ For the Windows build, as we currently rely on some of the pidgin build infrastr
 We don't provide and install a dynamic libpcre, so a static libpcre also needs to be made available, one approach is to place that in a directory under win32-dev/ and add that directory to the LIB_PATH set in local.mak
 
 ==10==
-* How to I build the source from subversion? *
+* How do I build the source from subversion? *
 
 Usually, you don't!  The source tarballs available on the downloads page are nearly always a much better choice.  If you must have absolutely the lastest source, try the snapshots page.  But if you really want to build from subversion:
 
