@@ -1,0 +1,129 @@
+#
+# Makefile.mingw
+#
+# Description: Makefile for musictracker plugin.
+#
+
+PIDGIN_TREE_TOP := ../../pidgin
+include $(PIDGIN_TREE_TOP)/libpurple/win32/global.mak
+
+TARGET = musictracker
+VERSION = $(shell cat ../version)
+DEFINES += -D_WIN32_WINNT=0x0500 '-DVERSION="$(VERSION)"' -DPCRE_STATIC -DWIN32
+COREFLAGS = -g -Werror -W -Wall -Wno-unused-parameter -fno-strict-aliasing
+CXXFLAGS += ${COREFLAGS} -Wno-non-virtual-dtor
+CFLAGS += ${COREFLAGS} -Wno-sign-compare -Wno-missing-field-initializers -Wno-declaration-after-statement -std=gnu99
+
+##
+## INCLUDE PATHS
+##
+INCLUDE_PATHS +=	-I. \
+			-I$(GTK_TOP)/include \
+			-I$(GTK_TOP)/include/gtk-2.0 \
+			-I$(GTK_TOP)/include/glib-2.0 \
+			-I$(GTK_TOP)/include/pango-1.0 \
+			-I$(GTK_TOP)/include/atk-1.0 \
+			-I$(GTK_TOP)/include/cairo \
+			-I$(GTK_TOP)/lib/glib-2.0/include \
+			-I$(GTK_TOP)/lib/gtk-2.0/include \
+			-I$(PURPLE_TOP) \
+			-I$(PURPLE_TOP)/win32 \
+			-I$(PIDGIN_TOP) \
+			-I$(PIDGIN_TOP)/win32 \
+			-I$(PIDGIN_TREE_TOP) \
+			-I$(LOCAL_TOP)/include
+
+LIB_PATHS +=		-L$(GTK_TOP)/lib \
+			-L$(PURPLE_TOP) \
+			-L$(PIDGIN_TOP) \
+			-L$(LOCAL_TOP)/lib
+
+##
+##  SOURCES, OBJECTS
+##
+C_SRC =	musictracker.c \
+		utils.c \
+		actions.c \
+		filter.c \
+		preferences.c \
+		foobar2000.c \
+		winamp.c \
+		wmp.c \
+		iTunesCOMInterface_i.c \
+		lastfm.c \
+		disphelper.c \
+                mpd.c \
+                libmpdclient.c \
+                msn-compat.c \
+                lastfm_ws.c \
+
+CXX_SRC = itunes.cpp
+
+%.o: %.cpp
+	$(CXX) $(CXXFLAGS) $(DEFINES) $(INCLUDE_PATHS) -o $@ -c $<
+
+OBJECTS = $(C_SRC:%.c=%.o) $(CXX_SRC:%.cpp=%.o)
+
+##
+## LIBRARIES
+##
+LIBS =			-lgtk-win32-2.0 \
+			-lglib-2.0 \
+			-lgdk-win32-2.0 \
+			-lgmodule-2.0 \
+			-lgobject-2.0 \
+			-lintl \
+			-lpidgin \
+			-lpurple \
+			-lpcre \
+			-lole32 \
+			-loleaut32 \
+			-luuid \
+                        -lws2_32 \
+
+include $(PIDGIN_COMMON_RULES)
+
+##
+## TARGET DEFINITIONS
+##
+.PHONY: all install clean
+
+all: $(TARGET).dll
+
+$(TARGET).dll: $(PURPLE_DLL).a $(PIDGIN_DLL).a $(OBJECTS)
+	$(CC) -shared $(OBJECTS) $(LIB_PATHS) $(LIBS) $(DLL_LD_FLAGS) -o $(TARGET).dll
+
+INSTALLER = ../installer/pidgin-musictracker-${VERSION}.exe
+
+INSTALL_SCRIPT = ../installer/musictracker.nsi
+PO_INSTALL_SCRIPT = ../installer/po_install.nsi
+PO_UNINSTALL_SCRIPT = ../installer/po_uninstall.nsi
+
+installer: $(INSTALLER)
+
+$(PO_INSTALL_SCRIPT): ../po/LINGUAS
+	echo "; Automatically generated installer script include for translation .mo files" > $(PO_INSTALL_SCRIPT)
+	for i in `cat ../po/LINGUAS` ; do if [ -e ../po/$$i.gmo -a $$i != "en@quot" -a $$i != "en@boldquot" ] ; then \
+             echo "CreateDirectory \$$INSTDIR\\locale\\$$i\\LC_MESSAGES" >>$(PO_INSTALL_SCRIPT) ; \
+             echo "File /oname=locale\\$$i\\LC_MESSAGES\\musictracker.mo ..\\po\\$$i.gmo" >>$(PO_INSTALL_SCRIPT) ; fi ; done
+
+$(PO_UNINSTALL_SCRIPT): ../po/LINGUAS
+	echo "; Automatically generated uninstaller script include for translation .mo files" > $(PO_UNINSTALL_SCRIPT)
+	for i in `cat ../po/LINGUAS` ; do if [ -e ../po/$$i.gmo -a $$i != "en@quot" -a $$i != "en@boldquot" ] ; then \
+             echo "Delete \$$INSTDIR\\locale\\$$i\\LC_MESSAGES\\musictracker.mo" >>$(PO_UNINSTALL_SCRIPT) ; \
+             echo "RMDir \$$INSTDIR\\locale\\$$i\\LC_MESSAGES" >>$(PO_UNINSTALL_SCRIPT) ;  fi ; done
+
+$(INSTALLER): $(TARGET).dll $(INSTALL_SCRIPT) $(PO_INSTALL_SCRIPT) $(PO_UNINSTALL_SCRIPT)
+	strip $(TARGET).dll
+	makensis -V3 -DVERSION=$(VERSION) $(INSTALL_SCRIPT)
+
+##
+## CLEAN RULES
+##
+clean:
+	rm -rf $(OBJECTS)
+	rm -rf $(TARGET).dll
+	rm -rf $(INSTALLER)
+
+include $(PIDGIN_COMMON_TARGETS)
+
