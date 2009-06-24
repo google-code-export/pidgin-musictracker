@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: pidgin-musictracker\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/pidgin-musictracker/issues/\n"
 "POT-Creation-Date: 2009-05-29 14:49+0100\n"
-"PO-Revision-Date: 2009-01-28 11:15+0000\n"
-"Last-Translator: Mateusz Szyper <mateyko5@o2.pl>\n"
+"PO-Revision-Date: 2009-06-11 18:26+0000\n"
+"Last-Translator: pp/bs <Unknown>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2009-04-14 15:48+0000\n"
+"X-Launchpad-Export-Date: 2009-06-24 11:48+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #. TRANSLATORS: this string controls the name musictracker appears as under the Tools menu
@@ -26,7 +26,7 @@ msgstr ""
 
 #: src/musictracker.c:858
 msgid "MusicTracker Plugin for Pidgin"
-msgstr ""
+msgstr "Wtyczka MusicTracker do programu Pidgin"
 
 #. TRANSLATORS: %s will be replaced with the URL of the translation site, currently
 #. http://translations.launchpad.net/pidgin-musictracker/trunk/+pots/musictracker
@@ -34,7 +34,7 @@ msgstr ""
 #: src/musictracker.c:864
 #, c-format
 msgid "Fix translation bugs at %s"
-msgstr ""
+msgstr "Popraw błędy w tłumaczeniu na stronie %s"
 
 #: src/musictracker.c:868
 msgid ""
@@ -42,23 +42,28 @@ msgid ""
 "information about currently playing song from your music player. Portions "
 "initially adopted from pidgin-currenttrack project."
 msgstr ""
+"Wtyczka MusicTracker pozwala na ustawienie tekstu statusu zawierającego "
+"utwór aktualnie odtwarzany przez odtwarzacz muzyki. Częściowo przejęte z "
+"projektu pidgin-currenttrack."
 
 #: src/musictracker.c:870
 msgid ""
 "WMP support via WMPuICE by Christian Mueller from http://www.mediatexx.com."
 msgstr ""
+"Obsługa WMP poprzez WMPuICE autorstwa Christiana Muellera z http://www."
+"mediatexx.com."
 
 #: src/actions.c:65
 msgid "Status to Set When Player is off:"
-msgstr "Status do ustawienia gdy Odtwarzacz jest wyłączony"
+msgstr "Status do ustawienia gdy Odtwarzacz jest wyłączony:"
 
 #: src/actions.c:85 src/actions.c:112
 msgid "Activate Status Changing"
-msgstr "Aktywuj Zmienianie Statusu"
+msgstr "Włącz zmienianie statusu"
 
 #: src/actions.c:92 src/actions.c:112
 msgid "Deactivate Status Changing"
-msgstr "Dezaktywuj Zmienianie Statusu"
+msgstr "Wyłącz zmienianie statusu"
 
 #: src/actions.c:115
 msgid "Change Player-Off Status..."
@@ -66,43 +71,43 @@ msgstr ""
 
 #: src/preferences.c:222
 msgid "Leave blank for an unchanged status message"
-msgstr ""
+msgstr "Pozostaw puste jeśli tekst statusu ma pozostać niezmieniony"
 
 #: src/preferences.c:247
 msgid "Player:"
-msgstr ""
+msgstr "Odtwarzacz:"
 
 #: src/preferences.c:253
 msgid "Auto-detect"
-msgstr ""
+msgstr "Wykrywaj automatycznie"
 
 #: src/preferences.c:263
 msgid "Artist"
-msgstr ""
+msgstr "Artysta"
 
 #: src/preferences.c:264
 msgid "Album"
-msgstr ""
+msgstr "Album"
 
 #: src/preferences.c:265
 msgid "Title"
-msgstr ""
+msgstr "Tytuł"
 
 #: src/preferences.c:266
 msgid "Track Duration"
-msgstr ""
+msgstr "Czas trwania utworu"
 
 #: src/preferences.c:267
 msgid "Elapsed Track Time"
-msgstr ""
+msgstr "Odtworzony czas utworu"
 
 #: src/preferences.c:268
 msgid "Progress Bar"
-msgstr ""
+msgstr "Wskaźnik postępu"
 
 #: src/preferences.c:269
 msgid "Player"
-msgstr ""
+msgstr "Odtwarzacz"
 
 #: src/preferences.c:270
 msgid "Music Symbol (may not display on some networks)"
@@ -110,23 +115,23 @@ msgstr ""
 
 #: src/preferences.c:271
 msgid "Status Message"
-msgstr ""
+msgstr "Tekst statusu"
 
 #: src/preferences.c:275
 msgid "Status Format"
-msgstr ""
+msgstr "Format statusu"
 
 #: src/preferences.c:282
 msgid "Playing:"
-msgstr ""
+msgstr "Odtwarzanie:"
 
 #: src/preferences.c:283
 msgid "Paused:"
-msgstr ""
+msgstr "Wstrzymano:"
 
 #: src/preferences.c:284
 msgid "Stopped:"
-msgstr ""
+msgstr "Zatrzymano:"
 
 #: src/preferences.c:312
 msgid "Screen Name"
@@ -134,7 +139,7 @@ msgstr ""
 
 #: src/preferences.c:314
 msgid "Protocol"
-msgstr ""
+msgstr "Protokół"
 
 #: src/preferences.c:320
 msgid "Playing Status Format"
@@ -142,7 +147,7 @@ msgstr ""
 
 #: src/preferences.c:325
 msgid "Disable"
-msgstr ""
+msgstr "Wyłącz"
 
 #: src/preferences.c:331
 msgid "Don't use 'now listening'"
@@ -156,11 +161,11 @@ msgstr ""
 
 #: src/preferences.c:345
 msgid "Other settings"
-msgstr ""
+msgstr "Inne ustawienia"
 
 #: src/preferences.c:355
 msgid "Don't change status message when away"
-msgstr ""
+msgstr "Nie zmieniaj tekstu status gdy nie jestem przy komputerze"
 
 #: src/preferences.c:362
 msgid "Don't change status message if protocol has 'now listening'"
@@ -168,15 +173,15 @@ msgstr ""
 
 #: src/preferences.c:368
 msgid "Status Filter"
-msgstr ""
+msgstr "Filtr statusu"
 
 #: src/preferences.c:378
 msgid "Enable status filter"
-msgstr ""
+msgstr "Włącz filtr statusu"
 
 #: src/preferences.c:385
 msgid "Blacklist (comma-delimited):"
-msgstr ""
+msgstr "Czarna lista (oddzielone przecinkami):"
 
 #: src/preferences.c:394
 msgid "Mask character:"
@@ -184,7 +189,7 @@ msgstr ""
 
 #: src/lastfm.c:127 src/lastfm_ws.c:169
 msgid "Username:"
-msgstr "Nazwa użytkownika"
+msgstr "Nazwa użytkownika:"
 
 #: src/lastfm.c:136 src/lastfm_ws.c:178
 msgid "poll interval:"
@@ -211,7 +216,7 @@ msgstr "Nazwa hosta:"
 
 #: src/mpd.c:124
 msgid "Port:"
-msgstr "Port"
+msgstr "Port:"
 
 #: src/mpd.c:132
 msgid "Password:"
@@ -226,6 +231,11 @@ msgid ""
 "\n"
 "Port Defaults to 9090, Multiple servers accepted delimited by ','"
 msgstr ""
+"Porada:\n"
+"'#' Znajdź odtwarzacz, który odtwarza\n"
+"'*' Znajdź odtwarzacz, który jest uruchomiony\n"
+"'id/name' poprzedź znakiem ! aby ignorować gdy nie odtwarza\n"
+"Port domyślny to 9090, Można podać wiele serwerów oddzielając je znakiem ','"
 
 #: src/squeezecenter.c:850
 msgid "Host:CliPort, Servers:"
@@ -237,11 +247,11 @@ msgstr ""
 
 #: src/squeezecenter.c:866
 msgid "CLI User:"
-msgstr ""
+msgstr "Użytkownik CLI:"
 
 #: src/squeezecenter.c:874
 msgid "CLI Password:"
-msgstr ""
+msgstr "Hasło CLI:"
 
 #: src/squeezecenter.c:886
 msgid "Server:"
@@ -249,32 +259,32 @@ msgstr "Serwer:"
 
 #: src/squeezecenter.c:891
 msgid "Squeezecenter Version:"
-msgstr ""
+msgstr "Wersja Squeezecenter:"
 
 #: src/squeezecenter.c:896
 msgid "Players:"
-msgstr "Gracze:"
+msgstr "Odtwarzacze:"
 
 #: src/squeezecenter.c:899
 #, c-format
 msgid "Player count: %d\n"
-msgstr ""
+msgstr "Liczba odtwarzaczy: %d\n"
 
 #: src/squeezecenter.c:908
 msgid "Last Command:"
-msgstr ""
+msgstr "Ostatnie polecenie:"
 
 #: src/squeezecenter.c:913
 msgid "Last Reply:"
-msgstr ""
+msgstr "Ostatnia odpowiedź:"
 
 #: src/squeezecenter.c:919
 msgid "Last Error:"
-msgstr ""
+msgstr "Ostatni błąd:"
 
 #: src/xmmsctrl.c:153
 msgid "Title Delimiter Character:"
-msgstr ""
+msgstr "Znak oddzielający tytuły:"
 
 #: src/xmmsctrl.c:159
 msgid ""
