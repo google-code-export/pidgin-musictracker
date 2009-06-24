@@ -1,6 +1,17 @@
 ChangeLog for MusicTracker Pidgin Plugin
 ========================================
 
+2009-06-24 (Version 0.4.19)
+	* Update build scripts so launchpad builds are requested for all active Ubuntu releases; include translations in the .deb packages generated there
+	* Autogen.sh replaces reconf; this properly updates ltmain.sh, fixing a problem when building from source (issue 104)
+	* Distinguish between 'player closed' and 'player stopped' states more clearly.  When in the 'player closed' state, we always leave the status message alone.(issue 65)
+	* Added a tooltip to tell people the effect of leaving the status format string blank is to keep using the status message selected in the pidgin status selector (issue 66)
+	* Add support for fetching track information from the Last.fm webservices API 2.0 (issue 89)
+	* Fix the legacy Last.fm track information fetcher to present a proper UserAgent identifier and plug an enormous memory leak.
+	* Remove a hardcoded limit to buffer-size in debug output
+	* Improvements to Windows installer: add RequestExecutionLevel to installer script (should avoid some Vista issues), add an uninstaller script, set compressor to LZMA (reduces downlown size)
+	* Add/update some more translations contributed via launchpad (added: Russian(ru); updated:  Italian(it), Spanish(es), Polish(pl), French(fr), Norwegian Bokmal(nb) translations)
+
 2009-05-11 (Version 0.4.18)
 	* Fix the Spanish translation, so that the translation of 'MusicTracker' menu item is not a translation of the instructions to translators for translating the 'MusicTracker' menu item, but a translation of the 'MusicTracker' menu item.
 	* Fix a bug preventing track time retrieval from banshee 1.0; it's a uint not an int
