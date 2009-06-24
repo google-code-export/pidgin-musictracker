@@ -4,6 +4,10 @@ Name "MusicTracker Plugin for Pidgin"
 ; The file to write
 OutFile "pidgin-musictracker-${VERSION}.exe"
 
+; We want to write the plugin to Program Files, so request privileges
+; XXX: could we install the plugin to %APPDATA%/.purple/plugin instead if we don't have ?
+RequestExecutionLevel admin
+
 !define PIDGIN_REG_KEY                          "SOFTWARE\pidgin"
 
 ;--------------------------------
