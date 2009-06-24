@@ -82,6 +82,8 @@ If you have trouble getting this to work, you may find that the following help:
 
 These actions should have been performed by the musictracker installer. They won't have occured if you have a portable installation of pidgin or similar.
 
+The WMPuICE plug-in to WMP isn't available for 64-bit WMP,
+
 ==8==
 * Doesn't work with foobar2000 (artist/track/title are blank) *
 
