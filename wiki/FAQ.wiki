@@ -26,12 +26,16 @@ You must exit pidgin to run the installer if you have a previous version of musi
 If you have installed pidgin somewhere other than the default location of  "C:\Program Files\Pidgin", you must tell the musictracker installer the correct location for pidgin. (Since 0.4.15, the Windows installer should be clever enough to find where pidgin was installed correctly)
 
 ==4==
-*How do I uninstall musictracker? *
+*How do I uninstall musictracker on Windows? (0.4.18 and earlier) *
 
   * Delete C:\Program Files\Pidgin\plugins\musictracker.dll
   * Run regsvr32 /u "C:\Program Files\Pidgin\wmpuice.dll"
   * Delete C:\Program Files\Pidgin\wmpuice.dll
   * Delete any musictracker.mo files from C:\Program Files\Pidgin\locale\`*`\LC_MESSAGES
+
+*How do I uninstall musictracker on Windows? (0.4.19 and later) *
+
+Use Add/Remove Programs from the Control Panel 
 
 ==5==
 * How do I get my status to go back to the pidgin status message when player stops? *
