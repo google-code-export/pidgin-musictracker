@@ -96,7 +96,8 @@ $(TARGET).dll: $(PURPLE_DLL).a $(PIDGIN_DLL).a $(OBJECTS)
 INSTALLER = ../installer/pidgin-musictracker-${VERSION}.exe
 
 INSTALL_SCRIPT = ../installer/musictracker.nsi
-PO_INSTALL_SCRIPT = ../installer/po_list.nsi
+PO_INSTALL_SCRIPT = ../installer/po_install.nsi
+PO_UNINSTALL_SCRIPT = ../installer/po_uninstall.nsi
 
 installer: $(INSTALLER)
 
@@ -106,9 +107,15 @@ $(PO_INSTALL_SCRIPT): ../po/LINGUAS
              echo "CreateDirectory \$$INSTDIR\\locale\\$$i\\LC_MESSAGES" >>$(PO_INSTALL_SCRIPT) ; \
              echo "File /oname=locale\\$$i\\LC_MESSAGES\\musictracker.mo ..\\po\\$$i.gmo" >>$(PO_INSTALL_SCRIPT) ; fi ; done
 
-$(INSTALLER): $(TARGET).dll $(INSTALL_SCRIPT) $(PO_INSTALL_SCRIPT)
+$(PO_UNINSTALL_SCRIPT): ../po/LINGUAS
+	echo "; Automatically generated uninstaller script include for translation .mo files" > $(PO_UNINSTALL_SCRIPT)
+	for i in `cat ../po/LINGUAS` ; do if [ -e ../po/$$i.gmo -a $$i != "en@quot" -a $$i != "en@boldquot" ] ; then \
+             echo "Delete \$$INSTDIR\\locale\\$$i\\LC_MESSAGES\\musictracker.mo" >>$(PO_UNINSTALL_SCRIPT) ; \
+             echo "RMDir \$$INSTDIR\\locale\\$$i\\LC_MESSAGES" >>$(PO_UNINSTALL_SCRIPT) ;  fi ; done
+
+$(INSTALLER): $(TARGET).dll $(INSTALL_SCRIPT) $(PO_INSTALL_SCRIPT) $(PO_UNINSTALL_SCRIPT)
 	strip $(TARGET).dll
-	makensis -DVERSION=$(VERSION) $(INSTALL_SCRIPT)
+	makensis -V3 -DVERSION=$(VERSION) $(INSTALL_SCRIPT)
 
 ##
 ## CLEAN RULES
