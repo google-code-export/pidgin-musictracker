@@ -3,14 +3,18 @@
 # $1 = 'release' or 'snapshot'
 # $2 = version number for release
 
-# clean
-rm -rf *
-
 # assign a version number
 if [ $1 != "release" ]
 then
  # get trunk svn revision
  SVN_REV=`svn info https://pidgin-musictracker.googlecode.com/svn/trunk | grep Revision | cut -d':' -f2 | tr -d ' '`
+
+ # obtaining svn revision failed, do nothing...
+ if [ -z $SVN_REV ] 
+ then
+   echo "Couldn't get svn rev"
+   exit 0
+ fi
 
  # don't do anything if it hasn't changed since last time we ran
  if [ `cat ~/.pidgin-musictracker-subversion-revision` = $SVN_REV ]
@@ -26,6 +30,11 @@ else
  VERSION=$2
  WORKDIR=pidgin-musictracker-$VERSION
 fi
+
+# clean
+mkdir -p musictracker-package-release
+cd musictracker-package-release
+rm -rf *
 
 # export source from svn
 if [ $1 != "release" ]
@@ -75,16 +84,16 @@ then
  echo $SVN_REV >~/.pidgin-musictracker-subversion-revision
 else
  #  use googlecode_upload.py to upload the files
- ~/googlecode_upload.py -s "Linux x86 plugin binary"  -p pidgin-musictracker -l          Beta,OpSys-Linux,Type-Executable  pidgin-musictracker-$VERSION-bin.tar.bz2
- ~/googlecode_upload.py -s "Windows plugin installer" -p pidgin-musictracker -l Featured,Beta,OpSys-Windows,Type-Installer $WORKDIR/installer/pidgin-musictracker-$VERSION.exe
- ~/googlecode_upload.py -s "Source package"           -p pidgin-musictracker -l Featured,Beta,OpSys-All,Type-Source        pidgin-musictracker-$VERSION.tar.bz2
+ googlecode_upload.py -s "Linux x86 plugin binary"  -p pidgin-musictracker -l          Beta,OpSys-Linux,Type-Executable  pidgin-musictracker-$VERSION-bin.tar.bz2
+ googlecode_upload.py -s "Windows plugin installer" -p pidgin-musictracker -l Featured,Beta,OpSys-Windows,Type-Installer $WORKDIR/installer/pidgin-musictracker-$VERSION.exe
+ googlecode_upload.py -s "Source package"           -p pidgin-musictracker -l Featured,Beta,OpSys-All,Type-Source        pidgin-musictracker-$VERSION.tar.bz2
 
  # upload source tarball to release area on my webhost as well
  scp $UPLOAD_CREDENTIALS \
      pidgin-musictracker-$VERSION.tar.bz2 \
      $UPLOAD_TARGET/pidgin-musictracker
 
- # remember this version number to use as the base for ppa package names
+ # remember this version number to use as the base for snapshot package names
  echo $VERSION >~/.pidgin-musictracker-release-version
 fi
 
