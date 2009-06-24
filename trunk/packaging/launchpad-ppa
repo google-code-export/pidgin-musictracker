@@ -56,7 +56,7 @@ rm -rf pidgin-musictracker_${PV}*
 }
 
 # request a launchpad build against all active ubuntu releases
-for RELEASE in hardy intrepid jaunty
+for RELEASE in hardy intrepid jaunty karmic
 do
  launchpad_build
 done
