@@ -40,8 +40,7 @@ Use Add/Remove Programs from the Control Panel
 ==5==
 * How do I get my status to go back to the pidgin status message when player stops? *
 
-Change the "Stopped/Off" Status Format in the musictracker plugin configuration to an
-empty string.
+Leave the "Stopped" Status Format in the musictracker plugin configuration blank.
 
 ==6==
 * Player name is shown as "unknown" *
