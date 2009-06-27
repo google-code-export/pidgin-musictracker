@@ -25,6 +25,8 @@ You must exit pidgin to run the installer if you have a previous version of musi
 
 If you have installed pidgin somewhere other than the default location of  "C:\Program Files\Pidgin", you must tell the musictracker installer the correct location for pidgin. (Since 0.4.15, the Windows installer should be clever enough to find where pidgin was installed correctly)
 
+On Windows Vista and later, you may need to install the program with Administrator privileges by right-clicking on the pidgin-musictracker-n.n.nn.exe installer file and choosing 'Run as Administrator'. (Since 0.4.19, the Windows installer should request privilege with a UAC prompt)
+
 ==4==
 *How do I uninstall musictracker on Windows? (0.4.18 and earlier) *
 
