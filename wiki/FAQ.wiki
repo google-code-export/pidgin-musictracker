@@ -4,6 +4,14 @@
 ==1==
 *I installed musictracker, started my player and my status doesn't change*
 
+  * Some players require additional plugins/features to be turned on/a specific configuration to help musictracker get the track information.
+
+See the player-specific notes on the [http://code.google.com/p/pidgin-musictracker/ pidgin-musictracker homepage]
+
+  * Make sure you haven't chosen "Deactivate Status Changing" from Tools/Musictracker menu
+
+  * Incorrect expectations:
+
 Your outgoing status message is changed, as your correspondents should be able to tell you, but the status message shown in the pidgin UI is not updated.
 
 This behaviour, whilst failing to provide clearly needed user feedback, is by design, at least for the moment.
@@ -109,22 +117,24 @@ Since it doesn't work very well, the direct foobar2000 support will be removed a
 ==9==
 * How do I build from source? *
 
-Download and unpack the pidgin-musictracker-n.n.nn.tar.bz2 source package, then
+  * You need to have the pidgin development files installed.  These are usually in a separate package to the pidigin application itself, called pidgin-dev or similar.  Depending on your distro `apt-get build-dep pidgin-musictracker` or `yum-builddep pidgin-musictracker` should install all of the required packages to build for you. 
+
+  * Download and unpack the pidgin-musictracker-n.n.nn.tar.bz2 source package, then
 
 {{{
 ./configure --prefix=/usr
 make
 }}}
 
-for Windows
+or, for Windows
 
 {{{
 make -f Makefile.mingw installer
 }}}
 
-For the Windows build, as we currently rely on some of the pidgin build infrastructure,  you'll also need the pidgin source at the relative path ../pidgin,  with a win32-dev/ which has been populated by the Windows build dependency fetcher, winpidgin-build-fetcher.sh.  This source needs to be buildable, i.e. have an appropriate config.h and local.mak.  See [http://developer.pidgin.im/wiki/BuildingWinPidgin Pidgin for Windows Build Instructions] for more details.
+  * For the Windows build, as we currently rely on some of the pidgin build infrastructure,  you'll also need the pidgin source at the relative path ../pidgin,  with a win32-dev/ which has been populated by the Windows build dependency fetcher, winpidgin-build-fetcher.sh.  This source needs to be buildable, i.e. have an appropriate config.h and local.mak.  See [http://developer.pidgin.im/wiki/BuildingWinPidgin Pidgin for Windows Build Instructions] for more details.
 
-We don't provide and install a dynamic libpcre, so a static libpcre also needs to be made available, one approach is to place that in a directory under win32-dev/ and add that directory to the LIB_PATH set in local.mak
+  * For the Windows build, we don't provide and install a dynamic libpcre, so a static libpcre also needs to be made available to link the plugin with, one approach is to place that in a directory under win32-dev/ and add that directory to the LIB_PATH set in local.mak
 
 ==10==
 * How do I build the source from subversion? *
