@@ -29,9 +29,9 @@ fi
 AC_SUBST(DEBUG_CFLAGS)
 
 PKG_CHECK_MODULES([PIDGIN],[pidgin >= 2.0.0],,AC_MSG_ERROR([
-*** Pidgin 2.0+ is required to build MusicTracker; please make sure you have the
-*** Pidgin development files installed. The latest version of Pidgin is always
-*** available at http://pidgin.im/.]))
+*** Pidgin 2.0+ is required to build pidgin-musictracker
+*** Please make sure you have the Pidgin development files installed.
+*** The latest version of Pidgin is always available at http://pidgin.im/]))
 AC_SUBST(PIDGIN_CFLAGS)
 PIDGIN_LIBDIR=`pkg-config --variable=libdir pidgin`
 PIDGIN_DATADIR=`pkg-config --variable=datadir pidgin`
@@ -39,23 +39,23 @@ AC_SUBST(PIDGIN_LIBDIR)
 AC_SUBST(PIDGIN_DATADIR)
 
 AM_PATH_GLIB_2_0(2.0.0,,AC_MSG_ERROR([
-*** GLib 2.0 is required to build MusicTracker; please make sure you have the
-*** GLib development headers installed. The latest version of GLib is always
-*** available at http://www.gtk.org/.]))
+*** GLib 2.0+ is required to build pidgin-musictracker
+*** Please make sure you have the GLib development files installed
+*** The latest version of GLib is always available at http://www.gtk.org/]))
 AC_SUBST(GLIB_LIBS)
 AC_SUBST(GLIB_CFLAGS)
 
 AM_PATH_GTK_2_0(2.0.0,,AC_MSG_ERROR([
-*** GTK+ 2.0 is required to build MusicTracker; please make sure you have the
-*** GTK+ development headers installed. The latest version of GTK+ is always
-*** available at http://www.gtk.org/.]))
+*** GTK+ 2.0+ is required to build pidgin-musictracker
+*** Please make sure you have the GTK+ development files installed
+*** The latest version of GTK+ is always available at http://www.gtk.org/]))
 AC_SUBST(GTK_LIBS)
 AC_SUBST(GTK_CFLAGS)
 
 PKG_CHECK_MODULES([DBUS],[dbus-glib-1 >= 0.73],,AC_MSG_ERROR([
-*** DBUS 0.73+ is required to build MusicTracker; please make sure you have the
-*** DBUS development files installed. The latest version of DBUS is always
-*** available at http://dbus.freedesktop.net/.]))
+*** DBUS 0.73+ is required to build pidgin-musictracker
+*** Please make sure you have the DBUS development files installed
+*** The latest version of DBUS is always available at http://dbus.freedesktop.net/]))
 AC_SUBST(DBUS_CFLAGS)
 AC_SUBST(DBUS_LIBS)
 
@@ -69,9 +69,9 @@ fi
 
 if test "x$enable_xmms2" = "xyes" ; then
 	PKG_CHECK_MODULES([XMMSCLIENT], [xmms2-client >= 0.6],[AC_DEFINE(HAVE_XMMSCLIENT, 1, "XMMS2 Client")],AC_MSG_ERROR([
-	*** XMMS2 0.6+ is required to build XMMS2 support for MusicTracker; please make sure
-	*** you have the XMMS2 development files installed. The latest version of XMMS2
-	*** is always available at http://wiki.xmms2.xmms.se/.]))
+	*** XMMS2 0.6+ is required to build pidgin-musictracker with XMMS2 support
+        *** Please make sure you have the XMMS2 development files installed
+        *** The latest version of XMMS2 is always available at http://wiki.xmms2.xmms.se/]))
 	AC_SUBST(XMMSCLIENT_CFLAGS)
 	AC_SUBST(XMMSCLIENT_LIBS)
 fi
@@ -90,9 +90,9 @@ fi
 AC_SUBST(WERROR_CFLAGS)
 
 AC_CHECK_LIB(pcre,pcre_exec,,AC_MSG_ERROR([
-*** PCRE library is needed; please make sure you have the PCRE development
-*** files installed. The latest version of PCRE is always available at
-*** http://www.pcre.org/.]))
+*** PCRE library is required to build pidgin-musictracker
+*** Please make sure you have the PCRE development files installed
+*** The latest version of PCRE is always available at http://www.pcre.org/]))
 
 AC_PREFIX_DEFAULT(`pkg-config --variable=prefix pidgin`)
 
