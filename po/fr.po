@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: pidgin-musictracker\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/pidgin-musictracker/issues/\n"
 "POT-Creation-Date: 2009-05-29 14:49+0100\n"
-"PO-Revision-Date: 2009-06-09 12:37+0000\n"
-"Last-Translator: Geoffrey <Unknown>\n"
+"PO-Revision-Date: 2009-07-21 13:58+0000\n"
+"Last-Translator: pafnow <pafnow@pafnow.net>\n"
 "Language-Team: French <fr@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2009-06-24 11:48+0000\n"
+"X-Launchpad-Export-Date: 2009-08-09 19:52+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #. TRANSLATORS: this string controls the name musictracker appears as under the Tools menu
@@ -42,6 +42,9 @@ msgid ""
 "information about currently playing song from your music player. Portions "
 "initially adopted from pidgin-currenttrack project."
 msgstr ""
+"Le plugin MusicTracker permet de personnaliser votre message d'état avec des "
+"informations concernant la musique jouée dans votre lecteur. Des fragments "
+"ont été adoptés du projet pidgin-currenttrack."
 
 #: src/musictracker.c:870
 msgid ""
@@ -75,7 +78,7 @@ msgstr "Lecteur:"
 
 #: src/preferences.c:253
 msgid "Auto-detect"
-msgstr "Auto-détection"
+msgstr "Détection automatique"
 
 #: src/preferences.c:263
 msgid "Artist"
@@ -115,11 +118,11 @@ msgstr "Message d'état"
 
 #: src/preferences.c:275
 msgid "Status Format"
-msgstr "Statut du format"
+msgstr "Format du statut"
 
 #: src/preferences.c:282
 msgid "Playing:"
-msgstr "En Lecture:"
+msgstr "En cours de lecture:"
 
 #: src/preferences.c:283
 msgid "Paused:"
@@ -139,7 +142,7 @@ msgstr "Protocole"
 
 #: src/preferences.c:320
 msgid "Playing Status Format"
-msgstr "Format du stattu du lecteur"
+msgstr "Format du statut de lecture"
 
 #: src/preferences.c:325
 msgid "Disable"
