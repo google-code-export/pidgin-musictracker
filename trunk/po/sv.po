@@ -1,4 +1,4 @@
-# Polish translation for pidgin-musictracker
+# Swedish translation for pidgin-musictracker
 # Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
 # This file is distributed under the same license as the pidgin-musictracker package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
@@ -8,9 +8,9 @@ msgstr ""
 "Project-Id-Version: pidgin-musictracker\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/pidgin-musictracker/issues/\n"
 "POT-Creation-Date: 2009-08-31 14:13+0100\n"
-"PO-Revision-Date: 2009-08-18 15:30+0000\n"
-"Last-Translator: Kuba Zarzycki <jakubzarzycki@gmail.com>\n"
-"Language-Team: Polish <pl@li.org>\n"
+"PO-Revision-Date: 2009-08-20 20:51+0000\n"
+"Last-Translator: Rizzly <Unknown>\n"
+"Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -22,11 +22,11 @@ msgstr ""
 #.
 #: src/musictracker.c:857
 msgid "MusicTracker"
-msgstr ""
+msgstr "MusicTracker"
 
 #: src/musictracker.c:858
 msgid "MusicTracker Plugin for Pidgin"
-msgstr "Wtyczka MusicTracker do programu Pidgin"
+msgstr "MusicTracker-insticksmodul för Pidgin"
 
 #. TRANSLATORS: %s will be replaced with the URL of the translation site, currently
 #. http://translations.launchpad.net/pidgin-musictracker/trunk/+pots/musictracker
@@ -34,7 +34,7 @@ msgstr "Wtyczka MusicTracker do programu Pidgin"
 #: src/musictracker.c:864
 #, c-format
 msgid "Fix translation bugs at %s"
-msgstr "Popraw błędy w tłumaczeniu na stronie %s"
+msgstr "Fixa översättningsfel på %s"
 
 #: src/musictracker.c:868
 msgid ""
@@ -42,48 +42,46 @@ msgid ""
 "information about currently playing song from your music player. Portions "
 "initially adopted from pidgin-currenttrack project."
 msgstr ""
-"Wtyczka MusicTracker pozwala na ustawienie tekstu statusu zawierającego "
-"utwór aktualnie odtwarzany przez odtwarzacz muzyki. Częściowo przejęte z "
-"projektu pidgin-currenttrack."
+"Insticksmodulen MusicTracker låter dig ändra ditt statusmeddelande med "
+"information om den låt som du för tillfället spelar upp i din musikspelare. "
+"Vissa delar kommer från pidgin-currenttrack-projektet."
 
 #: src/musictracker.c:870
 msgid ""
 "WMP support via WMPuICE by Christian Mueller from http://www.mediatexx.com."
-msgstr ""
-"Obsługa WMP poprzez WMPuICE autorstwa Christiana Muellera z http://www."
-"mediatexx.com."
+msgstr "WMP-support via WMPuICE av Christian Mueller from http://mediatexx.com"
 
 #: src/actions.c:65
 msgid "Status to Set When Player is off:"
-msgstr "Status do ustawienia gdy Odtwarzacz jest wyłączony:"
+msgstr "Status när spelaren är avstängd:"
 
 #: src/actions.c:85 src/actions.c:112
 msgid "Activate Status Changing"
-msgstr "Włącz zmienianie statusu"
+msgstr "Aktivera statusändring"
 
 #: src/actions.c:92 src/actions.c:112
 msgid "Deactivate Status Changing"
-msgstr "Wyłącz zmienianie statusu"
+msgstr "Avaktivera statusändring"
 
 #: src/actions.c:115
 msgid "Change Player-Off Status..."
-msgstr ""
+msgstr "Ändra status för avstängd spelare..."
 
 #: src/preferences.c:222
 msgid "Leave blank for an unchanged status message"
-msgstr "Pozostaw puste jeśli tekst statusu ma pozostać niezmieniony"
+msgstr "Lämna fältet tomt för att statusmeddelandet inte ska ändras"
 
 #: src/preferences.c:247
 msgid "Player:"
-msgstr "Odtwarzacz:"
+msgstr "Spelare:"
 
 #: src/preferences.c:253
 msgid "Auto-detect"
-msgstr "Wykrywaj automatycznie"
+msgstr "Automatisk detektion"
 
 #: src/preferences.c:263
 msgid "Artist"
-msgstr "Artysta"
+msgstr "Artist"
 
 #: src/preferences.c:264
 msgid "Album"
@@ -91,119 +89,118 @@ msgstr "Album"
 
 #: src/preferences.c:265
 msgid "Title"
-msgstr "Tytuł"
+msgstr "Titel"
 
 #: src/preferences.c:266
 msgid "Track Duration"
-msgstr "Czas trwania utworu"
+msgstr ""
 
 #: src/preferences.c:267
 msgid "Elapsed Track Time"
-msgstr "Odtworzony czas utworu"
+msgstr ""
 
 #: src/preferences.c:268
 msgid "Progress Bar"
-msgstr "Wskaźnik postępu"
+msgstr "Förloppsindikator"
 
 #: src/preferences.c:269
 msgid "Player"
-msgstr "Odtwarzacz"
+msgstr "Spelare"
 
 #: src/preferences.c:270
 msgid "Music Symbol (may not display on some networks)"
-msgstr ""
+msgstr "Musiksymbol"
 
 #: src/preferences.c:271
 msgid "Status Message"
-msgstr "Tekst statusu"
+msgstr "Statusmeddelande"
 
 #: src/preferences.c:275
 msgid "Status Format"
-msgstr "Format statusu"
+msgstr "Statusutformning"
 
 #: src/preferences.c:282
 msgid "Playing:"
-msgstr "Odtwarzanie:"
+msgstr "Uppspelning"
 
 #: src/preferences.c:283
 msgid "Paused:"
-msgstr "Wstrzymano:"
+msgstr "Pausad:"
 
 #: src/preferences.c:284
 msgid "Stopped:"
-msgstr "Zatrzymano:"
+msgstr "Stoppad:"
 
 #: src/preferences.c:312
 msgid "Screen Name"
-msgstr "Nazwa użytkownika"
+msgstr "Kontonamn"
 
 #: src/preferences.c:314
 msgid "Protocol"
-msgstr "Protokół"
+msgstr "Protokoll"
 
 #: src/preferences.c:320
 msgid "Playing Status Format"
-msgstr "Format wyświetlanego statusu"
+msgstr ""
 
 #: src/preferences.c:325
 msgid "Disable"
-msgstr "Wyłącz"
+msgstr "Avaktivera"
 
 #: src/preferences.c:331
 msgid "Don't use 'now listening'"
-msgstr "Nie używaj \"Teraz odtwarzane\""
+msgstr "Använd inte 'lyssnar på'"
 
 #: src/preferences.c:335
 msgid ""
 "Customize playing status format, or disable status changing altogether for "
 "specific accounts"
 msgstr ""
-"Dostosuj format statusu, lub zablokuj całkowicie zmianę statusu dla "
-"poszczególnych kont."
 
 #: src/preferences.c:345
 msgid "Other settings"
-msgstr "Inne ustawienia"
+msgstr "Andra inställningar"
 
 #: src/preferences.c:355
 msgid "Don't change status message when away"
-msgstr "Nie zmieniaj tekstu status gdy nie jestem przy komputerze"
+msgstr "Ändra inte statusmeddelance vid frånvaro"
 
 #: src/preferences.c:362
 msgid "Don't change status message if protocol has 'now listening'"
-msgstr ""
+msgstr "Ändra inte statusmeddelande om protokollet har 'lyssnar på'"
 
 #: src/preferences.c:368
 msgid "Status Filter"
-msgstr "Filtr statusu"
+msgstr "Statusfilter"
 
 #: src/preferences.c:378
 msgid "Enable status filter"
-msgstr "Włącz filtr statusu"
+msgstr "Aktivera statusfilter"
 
 #: src/preferences.c:385
 msgid "Blacklist (comma-delimited):"
-msgstr "Czarna lista (oddzielone przecinkami):"
+msgstr "Svartlista (separera med komma):"
 
 #: src/preferences.c:394
 msgid "Mask character:"
-msgstr ""
+msgstr "Maskeringstecken:"
 
 #: src/lastfm.c:127 src/lastfm_ws.c:169
 msgid "Username:"
-msgstr "Nazwa użytkownika:"
+msgstr "Användarnamn:"
 
 #: src/lastfm.c:136 src/lastfm_ws.c:178
 msgid "poll interval:"
-msgstr ""
+msgstr "Uppdateringsintervall"
 
 #: src/lastfm.c:141 src/lastfm_ws.c:183
 msgid "This is the interval (in seconds) at which we check Last.fm for changes"
 msgstr ""
+"Detta är intervallet (i sekunder) som vi kollar efter ändringar på Last.fm"
 
 #: src/lastfm.c:148
 msgid "quiet interval:"
-msgstr ""
+msgstr "Tystnadsintervall:"
 
 #: src/lastfm.c:153
 msgid ""
@@ -211,10 +208,13 @@ msgid ""
 "we assume the track is playing for. Unless another track is scrobbled after "
 "the interval is elapsed, we will assume the off state for the player."
 msgstr ""
+"Detta är intervallet (i sekunder) efter spåret har blivit scrobblat som vi "
+"förmodar är spårets uppspelningstid. Om inte ett annat spår scrobblas efter "
+"intervallets tidsutgång, kommer vi att förmoda att spelaren är avstängd."
 
 #: src/mpd.c:116
 msgid "Hostname:"
-msgstr "Nazwa hosta:"
+msgstr "Värdnamn:"
 
 #: src/mpd.c:124
 msgid "Port:"
@@ -222,7 +222,7 @@ msgstr "Port:"
 
 #: src/mpd.c:132
 msgid "Password:"
-msgstr "Hasło:"
+msgstr "Lösenord:"
 
 #: src/squeezecenter.c:58
 msgid ""
@@ -233,60 +233,61 @@ msgid ""
 "\n"
 "Port Defaults to 9090, Multiple servers accepted delimited by ','"
 msgstr ""
-"Porada:\n"
-"'#' Znajdź odtwarzacz, który odtwarza\n"
-"'*' Znajdź odtwarzacz, który jest uruchomiony\n"
-"'id/name' poprzedź znakiem ! aby ignorować gdy nie odtwarza\n"
-"Port domyślny to 9090, Można podać wiele serwerów oddzielając je znakiem ','"
+"Tips:\n"
+"'#' Detektera uppspelande spelare\n"
+"'*' Detektera startad spelare\n"
+"'id/name' prefix med ! för att ignorera när inget spelas upp\n"
+"\n"
+"Standardport är 9090, flera servrar tillåtna, separeras med ','"
 
 #: src/squeezecenter.c:850
 msgid "Host:CliPort, Servers:"
-msgstr ""
+msgstr "Värd:CliPort, Servrar:"
 
 #: src/squeezecenter.c:858
 msgid "Player Order:"
-msgstr ""
+msgstr "Spelarordning"
 
 #: src/squeezecenter.c:866
 msgid "CLI User:"
-msgstr "Użytkownik CLI:"
+msgstr "CLI-användare:"
 
 #: src/squeezecenter.c:874
 msgid "CLI Password:"
-msgstr "Hasło CLI:"
+msgstr "CLI-lösenord"
 
 #: src/squeezecenter.c:886
 msgid "Server:"
-msgstr "Serwer:"
+msgstr "Server:"
 
 #: src/squeezecenter.c:891
 msgid "Squeezecenter Version:"
-msgstr "Wersja Squeezecenter:"
+msgstr "Squeezecenter-version"
 
 #: src/squeezecenter.c:896
 msgid "Players:"
-msgstr "Odtwarzacze:"
+msgstr "Spelare:"
 
 #: src/squeezecenter.c:899
 #, c-format
 msgid "Player count: %d\n"
-msgstr "Liczba odtwarzaczy: %d\n"
+msgstr "Antal spelare: %d\n"
 
 #: src/squeezecenter.c:908
 msgid "Last Command:"
-msgstr "Ostatnie polecenie:"
+msgstr "Senaste kommando:"
 
 #: src/squeezecenter.c:913
 msgid "Last Reply:"
-msgstr "Ostatnia odpowiedź:"
+msgstr "Senaste svar:"
 
 #: src/squeezecenter.c:919
 msgid "Last Error:"
-msgstr "Ostatni błąd:"
+msgstr "Senaste fel:"
 
 #: src/xmmsctrl.c:153
 msgid "Title Delimiter Character:"
-msgstr "Znak oddzielający tytuły:"
+msgstr ""
 
 #: src/xmmsctrl.c:159
 msgid ""
@@ -297,3 +298,9 @@ msgid ""
 "players. If you change this character above, then '|' in the string '%p | %a "
 "| %t' must be replaced with the selected character."
 msgstr ""
+"Notera: Du måste ändra spelningslistans titel i XMMS/Audacious 1.3 så att "
+"den utformas som '%p | %a | %t' (ARTIST | ALBUM | TITEL) i spelaren "
+"inställningar, där '|' är titelseparatortecknet du ställde in ovan. Detta är "
+"det enda sättet för MusicTracker att känna av alla tre fälten från dessa "
+"spelare. Om du ändrar tecknet ovan så måste '|' i strängen '%p | %a | %t' "
+"bytas ut mot det valda tecknet."

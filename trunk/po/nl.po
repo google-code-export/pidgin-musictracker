@@ -7,14 +7,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pidgin-musictracker\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/pidgin-musictracker/issues/\n"
-"POT-Creation-Date: 2009-05-29 14:49+0100\n"
-"PO-Revision-Date: 2009-05-29 14:47+0100\n"
-"Last-Translator: Jon TURNEY <jon.turney@dronecode.org.uk>\n"
+"POT-Creation-Date: 2009-08-31 14:13+0100\n"
+"PO-Revision-Date: 2009-08-18 18:14+0000\n"
+"Last-Translator: Willem Mulder <willemmaster@hotmail.com>\n"
 "Language-Team: Dutch <nl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2009-04-14 15:48+0000\n"
+"X-Launchpad-Export-Date: 2009-08-31 13:00+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #. TRANSLATORS: this string controls the name musictracker appears as under the Tools menu
@@ -42,6 +42,9 @@ msgid ""
 "information about currently playing song from your music player. Portions "
 "initially adopted from pidgin-currenttrack project."
 msgstr ""
+"Met de MusicTracker plugin kun je je statusbericht aanpassen met informatie "
+"van je muziekspeler over het nummer dat je aan het luisteren bent. Delen "
+"zijn aanvankelijk overgenomen van het pidgin-currenttrack project."
 
 #: src/musictracker.c:870
 msgid ""
@@ -67,7 +70,7 @@ msgstr "Verander speler-uit status..."
 
 #: src/preferences.c:222
 msgid "Leave blank for an unchanged status message"
-msgstr ""
+msgstr "Leeglaten voor een onveranderd statusbericht"
 
 #: src/preferences.c:247
 msgid "Player:"
@@ -111,7 +114,7 @@ msgstr "Muzieksymbool (wordt misschien niet weergeven op sommige netwerken)"
 
 #: src/preferences.c:271
 msgid "Status Message"
-msgstr ""
+msgstr "Statusbericht"
 
 #: src/preferences.c:275
 msgid "Status Format"
@@ -167,7 +170,7 @@ msgstr "Verander statusbericht niet wanneer u afwezig bent"
 
 #: src/preferences.c:362
 msgid "Don't change status message if protocol has 'now listening'"
-msgstr ""
+msgstr "Verander statusbericht niet als het protocol 'speelt nu' heeft"
 
 #: src/preferences.c:368
 msgid "Status Filter"
@@ -183,7 +186,7 @@ msgstr "Zwarte lijst (gescheiden door komma's)"
 
 #: src/preferences.c:394
 msgid "Mask character:"
-msgstr ""
+msgstr "Maskerteken"
 
 #: src/lastfm.c:127 src/lastfm_ws.c:169
 msgid "Username:"
@@ -194,10 +197,9 @@ msgid "poll interval:"
 msgstr "poll interval:"
 
 #: src/lastfm.c:141 src/lastfm_ws.c:183
-#, fuzzy
 msgid "This is the interval (in seconds) at which we check Last.fm for changes"
 msgstr ""
-"Dit is de interval (in seconden) tussen het kijken naar de Last.fm feed voor "
+"Dit is het interval (in seconden) waarmee we Last.fm controleren op "
 "veranderingen"
 
 #: src/lastfm.c:148
@@ -232,6 +234,13 @@ msgid ""
 "\n"
 "Port Defaults to 9090, Multiple servers accepted delimited by ','"
 msgstr ""
+"Advies:\n"
+"'#' Vind spelende speler\n"
+"'*' Vind aangezette speler\n"
+"'id/name' zet er een ! voor om te het negeren wanneer hij niet speelt\n"
+"\n"
+"Poort staat standaart op 9090, meerdere servers worden geaccepteerd "
+"gescheiden door een ','"
 
 #: src/squeezecenter.c:850
 msgid "Host:CliPort, Servers:"
@@ -291,3 +300,9 @@ msgid ""
 "players. If you change this character above, then '|' in the string '%p | %a "
 "| %t' must be replaced with the selected character."
 msgstr ""
+"Opmerking: Je moet de playlist-titel formaat in de voorkeuren van XMMS/"
+"Audacious 1.3 veranderen naar '%p | %a | %t' (ARTIEST | ALBUM | TITEL), waar "
+"de '|' het titel scheidingsteken is zoals hierboven ingesteld, wat de enige "
+"manier is voor MusicTracker om alle drie de velden te verwerken van deze "
+"spelers. Als je dit teken hierboven verandert, moet je het teken '|' in de "
+"tekenreeks '%p | %a | %t' vervangen met het teken dat je hebt gekozen."

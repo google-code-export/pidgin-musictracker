@@ -1,4 +1,4 @@
-# Polish translation for pidgin-musictracker
+# Simplified Chinese translation for pidgin-musictracker
 # Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
 # This file is distributed under the same license as the pidgin-musictracker package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
@@ -8,9 +8,9 @@ msgstr ""
 "Project-Id-Version: pidgin-musictracker\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/pidgin-musictracker/issues/\n"
 "POT-Creation-Date: 2009-08-31 14:13+0100\n"
-"PO-Revision-Date: 2009-08-18 15:30+0000\n"
-"Last-Translator: Kuba Zarzycki <jakubzarzycki@gmail.com>\n"
-"Language-Team: Polish <pl@li.org>\n"
+"PO-Revision-Date: 2009-08-21 07:58+0000\n"
+"Last-Translator: liuhao <Unknown>\n"
+"Language-Team: Simplified Chinese <zh_CN@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -22,11 +22,11 @@ msgstr ""
 #.
 #: src/musictracker.c:857
 msgid "MusicTracker"
-msgstr ""
+msgstr "音乐状态"
 
 #: src/musictracker.c:858
 msgid "MusicTracker Plugin for Pidgin"
-msgstr "Wtyczka MusicTracker do programu Pidgin"
+msgstr "Pidgin的音乐状态插件"
 
 #. TRANSLATORS: %s will be replaced with the URL of the translation site, currently
 #. http://translations.launchpad.net/pidgin-musictracker/trunk/+pots/musictracker
@@ -34,7 +34,7 @@ msgstr "Wtyczka MusicTracker do programu Pidgin"
 #: src/musictracker.c:864
 #, c-format
 msgid "Fix translation bugs at %s"
-msgstr "Popraw błędy w tłumaczeniu na stronie %s"
+msgstr "报告翻译问题 %s"
 
 #: src/musictracker.c:868
 msgid ""
@@ -42,168 +42,163 @@ msgid ""
 "information about currently playing song from your music player. Portions "
 "initially adopted from pidgin-currenttrack project."
 msgstr ""
-"Wtyczka MusicTracker pozwala na ustawienie tekstu statusu zawierającego "
-"utwór aktualnie odtwarzany przez odtwarzacz muzyki. Częściowo przejęte z "
-"projektu pidgin-currenttrack."
+"音乐状态插件允许你以正在播放的音乐自定义你的状态信息。Portions从pidgin-"
+"currenttrack项目继续开发"
 
 #: src/musictracker.c:870
 msgid ""
 "WMP support via WMPuICE by Christian Mueller from http://www.mediatexx.com."
-msgstr ""
-"Obsługa WMP poprzez WMPuICE autorstwa Christiana Muellera z http://www."
-"mediatexx.com."
+msgstr "WMP的支持需要Christian Mueller制作的WMPuICE: http://www.mediatexx.com."
 
 #: src/actions.c:65
 msgid "Status to Set When Player is off:"
-msgstr "Status do ustawienia gdy Odtwarzacz jest wyłączony:"
+msgstr "设置当播放器关闭后的状态:"
 
 #: src/actions.c:85 src/actions.c:112
 msgid "Activate Status Changing"
-msgstr "Włącz zmienianie statusu"
+msgstr "激活状态改变"
 
 #: src/actions.c:92 src/actions.c:112
 msgid "Deactivate Status Changing"
-msgstr "Wyłącz zmienianie statusu"
+msgstr "停止状态改变"
 
 #: src/actions.c:115
 msgid "Change Player-Off Status..."
-msgstr ""
+msgstr "改变播放器关闭后的状态..."
 
 #: src/preferences.c:222
 msgid "Leave blank for an unchanged status message"
-msgstr "Pozostaw puste jeśli tekst statusu ma pozostać niezmieniony"
+msgstr "状态消息未改变则保持空白"
 
 #: src/preferences.c:247
 msgid "Player:"
-msgstr "Odtwarzacz:"
+msgstr "播放器:"
 
 #: src/preferences.c:253
 msgid "Auto-detect"
-msgstr "Wykrywaj automatycznie"
+msgstr "自动选择"
 
 #: src/preferences.c:263
 msgid "Artist"
-msgstr "Artysta"
+msgstr "艺术家"
 
 #: src/preferences.c:264
 msgid "Album"
-msgstr "Album"
+msgstr "专辑"
 
 #: src/preferences.c:265
 msgid "Title"
-msgstr "Tytuł"
+msgstr "标题"
 
 #: src/preferences.c:266
 msgid "Track Duration"
-msgstr "Czas trwania utworu"
+msgstr "音轨长度"
 
 #: src/preferences.c:267
 msgid "Elapsed Track Time"
-msgstr "Odtworzony czas utworu"
+msgstr "经过的时间"
 
 #: src/preferences.c:268
 msgid "Progress Bar"
-msgstr "Wskaźnik postępu"
+msgstr "进度条"
 
 #: src/preferences.c:269
 msgid "Player"
-msgstr "Odtwarzacz"
+msgstr "播放器"
 
 #: src/preferences.c:270
 msgid "Music Symbol (may not display on some networks)"
-msgstr ""
+msgstr "音乐链接(在某些情况下上可能无法显示)"
 
 #: src/preferences.c:271
 msgid "Status Message"
-msgstr "Tekst statusu"
+msgstr "状态信息"
 
 #: src/preferences.c:275
 msgid "Status Format"
-msgstr "Format statusu"
+msgstr "状态格式"
 
 #: src/preferences.c:282
 msgid "Playing:"
-msgstr "Odtwarzanie:"
+msgstr "正在播放:"
 
 #: src/preferences.c:283
 msgid "Paused:"
-msgstr "Wstrzymano:"
+msgstr "暂停中:"
 
 #: src/preferences.c:284
 msgid "Stopped:"
-msgstr "Zatrzymano:"
+msgstr "已停止:"
 
 #: src/preferences.c:312
 msgid "Screen Name"
-msgstr "Nazwa użytkownika"
+msgstr "屏幕名称"
 
 #: src/preferences.c:314
 msgid "Protocol"
-msgstr "Protokół"
+msgstr "协议"
 
 #: src/preferences.c:320
 msgid "Playing Status Format"
-msgstr "Format wyświetlanego statusu"
+msgstr "正在播放的状态格式"
 
 #: src/preferences.c:325
 msgid "Disable"
-msgstr "Wyłącz"
+msgstr "禁用"
 
 #: src/preferences.c:331
 msgid "Don't use 'now listening'"
-msgstr "Nie używaj \"Teraz odtwarzane\""
+msgstr "不要使用'正在收听'"
 
 #: src/preferences.c:335
 msgid ""
 "Customize playing status format, or disable status changing altogether for "
 "specific accounts"
-msgstr ""
-"Dostosuj format statusu, lub zablokuj całkowicie zmianę statusu dla "
-"poszczególnych kont."
+msgstr "自定义播放状态的格式，或者禁止特定账户状态改变"
 
 #: src/preferences.c:345
 msgid "Other settings"
-msgstr "Inne ustawienia"
+msgstr "其他设置"
 
 #: src/preferences.c:355
 msgid "Don't change status message when away"
-msgstr "Nie zmieniaj tekstu status gdy nie jestem przy komputerze"
+msgstr "当离开后不要改变状态信息"
 
 #: src/preferences.c:362
 msgid "Don't change status message if protocol has 'now listening'"
-msgstr ""
+msgstr "如果协议支持'正在收听'状态则不要改变状态消息只改变'正在收听'状态"
 
 #: src/preferences.c:368
 msgid "Status Filter"
-msgstr "Filtr statusu"
+msgstr "状态信息过滤"
 
 #: src/preferences.c:378
 msgid "Enable status filter"
-msgstr "Włącz filtr statusu"
+msgstr "启用状态信息过滤"
 
 #: src/preferences.c:385
 msgid "Blacklist (comma-delimited):"
-msgstr "Czarna lista (oddzielone przecinkami):"
+msgstr "黑名单(使用逗号分隔):"
 
 #: src/preferences.c:394
 msgid "Mask character:"
-msgstr ""
+msgstr "替换字符:"
 
 #: src/lastfm.c:127 src/lastfm_ws.c:169
 msgid "Username:"
-msgstr "Nazwa użytkownika:"
+msgstr "用户名:"
 
 #: src/lastfm.c:136 src/lastfm_ws.c:178
 msgid "poll interval:"
-msgstr ""
+msgstr "查询间隔:"
 
 #: src/lastfm.c:141 src/lastfm_ws.c:183
 msgid "This is the interval (in seconds) at which we check Last.fm for changes"
-msgstr ""
+msgstr "设置查询Last.fm状态改变的时间间隔(秒)"
 
 #: src/lastfm.c:148
 msgid "quiet interval:"
-msgstr ""
+msgstr "安静的间隔:"
 
 #: src/lastfm.c:153
 msgid ""
@@ -211,18 +206,20 @@ msgid ""
 "we assume the track is playing for. Unless another track is scrobbled after "
 "the interval is elapsed, we will assume the off state for the player."
 msgstr ""
+"设置音乐信息发布后我们假定音乐播放的时间(秒). 除非在此时间后另外一个音轨信息"
+"发布, 否则我们就假设播放器状态为关闭."
 
 #: src/mpd.c:116
 msgid "Hostname:"
-msgstr "Nazwa hosta:"
+msgstr "主机名:"
 
 #: src/mpd.c:124
 msgid "Port:"
-msgstr "Port:"
+msgstr "端口:"
 
 #: src/mpd.c:132
 msgid "Password:"
-msgstr "Hasło:"
+msgstr "密码:"
 
 #: src/squeezecenter.c:58
 msgid ""
@@ -233,60 +230,61 @@ msgid ""
 "\n"
 "Port Defaults to 9090, Multiple servers accepted delimited by ','"
 msgstr ""
-"Porada:\n"
-"'#' Znajdź odtwarzacz, który odtwarza\n"
-"'*' Znajdź odtwarzacz, który jest uruchomiony\n"
-"'id/name' poprzedź znakiem ! aby ignorować gdy nie odtwarza\n"
-"Port domyślny to 9090, Można podać wiele serwerów oddzielając je znakiem ','"
+"高级:\n"
+"'#' 找到播放中的播放器\n"
+"'*' 找到开启的播放器\n"
+"'id/name' 如果没有播放，加上 ! 前缀来忽略\n"
+"\n"
+"端口默认为9090, 多个服务端用','分隔"
 
 #: src/squeezecenter.c:850
 msgid "Host:CliPort, Servers:"
-msgstr ""
+msgstr "主机名:端口, 服务器:"
 
 #: src/squeezecenter.c:858
 msgid "Player Order:"
-msgstr ""
+msgstr "播放顺序:"
 
 #: src/squeezecenter.c:866
 msgid "CLI User:"
-msgstr "Użytkownik CLI:"
+msgstr "命令行界面用户:"
 
 #: src/squeezecenter.c:874
 msgid "CLI Password:"
-msgstr "Hasło CLI:"
+msgstr "命令行界面密码:"
 
 #: src/squeezecenter.c:886
 msgid "Server:"
-msgstr "Serwer:"
+msgstr "服务器:"
 
 #: src/squeezecenter.c:891
 msgid "Squeezecenter Version:"
-msgstr "Wersja Squeezecenter:"
+msgstr "压缩中心版本:"
 
 #: src/squeezecenter.c:896
 msgid "Players:"
-msgstr "Odtwarzacze:"
+msgstr "播放器:"
 
 #: src/squeezecenter.c:899
 #, c-format
 msgid "Player count: %d\n"
-msgstr "Liczba odtwarzaczy: %d\n"
+msgstr "播放器数量: %d\n"
 
 #: src/squeezecenter.c:908
 msgid "Last Command:"
-msgstr "Ostatnie polecenie:"
+msgstr "上一条指令:"
 
 #: src/squeezecenter.c:913
 msgid "Last Reply:"
-msgstr "Ostatnia odpowiedź:"
+msgstr "上一条回复:"
 
 #: src/squeezecenter.c:919
 msgid "Last Error:"
-msgstr "Ostatni błąd:"
+msgstr "上一个错误:"
 
 #: src/xmmsctrl.c:153
 msgid "Title Delimiter Character:"
-msgstr "Znak oddzielający tytuły:"
+msgstr "标题界定符号:"
 
 #: src/xmmsctrl.c:159
 msgid ""
@@ -297,3 +295,7 @@ msgid ""
 "players. If you change this character above, then '|' in the string '%p | %a "
 "| %t' must be replaced with the selected character."
 msgstr ""
+"注意：你必须修在XMMS/Audacious 1.3属性设置里改播放列表名称格式为'%p | %a | %"
+"t' (艺术家 | 专辑 | 标题)，这里的'|'是上面设置的标题分隔符这是唯一能让"
+"MusicTracker能够正确识别这几个播放器信息的方法你需要在播放器和此处同时更"
+"改'|'这个符号。如果你改变上面提到的这个符号，那么这里也应该替换。"
