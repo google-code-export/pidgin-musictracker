@@ -148,7 +148,7 @@ echo my-hacked-up-version >version
 }}}
 
 ==11==
-* Where are the linux binary packages? *
+* Where are the linux binary packages? *<br>
 * I downloaded and extracted the Linux x86 plugin musictracker.so file, but what do I with it? *
 
 There are links to binary packages for some distros on the main page.  
