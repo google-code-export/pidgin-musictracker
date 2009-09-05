@@ -124,6 +124,7 @@ Since it doesn't work very well, the direct foobar2000 support will be removed a
 {{{
 ./configure --prefix=/usr
 make
+sudo make install
 }}}
 
 or, for Windows
@@ -148,6 +149,7 @@ echo my-hacked-up-version >version
 
 ==11==
 * Where are the linux binary packages? *
+* I downloaded and extracted the Linux x86 plugin musictracker.so file, but what do I with it? *
 
 There are links to binary packages for some distros on the main page.  
 
