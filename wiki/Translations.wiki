@@ -5,7 +5,7 @@ pidgin-musictracker supports a translatable UI. Additional translations and upda
 
 The translations can be edited online at [https://translations.launchpad.net/pidgin-musictracker/trunk/+pots/musictracker Launchpad].  
 
-You will need to create a Launchpad account to add to translations.  If you are adding a translation for a new language, after creating an Launchpad account, you'll need to visit https://launchpad.net/~jon-turney/+editlanguages and tell Launchpad you speak the language you want to translate to.
+You will need to create a Launchpad account to add to translations.  If you are adding a translation for a new language, after creating an Launchpad account, you'll need to visit https://launchpad.net/people/+me/+editlanguages and tell Launchpad you speak the language you want to translate to.
 
 _Alternatively, if you don't want to use Launchpad_
 
