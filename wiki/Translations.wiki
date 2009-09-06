@@ -10,3 +10,5 @@ You will need to create a Launchpad account to add to translations.  If you are 
 _Alternatively, if you don't want to use Launchpad_
 
 The file [http://code.google.com/p/pidgin-musictracker/source/browse/trunk#trunk/po po/musictracker.pot] is a template containing all the translatable messages.  You can create an empty translation file by copying and editing it or by using the [http://www.gnu.org/software/gettext/manual/gettext.html#Creating msginit] program provided by GNU gettext.  Add the translated text for _msgid_ lines to the _msgstr_ lines, and raise a new issue with your translation file attached.
+
+_You may find it useful to refer to the [Screenshots] whilst translating_
