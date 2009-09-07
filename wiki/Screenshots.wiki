@@ -9,6 +9,6 @@ Configuration dialog box under KDE 3.5, with format "add" button menu active
 
 <img src="http://pidgin-musictracker.googlecode.com/svn/wiki/musictracker_config_dialog_with_popup_kde.png"/>
 
-SqueezeCenter-specific configuration dialog
+!SqueezeCenter-specific configuration dialog
 
 <img src="http://pidgin-musictracker.googlecode.com/svn/wiki/musictracker_config_squeezecenter.png"/>
