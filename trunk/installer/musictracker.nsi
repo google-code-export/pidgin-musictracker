@@ -40,6 +40,7 @@ Section "Musictracker" ;No components page, name is not important
   WriteUninstaller $INSTDIR\pidgin-musictracker-uninst.exe
 
   WriteRegStr HKLM "${MUSICTRACKER_UNINSTALL_KEY}" "DisplayName" "Pidgin-Musictracker plugin (remove only)"
+  WriteRegStr HKLM "${MUSICTRACKER_UNINSTALL_KEY}" "HelpLink" "http://code.google.com/p/pidgin-musictracker/"
   WriteRegDWORD HKLM "${MUSICTRACKER_UNINSTALL_KEY}" "NoModify" 1
   WriteRegDWORD HKLM "${MUSICTRACKER_UNINSTALL_KEY}" "NoRepair" 1
   WriteRegStr HKLM "${MUSICTRACKER_UNINSTALL_KEY}" "UninstallString" "$INSTDIR\pidgin-musictracker-uninst.exe"
