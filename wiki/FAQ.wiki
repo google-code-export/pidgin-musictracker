@@ -197,6 +197,13 @@ There doesn't seem to be a definitive ordering for these elements in the 'MSN co
 Maybe the offical MSN client can, but I don't know how it does that...  until someone can tell me how, users of such players will either need to 
 open the musictracker plugin configuration dialog, select "Messenger compatible interface" in the player drop down list, press the "properties" button and tick "Swap artist and title", or look for a similar configuration in the player.
 
+==16==
+* I updated iTunes and now musictracker doesn't work (or doesn't work properly) *
+
+It seems that upgrading iTunes is known to sometimes break the COM interface used by musictracker to get track information. (For example see http://discussions.apple.com/thread.jspa?threadID=1701294)
+
+Uninstalling and then reinstalling iTunes using the full download should fix this problem.
+
 == My Question isn't answered here! Help! ==
 
 Please send a mail to the pidigin-musictracker general discussion mailing list if you have a question.
