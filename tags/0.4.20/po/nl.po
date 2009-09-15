@@ -1,0 +1,308 @@
+# Dutch translation for pidgin-musictracker
+# Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
+# This file is distributed under the same license as the pidgin-musictracker package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: pidgin-musictracker\n"
+"Report-Msgid-Bugs-To: http://code.google.com/p/pidgin-musictracker/issues/\n"
+"POT-Creation-Date: 2009-08-31 14:13+0100\n"
+"PO-Revision-Date: 2009-08-18 18:14+0000\n"
+"Last-Translator: Willem Mulder <willemmaster@hotmail.com>\n"
+"Language-Team: Dutch <nl@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2009-08-31 13:00+0000\n"
+"X-Generator: Launchpad (build Unknown)\n"
+
+#. TRANSLATORS: this string controls the name musictracker appears as under the Tools menu
+#. It's probably a good idea to treat 'MusicTracker' as a proper name, transliterate but don't translate
+#.
+#: src/musictracker.c:857
+msgid "MusicTracker"
+msgstr "MusicTracker"
+
+#: src/musictracker.c:858
+msgid "MusicTracker Plugin for Pidgin"
+msgstr "MusicTracker plugin voor Pidgin"
+
+#. TRANSLATORS: %s will be replaced with the URL of the translation site, currently
+#. http://translations.launchpad.net/pidgin-musictracker/trunk/+pots/musictracker
+#.
+#: src/musictracker.c:864
+#, c-format
+msgid "Fix translation bugs at %s"
+msgstr "Herstel vertaalfouten op %s"
+
+#: src/musictracker.c:868
+msgid ""
+"The MusicTracker Plugin allows you to customize your status message with "
+"information about currently playing song from your music player. Portions "
+"initially adopted from pidgin-currenttrack project."
+msgstr ""
+"Met de MusicTracker plugin kun je je statusbericht aanpassen met informatie "
+"van je muziekspeler over het nummer dat je aan het luisteren bent. Delen "
+"zijn aanvankelijk overgenomen van het pidgin-currenttrack project."
+
+#: src/musictracker.c:870
+msgid ""
+"WMP support via WMPuICE by Christian Mueller from http://www.mediatexx.com."
+msgstr ""
+"WMP support via WMPulCE door Christian Mueller van http://www.mediatex.com."
+
+#: src/actions.c:65
+msgid "Status to Set When Player is off:"
+msgstr "De te zette status als speler uitstaat:"
+
+#: src/actions.c:85 src/actions.c:112
+msgid "Activate Status Changing"
+msgstr "Activeer Statusverandering"
+
+#: src/actions.c:92 src/actions.c:112
+msgid "Deactivate Status Changing"
+msgstr "Deactiveer Statusverandering"
+
+#: src/actions.c:115
+msgid "Change Player-Off Status..."
+msgstr "Verander speler-uit status..."
+
+#: src/preferences.c:222
+msgid "Leave blank for an unchanged status message"
+msgstr "Leeglaten voor een onveranderd statusbericht"
+
+#: src/preferences.c:247
+msgid "Player:"
+msgstr "Speler"
+
+#: src/preferences.c:253
+msgid "Auto-detect"
+msgstr "Automatisch detecteren"
+
+#: src/preferences.c:263
+msgid "Artist"
+msgstr "Artiest"
+
+#: src/preferences.c:264
+msgid "Album"
+msgstr "Album"
+
+#: src/preferences.c:265
+msgid "Title"
+msgstr "Titel"
+
+#: src/preferences.c:266
+msgid "Track Duration"
+msgstr "Nummer lengte"
+
+#: src/preferences.c:267
+msgid "Elapsed Track Time"
+msgstr "Verstreken tijd"
+
+#: src/preferences.c:268
+msgid "Progress Bar"
+msgstr "Voortgangsbalk"
+
+#: src/preferences.c:269
+msgid "Player"
+msgstr "Speler"
+
+#: src/preferences.c:270
+msgid "Music Symbol (may not display on some networks)"
+msgstr "Muzieksymbool (wordt misschien niet weergeven op sommige netwerken)"
+
+#: src/preferences.c:271
+msgid "Status Message"
+msgstr "Statusbericht"
+
+#: src/preferences.c:275
+msgid "Status Format"
+msgstr "Status formaat"
+
+#: src/preferences.c:282
+msgid "Playing:"
+msgstr "Speelt:"
+
+#: src/preferences.c:283
+msgid "Paused:"
+msgstr "Gepauzeerd:"
+
+#: src/preferences.c:284
+msgid "Stopped:"
+msgstr "Gestopt:"
+
+#: src/preferences.c:312
+msgid "Screen Name"
+msgstr "Gebruikersnaam"
+
+#: src/preferences.c:314
+msgid "Protocol"
+msgstr "Protocol"
+
+#: src/preferences.c:320
+msgid "Playing Status Format"
+msgstr "Speelstatus formaat"
+
+#: src/preferences.c:325
+msgid "Disable"
+msgstr "Uitschakelen"
+
+#: src/preferences.c:331
+msgid "Don't use 'now listening'"
+msgstr "Gebruik geen 'speelt nu'"
+
+#: src/preferences.c:335
+msgid ""
+"Customize playing status format, or disable status changing altogether for "
+"specific accounts"
+msgstr ""
+"Speelstatus formaat aanpassen, of schakel statusverandering helemaal uit "
+"voor bepaalde accounts"
+
+#: src/preferences.c:345
+msgid "Other settings"
+msgstr "Andere instellingen"
+
+#: src/preferences.c:355
+msgid "Don't change status message when away"
+msgstr "Verander statusbericht niet wanneer u afwezig bent"
+
+#: src/preferences.c:362
+msgid "Don't change status message if protocol has 'now listening'"
+msgstr "Verander statusbericht niet als het protocol 'speelt nu' heeft"
+
+#: src/preferences.c:368
+msgid "Status Filter"
+msgstr "Statusfilter"
+
+#: src/preferences.c:378
+msgid "Enable status filter"
+msgstr "Aanzetten statusfilter"
+
+#: src/preferences.c:385
+msgid "Blacklist (comma-delimited):"
+msgstr "Zwarte lijst (gescheiden door komma's)"
+
+#: src/preferences.c:394
+msgid "Mask character:"
+msgstr "Maskerteken"
+
+#: src/lastfm.c:127 src/lastfm_ws.c:169
+msgid "Username:"
+msgstr "Gebruikersnaam:"
+
+#: src/lastfm.c:136 src/lastfm_ws.c:178
+msgid "poll interval:"
+msgstr "poll interval:"
+
+#: src/lastfm.c:141 src/lastfm_ws.c:183
+msgid "This is the interval (in seconds) at which we check Last.fm for changes"
+msgstr ""
+"Dit is het interval (in seconden) waarmee we Last.fm controleren op "
+"veranderingen"
+
+#: src/lastfm.c:148
+msgid "quiet interval:"
+msgstr "zachte tussenpoos:"
+
+#: src/lastfm.c:153
+msgid ""
+"This is the interval (in seconds) after the track has been scrobbled which "
+"we assume the track is playing for. Unless another track is scrobbled after "
+"the interval is elapsed, we will assume the off state for the player."
+msgstr ""
+
+#: src/mpd.c:116
+msgid "Hostname:"
+msgstr "Hostnaam:"
+
+#: src/mpd.c:124
+msgid "Port:"
+msgstr "Poort:"
+
+#: src/mpd.c:132
+msgid "Password:"
+msgstr "Wachtwoord:"
+
+#: src/squeezecenter.c:58
+msgid ""
+"Advice:\n"
+"'#' Find playing player\n"
+"'*' Find powered player\n"
+"'id/name' prefix with ! to ignore if not playing\n"
+"\n"
+"Port Defaults to 9090, Multiple servers accepted delimited by ','"
+msgstr ""
+"Advies:\n"
+"'#' Vind spelende speler\n"
+"'*' Vind aangezette speler\n"
+"'id/name' zet er een ! voor om te het negeren wanneer hij niet speelt\n"
+"\n"
+"Poort staat standaart op 9090, meerdere servers worden geaccepteerd "
+"gescheiden door een ','"
+
+#: src/squeezecenter.c:850
+msgid "Host:CliPort, Servers:"
+msgstr "Host:CliPort, Servers:"
+
+#: src/squeezecenter.c:858
+msgid "Player Order:"
+msgstr "Speelvolgorde:"
+
+#: src/squeezecenter.c:866
+msgid "CLI User:"
+msgstr "CLI gebruiker:"
+
+#: src/squeezecenter.c:874
+msgid "CLI Password:"
+msgstr "CLI wachtwoord:"
+
+#: src/squeezecenter.c:886
+msgid "Server:"
+msgstr "Server:"
+
+#: src/squeezecenter.c:891
+msgid "Squeezecenter Version:"
+msgstr "Squeezecenter versie:"
+
+#: src/squeezecenter.c:896
+msgid "Players:"
+msgstr "Spelers:"
+
+#: src/squeezecenter.c:899
+#, c-format
+msgid "Player count: %d\n"
+msgstr "Aantal spelers: %d\n"
+
+#: src/squeezecenter.c:908
+msgid "Last Command:"
+msgstr "Laatste commando:"
+
+#: src/squeezecenter.c:913
+msgid "Last Reply:"
+msgstr "Laatste antwoord:"
+
+#: src/squeezecenter.c:919
+msgid "Last Error:"
+msgstr "Laatste fout:"
+
+#: src/xmmsctrl.c:153
+msgid "Title Delimiter Character:"
+msgstr "Titel scheidingsteken:"
+
+#: src/xmmsctrl.c:159
+msgid ""
+"Note: You must change the playlist title in XMMS/Audacious 1.3 to be "
+"formatted as '%p | %a | %t' (ARTIST | ALBUM | TITLE) in the player "
+"preferences, where '|' is the Title Delimiter Character set above, which is "
+"the only way for MusicTracker to parse all three fields from either of these "
+"players. If you change this character above, then '|' in the string '%p | %a "
+"| %t' must be replaced with the selected character."
+msgstr ""
+"Opmerking: Je moet de playlist-titel formaat in de voorkeuren van XMMS/"
+"Audacious 1.3 veranderen naar '%p | %a | %t' (ARTIEST | ALBUM | TITEL), waar "
+"de '|' het titel scheidingsteken is zoals hierboven ingesteld, wat de enige "
+"manier is voor MusicTracker om alle drie de velden te verwerken van deze "
+"spelers. Als je dit teken hierboven verandert, moet je het teken '|' in de "
+"tekenreeks '%p | %a | %t' vervangen met het teken dat je hebt gekozen."
