@@ -1,6 +1,12 @@
 ChangeLog for MusicTracker Pidgin Plugin
 ========================================
 
+2009-09-15 (Version 0.4.20)
+	* Reformat configure output when a package check fails, to make it a bit easier for people to read and understand that development packages are required
+	* Add/update some more translations contributed via launchpad (added: Danish(da), Swedish(sv), Simplified Chinese(zn_CN); updated:  Low German(nds), Dutch(nl), Polish(pl), Norwegian Bokmal(nb), French(fr), German(de))
+	* Fix snapshot script not do to anything if svn is unavailable; Don't wait for koji builds to complete in snapshot script; Launchpad snapshots are now built for ubuntu karmic as well
+	* Improve release script to create a clean working directory before starting
+
 2009-06-24 (Version 0.4.19)
 	* Update build scripts so launchpad builds are requested for all active Ubuntu releases; include translations in the .deb packages generated there
 	* Autogen.sh replaces reconf; this properly updates ltmain.sh, fixing a problem when building from source (issue 104)
