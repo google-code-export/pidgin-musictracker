@@ -7,14 +7,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pidgin-musictracker\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/pidgin-musictracker/issues/\n"
-"POT-Creation-Date: 2009-05-29 14:49+0100\n"
-"PO-Revision-Date: 2009-05-29 14:46+0100\n"
-"Last-Translator: Jon TURNEY <jon.turney@dronecode.org.uk>\n"
+"POT-Creation-Date: 2009-10-12 22:54+0100\n"
+"PO-Revision-Date: 2009-09-30 22:26+0000\n"
+"Last-Translator: Yaron <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <he@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2009-04-14 15:48+0000\n"
+"X-Launchpad-Export-Date: 2009-10-12 21:16+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #. TRANSLATORS: this string controls the name musictracker appears as under the Tools menu
@@ -22,11 +22,11 @@ msgstr ""
 #.
 #: src/musictracker.c:857
 msgid "MusicTracker"
-msgstr ""
+msgstr "MusicTracker"
 
 #: src/musictracker.c:858
 msgid "MusicTracker Plugin for Pidgin"
-msgstr ""
+msgstr "תוסף MusicTracker לפידג'ין"
 
 #. TRANSLATORS: %s will be replaced with the URL of the translation site, currently
 #. http://translations.launchpad.net/pidgin-musictracker/trunk/+pots/musictracker
@@ -34,7 +34,7 @@ msgstr ""
 #: src/musictracker.c:864
 #, c-format
 msgid "Fix translation bugs at %s"
-msgstr ""
+msgstr "ניתן לתקן שגיאות בתרגום דרך %s"
 
 #: src/musictracker.c:868
 msgid ""
@@ -42,11 +42,16 @@ msgid ""
 "information about currently playing song from your music player. Portions "
 "initially adopted from pidgin-currenttrack project."
 msgstr ""
+"התוסף MusicTracker מאפשר לך לשנות את הודעת המצב שלך עם נתונים אודות השיר "
+"המתנגן כעת בנגן המוזיקה שלך. המיזם נשען בתחילת דרכו על קטעי קוד מהמיזם "
+"pidgin-currenttrack."
 
 #: src/musictracker.c:870
 msgid ""
 "WMP support via WMPuICE by Christian Mueller from http://www.mediatexx.com."
 msgstr ""
+"תמיכה ב־WMP באמצעות WMPuICE שנכתב על ידי כריסטיאן מילר מהאתר http://www."
+"mediatexx.com."
 
 #: src/actions.c:65
 msgid "Status to Set When Player is off:"
@@ -54,133 +59,134 @@ msgstr "קביעת מעמד כאשר הנגן כבוי"
 
 #: src/actions.c:85 src/actions.c:112
 msgid "Activate Status Changing"
-msgstr ""
+msgstr "הפעלת החלפת הודעת המצב"
 
 #: src/actions.c:92 src/actions.c:112
 msgid "Deactivate Status Changing"
-msgstr ""
+msgstr "נטרול החלפת הודעת המצב"
 
 #: src/actions.c:115
 msgid "Change Player-Off Status..."
-msgstr ""
+msgstr "החלפת ההודעה כשהנגן כבוי..."
 
-#: src/preferences.c:222
+#: src/preferences.c:226
 msgid "Leave blank for an unchanged status message"
-msgstr ""
+msgstr "ניתן להשאיר ריק כדי שההודעה לא תשתנה"
 
-#: src/preferences.c:247
+#: src/preferences.c:251
 msgid "Player:"
 msgstr "נגן"
 
-#: src/preferences.c:253
+#: src/preferences.c:257
 msgid "Auto-detect"
 msgstr "איתור אוטומטי"
 
-#: src/preferences.c:263
+#: src/preferences.c:266
 msgid "Artist"
 msgstr "אמן"
 
-#: src/preferences.c:264
+#: src/preferences.c:267
 msgid "Album"
 msgstr "אלבום"
 
-#: src/preferences.c:265
+#: src/preferences.c:268
 msgid "Title"
 msgstr "כותרת"
 
-#: src/preferences.c:266
+#: src/preferences.c:269
 msgid "Track Duration"
 msgstr "משך הרצועה"
 
-#: src/preferences.c:267
+#: src/preferences.c:270
 msgid "Elapsed Track Time"
-msgstr ""
+msgstr "זמן שעבר בנגינת הרצועה"
 
-#: src/preferences.c:268
+#: src/preferences.c:271
 msgid "Progress Bar"
 msgstr "סרגל התקדמות"
 
-#: src/preferences.c:269
+#: src/preferences.c:272
 msgid "Player"
 msgstr "נֵגן"
 
-#: src/preferences.c:270
+#: src/preferences.c:273
 msgid "Music Symbol (may not display on some networks)"
-msgstr ""
+msgstr "תו מוזיקלי (יתכן שלא יופיע בחלק מהרשתות)"
 
-#: src/preferences.c:271
+#: src/preferences.c:274
 msgid "Status Message"
-msgstr ""
+msgstr "הודעת מצב"
 
-#: src/preferences.c:275
+#: src/preferences.c:278
 msgid "Status Format"
-msgstr ""
+msgstr "מבנה המצב"
 
-#: src/preferences.c:282
+#: src/preferences.c:285
 msgid "Playing:"
 msgstr "מנגן עכשיו:"
 
-#: src/preferences.c:283
+#: src/preferences.c:286
 msgid "Paused:"
 msgstr "השהה"
 
-#: src/preferences.c:284
+#: src/preferences.c:287
 msgid "Stopped:"
 msgstr "עצור:"
 
-#: src/preferences.c:312
+#: src/preferences.c:315
 msgid "Screen Name"
 msgstr "שם התצוגה"
 
-#: src/preferences.c:314
+#: src/preferences.c:317
 msgid "Protocol"
 msgstr "פרוטוקול"
 
-#: src/preferences.c:320
+#: src/preferences.c:323
 msgid "Playing Status Format"
-msgstr ""
+msgstr "מבנה המצב בעת נגינה"
 
-#: src/preferences.c:325
+#: src/preferences.c:328
 msgid "Disable"
 msgstr "נטרל"
 
-#: src/preferences.c:331
+#: src/preferences.c:334
 msgid "Don't use 'now listening'"
-msgstr ""
+msgstr "לא להשתמש ב־'בהאזנה כעת'"
 
-#: src/preferences.c:335
+#: src/preferences.c:338
 msgid ""
 "Customize playing status format, or disable status changing altogether for "
 "specific accounts"
 msgstr ""
+"התאמת מבנה המצב בעת נגינה, או ביטול שינוי המצב יחדיו עבור חשבונות מסויימים"
 
-#: src/preferences.c:345
+#: src/preferences.c:348
 msgid "Other settings"
 msgstr "הגדרות אחרות"
 
-#: src/preferences.c:355
+#: src/preferences.c:358
 msgid "Don't change status message when away"
 msgstr "אל תשנה את המצב הנוכחי  כשאיני נוכח"
 
-#: src/preferences.c:362
+#: src/preferences.c:365
 msgid "Don't change status message if protocol has 'now listening'"
-msgstr ""
+msgstr "לא לשנות את הודעת המצב אם בפרוטוקול יש 'בהאזנה כעת'"
 
-#: src/preferences.c:368
+#: src/preferences.c:371
 msgid "Status Filter"
 msgstr "מצב המסנן"
 
-#: src/preferences.c:378
+#: src/preferences.c:381
 msgid "Enable status filter"
-msgstr ""
+msgstr "הפעלת מסנן המצב"
 
-#: src/preferences.c:385
+#: src/preferences.c:388
 msgid "Blacklist (comma-delimited):"
 msgstr "רשימה שחורה"
 
-#: src/preferences.c:394
+#: src/preferences.c:397
 msgid "Mask character:"
-msgstr ""
+msgstr "אות מיסוך:"
 
 #: src/lastfm.c:127 src/lastfm_ws.c:169
 msgid "Username:"
@@ -188,15 +194,15 @@ msgstr "שם משתמש:"
 
 #: src/lastfm.c:136 src/lastfm_ws.c:178
 msgid "poll interval:"
-msgstr ""
+msgstr "השהיה בין התשאולים:"
 
 #: src/lastfm.c:141 src/lastfm_ws.c:183
 msgid "This is the interval (in seconds) at which we check Last.fm for changes"
-msgstr ""
+msgstr "זהו משך ההשהיה (בשניות) בין בדיקת השירות Last.fm לשינויים"
 
 #: src/lastfm.c:148
 msgid "quiet interval:"
-msgstr ""
+msgstr "השהיה להשתקה:"
 
 #: src/lastfm.c:153
 msgid ""
@@ -211,7 +217,7 @@ msgstr "שם מארח:"
 
 #: src/mpd.c:124
 msgid "Port:"
-msgstr ""
+msgstr "פתחה:"
 
 #: src/mpd.c:132
 msgid "Password:"
@@ -226,22 +232,28 @@ msgid ""
 "\n"
 "Port Defaults to 9090, Multiple servers accepted delimited by ','"
 msgstr ""
+"עצה:\n"
+"'#' יש למצוא נגן שמנגן כעת\n"
+"'*' יש למצוא נגן נתמך\n"
+"קידומת 'id/name' עם ! כדי להתעלם אם כלום לא מתנגן\n"
+"\n"
+"פתחת ברירת המחדל היא 9090, ניתן לציין מספר שרתים עם הפרדה ב־','"
 
 #: src/squeezecenter.c:850
 msgid "Host:CliPort, Servers:"
-msgstr ""
+msgstr "מארח:פתחת_הלקוח, שרתים:"
 
 #: src/squeezecenter.c:858
 msgid "Player Order:"
-msgstr ""
+msgstr "סגן הנגנים:"
 
 #: src/squeezecenter.c:866
 msgid "CLI User:"
-msgstr ""
+msgstr "משתמש בשורת הפקודה:"
 
 #: src/squeezecenter.c:874
 msgid "CLI Password:"
-msgstr ""
+msgstr "סיסמה בשורת הפקודה:"
 
 #: src/squeezecenter.c:886
 msgid "Server:"
@@ -249,16 +261,16 @@ msgstr "שרת:"
 
 #: src/squeezecenter.c:891
 msgid "Squeezecenter Version:"
-msgstr ""
+msgstr "גרסת ה־Squeezecenter:"
 
 #: src/squeezecenter.c:896
 msgid "Players:"
-msgstr ""
+msgstr "נגנים:"
 
 #: src/squeezecenter.c:899
 #, c-format
 msgid "Player count: %d\n"
-msgstr ""
+msgstr "מספר הנגנים: %d\n"
 
 #: src/squeezecenter.c:908
 msgid "Last Command:"
@@ -266,7 +278,7 @@ msgstr "פקודה אחרונה"
 
 #: src/squeezecenter.c:913
 msgid "Last Reply:"
-msgstr ""
+msgstr "התגובה האחרונה:"
 
 #: src/squeezecenter.c:919
 msgid "Last Error:"
@@ -274,7 +286,7 @@ msgstr "שגיאה אחרונה:"
 
 #: src/xmmsctrl.c:153
 msgid "Title Delimiter Character:"
-msgstr ""
+msgstr "תו הפרדת הכותרת:"
 
 #: src/xmmsctrl.c:159
 msgid ""
@@ -285,3 +297,8 @@ msgid ""
 "players. If you change this character above, then '|' in the string '%p | %a "
 "| %t' must be replaced with the selected character."
 msgstr ""
+"הערה: עליך לשנות את כותרת רשימת ההשמעה ב־XMMS/Audacious 1.3 כך שתופיע כ־'%p "
+"| %a | %t' (אמן | אלבום | כותרת) בהעדפות הנגן, כך ש־'|' היא מפריד הכותרת "
+"המוגדר להלן, שזוהי הצורה היחידה בה MusicTracker יכול לפענח את כל שלושת השדות "
+"מכל אחד מנגנים אלה. אם התו שלהלן יוחלף אז יש להחליף את '|' שבמחרוזת '%p | %a "
+"| %t' בתו שנבחר."
