@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pidgin-musictracker\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/pidgin-musictracker/issues/\n"
-"POT-Creation-Date: 2009-05-29 14:49+0100\n"
+"POT-Creation-Date: 2009-10-12 22:54+0100\n"
 "PO-Revision-Date: 2009-05-29 14:48+0100\n"
 "Last-Translator: Jon TURNEY <jon.turney@dronecode.org.uk>\n"
 "Language-Team: English (United Kingdom) <en_GB@li.org>\n"
@@ -68,91 +68,91 @@ msgstr "Deactivate Status Changing"
 msgid "Change Player-Off Status..."
 msgstr "Change Player-Off Status..."
 
-#: src/preferences.c:222
+#: src/preferences.c:226
 msgid "Leave blank for an unchanged status message"
 msgstr "Leave blank for an unchanged status message"
 
-#: src/preferences.c:247
+#: src/preferences.c:251
 msgid "Player:"
 msgstr "Player:"
 
-#: src/preferences.c:253
+#: src/preferences.c:257
 msgid "Auto-detect"
 msgstr "Auto-detect"
 
-#: src/preferences.c:263
+#: src/preferences.c:266
 msgid "Artist"
 msgstr "Artist"
 
-#: src/preferences.c:264
+#: src/preferences.c:267
 msgid "Album"
 msgstr "Album"
 
-#: src/preferences.c:265
+#: src/preferences.c:268
 msgid "Title"
 msgstr "Title"
 
-#: src/preferences.c:266
+#: src/preferences.c:269
 msgid "Track Duration"
 msgstr "Track Duration"
 
-#: src/preferences.c:267
+#: src/preferences.c:270
 msgid "Elapsed Track Time"
 msgstr "Elapsed Track Time"
 
-#: src/preferences.c:268
+#: src/preferences.c:271
 msgid "Progress Bar"
 msgstr "Progress Bar"
 
-#: src/preferences.c:269
+#: src/preferences.c:272
 msgid "Player"
 msgstr "Player"
 
-#: src/preferences.c:270
+#: src/preferences.c:273
 msgid "Music Symbol (may not display on some networks)"
 msgstr "Music Symbol (may not display on some networks)"
 
-#: src/preferences.c:271
+#: src/preferences.c:274
 msgid "Status Message"
 msgstr "Status Message"
 
-#: src/preferences.c:275
+#: src/preferences.c:278
 msgid "Status Format"
 msgstr "Status Format"
 
-#: src/preferences.c:282
+#: src/preferences.c:285
 msgid "Playing:"
 msgstr "Playing:"
 
-#: src/preferences.c:283
+#: src/preferences.c:286
 msgid "Paused:"
 msgstr "Paused:"
 
-#: src/preferences.c:284
+#: src/preferences.c:287
 msgid "Stopped:"
 msgstr "Stopped:"
 
-#: src/preferences.c:312
+#: src/preferences.c:315
 msgid "Screen Name"
 msgstr "Screen Name"
 
-#: src/preferences.c:314
+#: src/preferences.c:317
 msgid "Protocol"
 msgstr "Protocol"
 
-#: src/preferences.c:320
+#: src/preferences.c:323
 msgid "Playing Status Format"
 msgstr "Playing Status Format"
 
-#: src/preferences.c:325
+#: src/preferences.c:328
 msgid "Disable"
 msgstr "Disable"
 
-#: src/preferences.c:331
+#: src/preferences.c:334
 msgid "Don't use 'now listening'"
 msgstr "Don't use 'now listening'"
 
-#: src/preferences.c:335
+#: src/preferences.c:338
 msgid ""
 "Customize playing status format, or disable status changing altogether for "
 "specific accounts"
@@ -160,31 +160,31 @@ msgstr ""
 "Customise playing status format, or disable status changing altogether for "
 "specific accounts"
 
-#: src/preferences.c:345
+#: src/preferences.c:348
 msgid "Other settings"
 msgstr "Other settings"
 
-#: src/preferences.c:355
+#: src/preferences.c:358
 msgid "Don't change status message when away"
 msgstr "Don't change status message when away"
 
-#: src/preferences.c:362
+#: src/preferences.c:365
 msgid "Don't change status message if protocol has 'now listening'"
 msgstr "Don't change status message if protocol has 'now listening'"
 
-#: src/preferences.c:368
+#: src/preferences.c:371
 msgid "Status Filter"
 msgstr "Status Filter"
 
-#: src/preferences.c:378
+#: src/preferences.c:381
 msgid "Enable status filter"
 msgstr "Enable status filter"
 
-#: src/preferences.c:385
+#: src/preferences.c:388
 msgid "Blacklist (comma-delimited):"
 msgstr "Blacklist (comma-delimited):"
 
-#: src/preferences.c:394
+#: src/preferences.c:397
 msgid "Mask character:"
 msgstr "Mask character:"
 
@@ -199,8 +199,7 @@ msgstr "poll interval:"
 #: src/lastfm.c:141 src/lastfm_ws.c:183
 msgid "This is the interval (in seconds) at which we check Last.fm for changes"
 msgstr ""
-"This is the interval (in seconds) at which we check the Last.fm feed for "
-"changes"
+"This is the interval (in seconds) at which we check Last.fm for changes"
 
 #: src/lastfm.c:148
 msgid "quiet interval:"
