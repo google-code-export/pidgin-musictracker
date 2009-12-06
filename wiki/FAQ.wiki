@@ -36,16 +36,16 @@ If you have installed pidgin somewhere other than the default location of  "C:\P
 On Windows Vista and later, you may need to install the program with Administrator privileges by right-clicking on the pidgin-musictracker-n.n.nn.exe installer file and choosing 'Run as Administrator'. (Since 0.4.19, the Windows installer should request privilege with a UAC prompt)
 
 ==4==
+*How do I uninstall musictracker on Windows? (0.4.19 and later) *
+
+Use Add/Remove Programs from the Control Panel 
+
 *How do I uninstall musictracker on Windows? (0.4.18 and earlier) *
 
   * Delete C:\Program Files\Pidgin\plugins\musictracker.dll
   * Run regsvr32 /u "C:\Program Files\Pidgin\wmpuice.dll"
   * Delete C:\Program Files\Pidgin\wmpuice.dll
   * Delete any musictracker.mo files from C:\Program Files\Pidgin\locale\`*`\LC_MESSAGES
-
-*How do I uninstall musictracker on Windows? (0.4.19 and later) *
-
-Use Add/Remove Programs from the Control Panel 
 
 ==5==
 * How do I get my status to go back to the pidgin status message when player stops? *
@@ -61,19 +61,6 @@ not available, so %r is replaced with "unknown" in this case.
 A useful [http://kentie.net/article/nowplaying/index.htm description of this interface]
 
 ==7==
-* Doesn't work with Windows Media Player (0.4.5 and earlier)*
-
-Sigh.
-
-You must enable the plugin called "True Launch Bar Remote Control" in Windows Media
-Player (accessible from the little arrow underneath Now Playing, Plugins, Other).
-
-This plugin is implemented by wmp9.dll and seems to provide the hook needed for reporting WMP status messages.
-
-I've removed wmp9.dll from the pidgin-musictracker installer as the distribution rights are unclear.  Googling for "True Launch Bar" should find it :-)
-
-Needless to say, this was a complete crock and was re-writtten for 0.4.6
-
 * Doesn't work with Windows Media Player (0.4.6 and later)*
 
 Since 0.4.6, the [http://www.mediatexx.com/download/addons.htm WMPuICE] plug-in to WMP is used to retrieve now playing information from WMP.
@@ -91,7 +78,20 @@ If you have trouble getting this to work, you may find that the following help:
 
 These actions should have been performed by the musictracker installer. They won't have occured if you have a portable installation of pidgin or similar.
 
-The WMPuICE plug-in to WMP isn't available for 64-bit WMP,
+The WMPuICE plug-in to WMP isn't available for 64-bit WMP.
+
+* Doesn't work with Windows Media Player (0.4.5 and earlier)*
+
+Sigh.
+
+You must enable the plugin called "True Launch Bar Remote Control" in Windows Media
+Player (accessible from the little arrow underneath Now Playing, Plugins, Other).
+
+This plugin is implemented by wmp9.dll and seems to provide the hook needed for reporting WMP status messages.
+
+I've removed wmp9.dll from the pidgin-musictracker installer as the distribution rights are unclear.  Googling for "True Launch Bar" should find it :-)
+
+Needless to say, this was a complete crock and was re-writtten for 0.4.6
 
 ==8==
 * Doesn't work with foobar2000 (artist/track/title are blank) *
