@@ -17,7 +17,7 @@
   * Player autodetection should perhaps retry the player it found last time first before trying all the other alternatives?
   * ~~Filter isn't applied to tune status~~
   * Enable and test !SqueezeCenter code under Windows
-  * --Windows uninstaller--
+  * ~~Windows uninstaller~~
   * Write a patch for pidgin which allows the MSN tune presentation hint to be set as a tune status attribute
   * ~~Make UI translateable~~
   * If the media player is playing video, provide an option to ignore it
