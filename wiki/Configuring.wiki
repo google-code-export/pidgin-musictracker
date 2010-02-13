@@ -1,0 +1,90 @@
+#summary Configuring your music player and musictracker to work together
+
+= How do I configure my player and musictracker to work together?==
+
+Some players require additional plugins/features to be turned on/a specific configuration to help musictracker get the track information. 
+
+== Windows Players ==
+
+  * [http://www.aimp.ru AIMP2]
+Supports a 'winamp-compatible' interface.
+
+  * [http://www.foobar2000.org/ Foobar2000]
+foobar2000 works best with a component installed to help musictracker get the track information (See [http://code.google.com/p/pidgin-musictracker/wiki/FAQ#8 FAQ #8]) and musictracker's player setting set to 'auto-detect' or 'messenger compatible'.  The foobar2000-specific player interface will be removed at some future date. 
+
+ * [http://www.apple.com/itunes/download/ iTunes]
+Supported via 'iTunes interface.
+
+ * [http://www.last.fm/download Last.fm client]
+Supported via 'MSN Messenger compatible' interface.
+
+  * [http://www.last.fm/feeds Last.fm feed]
+Supported via 'Last.m API' interace.  You will need to configure musictracker with your Last.fm username.
+
+  * [http://www.mediamonkey.com/ MediaMonkey]
+Supported via 'winamp-compatible' interface.
+
+  * Media Player Classic
+Supported via 'MSN Messenger compatible' interface.  'Send "Now Playing" information to MSN Messenger' needs to be turned on in the player's options.
+
+  * [http://openpandora.googlepages.com/ OpenPandora]
+Supported via 'MSN Messenger compatible' interface.
+
+ * [http://getsongbird.com/ Songbird] 
+Supported via 'MSN Messenger compatible' interface.  Install the [http://addons.songbirdnest.com/addon/1204 LiveTweeter] plugin for Songbird and turn on 'Activate MSN/WindowsLive Messenger' in the plugins settings.
+
+ * [http://www.spotify.com/ Spotify]
+Supported via 'MSN Messenger compatible' interface. 
+
+  * [http://www.musicpd.org/ MPD]
+
+  * [http://www.winamp.com/ Winamp]
+
+  * [http://www.microsoft.com/windows/windowsmedia/player/11/default.aspx Windows Media Player]
+We don't think this works with 64-bit WMP. We don't know why.
+
+ * [http://wwwct.ttplayer.com/index.html TTplayer]
+Supported via 'MSN Messenger compatible' interface. 
+
+ * [http://www.videolan.org/vlc/ VLC]
+Supported via 'MSN Messenger compatible' interface.  ''MSN Now Playing' needs to be turned on in the player's preferences, found uner 'Control Interfaces' when 'Show settings' is set to 'all'.
+
+== Linux Players == 
+
+  * [http://amarok.kde.org/ Amarok]
+  * [http://amarok.kde.org/ Amarok2]
+Supports MRPIS.
+  * [http://audacious-media-player.org Audacious]
+Audacious 1.3: Title format needs to be set as '%p | %a | %t' in the players preferences. Delimiter choice '|' can be changed in musictracker settings.
+
+  * [http://banshee-project.org/ Banshee]
+  * [http://bmpx.backtrace.info/ BMPx]
+Supports MRPIS.
+  * [http://www.dragonplayer.org/ dragonplayer]
+Supports MRPIS.
+  * [http://www.exaile.org/ Exaile]
+  * [http://www.exaile.org/ Exaile] >= 0.3
+Supports MRPIS.
+  * [http://code.google.com/p/gogglesmm/ Goggles Music Manager]
+Supports MRPIS.
+  * [http://www.last.fm/feeds Last.fm feed]
+  * [http://www.listen-project.org/ Listen]
+  * [http://moc.daper.net/ MOC]
+  * [http://www.musicpd.org/ MPD]
+  * [http://qmmp.ylsoftware.com/index_en.php QMMP] >=0.3
+Supports MRPIS.
+  * [http://www.sacredchao.net/quodlibet/ Quod Libet]
+  * [http://www.gnome.org/projects/rhythmbox/ Rhythmbox]
+Supports MRPIS.
+
+  * [http://getsongbird.com/ Songbird]
+with [http://addons.songbirdnest.com/addon/1626 MPRIS addon] supports MRPIS.
+
+with [http://addons.songbirdnest.com/addon/181 DBusBird addon]
+  * [http://www.slimdevices.com/su_downloads.html SqueezeCenter]
+  * [http://vagalume.igalia.com/ Vagalume]
+  * [http://www.videolan.org/vlc/ VLC] >0.9.0
+Supports MRPIS.
+  * [http://www.xmms.org/ XMMS]
+Title format needs to be set as '%p | %a | %t' in the players preferences. Delimiter choice '|' can be changed in musictracker settings.
+  * [http://wiki.xmms2.xmms.se XMMS2] >= 0.6
