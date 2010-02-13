@@ -16,11 +16,11 @@ Some players require additional plugins/features to be turned on/a specific conf
 ||[http://getsongbird.com/ Songbird]||Supported via the 'MSN Messenger compatible' interface.  Install the [http://addons.songbirdnest.com/addon/1204 LiveTweeter] plugin for Songbird and turn on 'Activate MSN/!WindowsLive Messenger' in the plugins settings.||
 ||[http://www.spotify.com/ Spotify]||Supported via the 'MSN Messenger compatible' interface.||
 ||[http://www.winamp.com/ Winamp]||Supported via the 'winamp-compatible' interface.||
-||[http://www.microsoft.com/windows/windowsmedia/player/11/default.aspx Windows Media Player]|| Supported via the 'Windows Media Player' interface.  This requires the 'uICE WMP Plug-in' for Windows Media Player, which should be automatically installed and enabled by the musictracker installer.  See [http://code.google.com/p/pidgin-musictracker/wiki/FAQ#7 FAQ#7] for help if that fails to happen.  We don't think this works with 64-bit WMP.  Also supported via the 'MSN Messenger compatible' interface. You may need to install "Windows Live Messenger" and then enable the 'Windows Live Messenger Music' plugin (under Now Playing (little down arrow at the bottom of button)/Plugins/Other (or View/Plugins/Other if you have normal menus enabled)).||
+||[http://www.microsoft.com/windows/windowsmedia/player/11/default.aspx Windows Media Player]|| Supported via the 'Windows Media Player' interface.  This requires the 'uICE WMP Plug-in' for Windows Media Player, which should be automatically installed and enabled by the musictracker installer.  See [http://code.google.com/p/pidgin-musictracker/wiki/FAQ#7 FAQ#7] for help if that fails to happen.  We don't think this works with 64-bit WMP.<br>Also supported via the 'MSN Messenger compatible' interface. You may need to install "Windows Live Messenger" and then enable the 'Windows Live Messenger Music' plugin (under Now Playing (little down arrow at the bottom of button)/Plugins/Other (or View/Plugins/Other if you have normal menus enabled)).||
 ||[http://wwwct.ttplayer.com/index.html TTplayer]||Supported via the 'MSN Messenger compatible' interface.||
 ||[http://www.videolan.org/vlc/ VLC]||Supported via the 'MSN Messenger compatible' interface.  ''MSN Now Playing' needs to be turned on in the player's preferences, found under 'Control Interfaces' when 'Show settings' is set to 'all'.||
 
-== Windows & Linux Player Interfaces ==
+== Player Interfaces available on both Windows & Linux ==
 
 ||[http://www.last.fm/feeds Last.fm feed]||Supported via the 'Last.fm API' interface.  You will need to configure musictracker with your Last.fm username.||
 ||[http://www.musicpd.org/ MPD]||Supported via the MPD interface. You will need to configure musictracker with the hostname or IP address, port and password of your MPD.||
@@ -29,20 +29,20 @@ Some players require additional plugins/features to be turned on/a specific conf
 
 ||[http://amarok.kde.org/ Amarok]||Supported via the Amarok interface.||
 ||[http://amarok.kde.org/ Amarok2]||Supported via the MRPIS interface.||
-||[http://audacious-media-player.org Audacious]||Audacious 1.4 and later is supported via the MRPIS interface.  Audacious 1.3 an earlier is supported via the XMMS interface.  Title format needs to be set as '%p | %a | %t' in the players preferences. Delimiter choice '|' can be changed in musictracker settings.||
+||[http://audacious-media-player.org Audacious]||Audacious 1.4 and later is supported via the MRPIS interface.<br>Audacious 1.3 and earlier is supported via the XMMS interface.  Title format needs to be set as '%p | %a | %t' in the players preferences. Delimiter choice '|' can be changed in musictracker settings.||
 ||[http://banshee-project.org/ Banshee]||Supported via the Banshee interface||
 ||[http://bmpx.backtrace.info/ BMPx]||Supported via the MRPIS interface.||
 ||[http://www.dragonplayer.org/ dragonplayer]||Supported via the MRPIS interface.||
-||[http://www.exaile.org/ Exaile]||Exaile >= 0.3 are supported via the MRPIS interface.  Earlier versions of Exaile are suported via the Exaile interface.||
+||[http://www.exaile.org/ Exaile]||Exaile >= 0.3 are supported via the MRPIS interface.<br>Earlier versions of Exaile are suported via the Exaile interface.||
 ||[http://code.google.com/p/gogglesmm/ Goggles Music Manager]||Supported via the MRPIS interface.||
 ||[http://www.listen-project.org/ Listen]||Supported via the Listen interface.||
 ||[http://moc.daper.net/ MOC]||Supported via the MOC interface.||
 ||[http://qmmp.ylsoftware.com/index_en.php QMMP] >=0.3||Supported via the MRPIS interface.||
-||[http://www.sacredchao.net/quodlibet/ Quod Libet]||Supported via the 'QuodLibet' interface.||
+||[http://www.sacredchao.net/quodlibet/ Quod Libet]||Supported via the '!QuodLibet' interface.||
 ||[http://www.gnome.org/projects/rhythmbox/ Rhythmbox]||Supported via the MRPIS interface.||
-||[http://getsongbird.com/ Songbird]||Supported via the MRPIS interface with [http://addons.songbirdnest.com/addon/1626 MPRIS addon].  Also supported via the dbusBird interface with [http://addons.songbirdnest.com/addon/181 DBusBird addon].||
-||[http://www.slimdevices.com/su_downloads.html SqueezeCenter]||Supported via the SqueezeCenter interface.  You need to configure musictracker with the details of your SqueezeBox server.||
+||[http://getsongbird.com/ Songbird]||Supported via the MRPIS interface with [http://addons.songbirdnest.com/addon/1626 MPRIS addon].<br>Also supported via the dbusBird interface with [http://addons.songbirdnest.com/addon/181 DBusBird addon].||
+||[http://www.slimdevices.com/su_downloads.html SqueezeCenter]||Supported via the !SqueezeCenter interface.  You need to configure musictracker with the details of your !SqueezeBox server.||
 ||[http://vagalume.igalia.com/ Vagalume]||Supported via the Vagalume interface.||
 ||[http://www.videolan.org/vlc/ VLC]||VLC versions >0.9.0 are supported via the MRPIS interface.||
 ||[http://www.xmms.org/ XMMS]||Supported via the XMMS interface.  Title format needs to be set as '%p | %a | %t' in the players preferences. Delimiter choice '|' can be changed in musictracker settings.||
-||[http://wiki.xmms2.xmms.se XMMS2]||XMMS2 0.6 and later are supported.||
+||[http://wiki.xmms2.xmms.se XMMS2]||XMMS2 0.6 and later are supported via the XMMS2 interface.||
