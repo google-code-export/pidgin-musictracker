@@ -38,7 +38,7 @@ musictracker_la_SOURCES = musictracker.c \
 						  lastfm_ws.c
 
 musictracker_la_LDFLAGS = -module -avoid-version -Wl,--as-needed
-musictracker_la_LIBADD = $(GLIB_LIBS) $(GTK_LIBS) $(DBUS_LIBS) @LTLIBINTL@
+musictracker_la_LIBADD = $(GLIB_LIBS) $(GTK_LIBS) $(DBUS_LIBS) $(PCRE_LIBS) @LTLIBINTL@
 
 AM_CPPFLAGS = \
         -DDATADIR=\"$(PIDGIN_DATADIR)\" \
@@ -47,10 +47,11 @@ AM_CPPFLAGS = \
 	-std=gnu99 \
         $(PIDGIN_CFLAGS) \
         $(GLIB_CFLAGS) \
-		$(GTK_CFLAGS) \
-		$(DBUS_CFLAGS) \
-		$(DEBUG_CFLAGS) \
-		$(XMMSCLIENT_CFLAGS)
+	$(GTK_CFLAGS) \
+	$(DBUS_CFLAGS) \
+	$(DEBUG_CFLAGS) \
+	$(XMMSCLIENT_CFLAGS) \
+	$(PCRE_CFLAGS)
 
 # Windows sources should also be included in distribution archive
 EXTRA_DIST = musictracker.h \
