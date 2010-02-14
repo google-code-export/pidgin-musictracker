@@ -198,6 +198,8 @@ msgstr "kyselyn aikaväli:"
 msgid ""
 "This is the interval (in seconds) at which we check Last.fm for changes"
 msgstr ""
+"Tämä on aikaväli (sekunneissa) kun tarkistamme Last.fm-syötteen muutoksien "
+"varalta"
 
 #: src/lastfm.c:148
 msgid "quiet interval:"
