@@ -36,7 +36,7 @@ _Note:_ The *MSN Messenger compatible* interface, as implemented by many players
 ||[http://banshee-project.org/ Banshee]||Supported via the Banshee interface||
 ||[http://bmpx.backtrace.info/ BMPx]||Supported via the MRPIS interface.||
 ||[http://www.dragonplayer.org/ dragonplayer]||Supported via the MRPIS interface.||
-||[http://www.exaile.org/ Exaile]||Exaile >= 0.3 are supported via the MRPIS interface.<br>Earlier versions of Exaile are suported via the Exaile interface.||
+||[http://www.exaile.org/ Exaile]||Exaile >= 0.3 are supported via the MRPIS interface.  This needs to be enabled in Exaile via Edit/Preferences/Plugins and ensure MPRIS plugin is ticked.<br>Earlier versions of Exaile are suported via the Exaile interface.||
 ||[http://code.google.com/p/gogglesmm/ Goggles Music Manager]||Supported via the MRPIS interface.||
 ||[http://www.listen-project.org/ Listen]||Supported via the Listen interface.||
 ||[http://moc.daper.net/ MOC]||Supported via the MOC interface.||
