@@ -89,10 +89,12 @@ fi
 
 AC_SUBST(WERROR_CFLAGS)
 
-AC_CHECK_LIB(pcre,pcre_exec,,AC_MSG_ERROR([
+PKG_CHECK_MODULES([PCRE],[libpcre],,AC_MSG_ERROR([
 *** PCRE library is required to build pidgin-musictracker
 *** Please make sure you have the PCRE development files installed
 *** The latest version of PCRE is always available at http://www.pcre.org/]))
+AC_SUBST(PCRE_LIBS)
+AC_SUBST(PCRE_CFLAGS)
 
 AC_PREFIX_DEFAULT(`pkg-config --variable=prefix pidgin`)
 
