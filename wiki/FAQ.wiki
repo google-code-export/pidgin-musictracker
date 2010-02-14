@@ -6,7 +6,7 @@
 
   * Some players require additional plugins/features to be turned on/a specific configuration to help musictracker get the track information.
 
-See the player-specific notes on the [http://code.google.com/p/pidgin-musictracker/ pidgin-musictracker homepage]
+[Configuring See the player-specific notes].
 
   * Make sure you haven't chosen "Deactivate Status Changing" from Tools/Musictracker menu
 
