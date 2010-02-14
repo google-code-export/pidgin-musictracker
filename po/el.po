@@ -1,0 +1,317 @@
+# Greek translation for pidgin-musictracker
+# Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
+# This file is distributed under the same license as the pidgin-musictracker package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: pidgin-musictracker\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2009-05-29 14:49+0100\n"
+"PO-Revision-Date: 2009-11-18 13:50+0000\n"
+"Last-Translator: Anthony Mattheakakis <antony256@gmail.com>\n"
+"Language-Team: Greek <el@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2010-02-14 16:12+0000\n"
+"X-Generator: Launchpad (build Unknown)\n"
+
+#. TRANSLATORS: this string controls the name musictracker appears as under the Tools menu
+#. It's probably a good idea to treat 'MusicTracker' as a proper name, transliterate but don't translate
+#. 
+#: src/musictracker.c:857
+msgid "MusicTracker"
+msgstr "MusicTracker"
+
+#: src/musictracker.c:858
+msgid "MusicTracker Plugin for Pidgin"
+msgstr "Πρόσθετο MusicTracker για Pidgin"
+
+#. TRANSLATORS: %s will be replaced with the URL of the translation site, currently
+#. http://translations.launchpad.net/pidgin-musictracker/trunk/+pots/musictracker
+#. 
+#: src/musictracker.c:864
+#, c-format
+msgid "Fix translation bugs at %s"
+msgstr "Διορθώστε μεταφραστικά λάθη στο %s"
+
+#: src/musictracker.c:868
+msgid ""
+"The MusicTracker Plugin allows you to customize your status message with "
+"information about currently playing song from your music player. Portions "
+"initially adopted from pidgin-currenttrack project."
+msgstr ""
+"Το πρόσθετο MusicTracker σας επιτρέπει να προσαρμόσετε το μήνυμα κατάστασης "
+"με πληροφορίες για το κομμάτι που ακούτε στον αναπαραγωγέα σας. Αρχικά "
+"βασισμένο στο πρόγραμμα pidgin-currenttrack."
+
+#: src/musictracker.c:870
+msgid ""
+"WMP support via WMPuICE by Christian Mueller from http://www.mediatexx.com."
+msgstr ""
+"Υποστήριξη WMP μέσω WMPuICE από τον Christian Mueller από το "
+"http://www.mediatexx.com."
+
+#: src/actions.c:65
+msgid "Status to Set When Player is off:"
+msgstr "Μήνυμα κατάστασης που θα οριστεί όταν δεν παίζει μουσική:"
+
+#: src/actions.c:85 src/actions.c:112
+msgid "Activate Status Changing"
+msgstr "Ενεργοποίηση Αλλαγής Μηνύματος Κατάστασης"
+
+#: src/actions.c:92 src/actions.c:112
+msgid "Deactivate Status Changing"
+msgstr "Απενεργοποίηση Αλλαγής Μηνύματος Κατάστασης"
+
+#: src/actions.c:115
+msgid "Change Player-Off Status..."
+msgstr "Αλλαγή μηνύματος κατάστασης με σταματημένο αναπαραγωγέα..."
+
+#: src/preferences.c:222
+msgid "Leave blank for an unchanged status message"
+msgstr "Αφήστε κενό για αμετάβλητο μήνυμα κατάστασης"
+
+#: src/preferences.c:247
+msgid "Player:"
+msgstr "Αναπαραγωγέας"
+
+#: src/preferences.c:253
+msgid "Auto-detect"
+msgstr "Αυτόματη αναγνώριση"
+
+#: src/preferences.c:263
+msgid "Artist"
+msgstr "Καλλιτέχνης"
+
+#: src/preferences.c:264
+msgid "Album"
+msgstr "Άλμπουμ"
+
+#: src/preferences.c:265
+msgid "Title"
+msgstr "Τίτλος"
+
+#: src/preferences.c:266
+msgid "Track Duration"
+msgstr "Διάρκεια κομματιού"
+
+#: src/preferences.c:267
+msgid "Elapsed Track Time"
+msgstr "Χρόνος που παρέλθει στο κομμάτι"
+
+#: src/preferences.c:268
+msgid "Progress Bar"
+msgstr "Μπάρα προόδου"
+
+#: src/preferences.c:269
+msgid "Player"
+msgstr "Αναπαραγωγέας"
+
+#: src/preferences.c:270
+msgid "Music Symbol (may not display on some networks)"
+msgstr "Σύμβολο μουσικής (μπορεί να μην εμφανίζεται σε μερικά δίκτυα)"
+
+#: src/preferences.c:271
+msgid "Status Message"
+msgstr "Μήνυμα Κατάστασης"
+
+#: src/preferences.c:275
+msgid "Status Format"
+msgstr "Μορφή Μηνύματος"
+
+#: src/preferences.c:282
+msgid "Playing:"
+msgstr "Αναπαραγωγή:"
+
+#: src/preferences.c:283
+msgid "Paused:"
+msgstr "Παύση:"
+
+#: src/preferences.c:284
+msgid "Stopped:"
+msgstr "Σταματημένο:"
+
+#: src/preferences.c:312
+msgid "Screen Name"
+msgstr "Όνομα χρήστη"
+
+#: src/preferences.c:314
+msgid "Protocol"
+msgstr "Πρωτόκολλο"
+
+#: src/preferences.c:320
+msgid "Playing Status Format"
+msgstr "Μορφή μηνύματος κατά την αναπαραγωγή"
+
+#: src/preferences.c:325
+msgid "Disable"
+msgstr "Απενεργοποίηση"
+
+#: src/preferences.c:331
+msgid "Don't use 'now listening'"
+msgstr "Να μην χρησιμοποιείται το 'τώρα ακούει'"
+
+#: src/preferences.c:335
+msgid ""
+"Customize playing status format, or disable status changing altogether for "
+"specific accounts"
+msgstr ""
+"Προσαρμόστε το μήνυμα κατάστασης κατά την αναπαραγωγή, ή απενεργοποιείστε "
+"την αλλαγή μηνύματος για συγκεκριμένους λογαριασμούς"
+
+#: src/preferences.c:345
+msgid "Other settings"
+msgstr "Άλλες ρυθμίσεις"
+
+#: src/preferences.c:355
+msgid "Don't change status message when away"
+msgstr "Να μην γίνεται αλλαγή του μηνύματος κατάστασης όταν είμαι απών"
+
+#: src/preferences.c:362
+msgid "Don't change status message if protocol has 'now listening'"
+msgstr ""
+"Να μην γίνεται αλλαγή του μηνύματος κατάστασης εάν το πρωτόκολλο έχει 'τώρα "
+"παίζει'"
+
+#: src/preferences.c:368
+msgid "Status Filter"
+msgstr "Φίλτρο μηνύματος κατάστασης"
+
+#: src/preferences.c:378
+msgid "Enable status filter"
+msgstr "Ενεργοποίηση φίλτρου"
+
+#: src/preferences.c:385
+msgid "Blacklist (comma-delimited):"
+msgstr "Μαύρη λίστα (οριοθετημένη με κόμματα):"
+
+#: src/preferences.c:394
+msgid "Mask character:"
+msgstr "Χαρακτήρας μάσκα:"
+
+#: src/lastfm.c:127 src/lastfm_ws.c:169
+msgid "Username:"
+msgstr "Όνομα χρήστη:"
+
+#: src/lastfm.c:136 src/lastfm_ws.c:178
+msgid "poll interval:"
+msgstr "χρονικό διάστημα ελέγχου:"
+
+#: src/lastfm.c:141 src/lastfm_ws.c:183
+msgid ""
+"This is the interval (in seconds) at which we check Last.fm for changes"
+msgstr ""
+"Το χρονικό διάστημα (σε δευτερόλεπτα) στο οποίο ελέγχεται το Last.fm για "
+"αλλαγές"
+
+#: src/lastfm.c:148
+msgid "quiet interval:"
+msgstr "χρονικό διάστημα αδράνειας:"
+
+#: src/lastfm.c:153
+msgid ""
+"This is the interval (in seconds) after the track has been scrobbled which "
+"we assume the track is playing for. Unless another track is scrobbled after "
+"the interval is elapsed, we will assume the off state for the player."
+msgstr ""
+"Το χρονικό διάστημα (σε δευτερόλεπτα) μετά το scrobble του κομματιού, που "
+"θεωρείται ότι συνεχίζεται η αναπαραγωγή του. Εάν δεν γίνει scrobble κάποιο "
+"άλλο κομμάτι σε αυτό το διάστημα, θα θεωρηθεί ότι η αναπαραγωγή έχει "
+"σταματήσει."
+
+#: src/mpd.c:116
+msgid "Hostname:"
+msgstr "Όνομα υπολογιστή:"
+
+#: src/mpd.c:124
+msgid "Port:"
+msgstr "Θύρα:"
+
+#: src/mpd.c:132
+msgid "Password:"
+msgstr "Κωδικός:"
+
+#: src/squeezecenter.c:58
+msgid ""
+"Advice:\n"
+"'#' Find playing player\n"
+"'*' Find powered player\n"
+"'id/name' prefix with ! to ignore if not playing\n"
+"\n"
+"Port Defaults to 9090, Multiple servers accepted delimited by ','"
+msgstr ""
+"Συμβουλή:\n"
+"\"#' Αναζήτηση αναπαραγωγέων που αναπαράγουν\n"
+"\"*' Αναζήτηση ενεργών αναπαραγωγέων\n"
+"'id/name' προσθέστε το πρόθεμα ! για να αγνοείται όταν δεν αναπαράγει\n"
+"\n"
+"Προκαθορισμένη θύρα η 9090. Πολλαπλοί αποδεκτοί εξυπηρετητές οριοθετούνται "
+"με ','"
+
+#: src/squeezecenter.c:850
+msgid "Host:CliPort, Servers:"
+msgstr "Διακομιστής:CliΘύρα, Εξυπηρετητές:"
+
+#: src/squeezecenter.c:858
+msgid "Player Order:"
+msgstr "Σειρά αναπαραγωγέων:"
+
+#: src/squeezecenter.c:866
+msgid "CLI User:"
+msgstr "Χρήστης CLI:"
+
+#: src/squeezecenter.c:874
+msgid "CLI Password:"
+msgstr "Κωδικός CLI:"
+
+#: src/squeezecenter.c:886
+msgid "Server:"
+msgstr "Εξυπηρετητής:"
+
+#: src/squeezecenter.c:891
+msgid "Squeezecenter Version:"
+msgstr "Έκδοση Squeezecenter:"
+
+#: src/squeezecenter.c:896
+msgid "Players:"
+msgstr "Αναπαραγωγείς:"
+
+#: src/squeezecenter.c:899
+#, c-format
+msgid "Player count: %d\n"
+msgstr "Αριθμός αναπαραγωγέων: %d\n"
+
+#: src/squeezecenter.c:908
+msgid "Last Command:"
+msgstr "Τελευταία εντολή:"
+
+#: src/squeezecenter.c:913
+msgid "Last Reply:"
+msgstr "Τελευταία απάντηση:"
+
+#: src/squeezecenter.c:919
+msgid "Last Error:"
+msgstr "Τελευταίο Σφάλμα:"
+
+#: src/xmmsctrl.c:153
+msgid "Title Delimiter Character:"
+msgstr "Χαρακτήρας οριοθέτης τίτλου:"
+
+#: src/xmmsctrl.c:159
+msgid ""
+"Note: You must change the playlist title in XMMS/Audacious 1.3 to be "
+"formatted as '%p | %a | %t' (ARTIST | ALBUM | TITLE) in the player "
+"preferences, where '|' is the Title Delimiter Character set above, which is "
+"the only way for MusicTracker to parse all three fields from either of these "
+"players. If you change this character above, then '|' in the string '%p | %a "
+"| %t' must be replaced with the selected character."
+msgstr ""
+"Σημείωση: Πρέπει να μετατρέψετε τη μορφή του τίτλου της λίστας αναπαραγωγής "
+"του XMMS/Audacious 1.3 στην μορφή '%p | %a | %t' (ARTIST | ALBUM | TITLE) , "
+"όπου '|' ο χαρακτήρας οριοθέτης τίτλου που έχετε ορίσει παραπάνω. Αυτός "
+"είναι ο μόνος τρόπος που το MusicTracker μπορεί να αναλύσει και τα τρία "
+"παιδεία από αυτούς τους αναπαραγωγείς. Εάν αλλάξατε τον χαρακτήρα παραπάνω, "
+"τότε το '|' στη συμβολοσειρά '%p | %a | %t' πρέπει να αντικατασταθεί με τον "
+"επιλεγμένο χαρακτήρα."
