@@ -8,18 +8,18 @@ msgstr ""
 "Project-Id-Version: pidgin-musictracker\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/pidgin-musictracker/issues/\n"
 "POT-Creation-Date: 2009-05-29 14:49+0100\n"
-"PO-Revision-Date: 2009-05-29 14:49+0100\n"
-"Last-Translator: Jon TURNEY <jon.turney@dronecode.org.uk>\n"
+"PO-Revision-Date: 2009-10-23 19:06+0000\n"
+"Last-Translator: J Bruni <joaohbruni@yahoo.com.br>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2009-04-14 15:48+0000\n"
+"X-Launchpad-Export-Date: 2010-02-14 16:12+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #. TRANSLATORS: this string controls the name musictracker appears as under the Tools menu
 #. It's probably a good idea to treat 'MusicTracker' as a proper name, transliterate but don't translate
-#.
+#. 
 #: src/musictracker.c:857
 msgid "MusicTracker"
 msgstr "MusicTracker"
@@ -30,7 +30,7 @@ msgstr "MusicTracker Plugin para o Pidgin"
 
 #. TRANSLATORS: %s will be replaced with the URL of the translation site, currently
 #. http://translations.launchpad.net/pidgin-musictracker/trunk/+pots/musictracker
-#.
+#. 
 #: src/musictracker.c:864
 #, c-format
 msgid "Fix translation bugs at %s"
@@ -72,7 +72,7 @@ msgstr "Mudar o Status do player para OFF"
 
 #: src/preferences.c:222
 msgid "Leave blank for an unchanged status message"
-msgstr ""
+msgstr "Deixe em branco para não modificar a mensagem de status"
 
 #: src/preferences.c:247
 msgid "Player:"
@@ -116,7 +116,7 @@ msgstr "Ícone da música (Pode não ser exibido em algumas redes)"
 
 #: src/preferences.c:271
 msgid "Status Message"
-msgstr ""
+msgstr "Mensagem de Status"
 
 #: src/preferences.c:275
 msgid "Status Format"
@@ -199,10 +199,9 @@ msgid "poll interval:"
 msgstr "Frequencia das Atualizações."
 
 #: src/lastfm.c:141 src/lastfm_ws.c:183
-#, fuzzy
 msgid "This is the interval (in seconds) at which we check Last.fm for changes"
 msgstr ""
-"Esta é a frequência (em segundos) que nós checamos as mudanças do Last.fm"
+"Este é o intervalo (em segundos) em que checamos Last.fm por mudanças"
 
 #: src/lastfm.c:148
 msgid "quiet interval:"
