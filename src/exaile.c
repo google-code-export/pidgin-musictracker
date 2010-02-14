@@ -58,6 +58,8 @@ get_exaile_info(struct TrackInfo* ti)
 		return;
 	}
 
+        ti->player = "Exaile";
+
 	if (sscanf(buf, "status: %s", status) == 1) {
 		if (!strcmp(status, "playing"))
 			ti->status = PLAYER_STATUS_PLAYING;

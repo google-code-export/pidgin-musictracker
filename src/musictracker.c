@@ -56,7 +56,7 @@ struct PlayerInfo g_players[] = {
 	{ "Banshee", get_banshee_info, 0 },
 	{ "Vagalume", get_vagalume_info, 0 },
 	{ "QuodLibet", get_quodlibet_info, 0 },
-	{ "Exaile", get_exaile_info, 0 },
+	{ "Exaile < 0.3", get_exaile_info, 0 },
 	{ "MOC", get_moc_info, 0 },
 	{ "Listen", get_listen_info, 0 },
 	{ "SqueezeCenter", get_squeezecenter_info, get_squeezecenter_pref },
