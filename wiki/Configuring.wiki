@@ -21,6 +21,8 @@ Some players require additional plugins/features to be turned on/a specific conf
 ||[http://wwwct.ttplayer.com/index.html TTplayer]||Supported via the 'MSN Messenger compatible' interface.||
 ||[http://www.videolan.org/vlc/ VLC]||Supported via the 'MSN Messenger compatible' interface.  ''MSN Now Playing' needs to be turned on in the player's preferences, found under 'Control Interfaces' when 'Show settings' is set to 'all'.||
 
+_Note:_ The *MSN Messenger compatible* interface, as implemented by many players has the limitation that only one other program can recieve the track information.  This causes problems if you run musictacker and e.g. the real MSN Messenger client at the same time.  This is a problem with the player and musictracker can't do anything about it.  If it causes you difficulties, please raise a bug on your player with the incantation "send the WM_COPYDATA message to the all MsnMsgrUIManager windows rather than just the first one".
+
 == Player Interfaces available on both Windows & Linux ==
 
 ||[http://www.last.fm/feeds Last.fm feed]||Supported via the 'Last.fm API' interface.  You will need to configure musictracker with your Last.fm username.||
