@@ -1,4 +1,5 @@
 #summary Configuring your music player and musictracker to work together
+#labels Featured
 
 = How do I configure my player and musictracker to work together?==
 
@@ -53,8 +54,8 @@ Some players require additional plugins/features to be turned on/a specific conf
 ||[http://decibel.silent-blade.org/ decibel]||[http://code.google.com/p/pidgin-musictracker/issues/detail?id=173 bug #173]||
 ||[http://gmusicbrowser.org/ gmusicbrowser]||Supports MPRIS so should just work, but no success reports, see [http://code.google.com/p/pidgin-musictracker/issues/detail?id=178 bug #178]||
 ||[http://www.jrmediacenter.com/ J. River Media Center]||[http://code.google.com/p/pidgin-musictracker/issues/detail?id=199 bug #199]||
-||JuK||[http://code.google.com/p/pidgin-musictracker/issues/detail?id=108 bug #108]||
-||[www.mplayerhq.hu/ mplayer]||[http://code.google.com/p/pidgin-musictracker/issues/detail?id=172 bug #172]||
+||[http://developer.kde.org/~wheeler/juk.html JuK]||[http://code.google.com/p/pidgin-musictracker/issues/detail?id=108 bug #108]||
+||[http://www.mplayerhq.hu/ mplayer]||[http://code.google.com/p/pidgin-musictracker/issues/detail?id=172 bug #172]||
 ||[http://projects.gnome.org/totem/ totem]||Current versions should work with MPRIS interface, but no success reports yet, see [http://code.google.com/p/pidgin-musictracker/issues/detail?id=160 bug #160]||
 ||[http://xbmc.org/ XBMC]||[http://code.google.com/p/pidgin-musictracker/issues/detail?id=27 bug #27]||
 ||Zune||See [http://code.google.com/p/pidgin-musictracker/issues/detail?id=38 bug #38] for some workarounds and patch suggestions.||
