@@ -46,7 +46,7 @@ _Note:_ The *MSN Messenger compatible* interface, as implemented by many players
 ||[http://getsongbird.com/ Songbird]||Supported via the MRPIS interface with [http://addons.songbirdnest.com/addon/1626 MPRIS addon].<br>Also supported via the dbusBird interface with [http://addons.songbirdnest.com/addon/181 DBusBird addon].||
 ||[http://www.slimdevices.com/su_downloads.html SqueezeCenter]||Supported via the !SqueezeCenter interface.  You need to configure musictracker with the details of your !SqueezeBox server.||
 ||[http://vagalume.igalia.com/ Vagalume]||Supported via the Vagalume interface.||
-||[http://www.videolan.org/vlc/ VLC]||VLC versions >0.9.0 are supported via the MRPIS interface.  'D-Bus control interface' needs to be turned on in the player's preferences (Tools/Preferences), found under 'Control Interfaces' when 'Show settings' is set to 'all'.||
+||[http://www.videolan.org/vlc/ VLC]||VLC versions >0.9.0 are supported via the MRPIS interface.  'D-Bus control interface' needs to be turned on in the player's preferences (Tools/Preferences), found under 'Control Interfaces' when 'Show settings' is set to 'all'.  You may need to restart VLC after changing this setting for it to take effect.||
 ||[http://www.xmms.org/ XMMS]||Supported via the XMMS interface.  Title format needs to be set as '%p | %a | %t' in the players preferences. Delimiter choice '|' can be changed in musictracker settings.||
 ||[http://wiki.xmms2.xmms.se XMMS2]||XMMS2 0.6 and later are supported via the XMMS2 interface.||
 
