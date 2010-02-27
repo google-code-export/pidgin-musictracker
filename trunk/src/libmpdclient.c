@@ -432,7 +432,7 @@ void mpd_clearError(mpd_Connection * connection) {
 }
 
 void mpd_closeConnection(mpd_Connection * connection) {
-	closesocket(connection->sock);
+	if(connection->sock > 0) closesocket(connection->sock);
 	if(connection->returnElement) free(connection->returnElement);
 	if(connection->request) free(connection->request);
 	free(connection);

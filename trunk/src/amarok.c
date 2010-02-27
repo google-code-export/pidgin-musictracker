@@ -43,20 +43,22 @@ get_amarok_info(struct TrackInfo* ti)
         trace ("dcop returned status '%s'", status);
 
         int status_value;
-	sscanf(status, "%d", &status_value);
-        switch (status_value)
+        if (sscanf(status, "%d", &status_value) > 0)
           {
-          case 0:
-            ti->status = PLAYER_STATUS_STOPPED;
-            break;
-          case 1:
-            ti->status = PLAYER_STATUS_PAUSED;
-            break;
-          case 2:
-            ti->status = PLAYER_STATUS_PLAYING;
-            break;
-          default:
-            ti->status = PLAYER_STATUS_CLOSED;
+            switch (status_value)
+              {
+              case 0:
+                ti->status = PLAYER_STATUS_STOPPED;
+                break;
+              case 1:
+                ti->status = PLAYER_STATUS_PAUSED;
+                break;
+              case 2:
+                ti->status = PLAYER_STATUS_PLAYING;
+                break;
+              default:
+                ti->status = PLAYER_STATUS_CLOSED;
+              }
           }
 
 	if (ti->status > PLAYER_STATUS_STOPPED) {
