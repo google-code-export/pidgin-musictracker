@@ -9,31 +9,32 @@ LAUNCHPAD_PUBLIC_KEY=0x7633C10E
 
 launchpad_build()
 {
-PV=$LAST_VERSION-2~ppa$SNAPSHOT~${RELEASE}1
+SV=$LAST_VERSION+$SNAPSHOT
+PV=$SV-0~ppa1~${RELEASE}1
 
 # unpack
 tar -jxf pidgin-musictracker-snapshot-$SNAPSHOT.tar.bz2
 
 # repack with name in expected format for debian package
 # repack as .gz not .bz2 as the build infrastructure doesn't support .bz2 atm...
-mv pidgin-musictracker-snapshot pidgin-musictracker_${PV}
-tar -zcf pidgin-musictracker_${PV}.tar.gz pidgin-musictracker_${PV}
+mv pidgin-musictracker-snapshot pidgin-musictracker_${SV}
+tar -zcf pidgin-musictracker_${SV}.orig.tar.gz pidgin-musictracker_${SV}
 
 # apply debianization patch by Craig Small <csmall@debian.org>
-(cd pidgin-musictracker_${PV} ; cat packaging/pidgin-musictracker-debianize.diff | patch -p1 )
+(cd pidgin-musictracker_${SV} ; cat packaging/pidgin-musictracker-debianize.diff | patch -p1 )
 
 # rewrite the changelog
 # set the version, identify myself as the uploader, say this is snapshot
-echo "pidgin-musictracker (${PV}) $RELEASE; urgency=low" >pidgin-musictracker_${PV}/debian/changelog
-echo "" >>pidgin-musictracker_${PV}/debian/changelog
-echo "  * Snapshot $SNAPSHOT" >>pidgin-musictracker_${PV}/debian/changelog
-echo "" >>pidgin-musictracker_${PV}/debian/changelog
-echo "" >>pidgin-musictracker_${PV}/debian/changelog
-echo " -- Jon TURNEY <jon.turney@dronecode.org.uk>  `date -R`" >>pidgin-musictracker_${PV}/debian/changelog
-echo >>pidgin-musictracker_${PV}/debian/changelog
+echo "pidgin-musictracker (${PV}) $RELEASE; urgency=low" >pidgin-musictracker_${SV}/debian/changelog
+echo "" >>pidgin-musictracker_${SV}/debian/changelog
+echo "  * Snapshot $SNAPSHOT" >>pidgin-musictracker_${SV}/debian/changelog
+echo "" >>pidgin-musictracker_${SV}/debian/changelog
+echo "" >>pidgin-musictracker_${SV}/debian/changelog
+echo " -- Jon TURNEY <jon.turney@dronecode.org.uk>  `date -R`" >>pidgin-musictracker_${SV}/debian/changelog
+echo >>pidgin-musictracker_${SV}/debian/changelog
 
 # build source package
-dpkg-source -b  -sP pidgin-musictracker_${PV} pidgin-musictracker_${PV}.tar.gz
+dpkg-source -b  -sP pidgin-musictracker_${SV} pidgin-musictracker_${SV}.orig.tar.gz
 
 # sign .dsc file
 echo >>pidgin-musictracker_${PV}.dsc
@@ -41,7 +42,7 @@ gpg --default-key $LAUNCHPAD_PUBLIC_KEY --clearsign pidgin-musictracker_${PV}.ds
 mv pidgin-musictracker_${PV}.dsc.asc pidgin-musictracker_${PV}.dsc
 
 # build .changes files
-(cd pidgin-musictracker_${PV} ; dpkg-genchanges -S -sa >../pidgin-musictracker_${PV}_source.changes )
+(cd pidgin-musictracker_${SV} ; dpkg-genchanges -S -sa >../pidgin-musictracker_${PV}_source.changes )
 
 # sign .changes file
 echo >>pidgin-musictracker_${PV}_source.changes
@@ -52,7 +53,7 @@ mv pidgin-musictracker_${PV}_source.changes.asc pidgin-musictracker_${PV}_source
 dput my-ppa pidgin-musictracker_${PV}_source.changes
 
 # clean up
-rm -rf pidgin-musictracker_${PV}*
+rm -rf pidgin-musictracker_${SV}*
 }
 
 # request a launchpad build against all active ubuntu releases
