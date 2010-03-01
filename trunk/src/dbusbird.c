@@ -22,7 +22,6 @@
  *
  */
 
-#include <dbus/dbus-glib.h>
 #include "musictracker.h"
 #include "utils.h"
 #include <string.h>
@@ -64,36 +63,30 @@ dbusbird_dbus_string(DBusGProxy *proxy, const char *method, char* dest)
 void
 get_dbusbird_info(struct TrackInfo* ti)
 {
-  DBusGConnection *connection;
-  DBusGProxy *proxy;
-  GError *error = 0;
+  static DBusGProxy *proxy = 0;
   char status[STRLEN];
 
   ti->status = PLAYER_STATUS_CLOSED;
 
-  connection = dbus_g_bus_get (DBUS_BUS_SESSION, &error);
-  if (connection == NULL) {
-    trace("Failed to open connection to dbus: %s\n", error->message);
-    g_error_free (error);
+  if (!dbus_g_running("org.mozilla.songbird")) {
     return;
   }
-  
-  if (!dbus_g_running(connection, "org.mozilla.songbird")) {
-    return;
-  }
-  
-  proxy = dbus_g_proxy_new_for_name (connection,
-                                     "org.mozilla.songbird",
-                                     "/org/mozilla/songbird",
-                                     "org.mozilla.songbird");
-  
+
+  if (!proxy)
+    {
+      proxy = dbus_g_proxy_new_for_name (connection,
+                                         "org.mozilla.songbird",
+                                         "/org/mozilla/songbird",
+                                         "org.mozilla.songbird");
+    }
+
   if (!dbusbird_dbus_string(proxy, "getStatus", status))
     {
       return;
     }
-  
+
   ti->player = "Songbird";
-        
+
   if (strcmp(status, "stopped") == 0) {
     ti->status = PLAYER_STATUS_STOPPED;
     return;

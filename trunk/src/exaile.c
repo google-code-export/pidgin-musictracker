@@ -1,4 +1,3 @@
-#include <dbus/dbus-glib.h>
 #include "musictracker.h"
 #include "utils.h"
 #include <string.h>
@@ -29,27 +28,23 @@ gboolean exaile_dbus_query(DBusGProxy *proxy, const char *method, char* dest)
 void
 get_exaile_info(struct TrackInfo* ti)
 {
-	DBusGConnection *connection;
-	DBusGProxy *proxy;
+	static DBusGProxy *proxy = 0;
 	GError *error = 0;
 	char buf[STRLEN], status[STRLEN];
 
         ti->status = PLAYER_STATUS_CLOSED;
 
-	connection = dbus_g_bus_get (DBUS_BUS_SESSION, &error);
-	if (connection == NULL) {
-		trace("Failed to open connection to dbus: %s\n", error->message);
-		g_error_free (error);
-	}
-
-	if (!dbus_g_running(connection, "org.exaile.DBusInterface")) {
+	if (!dbus_g_running("org.exaile.DBusInterface")) {
 		return;
 	}
 
-	proxy = dbus_g_proxy_new_for_name (connection,
-			"org.exaile.DBusInterface",
-			"/DBusInterfaceObject",
-			"org.exaile.DBusInterface");
+        if (!proxy)
+          {
+            proxy = dbus_g_proxy_new_for_name (connection,
+                                               "org.exaile.DBusInterface",
+                                               "/DBusInterfaceObject",
+                                               "org.exaile.DBusInterface");
+          }
 
 	// We should be using "status" instead of "query" here, but its broken in
 	// the current (0.2.6) Exaile version
@@ -77,7 +72,7 @@ get_exaile_info(struct TrackInfo* ti)
 
 		exaile_dbus_query(proxy, "get_length", buf);
 		if (sscanf(buf, "%d:%d", &mins, &secs) == 2) {
-			ti->totalSecs = mins*60 + secs;	
+			ti->totalSecs = mins*60 + secs;
 		}
 
 		error = 0;

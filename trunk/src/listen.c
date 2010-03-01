@@ -1,4 +1,3 @@
-#include <dbus/dbus-glib.h>
 #include "musictracker.h"
 #include "utils.h"
 #include <string.h>
@@ -6,30 +5,24 @@
 void
 get_listen_info(struct TrackInfo* ti)
 {
-    DBusGConnection *connection;
-    DBusGProxy *proxy;
+    static DBusGProxy *proxy = 0;
     GError *error = 0;
     char *buf = 0;
     pcre *re;
 
     ti->status = PLAYER_STATUS_CLOSED;
 
-    connection = dbus_g_bus_get (DBUS_BUS_SESSION, &error);
-    if (connection == NULL) {
-        trace("Failed to open connection to dbus: %s\n", error->message);
-        g_error_free (error);
+    if (!dbus_g_running("org.gnome.Listen")) {
         return;
     }
 
-    if (!dbus_g_running(connection, "org.gnome.Listen")) {
-        trace("org.gnome.Listen not running");
-        return;
-    }
-
-    proxy = dbus_g_proxy_new_for_name(connection,
-            "org.gnome.Listen",
-            "/org/gnome/listen",
-            "org.gnome.Listen");
+    if (!proxy)
+      {
+        proxy = dbus_g_proxy_new_for_name(connection,
+                                          "org.gnome.Listen",
+                                          "/org/gnome/listen",
+                                          "org.gnome.Listen");
+      }
 
     if (!dbus_g_proxy_call_with_timeout(proxy, "current_playing", DBUS_TIMEOUT, &error,
                            G_TYPE_INVALID,

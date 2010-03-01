@@ -1,4 +1,3 @@
-#include <dbus/dbus-glib.h>
 #include "musictracker.h"
 #include "utils.h"
 #include <string.h>
@@ -69,29 +68,24 @@ int audacious_dbus_int(DBusGProxy *proxy, const char *method, int pos)
 void
 get_audacious_info(struct TrackInfo* ti)
 {
-	DBusGConnection *connection;
-	DBusGProxy *proxy;
+	static DBusGProxy *proxy = 0;
 	GError *error = 0;
 	char *status = 0;
 	int pos = 0;
 
-        ti->status = PLAYER_STATUS_CLOSED;;
+        ti->status = PLAYER_STATUS_CLOSED;
 
-	connection = dbus_g_bus_get (DBUS_BUS_SESSION, &error);
-	if (connection == NULL) {
-		trace("Failed to open connection to dbus: %s\n", error->message);
-		g_error_free (error);
+	if (!dbus_g_running("org.atheme.audacious")) {
 		return;
 	}
 
-	if (!dbus_g_running(connection, "org.atheme.audacious")) {
-		return;
-	}
-
-	proxy = dbus_g_proxy_new_for_name (connection,
-			"org.atheme.audacious",
-			"/org/atheme/audacious",
-			"org.atheme.audacious");
+        if (!proxy)
+          {
+            proxy = dbus_g_proxy_new_for_name (connection,
+                                               "org.atheme.audacious",
+                                               "/org/atheme/audacious",
+                                               "org.atheme.audacious");
+          }
 
 	if (!dbus_g_proxy_call_with_timeout(proxy, "Status", DBUS_TIMEOUT, &error,
 				G_TYPE_INVALID,
@@ -103,7 +97,7 @@ get_audacious_info(struct TrackInfo* ti)
 	}
 
         ti->player = "Audacious";
-        
+
 	if (strcmp(status, "stopped") == 0) {
 		ti->status = PLAYER_STATUS_STOPPED;
 		return;
@@ -112,13 +106,13 @@ get_audacious_info(struct TrackInfo* ti)
 	} else {
 		ti->status = PLAYER_STATUS_PAUSED;
 	}
-	
+
 	// Find the position in the playlist
 	pos = audacious_dbus_uint(proxy, "Position");
-	
+
 	ti->currentSecs = audacious_dbus_uint(proxy, "Time")/1000;
 	ti->totalSecs = audacious_dbus_int(proxy, "SongLength", pos);
-	
+
 	audacious_dbus_string(proxy, "SongTuple", pos, "artist", ti->artist);
 	audacious_dbus_string(proxy, "SongTuple", pos, "album", ti->album);
 	audacious_dbus_string(proxy, "SongTuple", pos, "title", ti->track);

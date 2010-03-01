@@ -1,4 +1,3 @@
-#include <dbus/dbus-glib.h>
 #include "musictracker.h"
 #include "utils.h"
 #include <string.h>
@@ -66,24 +65,20 @@ unsigned int banshee_dbus_uint(DBusGProxy *proxy, const char *method)
 void
 get_banshee_info(struct TrackInfo* ti)
 {
-	DBusGConnection *connection;
-	DBusGProxy *proxy;
 	GError *error = 0;
 	int status;
 	char szStatus[STRLEN];
 
-	connection = dbus_g_bus_get (DBUS_BUS_SESSION, &error);
-	if (connection == NULL) {
-		trace("Failed to open connection to dbus: %s\n", error->message);
-		g_error_free (error);
-		return;
-	}
+	if (dbus_g_running("org.gnome.Banshee")) {
+                static DBusGProxy *proxy = 0;
 
-	if (dbus_g_running(connection,"org.gnome.Banshee")) {
-		proxy = dbus_g_proxy_new_for_name (connection,
-				"org.gnome.Banshee",
-				"/org/gnome/Banshee/Player",
-				"org.gnome.Banshee.Core");
+                if (!proxy)
+                  {
+                    proxy = dbus_g_proxy_new_for_name (connection,
+                                                       "org.gnome.Banshee",
+                                                       "/org/gnome/Banshee/Player",
+                                                       "org.gnome.Banshee.Core");
+                  }
 
 		if (!dbus_g_proxy_call_with_timeout (proxy, "GetPlayingStatus", DBUS_TIMEOUT, &error,
 					G_TYPE_INVALID,
@@ -109,12 +104,16 @@ get_banshee_info(struct TrackInfo* ti)
 		ti->totalSecs = banshee_dbus_int(proxy, "GetPlayingDuration");
 		ti->currentSecs = banshee_dbus_int(proxy, "GetPlayingPosition");
 		return;
-	} else if (dbus_g_running(connection, "org.bansheeproject.Banshee")) { // provide for new interface in banshee 1.0
-		proxy = dbus_g_proxy_new_for_name (connection,
-				"org.bansheeproject.Banshee",
-				"/org/bansheeproject/Banshee/PlayerEngine",
-				"org.bansheeproject.Banshee.PlayerEngine");
-		
+	} else if (dbus_g_running("org.bansheeproject.Banshee")) { // provide for new interface in banshee 1.0
+                static DBusGProxy *proxy = 0;
+                if (!proxy)
+                  {
+                    proxy = dbus_g_proxy_new_for_name (connection,
+                                                       "org.bansheeproject.Banshee",
+                                                       "/org/bansheeproject/Banshee/PlayerEngine",
+                                                       "org.bansheeproject.Banshee.PlayerEngine");
+                  }
+
 		banshee_dbus_string(proxy, "GetCurrentState", szStatus);
 		if (strcmp(szStatus, "idle") == 0) {
 			ti->status = PLAYER_STATUS_STOPPED;
@@ -123,7 +122,7 @@ get_banshee_info(struct TrackInfo* ti)
 			ti->status = PLAYER_STATUS_PLAYING;
 		else
 			ti->status = PLAYER_STATUS_PAUSED;
-		
+
 		GHashTable* table;
 		if (!dbus_g_proxy_call_with_timeout (proxy, "GetCurrentTrack", DBUS_TIMEOUT, &error,
 					G_TYPE_INVALID,
@@ -133,13 +132,13 @@ get_banshee_info(struct TrackInfo* ti)
 			trace("Failed to make dbus call: %s", error->message);
 			return;
 		}
-		
+
 		banshee_hash_str(table, "album", ti->album);
 		banshee_hash_str(table, "artist", ti->artist);
 		banshee_hash_str(table, "name", ti->track);
-		
+
 		g_hash_table_destroy(table);
-		
+
 		ti->totalSecs = banshee_dbus_uint(proxy, "GetLength") / 1000;
 		ti->currentSecs = banshee_dbus_uint(proxy, "GetPosition") / 1000;
 		return;

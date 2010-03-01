@@ -48,6 +48,7 @@
 #include <dbus/dbus-glib.h>
 
 #include "musictracker.h"
+#include "utils.h"
 
 #define DBUS_MPRIS_NAMESPACE		"org.mpris."
 #define DBUS_MPRIS_PLAYER		"org.freedesktop.MediaPlayer"
@@ -62,8 +63,6 @@
 					fmt, ## __VA_ARGS__);
 #define mpris_error(fmt, ...)	purple_debug(PURPLE_DEBUG_ERROR, "MPRIS", \
 					fmt, ## __VA_ARGS__);
-
-static DBusGConnection *bus = NULL;
 
 #define MPRIS_HINT_STATUSCHANGE 1
 #define MPRIS_HINT_METADATA_METHOD_CASE 2
@@ -168,7 +167,7 @@ mpris_status_signal_struct_cb(DBusGProxy *player_proxy, GValueArray *sigstruct, 
 
 static void mpris_connect_dbus_signals(pidginmpris_t *player)
 {
-	player->proxy = dbus_g_proxy_new_for_name(bus,
+	player->proxy = dbus_g_proxy_new_for_name(connection,
 			player->service_name, DBUS_MPRIS_PLAYER_PATH, DBUS_MPRIS_PLAYER);
 
 	dbus_g_proxy_add_signal(player->proxy, DBUS_MPRIS_TRACK_SIGNAL,
@@ -194,7 +193,7 @@ static void mpris_connect_dbus_signals(pidginmpris_t *player)
 
 static gboolean mpris_app_running(pidginmpris_t *player)
 {
-	DBusGProxy *proxy = dbus_g_proxy_new_for_name_owner(bus, 
+	DBusGProxy *proxy = dbus_g_proxy_new_for_name_owner(connection,
 			player->service_name, DBUS_MPRIS_PLAYER_PATH, DBUS_MPRIS_PLAYER, NULL);
 	
 	if(!proxy)
@@ -234,7 +233,7 @@ player_new(const char *service_name)
   mpris_status_signal_int_cb(NULL, -1, &(player->ti));
 
   /* Try to discover how this player likes to be known */
-  DBusGProxy *proxy = dbus_g_proxy_new_for_name(bus, player->service_name, "/", DBUS_MPRIS_PLAYER);
+  DBusGProxy *proxy = dbus_g_proxy_new_for_name(connection, player->service_name, "/", DBUS_MPRIS_PLAYER);
   if (proxy)
     {
       GError *error = 0;
@@ -284,24 +283,6 @@ player_delete(gpointer data)
       g_free(player->player_name);
       g_free(player);
     }
-}
-
-static gboolean
-load_plugin(void)
-{
-        if (!players)
-          players = g_hash_table_new_full(g_str_hash, g_str_equal, g_free, player_delete);
-
-	/* initialize dbus connection */
-	GError *error = 0;
-	bus = dbus_g_bus_get(DBUS_BUS_SESSION, &error);
-	if (!bus) {
-		mpris_error("failed to connect to the dbus daemon: %s\n", error->message);
-		g_error_free (error);
-		return FALSE;
-	}
-
-	return TRUE;
 }
 
 static void
@@ -419,13 +400,26 @@ mpris_check_player(gpointer key, gpointer value, gpointer user_data)
 void
 get_mpris_info(struct TrackInfo* ti)
 {
-  if (!bus)
-    if (!load_plugin())
-      return;
+  if (!connection)
+    {
+      if (!dbus_g_init_connection())
+        return;
+    }
+
+  if (!players)
+    {
+      players = g_hash_table_new_full(g_str_hash, g_str_equal, g_free, player_delete);
+    }
 
   /* Look for "org.mpris.*" service names on the bus */
   GError *error = 0;
-  DBusGProxy *proxy = dbus_g_proxy_new_for_name(bus, "org.freedesktop.DBus", "/", "org.freedesktop.DBus");
+
+  static DBusGProxy *proxy = 0;
+  if (!proxy)
+    {
+      proxy = dbus_g_proxy_new_for_name(connection, "org.freedesktop.DBus", "/", "org.freedesktop.DBus");
+    }
+  
   if (proxy)
     {
       char **v;

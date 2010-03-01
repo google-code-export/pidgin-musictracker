@@ -21,7 +21,9 @@ pcre* regex(const char* pattern, int options);
 int capture(pcre* re, const char *text, int len, ...);
 
 #ifndef WIN32
-gboolean dbus_g_running(DBusGConnection *connection, const char *name);
+DBusGConnection *connection;
+gboolean dbus_g_init_connection(void);
+gboolean dbus_g_running(const char *name);
 #endif
 
 #ifdef WIN32

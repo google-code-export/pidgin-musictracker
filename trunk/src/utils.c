@@ -217,25 +217,61 @@ int capture(pcre* re, const char* text, int len, ...)
 
 //--------------------------------------------------------------------
 
+/*
+  Initialize a connection to the dbus session bus
+*/
+
+#ifndef WIN32
+DBusGConnection *connection = NULL;
+
+gboolean dbus_g_init_connection(void)
+{
+  /* initialize dbus connection */
+  GError *error = 0;
+  connection = dbus_g_bus_get(DBUS_BUS_SESSION, &error);
+  if (!connection)
+    {
+      trace("Failed to connect to the dbus daemon: %s\n", error->message);
+      g_error_free (error);
+      return FALSE;
+    }
+
+  return TRUE;
+}
+#endif
+
+//--------------------------------------------------------------------
+
 /* Returns true if the given dbus service is running. To avoid starting
  * a program (a media player) that isn't running.
  */
 
 #ifndef WIN32
-gboolean dbus_g_running(DBusGConnection *connection, const char *name)
+gboolean dbus_g_running(const char *name)
 {
-	DBusGProxy *dbus;
+	static DBusGProxy *proxy = 0;
 	GError *error = 0;
 	gboolean running = FALSE;
 
-	dbus = dbus_g_proxy_new_for_name(connection,
-			"org.freedesktop.DBus",
-			"/org/freedesktop/DBus",
-			"org.freedesktop.DBus");
-
-        if (dbus)
+        if (!connection)
           {
-            if (dbus_g_proxy_call_with_timeout(dbus, "NameHasOwner", DBUS_TIMEOUT, &error,
+            if (!dbus_g_init_connection())
+              {
+                return FALSE;
+              }
+          }
+
+        if (!proxy)
+          {
+            proxy = dbus_g_proxy_new_for_name(connection,
+                                              "org.freedesktop.DBus",
+                                              "/org/freedesktop/DBus",
+                                              "org.freedesktop.DBus");
+          }
+
+        if (proxy)
+          {
+            if (dbus_g_proxy_call_with_timeout(proxy, "NameHasOwner", DBUS_TIMEOUT, &error,
                                                G_TYPE_STRING, name,
                                                G_TYPE_INVALID,
                                                G_TYPE_BOOLEAN, &running,
