@@ -19,8 +19,8 @@ gboolean winamp_get_w(const wchar_t *filename, const wchar_t *key, char *dest)
         extendedFileInfoStructW info;
         info.filename = winamp_filename;
         info.metadata = winamp_key;
-        info.ret = winamp_value;	
-        info.retlen = 1024;
+        info.ret = winamp_value;
+        info.retlen = 1024/sizeof(wchar_t);
         WriteProcessMemory(hProcess, winamp_info, &info, sizeof(info), NULL);
 
         WriteProcessMemory(hProcess, winamp_filename, filename, sizeof(wchar_t)*(wcslen(filename)+1), NULL);
@@ -51,7 +51,7 @@ gboolean winamp_get(const char *filename, const char *key, char *dest)
         extendedFileInfoStruct info;
         info.filename = winamp_filename;
         info.metadata = winamp_key;
-        info.ret = winamp_value;        
+        info.ret = winamp_value;
         info.retlen = 1024;
         WriteProcessMemory(hProcess, winamp_info, &info, sizeof(info), NULL);
 
@@ -124,7 +124,7 @@ get_winamp_info(struct TrackInfo* ti)
                 char filename[512];
                 ReadProcessMemory(hProcess, address, filename, 512, 0);
                 trace("Filename: %s", filename);
-                
+
                 winamp_get(filename, "ALBUM", ti->album);
                 winamp_get(filename, "ARTIST", ti->artist);
                 winamp_get(filename, "TITLE", ti->track);
