@@ -1,4 +1,3 @@
-#include <dbus/dbus-glib.h>
 #include "musictracker.h"
 #include "utils.h"
 #include <string.h>
@@ -27,29 +26,29 @@ unsigned int get_hash_uint(GHashTable *table, const char *key)
 void
 get_rhythmbox_info(struct TrackInfo* ti)
 {
-	DBusGConnection *connection;
-	DBusGProxy *player, *shell;
+	static DBusGProxy *player = 0;
+	static DBusGProxy *shell = 0;
 	GError *error = 0;
 
-	connection = dbus_g_bus_get (DBUS_BUS_SESSION, &error);
-	if (connection == NULL) {
-		trace("Failed to open connection to dbus: %s\n", error->message);
-		g_error_free (error);
+	if (!dbus_g_running("org.gnome.Rhythmbox")) {
 		return;
 	}
 
-	if (!dbus_g_running(connection, "org.gnome.Rhythmbox")) {
-		return;
-	}
+        if (!shell)
+          {
+            shell = dbus_g_proxy_new_for_name(connection,
+                                              "org.gnome.Rhythmbox",
+                                              "/org/gnome/Rhythmbox/Shell",
+                                              "org.gnome.Rhythmbox.Shell");
+          }
 
-	shell = dbus_g_proxy_new_for_name(connection,
-			"org.gnome.Rhythmbox",
-			"/org/gnome/Rhythmbox/Shell",
-			"org.gnome.Rhythmbox.Shell");
-	player = dbus_g_proxy_new_for_name(connection,
-			"org.gnome.Rhythmbox",
-			"/org/gnome/Rhythmbox/Player",
-			"org.gnome.Rhythmbox.Player");
+        if (!player)
+          {
+            player = dbus_g_proxy_new_for_name(connection,
+                                               "org.gnome.Rhythmbox",
+                                               "/org/gnome/Rhythmbox/Player",
+                                               "org.gnome.Rhythmbox.Player");
+          }
 
 	gboolean playing;
 	if (!dbus_g_proxy_call_with_timeout(player, "getPlaying", DBUS_TIMEOUT, &error,
@@ -60,7 +59,7 @@ get_rhythmbox_info(struct TrackInfo* ti)
 		ti->status = PLAYER_STATUS_STOPPED;
 		return;
 	}
-	
+
 	char *uri;
 	if (!dbus_g_proxy_call_with_timeout(player, "getPlayingUri", DBUS_TIMEOUT, &error,
 				G_TYPE_INVALID,
@@ -73,7 +72,7 @@ get_rhythmbox_info(struct TrackInfo* ti)
 	GHashTable *table;
 	if (!dbus_g_proxy_call_with_timeout(shell, "getSongProperties", DBUS_TIMEOUT, &error,
 				G_TYPE_STRING, uri,
-				G_TYPE_INVALID, 
+				G_TYPE_INVALID,
 				dbus_g_type_get_map("GHashTable", G_TYPE_STRING, G_TYPE_VALUE),	&table,
 				G_TYPE_INVALID)) {
 		if (!playing) {
@@ -95,7 +94,7 @@ get_rhythmbox_info(struct TrackInfo* ti)
         if (!get_hash_str(table, "rb:stream-song-title", ti->track))
           {
             get_hash_str(table, "title", ti->track);
-          }        
+          }
         get_hash_str(table, "artist", ti->artist);
 	get_hash_str(table, "album", ti->album);
 	ti->totalSecs = get_hash_uint(table, "duration");

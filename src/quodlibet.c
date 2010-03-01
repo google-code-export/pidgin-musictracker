@@ -1,10 +1,9 @@
-#include <dbus/dbus-glib.h>
 #include "musictracker.h"
 #include "utils.h"
 #include <stdint.h>
 #include <string.h>
 
-int g_state = PLAYER_STATUS_STOPPED;
+static int g_state = PLAYER_STATUS_STOPPED;
 
 void quodlibet_hash_str(GHashTable *table, const char *key, char *dest)
 {
@@ -25,43 +24,38 @@ void cb_quodlibet_paused(DBusGProxy *proxy, gpointer data)
 void
 get_quodlibet_info(struct TrackInfo* ti)
 {
-	DBusGConnection *connection;
-	DBusGProxy *player;
+	static DBusGProxy *player = 0;
 	GError *error = 0;
 	char buf[STRLEN];
 	static gboolean connected = FALSE;
 
         ti->status = PLAYER_STATUS_CLOSED;
 
-	connection = dbus_g_bus_get (DBUS_BUS_SESSION, &error);
-	if (connection == NULL) {
-		trace("Failed to open connection to dbus: %s\n", error->message);
-		g_error_free (error);
+	if (!dbus_g_running("net.sacredchao.QuodLibet")) {
 		return;
 	}
 
-	if (!dbus_g_running(connection, "net.sacredchao.QuodLibet")) {
-		return;
-	}
-
-	player = dbus_g_proxy_new_for_name(connection,
-			"net.sacredchao.QuodLibet",
-			"/net/sacredchao/QuodLibet",
-			"net.sacredchao.QuodLibet");
+        if (!player)
+          {
+            player = dbus_g_proxy_new_for_name(connection,
+                                               "net.sacredchao.QuodLibet",
+                                               "/net/sacredchao/QuodLibet",
+                                               "net.sacredchao.QuodLibet");
+          }
 
 	if (!connected) {
 		dbus_g_proxy_add_signal(player, "Paused", G_TYPE_INVALID);
-		dbus_g_proxy_connect_signal(player, "Paused", G_CALLBACK(cb_quodlibet_paused), 
+		dbus_g_proxy_connect_signal(player, "Paused", G_CALLBACK(cb_quodlibet_paused),
 				(gpointer) PLAYER_STATUS_PAUSED, 0);
 		dbus_g_proxy_add_signal(player, "Unpaused", G_TYPE_INVALID);
-		dbus_g_proxy_connect_signal(player, "Unpaused", G_CALLBACK(cb_quodlibet_paused), 
+		dbus_g_proxy_connect_signal(player, "Unpaused", G_CALLBACK(cb_quodlibet_paused),
 				(gpointer) PLAYER_STATUS_PLAYING, 0);
 		connected = TRUE;
 	}
 
 	GHashTable *table;
 	if (!dbus_g_proxy_call_with_timeout(player, "CurrentSong", DBUS_TIMEOUT, &error,
-				G_TYPE_INVALID, 
+				G_TYPE_INVALID,
 				dbus_g_type_get_map("GHashTable", G_TYPE_STRING, G_TYPE_STRING), &table,
 				G_TYPE_INVALID)) {
 		ti->status = PLAYER_STATUS_STOPPED;
