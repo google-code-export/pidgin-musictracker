@@ -98,6 +98,22 @@ purple_status_is_away (PurpleStatus *status)
 
 static
 gboolean
+purple_status_is_offline_or_invisible(PurpleStatus *status)
+{
+  PurpleStatusPrimitive primitive = PURPLE_STATUS_UNSET;
+
+  if (!status)
+    return FALSE;
+
+  primitive = purple_status_type_get_primitive(purple_status_get_type(status));
+
+  return ((primitive == PURPLE_STATUS_INVISIBLE) || (primitive == PURPLE_STATUS_OFFLINE));
+}
+
+//--------------------------------------------------------------------
+
+static
+gboolean
 purple_status_supports_attr (PurpleStatus *status, const char *id)
 {
 	gboolean		b				= FALSE;
@@ -356,6 +372,18 @@ set_status (PurpleAccount *account, struct TrackInfo *ti)
             return TRUE;
           }
 
+        // 'invisible' or 'offline' statuses always take priority
+        // (don't even set the tune status as this might make us to go online...)
+	PurpleStatus *status = purple_account_get_active_status(account);
+	if (status != NULL)
+	{
+          if (purple_status_is_offline_or_invisible(status))
+            {
+              trace("Status is invisible or offline");
+              return TRUE;
+            }
+	}
+
         // set 'now playing' status
         if (set_status_tune(account, ti != 0, ti) && purple_prefs_get_bool(PREF_NOW_LISTENING_ONLY))
           {
@@ -363,7 +391,6 @@ set_status (PurpleAccount *account, struct TrackInfo *ti)
           }
 
         // have we requested 'away' status to take priority?
-	PurpleStatus *status = purple_account_get_active_status (account);
 	if (status != NULL)
 	{
           if (purple_prefs_get_bool(PREF_DISABLE_WHEN_AWAY) && purple_status_is_away(status))
