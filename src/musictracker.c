@@ -626,12 +626,19 @@ cb_timeout(gpointer data) {
         utf8_validate(ti.track);
         utf8_validate(ti.artist);
 
-        // if filter is on, sanitize track info
+        // ensure track information is only printable chars
+        // (XMPP has strict rules about allowable characters,
+        //  printable is a subset of those allowed)
+        filter_printable(ti.track);
+        filter_printable(ti.artist);
+        filter_printable(ti.album);
+
+        // if profanity filter is on, sanitize track info
 	if (purple_prefs_get_bool(PREF_FILTER_ENABLE))
           {
-            filter(ti.track);
-            filter(ti.artist);
-            filter(ti.album);
+            filter_profanity(ti.track);
+            filter_profanity(ti.artist);
+            filter_profanity(ti.album);
 	}
 
         set_track_information(&ti);
