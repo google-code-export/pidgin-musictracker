@@ -38,7 +38,11 @@ grep -E "(Version|Release|Source0)" pidgin-musictracker.spec
 rpmbuild --rcfile=rpmrc -bs pidgin-musictracker.spec --sign --nodeps
 
 # request build on koji
-koji build --scratch --nowait dist-f9 $RPM_TOPDIR/SRPMS/pidgin-musictracker-$LAST_VERSION-1.${SNAPSHOT}.src.rpm
+koji build --scratch --nowait dist-rawhide $RPM_TOPDIR/SRPMS/pidgin-musictracker-$LAST_VERSION-1.${SNAPSHOT}.src.rpm
+koji build --scratch --nowait dist-f14 $RPM_TOPDIR/SRPMS/pidgin-musictracker-$LAST_VERSION-1.${SNAPSHOT}.src.rpm
+koji build --scratch --nowait dist-f13 $RPM_TOPDIR/SRPMS/pidgin-musictracker-$LAST_VERSION-1.${SNAPSHOT}.src.rpm
+koji build --scratch --nowait dist-f12 $RPM_TOPDIR/SRPMS/pidgin-musictracker-$LAST_VERSION-1.${SNAPSHOT}.src.rpm
+koji build --scratch --nowait dist-f11 $RPM_TOPDIR/SRPMS/pidgin-musictracker-$LAST_VERSION-1.${SNAPSHOT}.src.rpm
 
 # clean up
 rm -rf pidgin-musictracker-${LAST_VERSION}

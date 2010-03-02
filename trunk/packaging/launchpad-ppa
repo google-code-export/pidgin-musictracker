@@ -6,11 +6,11 @@
 
 LAST_VERSION=`cat ~/.pidgin-musictracker-release-version`
 LAUNCHPAD_PUBLIC_KEY=0x7633C10E
-
-launchpad_build()
-{
 SV=$LAST_VERSION+$SNAPSHOT
-PV=$SV-0~ppa1~${RELEASE}1
+
+##
+## build the source tarball
+##
 
 # unpack
 tar -jxf pidgin-musictracker-snapshot-$SNAPSHOT.tar.bz2
@@ -22,6 +22,16 @@ tar -zcf pidgin-musictracker_${SV}.orig.tar.gz pidgin-musictracker_${SV}
 
 # apply debianization patch by Craig Small <csmall@debian.org>
 (cd pidgin-musictracker_${SV} ; cat packaging/pidgin-musictracker-debianize.diff | patch -p1 )
+
+##
+## do launchpad build for given release
+##
+
+SRC_OPTION=sa
+
+launchpad_build()
+{
+PV=$SV-0~ppa1~${RELEASE}1
 
 # rewrite the changelog
 # set the version, identify myself as the uploader, say this is snapshot
@@ -42,7 +52,11 @@ gpg --default-key $LAUNCHPAD_PUBLIC_KEY --clearsign pidgin-musictracker_${PV}.ds
 mv pidgin-musictracker_${PV}.dsc.asc pidgin-musictracker_${PV}.dsc
 
 # build .changes files
-(cd pidgin-musictracker_${SV} ; dpkg-genchanges -S -sa >../pidgin-musictracker_${PV}_source.changes )
+(cd pidgin-musictracker_${SV} ; dpkg-genchanges -S -${SRC_OPTION} >../pidgin-musictracker_${PV}_source.changes )
+
+# only include original source tarball in the first source package
+# (we're not allowed to upload the same file twice)
+SRC_OPTION=sd
 
 # sign .changes file
 echo >>pidgin-musictracker_${PV}_source.changes
@@ -53,7 +67,9 @@ mv pidgin-musictracker_${PV}_source.changes.asc pidgin-musictracker_${PV}_source
 dput my-ppa pidgin-musictracker_${PV}_source.changes
 
 # clean up
-rm -rf pidgin-musictracker_${SV}*
+rm -rf pidgin-musictracker_${PV}.diff.gz
+rm -rf pidgin-musictracker_${PV}.dsc
+rm -rf pidgin-musictracker_${PV}_source.changes
 }
 
 # request a launchpad build against all active ubuntu releases
@@ -61,3 +77,6 @@ for RELEASE in hardy intrepid jaunty karmic
 do
  launchpad_build
 done
+
+# clean up
+rm -rf pidgin-musictracker_${SV}*
