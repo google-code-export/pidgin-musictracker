@@ -1,6 +1,24 @@
 ChangeLog for MusicTracker Pidgin Plugin
 ========================================
 
+2009-03-03 (Version 0.4.21)
+	* Fix a crash in preferences dialog when using russian locale (and potentially others with long translation strings) (issue 176)
+	* Added/Updated more translations contributed via Launchpad Rosetta:
+	 - Added: Australian English(en_AU), Greek(el), Hungarian(hu)
+	 - Updated: Brazilian Portugese(pt_BR), Czech(cs), Dutch(nl), French(fr), Finnish(fi), Hebrew(he), Low German(nds), Portugese(pt)), Russian(ru)
+	* Update label for Exaile interface to clarify it is for Exaile versions prior to 0.3 (issue 164)
+	* Use pkg-config to correctly pick up any needed CFLAGS for pcre (e.g. for include path if pcre.h is installed in /usr/include/pcre) (issue 197)
+	* Correctness fixes for a couple of issues detected by valgrind
+	* Various updates to launchpad and koji snapshot build scripts
+	* Check that installer has acquired admin privs, and stop with an error if not (issue 185)
+	* Installer will Create the plugins directory if needed, so it doesn't gratuitously fail if musictracker is being installed before pidgin is installed
+	* Manifest installer for XP style common controls
+	* Fix a dbus related memory leak (issue 88, issue 148)
+	* Fix an error potentially causing winamp to crash (issue 181)
+	* Always apply printable character filter to track information, which could otherwise cause disconnects of XMPP accounts (issue 198)
+	* Leave offline accounts alone, so we don't cause them to go online (issue 192)
+	* Don't use old track information if we have problems getting new track information from an MPRIS player (issue 202)
+
 2009-09-15 (Version 0.4.20)
 	* Reformat configure output when a package check fails, to make it a bit easier for people to read and understand that development packages are required
 	* Add/update some more translations contributed via launchpad (added: Danish(da), Swedish(sv), Simplified Chinese(zn_CN); updated:  Low German(nds), Dutch(nl), Polish(pl), Norwegian Bokmal(nb), French(fr), German(de))
