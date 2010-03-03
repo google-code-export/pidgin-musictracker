@@ -342,6 +342,8 @@ mpris_check_player(gpointer key, gpointer value, gpointer user_data)
           {
             mpris_debug("GetStatus failed with no error\n");
           }
+
+        return;
       }
 
     error = 0;
@@ -365,7 +367,8 @@ mpris_check_player(gpointer key, gpointer value, gpointer user_data)
           {
             mpris_debug("GetMetadata failed with no error\n");
           }
-            
+
+        return;
       }
 
     error = 0;
@@ -386,6 +389,8 @@ mpris_check_player(gpointer key, gpointer value, gpointer user_data)
           {
             mpris_debug("PositionGet failed with no error\n");
           }
+
+        return;
       }
 
     player->ti.player = player->player_name;
@@ -395,7 +400,7 @@ mpris_check_player(gpointer key, gpointer value, gpointer user_data)
         *ti = player->ti;
       }
   }
-}   
+}
 
 void
 get_mpris_info(struct TrackInfo* ti)
