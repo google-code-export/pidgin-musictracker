@@ -59,6 +59,7 @@ EXTRA_DIST = musictracker.h \
 			 actions.h \
 			 filter.h \
 			 libmpdclient.h \
+			 gettext.h \
 			 Makefile.mingw \
 			 winamp.c \
 			 foobar2000.c \

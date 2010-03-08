@@ -9,6 +9,6 @@
 # implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 EXTRA_DIST = config/config.rpath autogen.sh configure
-SUBDIRS = src doc installer po
+SUBDIRS = src doc installer po m4
 
 ACLOCAL_AMFLAGS = -I m4

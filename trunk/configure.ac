@@ -11,7 +11,7 @@
 AC_INIT([MusicTracker],
         [m4_esyscmd([cat version | tr -d '\n'])],
         [pidgin-musictracker@googlegroups.com],
-        [musictracker])
+        [pidgin-musictracker])
 AC_CONFIG_AUX_DIR(config)
 AM_CONFIG_HEADER(config.h)
 AM_INIT_AUTOMAKE([dist-bzip2])
