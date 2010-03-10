@@ -71,7 +71,7 @@ gboolean get_xmmsctrl_info(struct TrackInfo *ti, void *handle, int session)
 				return FALSE;
 			}
 
-                        char regexp[100];
+                        char regexp[STRLEN];
                         sprintf(regexp, "^(.*)\\%s(.*)\\%s(.*)$", sep, sep);
                         pcre *re = regex(regexp, 0);
                         capture(re, title, strlen(title), ti->artist, ti->album, ti->track);
