@@ -60,6 +60,8 @@ not available, so %r is replaced with "unknown" in this case.
 
 A useful [http://kentie.net/article/nowplaying/index.htm description of this interface]
 
+This [http://code.google.com/p/psymp3/wiki/MsnMsgrUiManager other description] mentions an iTunes extension to the format to include the player name, but other players don't seem to support that, and it is unknown if that breaks inter-operation with other clients.
+
 ==7==
 * Doesn't work with Windows Media Player (0.4.6 and later)*
 
