@@ -1,0 +1,14 @@
+#summary How to install pidgin-musictracker
+#labels Featured
+
+= Windows =
+
+  * [http://code.google.com/p/pidgin-musictracker/downloads/list?can=2&q=Windows Download] and run the latest version of the Windows installer
+  * Use Pidgin's Tools/Plugins menu to enable and configure the musictracker plugin
+  * If it's not autodetected, [Configuring configure] your music player to work with musictracker
+
+= Linux =
+
+  * Use your distribution's package management tool to install the latest version of the pidgin-musictracker pacakge
+  * Use Pidgin's Tools/Plugins menu to enable and configure the musictracker plugin
+  * If it's not autodetected, [Configuring configure] your music player to work with musictracker
