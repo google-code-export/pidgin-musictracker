@@ -119,6 +119,8 @@ Since it doesn't work very well, the direct foobar2000 support will be removed a
 ==9==
 * How do I build from source? *
 
+Usually, you don't!  The pidgin-musictracker packages available in most Linux distributions or the Windows installer are nearly always a much better choice.
+
   * You need to have the pidgin development files installed.  These are usually in a separate package to the pidigin application itself, called pidgin-dev or similar.  Depending on your distro `apt-get build-dep pidgin-musictracker` or `yum-builddep pidgin-musictracker` should install all of the required packages to build for you. 
 
   * Download and unpack the pidgin-musictracker-n.n.nn.tar.bz2 source package, then
@@ -175,8 +177,7 @@ Pidgin will show a music symbol next to a contact from whom it is receiving 'now
 
 Note that this 'now listening' data is not usually a free text field, so the formatting you have configured in musictracker cannot be applied, e.g. for MSN, the format of this 'now listening' information is usually 'title-artist' or 'artist-title(album)'.
 
-If you don't want musictracker to set the status message for protocols where can send 'now
-playing' information, tick the "Don't change status message if protocol has
+If you don't want musictracker to set the status message for protocols where it can send 'now playing' information, tick the "Don't change status message if protocol has
 'now listening'" option in the musictracker configuration.  This will cause musictracker to just send the 'now listening' element and not update the status message.
 
 It is also possible to disable use of it in the account specific configuration.  At the moment, it is automatically disabled for all !GoogleTalk and XMPP accounts.  This is useful for !GoogleTalk, as the 'now listening' element is not implemented in the standard XMPP way and doesn't work that well with musictracker, but for non-!GoogleTalk XMPP accounts with working XEP-0118 you may wish to clear that setting to enable musictracker to use the 'now listening' support.
