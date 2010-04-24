@@ -3,7 +3,7 @@
 
 = Windows =
 
-  * [http://code.google.com/p/pidgin-musictracker/downloads/list?can=2&q=Windows Download] and run the latest version of the Windows installer
+  * [http://code.google.com/p/pidgin-musictracker/downloads/list?q=opsys=Windows Download] and run the latest version of the Windows installer
   * Use Pidgin's Tools/Plugins menu to enable and configure the musictracker plugin
   * If it's not autodetected, [Configuring configure] your music player to work with musictracker
 
@@ -12,3 +12,9 @@
   * Use your distribution's package management tool to install the latest version of the pidgin-musictracker pacakge
   * Use Pidgin's Tools/Plugins menu to enable and configure the musictracker plugin
   * If it's not autodetected, [Configuring configure] your music player to work with musictracker
+
+Distribution package information
+||Debian||[http://packages.debian.org/sid/pidgin-musictracker Debian package details]||
+||Ubuntu||[http://packages.ubuntu.com/search?keywords=pidgin-musictracker&searchon=names&suite=all&section=all Ubuntu package details]||
+||Fedora||[https://admin.fedoraproject.org/updates/pidgin-musictracker Fedora RPMs]||
+||Gentoo||[http://packages.gentoo.org/package/x11-plugins/pidgin-musictracker Gentoo ebuild details]||
