@@ -37,7 +37,7 @@ musictracker_la_SOURCES = musictracker.c \
 						  moc.c \
 						  lastfm_ws.c
 
-musictracker_la_LDFLAGS = -module -avoid-version -Wl,--as-needed
+musictracker_la_LDFLAGS = -shared -module -avoid-version -Wl,--as-needed
 musictracker_la_LIBADD = $(GLIB_LIBS) $(GTK_LIBS) $(DBUS_LIBS) $(PCRE_LIBS) @LTLIBINTL@
 
 AM_CPPFLAGS = \
