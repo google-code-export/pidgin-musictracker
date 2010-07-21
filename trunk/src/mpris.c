@@ -91,6 +91,12 @@ mpris_track_signal_cb(DBusGProxy *player_proxy, GHashTable *table, struct TrackI
 {
 	GValue *value;
 
+	// clear any previous data in case some keys are absent
+	g_strlcpy(ti->artist, "", STRLEN);
+	g_strlcpy(ti->album, "", STRLEN);
+	g_strlcpy(ti->track, "", STRLEN);
+	ti->totalSecs = 0;
+
 	/* fetch values from hash table */
 	value = (GValue *) g_hash_table_lookup(table, "artist");
 	if (value != NULL && G_VALUE_HOLDS_STRING(value)) {
