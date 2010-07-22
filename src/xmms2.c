@@ -35,41 +35,63 @@ struct xmmsclientlib
 static struct xmmsclientlib dl;
 
 #define get_func(name) dl.name = dlsym(handle, #name) ; \
-                       if (dl.name == NULL) {trace("(XMMS2) could not resolve symbol %s in libxmmsclient.so", #name); dlclose(handle); return FALSE; } ; 
+                       if (dl.name == NULL) {trace("(XMMS2) could not resolve symbol %s in ", #name, libname); dlclose(handle); return NULL; } ; 
 
 static
-void *xmms2_dlsym_init(void)
+void *xmms2_dlsym_init(const char *libname)
+{
+  void *handle = dlopen(libname, RTLD_NOW);
+  if (handle)
+    {
+      get_func(xmmsc_init);
+      get_func(xmmsc_connect);
+      get_func(xmmsc_unref);
+      get_func(xmmsc_get_last_error);
+      get_func(xmmsc_playback_status);
+      get_func(xmmsc_playback_current_id);
+      get_func(xmmsc_playback_playtime);
+      get_func(xmmsc_medialib_get_info);
+      get_func(xmmsv_dict_entry_get_string);
+      get_func(xmmsv_dict_entry_get_int);
+      get_func(xmmsc_result_wait);
+      get_func(xmmsc_result_get_value);
+      get_func(xmmsv_get_uint);
+      get_func(xmmsv_get_error);
+      get_func(xmmsc_result_unref);
+      get_func(xmmsv_get_string);
+      get_func(xmmsv_propdict_to_dict);
+      get_func(xmmsv_unref);
+      dl.handle = handle;
+    }
+  else
+    {
+      trace("(XMMS2) Failed to load library %s", libname);
+    }
+  return handle;
+}
+
+static
+void *xmms2_lib_init(void)
 {
   if (!dl.handle)
     {
-      void *handle = dlopen("libxmmsclient.so", RTLD_NOW);
-      if (handle)
+      dl.handle = xmms2_dlsym_init("libxmmsclient.so");
+
+      /* XMMS2 0.7 DrNo */
+      if (!dl.handle)
         {
-          get_func(xmmsc_init);
-          get_func(xmmsc_connect);
-          get_func(xmmsc_unref);
-          get_func(xmmsc_get_last_error);
-          get_func(xmmsc_playback_status);
-          get_func(xmmsc_playback_current_id);
-          get_func(xmmsc_playback_playtime);
-          get_func(xmmsc_medialib_get_info);
-          get_func(xmmsv_dict_entry_get_string);
-          get_func(xmmsv_dict_entry_get_int);
-          get_func(xmmsc_result_wait);
-          get_func(xmmsc_result_get_value);
-          get_func(xmmsv_get_uint);
-          get_func(xmmsv_get_error);
-          get_func(xmmsc_result_unref);
-          get_func(xmmsv_get_string);
-          get_func(xmmsv_propdict_to_dict);
-          get_func(xmmsv_unref);
-          dl.handle = handle;
+          dl.handle = xmms2_dlsym_init("libxmmsclient.so.6");
         }
-      else
+
+      /* XMMS2 0.6 DrMattDestruction */
+      if (!dl.handle)
         {
-          trace("(XMMS2) Failed to load library libxmmsclient.so");
+          dl.handle = xmms2_dlsym_init("libxmmsclient.so.5");
         }
+
+      /* XMMS2 0.5 and earlier, libxmmsclient API is incompatible */
     }
+
   return dl.handle;
 }
 
@@ -235,7 +257,7 @@ get_xmms2_info(struct TrackInfo *ti)
 	gint ret;
 
         // have we successfully loaded the xmmsclient library and resolved symbols
-        if (!xmms2_dlsym_init())
+        if (!xmms2_lib_init())
           {
             return;
           }
