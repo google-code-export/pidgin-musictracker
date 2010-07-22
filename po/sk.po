@@ -1,214 +1,208 @@
-# Polish translation for pidgin-musictracker
-# Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
+# Slovak translation for pidgin-musictracker
+# Copyright (c) 2010 Rosetta Contributors and Canonical Ltd 2010
 # This file is distributed under the same license as the pidgin-musictracker package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: pidgin-musictracker\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/pidgin-musictracker/issues/\n"
-"POT-Creation-Date: 2009-05-29 14:49+0100\n"
-"PO-Revision-Date: 2010-06-11 18:42+0000\n"
-"Last-Translator: pankamyk <pankamyk@o2.pl>\n"
-"Language-Team: Polish <pl@li.org>\n"
+"POT-Creation-Date: 2010-07-22 20:27+0100\n"
+"PO-Revision-Date: 2010-06-21 10:47+0000\n"
+"Last-Translator: DAG Software <Unknown>\n"
+"Language-Team: Slovak <sk@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2010-07-22 19:12+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
-"X-Poedit-Country: POLAND\n"
-"X-Poedit-Language: Polish\n"
-"X-Poedit-Basepath: pidgin\n"
 
-# PROSZE UZYWAC W TLUMACZENIACH FORMY BEZOSOBOWEJ!
 #. TRANSLATORS: this string controls the name musictracker appears as under the Tools menu
 #. It's probably a good idea to treat 'MusicTracker' as a proper name, transliterate but don't translate
-#. 
-#: src/musictracker.c:857
+#.
+#: src/musictracker.c:891
 msgid "MusicTracker"
 msgstr "MusicTracker"
 
-#: src/musictracker.c:858
+#: src/musictracker.c:892
 msgid "MusicTracker Plugin for Pidgin"
-msgstr "Wtyczka MusicTracker dla programu Pidgin"
+msgstr "MusicTracker plugin pre Pidgin"
 
 #. TRANSLATORS: %s will be replaced with the URL of the translation site, currently
 #. http://translations.launchpad.net/pidgin-musictracker/trunk/+pots/musictracker
-#. 
-#: src/musictracker.c:864
+#.
+#: src/musictracker.c:898
 #, c-format
 msgid "Fix translation bugs at %s"
-msgstr "Można pomóc w tłumaczeniu tego programu na stronie %s"
+msgstr "Opraviť chyby prekladu na %s"
 
-#: src/musictracker.c:868
+#: src/musictracker.c:902
 msgid ""
 "The MusicTracker Plugin allows you to customize your status message with "
 "information about currently playing song from your music player. Portions "
 "initially adopted from pidgin-currenttrack project."
 msgstr ""
-"MusicTracker to wyświetlanie aktualnie odtwarzanego utworu w opisie "
-"komunikatora Pidgin."
+"MusicTracker plugin Vám umožňuje upraviť si váš status informáciou o práve "
+"hranej pesničke vo Vašom hudobnom prehrávači. Portions initially adopted "
+"from pidgin-currenttrack project."
 
-#: src/musictracker.c:870
+#: src/musictracker.c:904
 msgid ""
 "WMP support via WMPuICE by Christian Mueller from http://www.mediatexx.com."
 msgstr ""
-"Obsługa WMP przez WMPuICE, autorstwa Christiana Muellera. "
-"http://www.mediatexx.com"
+"WMP podpora cez WMPuICE od Christiana Muellera z http://www.mediatexx.com."
 
 #: src/actions.c:65
 msgid "Status to Set When Player is off:"
-msgstr "Status dla wyłączonego odtwarzacza:"
+msgstr "Keď je prehrávač vypnutý nastaviť status:"
 
 #: src/actions.c:85 src/actions.c:112
 msgid "Activate Status Changing"
-msgstr "Włączona zmiana statusu"
+msgstr "Aktivovať menenie statusu"
 
 #: src/actions.c:92 src/actions.c:112
 msgid "Deactivate Status Changing"
-msgstr "Wyłączona zmiana statusu"
+msgstr "Deaktivovať menenie statusu"
 
 #: src/actions.c:115
 msgid "Change Player-Off Status..."
-msgstr "Zmiana statusu przy zatrzymaniu odwarzania..."
+msgstr "Zmeniť status pri vypnutom prehrávači..."
 
-#: src/preferences.c:222
+#: src/preferences.c:226
 msgid "Leave blank for an unchanged status message"
-msgstr "Proszę pozostawić puste jeśli status ma pozostać niezmieniony"
+msgstr ""
 
-#: src/preferences.c:247
+#: src/preferences.c:251
 msgid "Player:"
-msgstr "Odtwarzacz:"
+msgstr "Prehrávač:"
 
-#: src/preferences.c:253
+#: src/preferences.c:257
 msgid "Auto-detect"
-msgstr "Autowykrywanie"
+msgstr "Automaticky detekovať"
 
-#: src/preferences.c:263
+#: src/preferences.c:266
 msgid "Artist"
-msgstr "Artysta"
+msgstr "Interprét"
 
-#: src/preferences.c:264
+#: src/preferences.c:267
 msgid "Album"
 msgstr "Album"
 
-#: src/preferences.c:265
-msgid "Title"
-msgstr "Tytuł"
-
-#: src/preferences.c:266
-msgid "Track Duration"
-msgstr "Czas trwania utworu"
-
-#: src/preferences.c:267
-msgid "Elapsed Track Time"
-msgstr "Odtworzony czas utworu"
-
 #: src/preferences.c:268
-msgid "Progress Bar"
-msgstr "Pasek postępu"
+msgid "Title"
+msgstr "Názov"
 
 #: src/preferences.c:269
-msgid "Player"
-msgstr "Odtwarzacz"
+msgid "Track Duration"
+msgstr "Dĺžka skladby"
 
 #: src/preferences.c:270
-msgid "Music Symbol (may not display on some networks)"
-msgstr "Symbol muzyczny (działa tylko w wybranych sieciach)"
+msgid "Elapsed Track Time"
+msgstr "Zostávajúci čas skladby"
 
-# jest to opis z statusu, ktory mamy domyslnie ustawiony w Pidgin'nie
 #: src/preferences.c:271
+msgid "Progress Bar"
+msgstr "Ukazovateľ priebehu"
+
+#: src/preferences.c:272
+msgid "Player"
+msgstr "Prehrávač"
+
+#: src/preferences.c:273
+msgid "Music Symbol (may not display on some networks)"
+msgstr "Symbol hudby (nemusí fungovať v niektorých sietiach)"
+
+#: src/preferences.c:274
 msgid "Status Message"
-msgstr "Oryginalny tekst statusu z Pidgin'a"
+msgstr "Status"
 
-#: src/preferences.c:275
+#: src/preferences.c:278
 msgid "Status Format"
-msgstr "Format statusu"
+msgstr "Formát statusu"
 
-#: src/preferences.c:282
+#: src/preferences.c:285
 msgid "Playing:"
-msgstr "dla odtwarzania (play):"
+msgstr "Prehráva sa:"
 
-#: src/preferences.c:283
+#: src/preferences.c:286
 msgid "Paused:"
-msgstr "gdy wstrzymano (pauza):"
+msgstr "Pozastavené:"
 
-#: src/preferences.c:284
+#: src/preferences.c:287
 msgid "Stopped:"
-msgstr "gdy zatrzymano (stop):"
+msgstr "Zastavené:"
 
-#: src/preferences.c:312
+#: src/preferences.c:315
 msgid "Screen Name"
-msgstr "Nazwa"
+msgstr "Účet"
 
-#: src/preferences.c:314
+#: src/preferences.c:317
 msgid "Protocol"
-msgstr "Protokół"
+msgstr "Protokol"
 
-#: src/preferences.c:320
+#: src/preferences.c:323
 msgid "Playing Status Format"
-msgstr "Format wyświetlanego statusu"
+msgstr "Formát statusu prehrávania"
 
-#: src/preferences.c:325
+#: src/preferences.c:328
 msgid "Disable"
-msgstr "Wyłączone"
+msgstr "Zakázať"
 
-#: src/preferences.c:331
+#: src/preferences.c:334
 msgid "Don't use 'now listening'"
-msgstr "Bez używania \"Teraz odtwarzane\""
+msgstr "Nepoužívať \"teraz počúvam\""
 
-#: src/preferences.c:335
+#: src/preferences.c:338
 msgid ""
 "Customize playing status format, or disable status changing altogether for "
 "specific accounts"
 msgstr ""
-"Ustalanie formatu statusu lub blokowanie całkowite zmiany statusu dla "
-"poszczególnych kont."
+"Upraviť si formát prehrávacieho statusu, alebo zakázať menenie statusu spolu "
+"pre špecifické účty"
 
-#: src/preferences.c:345
+#: src/preferences.c:348
 msgid "Other settings"
-msgstr "Inne ustawienia"
+msgstr "Ďalšie nastavenia"
 
-#: src/preferences.c:355
+#: src/preferences.c:358
 msgid "Don't change status message when away"
-msgstr "Bez zmiany statusu, gdy nie jestem przy komputerze"
+msgstr "Nemeniť status keď som preč"
 
-#: src/preferences.c:362
+#: src/preferences.c:365
 msgid "Don't change status message if protocol has 'now listening'"
-msgstr "Bez zmiany opisu dla \"Teraz słucham\""
+msgstr "Nemeniť status ak má protokol \"teraz počúvam\""
 
-#: src/preferences.c:368
+#: src/preferences.c:371
 msgid "Status Filter"
-msgstr "Filtr statusu"
+msgstr "Filter statusu"
 
-#: src/preferences.c:378
+#: src/preferences.c:381
 msgid "Enable status filter"
-msgstr "Włącz filtr statusu"
+msgstr "Povoliť filter statusov"
 
-#: src/preferences.c:385
+#: src/preferences.c:388
 msgid "Blacklist (comma-delimited):"
-msgstr "Auto-cenzura (oddziel wyrazy przecinkami)"
+msgstr "Blacklist (oddeľte čiarkami):"
 
-#: src/preferences.c:394
+#: src/preferences.c:397
 msgid "Mask character:"
-msgstr "Wybrany znak cenzurujący:"
+msgstr ""
 
 #: src/lastfm.c:127 src/lastfm_ws.c:169
 msgid "Username:"
-msgstr "Użytkownik:"
+msgstr "Meno užívateľa:"
 
 #: src/lastfm.c:136 src/lastfm_ws.c:178
 msgid "poll interval:"
-msgstr "interwał sondowania:"
+msgstr ""
 
 #: src/lastfm.c:141 src/lastfm_ws.c:183
-msgid ""
-"This is the interval (in seconds) at which we check Last.fm for changes"
-msgstr "Ilość sekund dla odświeżania danych z serwisu Last.fm"
+msgid "This is the interval (in seconds) at which we check Last.fm for changes"
+msgstr "Totoje interval (v sekundách) po kterém sa kontrolujú zmeny na Last.fm"
 
 #: src/lastfm.c:148
 msgid "quiet interval:"
-msgstr "ciche przerwy:"
+msgstr ""
 
 #: src/lastfm.c:153
 msgid ""
@@ -219,7 +213,7 @@ msgstr ""
 
 #: src/mpd.c:116
 msgid "Hostname:"
-msgstr "Nazwa hosta:"
+msgstr "Hostname:"
 
 #: src/mpd.c:124
 msgid "Port:"
@@ -227,7 +221,7 @@ msgstr "Port:"
 
 #: src/mpd.c:132
 msgid "Password:"
-msgstr "Hasło:"
+msgstr "Heslo:"
 
 #: src/squeezecenter.c:58
 msgid ""
@@ -238,60 +232,55 @@ msgid ""
 "\n"
 "Port Defaults to 9090, Multiple servers accepted delimited by ','"
 msgstr ""
-"Porada:\n"
-"'#' Znajdź odtwarzacz, który odtwarza\n"
-"'*' Znajdź odtwarzacz, który jest uruchomiony\n"
-"'id/name' poprzedź znakiem ! aby ignorować gdy nie odtwarza\n"
-"Port domyślny to 9090, Można podać wiele serwerów oddzielając je znakiem ','"
 
 #: src/squeezecenter.c:850
 msgid "Host:CliPort, Servers:"
-msgstr "Host:CliPort, Serwery:"
+msgstr "Host:CliPort, Servre:"
 
 #: src/squeezecenter.c:858
 msgid "Player Order:"
-msgstr "Kolejność odtwarzania:"
+msgstr "Príkaz prehrávaču:"
 
 #: src/squeezecenter.c:866
 msgid "CLI User:"
-msgstr "Użytkownik CLI:"
+msgstr "CLI použávateľ:"
 
 #: src/squeezecenter.c:874
 msgid "CLI Password:"
-msgstr "Hasło CLI:"
+msgstr "CLI heslo:"
 
 #: src/squeezecenter.c:886
 msgid "Server:"
-msgstr "Serwer:"
+msgstr "Server:"
 
 #: src/squeezecenter.c:891
 msgid "Squeezecenter Version:"
-msgstr "Wersja Squeezecenter:"
+msgstr ""
 
 #: src/squeezecenter.c:896
 msgid "Players:"
-msgstr "Odtwarzacze:"
+msgstr "Prehrávače:"
 
 #: src/squeezecenter.c:899
 #, c-format
 msgid "Player count: %d\n"
-msgstr "Liczba odtwarzaczy: %d\n"
+msgstr ""
 
 #: src/squeezecenter.c:908
 msgid "Last Command:"
-msgstr "Ostatnie polecenie:"
+msgstr "Posledný príkaz:"
 
 #: src/squeezecenter.c:913
 msgid "Last Reply:"
-msgstr "Ostatnia odpowiedź:"
+msgstr "Posledná odpoveď:"
 
 #: src/squeezecenter.c:919
 msgid "Last Error:"
-msgstr "Ostatni błąd:"
+msgstr "Posledná chyba:"
 
 #: src/xmmsctrl.c:153
 msgid "Title Delimiter Character:"
-msgstr "Znak oddzielający tytuły:"
+msgstr "Oddeľovač písmen v názvoch:"
 
 #: src/xmmsctrl.c:159
 msgid ""
