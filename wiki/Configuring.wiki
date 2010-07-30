@@ -51,7 +51,10 @@ _Note:_ The *MSN Messenger compatible* interface, as implemented by many players
 ||[http://wiki.xmms2.xmms.se XMMS2]||XMMS2 0.6 and later are supported via the XMMS2 interface.||
 
 == Requested and unsuported players ==
-You can vote for adding support for these players by starring the relevant bug
+
+See [http://code.google.com/p/pidgin-musictracker/issues/list?can=2&q=label%3Aplayer player support requests] in the issue tracker.
+
+You can vote for adding support for these players by starring the relevant issue.
 
 ||AMIP/Quintessential||[http://code.google.com/p/pidgin-musictracker/issues/detail?id=60 bug #60]||
 ||[http://decibel.silent-blade.org/ decibel]||[http://code.google.com/p/pidgin-musictracker/issues/detail?id=173 bug #173]||
