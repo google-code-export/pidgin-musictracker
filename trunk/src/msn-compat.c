@@ -141,7 +141,12 @@ void process_message(wchar_t *MSNTitle)
   // From testing, the order we expect seems to be the popular consensus, but provide
   // a configuration option to override this as I've got this wrong at least once...
   //
-  if (purple_prefs_get_bool(PREF_MSN_SWAP_ARTIST_TITLE))
+  gboolean swap = purple_prefs_get_bool(PREF_MSN_SWAP_ARTIST_TITLE);
+
+  if (strcmp("ZUNE", player) == 0)
+    swap = !swap;
+
+  if (swap)
   {
     char swap[STRLEN];
     strncpy(swap, msnti.artist, STRLEN);
@@ -192,7 +197,7 @@ void
 get_msn_compat_info(struct TrackInfo *ti)
 {
   static HWND MSNWindow = 0;
-  
+
   if (!MSNWindow)
     {
       memset(&msnti, 0, sizeof(struct TrackInfo));
@@ -200,8 +205,8 @@ get_msn_compat_info(struct TrackInfo *ti)
       WNDCLASSEX MSNClass = {sizeof(WNDCLASSEX),0,MSNWinProc,0,0,GetModuleHandle(NULL),NULL,NULL,NULL,NULL,"MsnMsgrUIManager",NULL};
       ATOM a = RegisterClassEx(&MSNClass);
       trace("RegisterClassEx returned 0x%x",a);
-  
-      MSNWindow = CreateWindowEx(0,"MsnMsgrUIManager","MSN message compatibility window for pidgin-musictracker",
+
+      MSNWindow = CreateWindowEx(0,"MsnMsgrUIManager","",
                                       0,0,0,0,0,
                                       HWND_MESSAGE,NULL,GetModuleHandle(NULL),NULL);
       trace("CreateWindowEx returned 0x%x", MSNWindow);
