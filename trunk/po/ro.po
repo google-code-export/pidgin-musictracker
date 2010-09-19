@@ -1,16 +1,16 @@
-# Swedish translation for pidgin-musictracker
-# Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
+# Romanian translation for pidgin-musictracker
+# Copyright (c) 2010 Rosetta Contributors and Canonical Ltd 2010
 # This file is distributed under the same license as the pidgin-musictracker package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: pidgin-musictracker\n"
-"Report-Msgid-Bugs-To: http://code.google.com/p/pidgin-musictracker/issues/\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-05-29 14:49+0100\n"
-"PO-Revision-Date: 2010-07-25 15:40+0000\n"
-"Last-Translator: Phoenix <Unknown>\n"
-"Language-Team: Swedish <sv@li.org>\n"
+"PO-Revision-Date: 2010-09-09 22:47+0000\n"
+"Last-Translator: dorusto <Unknown>\n"
+"Language-Team: Romanian <ro@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -26,7 +26,7 @@ msgstr "MusicTracker"
 
 #: src/musictracker.c:858
 msgid "MusicTracker Plugin for Pidgin"
-msgstr "MusicTracker-insticksmodul för Pidgin"
+msgstr "Plugin MusicTracker pentru Pidgin"
 
 #. TRANSLATORS: %s will be replaced with the URL of the translation site, currently
 #. http://translations.launchpad.net/pidgin-musictracker/trunk/+pots/musictracker
@@ -34,7 +34,7 @@ msgstr "MusicTracker-insticksmodul för Pidgin"
 #: src/musictracker.c:864
 #, c-format
 msgid "Fix translation bugs at %s"
-msgstr "Fixa översättningsfel på %s"
+msgstr "Corecteaza greselile de traducere la %s"
 
 #: src/musictracker.c:868
 msgid ""
@@ -42,47 +42,48 @@ msgid ""
 "information about currently playing song from your music player. Portions "
 "initially adopted from pidgin-currenttrack project."
 msgstr ""
-"Insticksmodulen MusicTracker låter dig ändra ditt statusmeddelande med "
-"information om den låt som du för tillfället spelar upp i din musikspelare. "
-"Vissa delar kommer från pidgin-currenttrack-projektet."
+"Plugin-ul MusicTracker iti permite sa aplici mesajului de stare informatii "
+"legate de ce muzica asculti in player-ul audio. Anumite optiuni au fost "
+"preluate din proiectul pidgin-currenttrack."
 
 #: src/musictracker.c:870
 msgid ""
 "WMP support via WMPuICE by Christian Mueller from http://www.mediatexx.com."
 msgstr ""
-"WMP-support via WMPuICE av Christian Mueller from http://mediatexx.com"
+"Windows Media Player este suportat prin intermediul WMPuICE creat de "
+"Christian Mueller - http://www.mediatexx.com."
 
 #: src/actions.c:65
 msgid "Status to Set When Player is off:"
-msgstr "Status när spelaren är avstängd:"
+msgstr "Mesaj de stare afisat cand player-ul este oprit:"
 
 #: src/actions.c:85 src/actions.c:112
 msgid "Activate Status Changing"
-msgstr "Aktivera statusändring"
+msgstr "Activeaza schimbarea mesajului de stare"
 
 #: src/actions.c:92 src/actions.c:112
 msgid "Deactivate Status Changing"
-msgstr "Avaktivera statusändring"
+msgstr "Dezactiveaza schimbarea mesajului de stare"
 
 #: src/actions.c:115
 msgid "Change Player-Off Status..."
-msgstr "Ändra status för avstängd spelare..."
+msgstr "Schimba mesajul pentru player oprit"
 
 #: src/preferences.c:222
 msgid "Leave blank for an unchanged status message"
-msgstr "Lämna fältet tomt för att statusmeddelandet inte ska ändras"
+msgstr "Lasa gol pentru ca mesajul de stare sa ramana neschimbat"
 
 #: src/preferences.c:247
 msgid "Player:"
-msgstr "Spelare:"
+msgstr "Program de redare:"
 
 #: src/preferences.c:253
 msgid "Auto-detect"
-msgstr "Automatisk detektion"
+msgstr "Detectare automată"
 
 #: src/preferences.c:263
 msgid "Artist"
-msgstr "Artist"
+msgstr "Interpret"
 
 #: src/preferences.c:264
 msgid "Album"
@@ -90,119 +91,122 @@ msgstr "Album"
 
 #: src/preferences.c:265
 msgid "Title"
-msgstr "Titel"
+msgstr "Titlu"
 
 #: src/preferences.c:266
 msgid "Track Duration"
-msgstr "Spårtid"
+msgstr "Durata melodiei"
 
 #: src/preferences.c:267
 msgid "Elapsed Track Time"
-msgstr "Förfluten spårtid"
+msgstr "Timp ramas din melodie"
 
 #: src/preferences.c:268
 msgid "Progress Bar"
-msgstr "Förloppsindikator"
+msgstr "Bara de progres"
 
 #: src/preferences.c:269
 msgid "Player"
-msgstr "Spelare"
+msgstr "Program de redare"
 
 #: src/preferences.c:270
 msgid "Music Symbol (may not display on some networks)"
-msgstr "Musiksymbol"
+msgstr "Simbol muzical (poate sa nu fie afisat in alti clienti de mess)"
 
 #: src/preferences.c:271
 msgid "Status Message"
-msgstr "Statusmeddelande"
+msgstr "Mesaj de stare"
 
 #: src/preferences.c:275
 msgid "Status Format"
-msgstr "Statusutformning"
+msgstr "Formatul mesajului de stare"
 
 #: src/preferences.c:282
 msgid "Playing:"
-msgstr "Uppspelning"
+msgstr "Ascult:"
 
 #: src/preferences.c:283
 msgid "Paused:"
-msgstr "Pausad:"
+msgstr "Pauza:"
 
 #: src/preferences.c:284
 msgid "Stopped:"
-msgstr "Stoppad:"
+msgstr "Oprit:"
 
 #: src/preferences.c:312
 msgid "Screen Name"
-msgstr "Kontonamn"
+msgstr "Numele ferestrei"
 
 #: src/preferences.c:314
 msgid "Protocol"
-msgstr "Protokoll"
+msgstr "Protocol"
 
 #: src/preferences.c:320
 msgid "Playing Status Format"
-msgstr ""
+msgstr "Formatul mesajului de redare"
 
 #: src/preferences.c:325
 msgid "Disable"
-msgstr "Avaktivera"
+msgstr "Dezactivează"
 
 #: src/preferences.c:331
 msgid "Don't use 'now listening'"
-msgstr "Använd inte 'lyssnar på'"
+msgstr "Nu afisa 'acum ascult'"
 
 #: src/preferences.c:335
 msgid ""
 "Customize playing status format, or disable status changing altogether for "
 "specific accounts"
 msgstr ""
+"Modifica formatul mesajului de stare cand muzica este redata, sau "
+"dezactiveaza schimbarea mesajului de stare pentru urmatoarele conturi"
 
 #: src/preferences.c:345
 msgid "Other settings"
-msgstr "Andra inställningar"
+msgstr "Optiuni suplimentare"
 
 #: src/preferences.c:355
 msgid "Don't change status message when away"
-msgstr "Ändra inte statusmeddelance vid frånvaro"
+msgstr "Nu schimba mesajul de stare cand sunt plecat"
 
 #: src/preferences.c:362
 msgid "Don't change status message if protocol has 'now listening'"
-msgstr "Ändra inte statusmeddelande om protokollet har 'lyssnar på'"
+msgstr "Nu schimba mesajul de stare daca este afisat 'acum ascult'"
 
 #: src/preferences.c:368
 msgid "Status Filter"
-msgstr "Statusfilter"
+msgstr "Filtru pentru mesajul de stare"
 
 #: src/preferences.c:378
 msgid "Enable status filter"
-msgstr "Aktivera statusfilter"
+msgstr "Activeaza filtrul pentru mesajul de stare"
 
 #: src/preferences.c:385
 msgid "Blacklist (comma-delimited):"
-msgstr "Svartlista (separera med komma):"
+msgstr "Lista cuvintelor interzise (separate prin virgula)"
 
 #: src/preferences.c:394
 msgid "Mask character:"
-msgstr "Maskeringstecken:"
+msgstr "Caracter pentru mascare:"
 
 #: src/lastfm.c:127 src/lastfm_ws.c:169
 msgid "Username:"
-msgstr "Användarnamn:"
+msgstr "Nume utilizator:"
 
 #: src/lastfm.c:136 src/lastfm_ws.c:178
 msgid "poll interval:"
-msgstr "Uppdateringsintervall"
+msgstr "interval extragere"
 
 #: src/lastfm.c:141 src/lastfm_ws.c:183
 msgid ""
 "This is the interval (in seconds) at which we check Last.fm for changes"
 msgstr ""
-"Detta är intervallet (i sekunder) som vi kollar efter ändringar på Last.fm"
+"Acesta este intervalul (in secunde) in care verificam Last.fm pentru orice "
+"modificare"
 
 #: src/lastfm.c:148
 msgid "quiet interval:"
-msgstr "Tystnadsintervall:"
+msgstr "interval de liniste:"
 
 #: src/lastfm.c:153
 msgid ""
@@ -210,13 +214,13 @@ msgid ""
 "we assume the track is playing for. Unless another track is scrobbled after "
 "the interval is elapsed, we will assume the off state for the player."
 msgstr ""
-"Detta är intervallet (i sekunder) efter spåret har blivit scrobblat som vi "
-"förmodar är spårets uppspelningstid. Om inte ett annat spår scrobblas efter "
-"intervallets tidsutgång, kommer vi att förmoda att spelaren är avstängd."
+"Acesta este intervalul (in secunde) primit dupa extragerea melodiei si care "
+"presupunem ca este durata melodiei. Daca nu este extrasa alta melodie dupa "
+"ce intervalul a expirat, presupunem ca player-ul este oprit."
 
 #: src/mpd.c:116
 msgid "Hostname:"
-msgstr "Värdnamn:"
+msgstr "Numele de reţea al calculatorului:"
 
 #: src/mpd.c:124
 msgid "Port:"
@@ -224,7 +228,7 @@ msgstr "Port:"
 
 #: src/mpd.c:132
 msgid "Password:"
-msgstr "Lösenord:"
+msgstr "Parolă:"
 
 #: src/squeezecenter.c:58
 msgid ""
@@ -235,28 +239,28 @@ msgid ""
 "\n"
 "Port Defaults to 9090, Multiple servers accepted delimited by ','"
 msgstr ""
-"Tips:\n"
-"'#' Detektera uppspelande spelare\n"
-"'*' Detektera startad spelare\n"
-"'id/name' prefix med ! för att ignorera när inget spelas upp\n"
+"Sfat:\n"
+"'#' Gaseste player-ul care reda\n"
+"'*' Gaseste player-ul care este pornit\n"
+"'id/nume' prefix with ! to ignore if not playing\n"
 "\n"
-"Standardport är 9090, flera servrar tillåtna, separeras med ','"
+"Port Defaults to 9090, Acceptarea mai multor servere delimitate prin ','"
 
 #: src/squeezecenter.c:850
 msgid "Host:CliPort, Servers:"
-msgstr "Värd:CliPort, Servrar:"
+msgstr "PC Garzda: Port Cli, Servere:"
 
 #: src/squeezecenter.c:858
 msgid "Player Order:"
-msgstr "Spelarordning"
+msgstr "Ordinea de redare:"
 
 #: src/squeezecenter.c:866
 msgid "CLI User:"
-msgstr "CLI-användare:"
+msgstr "Utilizator CLI:"
 
 #: src/squeezecenter.c:874
 msgid "CLI Password:"
-msgstr "CLI-lösenord"
+msgstr "Parola CLI"
 
 #: src/squeezecenter.c:886
 msgid "Server:"
@@ -264,32 +268,32 @@ msgstr "Server:"
 
 #: src/squeezecenter.c:891
 msgid "Squeezecenter Version:"
-msgstr "Squeezecenter-version"
+msgstr "Versiunea Squeezecenter:"
 
 #: src/squeezecenter.c:896
 msgid "Players:"
-msgstr "Spelare:"
+msgstr "Soft-uri de redare audio"
 
 #: src/squeezecenter.c:899
 #, c-format
 msgid "Player count: %d\n"
-msgstr "Antal spelare: %d\n"
+msgstr "Player count: %d\n"
 
 #: src/squeezecenter.c:908
 msgid "Last Command:"
-msgstr "Senaste kommando:"
+msgstr "Ultima comanda:"
 
 #: src/squeezecenter.c:913
 msgid "Last Reply:"
-msgstr "Senaste svar:"
+msgstr "Ultimul răspuns:"
 
 #: src/squeezecenter.c:919
 msgid "Last Error:"
-msgstr "Senaste fel:"
+msgstr "Ultima eroare:"
 
 #: src/xmmsctrl.c:153
 msgid "Title Delimiter Character:"
-msgstr ""
+msgstr "Caracter delimitare titlu"
 
 #: src/xmmsctrl.c:159
 msgid ""
@@ -300,9 +304,10 @@ msgid ""
 "players. If you change this character above, then '|' in the string '%p | %a "
 "| %t' must be replaced with the selected character."
 msgstr ""
-"Notera: Du måste ändra spelningslistans titel i XMMS/Audacious 1.3 så att "
-"den utformas som '%p | %a | %t' (ARTIST | ALBUM | TITEL) i spelaren "
-"inställningar, där '|' är titelseparatortecknet du ställde in ovan. Detta är "
-"det enda sättet för MusicTracker att känna av alla tre fälten från dessa "
-"spelare. Om du ändrar tecknet ovan så måste '|' i strängen '%p | %a | %t' "
-"bytas ut mot det valda tecknet."
+"Nota: Trebuie sa schimbi titlul listei de cantece in XMMS/Audacious 1.3 sa "
+"fie in formatul '%p | %a | %t' (ARTIST | ALBUM | TITLU MELODIE) in optiunile "
+"programului de redare, unde '|' este delimitatorul de mai sus folosit in "
+"titlul melodiei, si prin intermediul ccaruia MusicTracker poate desparti "
+"cele 3 date primite de la prgramele de redare audio. Daca schimbi aracterul "
+"de mai sus, atunci caracterul '|' din sirul '%p | %a | %t' trebuie schimbat "
+"cu caracterul ales de tine."
