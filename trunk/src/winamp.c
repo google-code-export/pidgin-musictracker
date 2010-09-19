@@ -11,6 +11,12 @@ gboolean winamp_get_w(const wchar_t *filename, const wchar_t *key, char *dest)
 {
 	// Allocate memory inside Winamp's address space to exchange data with it
 	char *winamp_info = VirtualAllocEx(hProcess, NULL, 4096, MEM_COMMIT, PAGE_READWRITE);
+        if (!winamp_info)
+          {
+            trace("VirtualAllocEx in winamp process failed");
+            return FALSE;
+          }
+
 	wchar_t *winamp_filename = (wchar_t*)(winamp_info+1024);
 	wchar_t *winamp_key = (wchar_t*)(winamp_info+2048);
 	wchar_t *winamp_value = (wchar_t*)(winamp_info+3072);
@@ -35,6 +41,8 @@ gboolean winamp_get_w(const wchar_t *filename, const wchar_t *key, char *dest)
         WideCharToMultiByte(CP_UTF8, 0, wdest, -1, dest, STRLEN, NULL, NULL);
  	trace("Got info '%s', return value %d", dest, rc);
 
+        VirtualFreeEx(hProcess, winamp_info, 0, MEM_RELEASE);
+
         return (rc != 1);
 }
 
@@ -43,6 +51,12 @@ gboolean winamp_get(const char *filename, const char *key, char *dest)
 {
         // Allocate memory inside Winamp's address space to exchange data with it
         char *winamp_info = VirtualAllocEx(hProcess, NULL, 4096, MEM_COMMIT, PAGE_READWRITE);
+        if (!winamp_info)
+          {
+            trace("VirtualAllocEx in winamp process failed");
+            return FALSE;
+          }
+
         char *winamp_filename = (char*)(winamp_info+1024);
         char *winamp_key = (char*)(winamp_info+2048);
         char *winamp_value = (char*)(winamp_info+3072);
@@ -65,6 +79,8 @@ gboolean winamp_get(const char *filename, const char *key, char *dest)
 
         trace("Got info for key '%s' is '%s', return value %d", key, dest, rc);
 
+        VirtualFreeEx(hProcess, winamp_info, 0, MEM_RELEASE);
+
         return (rc != 1);
 }
 
@@ -84,6 +100,10 @@ get_winamp_info(struct TrackInfo* ti)
 	DWORD processId;
 	GetWindowThreadProcessId(hWnd, &processId);
 	hProcess = OpenProcess(PROCESS_ALL_ACCESS, 0, processId);
+        if (!hProcess)
+          {
+            trace("Failed to open winamp process");
+          }
 
 	int playing = SendMessage(hWnd, WM_WA_IPC, 1, IPC_ISPLAYING);
 	if (playing == 0)
@@ -142,4 +162,6 @@ get_winamp_info(struct TrackInfo* ti)
             pcre_free(re);
             free(title);
           }
+
+        CloseHandle(hProcess);
 }
