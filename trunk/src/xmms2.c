@@ -35,7 +35,7 @@ struct xmmsclientlib
 static struct xmmsclientlib dl;
 
 #define get_func(name) dl.name = dlsym(handle, #name) ; \
-                       if (dl.name == NULL) {trace("(XMMS2) could not resolve symbol %s in ", #name, libname); dlclose(handle); return NULL; } ; 
+                       if (dl.name == NULL) {trace("(XMMS2) could not resolve symbol %s in %s", #name, libname); dlclose(handle); return NULL; } ; 
 
 static
 void *xmms2_dlsym_init(const char *libname)
