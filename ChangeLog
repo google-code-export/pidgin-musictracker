@@ -1,6 +1,19 @@
 ChangeLog for MusicTracker Pidgin Plugin
 ========================================
 
+2009-10-10 (Version 0.4.22)
+	* Fix 'make check' and 'make distcheck'
+	* Add -shared to musictracker_la_LDFLAGS to avoid building unneeded static library (issue 221)
+	* Ensure stale data from MRPIS player is not reported when track metadata hashtable is missing one of the keys we look for (issue 215)
+	* Look for libxmmsclient.so.6 and libxmmsclient.so.5 as well as just libxmmsclient.so (issue 214)
+	* Remove intrepid, add lucid to ubuntu distributions we try to build for on launchpad
+	* Added/Updated more translations contributed via Launchpad Rosetta:
+	- Added: Romanian(ro), Slovak(sk), Turkish(tr)
+	- Updated: Finnish(fi), Hungarian(hu), Polish(pl), Swedish(sv)
+	* Zune Player seems to object to the MsnMsgrUIManager window having a title, so remove that (issue 38)
+	* Also Zune player seems to send the title and artist swapped compared to Windows Media Player, but fortunately identifies itself as Zune. So detect it and swap them.
+	* Don't leak handles to the winamp process. Don't leak memory we allocate inside the winamp process (issue 232)
+
 2009-03-03 (Version 0.4.21)
 	* Fix a crash in preferences dialog when using russian locale (and potentially others with long translation strings) (issue 176)
 	* Added/Updated more translations contributed via Launchpad Rosetta:
