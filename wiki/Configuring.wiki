@@ -50,19 +50,8 @@ _Note:_ The *MSN Messenger compatible* interface, as implemented by many players
 ||[http://www.xmms.org/ XMMS]||Supported via the XMMS interface.  Title format needs to be set as '%p | %a | %t' in the players preferences. Delimiter choice '|' can be changed in musictracker settings.||
 ||[http://wiki.xmms2.xmms.se XMMS2]||XMMS2 0.6 and later are supported via the XMMS2 interface.||
 
-== Requested and unsuported players ==
+== Requested and unsupported players ==
 
 See [http://code.google.com/p/pidgin-musictracker/issues/list?can=2&q=label%3Aplayer player support requests] in the issue tracker.
 
 You can vote for adding support for these players by starring the relevant issue.
-
-||AMIP/Quintessential||[http://code.google.com/p/pidgin-musictracker/issues/detail?id=60 bug #60]||
-||[http://decibel.silent-blade.org/ decibel]||[http://code.google.com/p/pidgin-musictracker/issues/detail?id=173 bug #173]||
-||[http://gmusicbrowser.org/ gmusicbrowser]||Supports MPRIS so should just work, but no success reports, see [http://code.google.com/p/pidgin-musictracker/issues/detail?id=178 bug #178]||
-||[http://www.jrmediacenter.com/ J. River Media Center]||[http://code.google.com/p/pidgin-musictracker/issues/detail?id=199 bug #199]||
-||[http://developer.kde.org/~wheeler/juk.html JuK]||[http://code.google.com/p/pidgin-musictracker/issues/detail?id=108 bug #108]||
-||[http://libre.fm/ libre.fm feed]||[http://code.google.com/p/pidgin-musictracker/issues/detail?id=203 bug #203]||
-||[http://www.mplayerhq.hu/ mplayer]||[http://code.google.com/p/pidgin-musictracker/issues/detail?id=172 bug #172]||
-||[http://projects.gnome.org/totem/ totem]||Current versions should work with MPRIS interface, but no success reports yet, see [http://code.google.com/p/pidgin-musictracker/issues/detail?id=160 bug #160]||
-||[http://xbmc.org/ XBMC]||[http://code.google.com/p/pidgin-musictracker/issues/detail?id=27 bug #27]||
-||Zune||See [http://code.google.com/p/pidgin-musictracker/issues/detail?id=38 bug #38] for some workarounds and patch suggestions.||
