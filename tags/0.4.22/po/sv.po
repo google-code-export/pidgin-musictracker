@@ -1,0 +1,308 @@
+# Swedish translation for pidgin-musictracker
+# Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
+# This file is distributed under the same license as the pidgin-musictracker package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: pidgin-musictracker\n"
+"Report-Msgid-Bugs-To: http://code.google.com/p/pidgin-musictracker/issues/\n"
+"POT-Creation-Date: 2009-05-29 14:49+0100\n"
+"PO-Revision-Date: 2010-07-25 15:40+0000\n"
+"Last-Translator: Phoenix <Unknown>\n"
+"Language-Team: Swedish <sv@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2010-09-19 16:08+0000\n"
+"X-Generator: Launchpad (build Unknown)\n"
+
+#. TRANSLATORS: this string controls the name musictracker appears as under the Tools menu
+#. It's probably a good idea to treat 'MusicTracker' as a proper name, transliterate but don't translate
+#. 
+#: src/musictracker.c:857
+msgid "MusicTracker"
+msgstr "MusicTracker"
+
+#: src/musictracker.c:858
+msgid "MusicTracker Plugin for Pidgin"
+msgstr "MusicTracker-insticksmodul för Pidgin"
+
+#. TRANSLATORS: %s will be replaced with the URL of the translation site, currently
+#. http://translations.launchpad.net/pidgin-musictracker/trunk/+pots/musictracker
+#. 
+#: src/musictracker.c:864
+#, c-format
+msgid "Fix translation bugs at %s"
+msgstr "Fixa översättningsfel på %s"
+
+#: src/musictracker.c:868
+msgid ""
+"The MusicTracker Plugin allows you to customize your status message with "
+"information about currently playing song from your music player. Portions "
+"initially adopted from pidgin-currenttrack project."
+msgstr ""
+"Insticksmodulen MusicTracker låter dig ändra ditt statusmeddelande med "
+"information om den låt som du för tillfället spelar upp i din musikspelare. "
+"Vissa delar kommer från pidgin-currenttrack-projektet."
+
+#: src/musictracker.c:870
+msgid ""
+"WMP support via WMPuICE by Christian Mueller from http://www.mediatexx.com."
+msgstr ""
+"WMP-support via WMPuICE av Christian Mueller from http://mediatexx.com"
+
+#: src/actions.c:65
+msgid "Status to Set When Player is off:"
+msgstr "Status när spelaren är avstängd:"
+
+#: src/actions.c:85 src/actions.c:112
+msgid "Activate Status Changing"
+msgstr "Aktivera statusändring"
+
+#: src/actions.c:92 src/actions.c:112
+msgid "Deactivate Status Changing"
+msgstr "Avaktivera statusändring"
+
+#: src/actions.c:115
+msgid "Change Player-Off Status..."
+msgstr "Ändra status för avstängd spelare..."
+
+#: src/preferences.c:222
+msgid "Leave blank for an unchanged status message"
+msgstr "Lämna fältet tomt för att statusmeddelandet inte ska ändras"
+
+#: src/preferences.c:247
+msgid "Player:"
+msgstr "Spelare:"
+
+#: src/preferences.c:253
+msgid "Auto-detect"
+msgstr "Automatisk detektion"
+
+#: src/preferences.c:263
+msgid "Artist"
+msgstr "Artist"
+
+#: src/preferences.c:264
+msgid "Album"
+msgstr "Album"
+
+#: src/preferences.c:265
+msgid "Title"
+msgstr "Titel"
+
+#: src/preferences.c:266
+msgid "Track Duration"
+msgstr "Spårtid"
+
+#: src/preferences.c:267
+msgid "Elapsed Track Time"
+msgstr "Förfluten spårtid"
+
+#: src/preferences.c:268
+msgid "Progress Bar"
+msgstr "Förloppsindikator"
+
+#: src/preferences.c:269
+msgid "Player"
+msgstr "Spelare"
+
+#: src/preferences.c:270
+msgid "Music Symbol (may not display on some networks)"
+msgstr "Musiksymbol"
+
+#: src/preferences.c:271
+msgid "Status Message"
+msgstr "Statusmeddelande"
+
+#: src/preferences.c:275
+msgid "Status Format"
+msgstr "Statusutformning"
+
+#: src/preferences.c:282
+msgid "Playing:"
+msgstr "Uppspelning"
+
+#: src/preferences.c:283
+msgid "Paused:"
+msgstr "Pausad:"
+
+#: src/preferences.c:284
+msgid "Stopped:"
+msgstr "Stoppad:"
+
+#: src/preferences.c:312
+msgid "Screen Name"
+msgstr "Kontonamn"
+
+#: src/preferences.c:314
+msgid "Protocol"
+msgstr "Protokoll"
+
+#: src/preferences.c:320
+msgid "Playing Status Format"
+msgstr ""
+
+#: src/preferences.c:325
+msgid "Disable"
+msgstr "Avaktivera"
+
+#: src/preferences.c:331
+msgid "Don't use 'now listening'"
+msgstr "Använd inte 'lyssnar på'"
+
+#: src/preferences.c:335
+msgid ""
+"Customize playing status format, or disable status changing altogether for "
+"specific accounts"
+msgstr ""
+
+#: src/preferences.c:345
+msgid "Other settings"
+msgstr "Andra inställningar"
+
+#: src/preferences.c:355
+msgid "Don't change status message when away"
+msgstr "Ändra inte statusmeddelance vid frånvaro"
+
+#: src/preferences.c:362
+msgid "Don't change status message if protocol has 'now listening'"
+msgstr "Ändra inte statusmeddelande om protokollet har 'lyssnar på'"
+
+#: src/preferences.c:368
+msgid "Status Filter"
+msgstr "Statusfilter"
+
+#: src/preferences.c:378
+msgid "Enable status filter"
+msgstr "Aktivera statusfilter"
+
+#: src/preferences.c:385
+msgid "Blacklist (comma-delimited):"
+msgstr "Svartlista (separera med komma):"
+
+#: src/preferences.c:394
+msgid "Mask character:"
+msgstr "Maskeringstecken:"
+
+#: src/lastfm.c:127 src/lastfm_ws.c:169
+msgid "Username:"
+msgstr "Användarnamn:"
+
+#: src/lastfm.c:136 src/lastfm_ws.c:178
+msgid "poll interval:"
+msgstr "Uppdateringsintervall"
+
+#: src/lastfm.c:141 src/lastfm_ws.c:183
+msgid ""
+"This is the interval (in seconds) at which we check Last.fm for changes"
+msgstr ""
+"Detta är intervallet (i sekunder) som vi kollar efter ändringar på Last.fm"
+
+#: src/lastfm.c:148
+msgid "quiet interval:"
+msgstr "Tystnadsintervall:"
+
+#: src/lastfm.c:153
+msgid ""
+"This is the interval (in seconds) after the track has been scrobbled which "
+"we assume the track is playing for. Unless another track is scrobbled after "
+"the interval is elapsed, we will assume the off state for the player."
+msgstr ""
+"Detta är intervallet (i sekunder) efter spåret har blivit scrobblat som vi "
+"förmodar är spårets uppspelningstid. Om inte ett annat spår scrobblas efter "
+"intervallets tidsutgång, kommer vi att förmoda att spelaren är avstängd."
+
+#: src/mpd.c:116
+msgid "Hostname:"
+msgstr "Värdnamn:"
+
+#: src/mpd.c:124
+msgid "Port:"
+msgstr "Port:"
+
+#: src/mpd.c:132
+msgid "Password:"
+msgstr "Lösenord:"
+
+#: src/squeezecenter.c:58
+msgid ""
+"Advice:\n"
+"'#' Find playing player\n"
+"'*' Find powered player\n"
+"'id/name' prefix with ! to ignore if not playing\n"
+"\n"
+"Port Defaults to 9090, Multiple servers accepted delimited by ','"
+msgstr ""
+"Tips:\n"
+"'#' Detektera uppspelande spelare\n"
+"'*' Detektera startad spelare\n"
+"'id/name' prefix med ! för att ignorera när inget spelas upp\n"
+"\n"
+"Standardport är 9090, flera servrar tillåtna, separeras med ','"
+
+#: src/squeezecenter.c:850
+msgid "Host:CliPort, Servers:"
+msgstr "Värd:CliPort, Servrar:"
+
+#: src/squeezecenter.c:858
+msgid "Player Order:"
+msgstr "Spelarordning"
+
+#: src/squeezecenter.c:866
+msgid "CLI User:"
+msgstr "CLI-användare:"
+
+#: src/squeezecenter.c:874
+msgid "CLI Password:"
+msgstr "CLI-lösenord"
+
+#: src/squeezecenter.c:886
+msgid "Server:"
+msgstr "Server:"
+
+#: src/squeezecenter.c:891
+msgid "Squeezecenter Version:"
+msgstr "Squeezecenter-version"
+
+#: src/squeezecenter.c:896
+msgid "Players:"
+msgstr "Spelare:"
+
+#: src/squeezecenter.c:899
+#, c-format
+msgid "Player count: %d\n"
+msgstr "Antal spelare: %d\n"
+
+#: src/squeezecenter.c:908
+msgid "Last Command:"
+msgstr "Senaste kommando:"
+
+#: src/squeezecenter.c:913
+msgid "Last Reply:"
+msgstr "Senaste svar:"
+
+#: src/squeezecenter.c:919
+msgid "Last Error:"
+msgstr "Senaste fel:"
+
+#: src/xmmsctrl.c:153
+msgid "Title Delimiter Character:"
+msgstr ""
+
+#: src/xmmsctrl.c:159
+msgid ""
+"Note: You must change the playlist title in XMMS/Audacious 1.3 to be "
+"formatted as '%p | %a | %t' (ARTIST | ALBUM | TITLE) in the player "
+"preferences, where '|' is the Title Delimiter Character set above, which is "
+"the only way for MusicTracker to parse all three fields from either of these "
+"players. If you change this character above, then '|' in the string '%p | %a "
+"| %t' must be replaced with the selected character."
+msgstr ""
+"Notera: Du måste ändra spelningslistans titel i XMMS/Audacious 1.3 så att "
+"den utformas som '%p | %a | %t' (ARTIST | ALBUM | TITEL) i spelaren "
+"inställningar, där '|' är titelseparatortecknet du ställde in ovan. Detta är "
+"det enda sättet för MusicTracker att känna av alla tre fälten från dessa "
+"spelare. Om du ändrar tecknet ovan så måste '|' i strängen '%p | %a | %t' "
+"bytas ut mot det valda tecknet."
