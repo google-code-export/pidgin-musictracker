@@ -38,6 +38,7 @@ _Note:_ The *MSN Messenger compatible* interface, as implemented by many players
 ||[http://www.dragonplayer.org/ dragonplayer]||Supported via the MRPIS interface.||
 ||[http://www.exaile.org/ Exaile]||Exaile >= 0.3 are supported via the MRPIS interface.  This needs to be enabled in Exaile via Edit/Preferences/Plugins and ensure MPRIS plugin is ticked.<br>Earlier versions of Exaile are suported via the Exaile interface (the Exaile-specific org.exaile.!DbusInterface Dbus interface).||
 ||[http://code.google.com/p/gogglesmm/ Goggles Music Manager]||Supported via the MRPIS interface.||
+||[http://sourceforge.net/projects/guayadeque/ Guayadeque]||Supported via the MRPIS interface.||
 ||[http://www.listen-project.org/ Listen]||Supported via the Listen interface (the Listen-specific org.gnome.Listen Dbus interface).||
 ||[http://moc.daper.net/ MOC]||Supported via the MOC interface (using the mocq tool).||
 ||[http://qmmp.ylsoftware.com/index_en.php QMMP] >=0.3||Supported via the MRPIS interface.||
