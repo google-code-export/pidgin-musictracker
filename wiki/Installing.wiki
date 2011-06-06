@@ -9,7 +9,7 @@
 
 = Linux =
 
-  * Use your distribution's package management tool to install the latest version of the pidgin-musictracker pacakge
+  * Use your distribution's package management tool to install the latest version of the pidgin-musictracker package
   * Use Pidgin's Tools/Plugins menu to enable and configure the musictracker plugin
   * If it's not autodetected, [Configuring configure] your music player to work with musictracker
 
