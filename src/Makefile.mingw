@@ -10,7 +10,7 @@ include $(PIDGIN_TREE_TOP)/libpurple/win32/global.mak
 TARGET = musictracker
 VERSION = $(shell cat ../version)
 DEFINES += -D_WIN32_WINNT=0x0500 '-DVERSION="$(VERSION)"' -DPCRE_STATIC -DWIN32
-COREFLAGS = -g -Werror -W -Wall -Wno-unused-parameter -fno-strict-aliasing
+COREFLAGS = -g -Werror -W -Wall -Wno-unused-parameter -fno-strict-aliasing -Wno-format
 CXXFLAGS += ${COREFLAGS} -Wno-non-virtual-dtor
 CFLAGS += ${COREFLAGS} -Wno-sign-compare -Wno-missing-field-initializers -Wno-declaration-after-statement -std=gnu99
 
