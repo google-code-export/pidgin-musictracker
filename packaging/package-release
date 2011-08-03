@@ -10,7 +10,7 @@ then
  SVN_REV=`svn info https://pidgin-musictracker.googlecode.com/svn/trunk | grep Revision | cut -d':' -f2 | tr -d ' '`
 
  # obtaining svn revision failed, do nothing...
- if [ -z $SVN_REV ] 
+ if [ -z $SVN_REV ]
  then
    echo "Couldn't get svn rev"
    exit 0
@@ -72,6 +72,7 @@ then
      pidgin-musictracker-$VERSION-bin.tar.bz2 \
      $WORKDIR/installer/pidgin-musictracker-$VERSION.exe \
      pidgin-musictracker-$VERSION.tar.bz2 \
+     $WORKDIR/src/musictracker.dbg \
      $UPLOAD_TARGET/pidgin-musictracker-snapshot
 
  rm -r $WORKDIR

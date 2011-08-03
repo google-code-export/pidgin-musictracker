@@ -114,7 +114,9 @@ $(PO_UNINSTALL_SCRIPT): ../po/LINGUAS
              echo "RMDir \$$INSTDIR\\locale\\$$i\\LC_MESSAGES" >>$(PO_UNINSTALL_SCRIPT) ;  fi ; done
 
 $(INSTALLER): $(TARGET).dll $(INSTALL_SCRIPT) $(PO_INSTALL_SCRIPT) $(PO_UNINSTALL_SCRIPT)
-	strip $(TARGET).dll
+	objcopy --only-keep-debug $(TARGET).dll $(TARGET).dbg
+	objcopy --strip-debug $(TARGET).dll
+	objcopy --add-gnu-debuglink=$(TARGET).dbg $(TARGET).dll
 	makensis -V3 -DVERSION=$(VERSION) $(INSTALL_SCRIPT)
 
 ##
