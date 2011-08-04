@@ -7,53 +7,56 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pidgin-musictracker\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/pidgin-musictracker/issues/\n"
-"POT-Creation-Date: 2009-10-12 22:54+0100\n"
-"PO-Revision-Date: 2009-10-07 13:44+0000\n"
-"Last-Translator: Joao Nogueira <whipx@hotmail.com>\n"
+"POT-Creation-Date: 2011-08-04 18:09+0100\n"
+"PO-Revision-Date: 2010-10-14 17:40+0000\n"
+"Last-Translator: Carnë Draug <Unknown>\n"
 "Language-Team: Portuguese <pt@li.org>\n"
+"Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2009-10-12 21:16+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Launchpad-Export-Date: 2011-08-04 11:16+0000\n"
+"X-Generator: Launchpad (build 13604)\n"
 
 #. TRANSLATORS: this string controls the name musictracker appears as under the Tools menu
 #. It's probably a good idea to treat 'MusicTracker' as a proper name, transliterate but don't translate
 #.
-#: src/musictracker.c:857
+#: src/musictracker.c:891
 msgid "MusicTracker"
 msgstr "MusicTracker"
 
-#: src/musictracker.c:858
+#: src/musictracker.c:892
 msgid "MusicTracker Plugin for Pidgin"
-msgstr "Plugin do MusicTracker para o Pidgin"
+msgstr "Plugin MusicTracker para o Pidgin"
 
 #. TRANSLATORS: %s will be replaced with the URL of the translation site, currently
 #. http://translations.launchpad.net/pidgin-musictracker/trunk/+pots/musictracker
 #.
-#: src/musictracker.c:864
+#: src/musictracker.c:898
 #, c-format
 msgid "Fix translation bugs at %s"
 msgstr "Corrigir os bugs de tradução em %s"
 
-#: src/musictracker.c:868
+#: src/musictracker.c:902
 msgid ""
 "The MusicTracker Plugin allows you to customize your status message with "
 "information about currently playing song from your music player. Portions "
 "initially adopted from pidgin-currenttrack project."
 msgstr ""
-"On plugin do MusicTracker permite-te costumizar a tua mensagem de estado com "
+"O plugin MusicTracker permite-te costumizar a tua mensagem de estado com "
 "informações relativas à música que estás a ouvir. Parte disto foi "
-"inicialmente adoptado pelo projecto do pidgin-currenttrack"
+"inicialmente adoptado do projecto pidgin-currenttrack."
 
-#: src/musictracker.c:870
+#: src/musictracker.c:904
 msgid ""
 "WMP support via WMPuICE by Christian Mueller from http://www.mediatexx.com."
 msgstr ""
+"Suporte WMP através do WMPuICE por Christian Mueller de http://www.mediatexx."
+"com."
 
 #: src/actions.c:65
 msgid "Status to Set When Player is off:"
-msgstr "Estado a alterar quando o reprodutor estiver desligado."
+msgstr "Estado a escolher quando o reprodutor estiver desligado:"
 
 #: src/actions.c:85 src/actions.c:112
 msgid "Activate Status Changing"
@@ -77,7 +80,7 @@ msgstr "Reprodutor:"
 
 #: src/preferences.c:257
 msgid "Auto-detect"
-msgstr "Auto detectar"
+msgstr "Detectar automaticamente"
 
 #: src/preferences.c:266
 msgid "Artist"
@@ -101,7 +104,7 @@ msgstr "Tempo Decorrido"
 
 #: src/preferences.c:271
 msgid "Progress Bar"
-msgstr ""
+msgstr "Barra de progresso"
 
 #: src/preferences.c:272
 msgid "Player"
@@ -113,7 +116,7 @@ msgstr "Simbolo Musical (pode não aparecer em determinadas redes)"
 
 #: src/preferences.c:274
 msgid "Status Message"
-msgstr ""
+msgstr "Mensagem de Estado"
 
 #: src/preferences.c:278
 msgid "Status Format"
@@ -133,7 +136,7 @@ msgstr "Parado"
 
 #: src/preferences.c:315
 msgid "Screen Name"
-msgstr ""
+msgstr "Nome de utilizador"
 
 #: src/preferences.c:317
 msgid "Protocol"
@@ -141,7 +144,7 @@ msgstr "Protocolo"
 
 #: src/preferences.c:323
 msgid "Playing Status Format"
-msgstr ""
+msgstr "Formatação do estado durante reprodução"
 
 #: src/preferences.c:328
 msgid "Disable"
@@ -156,34 +159,36 @@ msgid ""
 "Customize playing status format, or disable status changing altogether for "
 "specific accounts"
 msgstr ""
+"Customizar formato do estado durante a reprodução, ou inactivar mudança do "
+"estado para determinadas contas."
 
 #: src/preferences.c:348
 msgid "Other settings"
-msgstr "Outras definições"
+msgstr "Outras configurações"
 
 #: src/preferences.c:358
 msgid "Don't change status message when away"
-msgstr ""
+msgstr "Não mudar messagem de estado quando ausente"
 
 #: src/preferences.c:365
 msgid "Don't change status message if protocol has 'now listening'"
-msgstr ""
+msgstr "Não mudar messagem de estado se o protocolo tiver \"a ouvir agora\""
 
 #: src/preferences.c:371
 msgid "Status Filter"
-msgstr ""
+msgstr "Filtro de estado"
 
 #: src/preferences.c:381
 msgid "Enable status filter"
-msgstr ""
+msgstr "Activar filtro de estado"
 
 #: src/preferences.c:388
 msgid "Blacklist (comma-delimited):"
-msgstr ""
+msgstr "Lista negra (separado por vírgulas):"
 
 #: src/preferences.c:397
 msgid "Mask character:"
-msgstr ""
+msgstr "Caractere máscara:"
 
 #: src/lastfm.c:127 src/lastfm_ws.c:169
 msgid "Username:"
@@ -191,12 +196,13 @@ msgstr "Nome de utilizador:"
 
 #: src/lastfm.c:136 src/lastfm_ws.c:178
 msgid "poll interval:"
-msgstr "Intervalo de atualização."
+msgstr "Intervalo de actualização:"
 
 #: src/lastfm.c:141 src/lastfm_ws.c:183
 msgid "This is the interval (in seconds) at which we check Last.fm for changes"
 msgstr ""
-"Este é o intervalo de atualização, no qual verificamos mudanças no Last.fm"
+"Este é o intervalo de actualização (em segundos), em que verificamos "
+"mudanças no Last.fm"
 
 #: src/lastfm.c:148
 msgid "quiet interval:"
@@ -211,11 +217,11 @@ msgstr ""
 
 #: src/mpd.c:116
 msgid "Hostname:"
-msgstr ""
+msgstr "Nome da Máquina:"
 
 #: src/mpd.c:124
 msgid "Port:"
-msgstr "Porto:"
+msgstr "Porta:"
 
 #: src/mpd.c:132
 msgid "Password:"
@@ -237,7 +243,7 @@ msgstr ""
 
 #: src/squeezecenter.c:858
 msgid "Player Order:"
-msgstr ""
+msgstr "Ordem dos reprodutores:"
 
 #: src/squeezecenter.c:866
 msgid "CLI User:"
@@ -253,24 +259,24 @@ msgstr "Servidor:"
 
 #: src/squeezecenter.c:891
 msgid "Squeezecenter Version:"
-msgstr ""
+msgstr "versão do Squeezacenter:"
 
 #: src/squeezecenter.c:896
 msgid "Players:"
-msgstr ""
+msgstr "Reprodutores"
 
 #: src/squeezecenter.c:899
 #, c-format
 msgid "Player count: %d\n"
-msgstr ""
+msgstr "Contador de reprodutores: %d\n"
 
 #: src/squeezecenter.c:908
 msgid "Last Command:"
-msgstr ""
+msgstr "Último comando"
 
 #: src/squeezecenter.c:913
 msgid "Last Reply:"
-msgstr ""
+msgstr "Última resposta:"
 
 #: src/squeezecenter.c:919
 msgid "Last Error:"
@@ -278,7 +284,7 @@ msgstr "Último Erro:"
 
 #: src/xmmsctrl.c:153
 msgid "Title Delimiter Character:"
-msgstr ""
+msgstr "Caracter delimitador do título"
 
 #: src/xmmsctrl.c:159
 msgid ""

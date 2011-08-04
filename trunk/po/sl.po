@@ -7,43 +7,44 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pidgin-musictracker\n"
 "Report-Msgid-Bugs-To: http://code.google.com/p/pidgin-musictracker/issues/\n"
-"POT-Creation-Date: 2009-05-29 14:49+0100\n"
-"PO-Revision-Date: 2009-05-29 14:47+0100\n"
-"Last-Translator: Jon TURNEY <jon.turney@dronecode.org.uk>\n"
+"POT-Creation-Date: 2011-08-04 18:09+0100\n"
+"PO-Revision-Date: 2011-01-12 17:23+0000\n"
+"Last-Translator: R33D3M33R <Unknown>\n"
 "Language-Team: Slovenian <sl@li.org>\n"
+"Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2009-04-14 15:48+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
+"X-Launchpad-Export-Date: 2011-08-04 11:16+0000\n"
+"X-Generator: Launchpad (build 13604)\n"
 
 #. TRANSLATORS: this string controls the name musictracker appears as under the Tools menu
 #. It's probably a good idea to treat 'MusicTracker' as a proper name, transliterate but don't translate
 #.
-#: src/musictracker.c:857
+#: src/musictracker.c:891
 msgid "MusicTracker"
 msgstr "Sledilnik glasbe"
 
-#: src/musictracker.c:858
+#: src/musictracker.c:892
 msgid "MusicTracker Plugin for Pidgin"
 msgstr "Vtičnik \"Sledilnik glasbe\" za Pidgin"
 
 #. TRANSLATORS: %s will be replaced with the URL of the translation site, currently
 #. http://translations.launchpad.net/pidgin-musictracker/trunk/+pots/musictracker
 #.
-#: src/musictracker.c:864
+#: src/musictracker.c:898
 #, c-format
 msgid "Fix translation bugs at %s"
 msgstr "Popravi napake v prevajanju na %s"
 
-#: src/musictracker.c:868
+#: src/musictracker.c:902
 msgid ""
 "The MusicTracker Plugin allows you to customize your status message with "
 "information about currently playing song from your music player. Portions "
 "initially adopted from pidgin-currenttrack project."
 msgstr ""
 
-#: src/musictracker.c:870
+#: src/musictracker.c:904
 msgid ""
 "WMP support via WMPuICE by Christian Mueller from http://www.mediatexx.com."
 msgstr ""
@@ -54,131 +55,131 @@ msgstr "Stanje ko je predvajalnik izklopljen:"
 
 #: src/actions.c:85 src/actions.c:112
 msgid "Activate Status Changing"
-msgstr ""
+msgstr "Omogoči spreminjanje stanja"
 
 #: src/actions.c:92 src/actions.c:112
 msgid "Deactivate Status Changing"
-msgstr ""
+msgstr "Onemogoči spreminjanje stanja"
 
 #: src/actions.c:115
 msgid "Change Player-Off Status..."
-msgstr ""
+msgstr "Spremeni stanje ko je predvajalnik izklopljen ..."
 
-#: src/preferences.c:222
+#: src/preferences.c:226
 msgid "Leave blank for an unchanged status message"
 msgstr ""
 
-#: src/preferences.c:247
+#: src/preferences.c:251
 msgid "Player:"
 msgstr "Predvajalnik:"
 
-#: src/preferences.c:253
+#: src/preferences.c:257
 msgid "Auto-detect"
-msgstr ""
+msgstr "Samodejno zaznaj"
 
-#: src/preferences.c:263
+#: src/preferences.c:266
 msgid "Artist"
 msgstr "Izvajalec"
 
-#: src/preferences.c:264
+#: src/preferences.c:267
 msgid "Album"
 msgstr "Album"
 
-#: src/preferences.c:265
+#: src/preferences.c:268
 msgid "Title"
 msgstr "Naslov"
 
-#: src/preferences.c:266
+#: src/preferences.c:269
 msgid "Track Duration"
 msgstr "Dolžina skladbe"
 
-#: src/preferences.c:267
+#: src/preferences.c:270
 msgid "Elapsed Track Time"
 msgstr ""
 
-#: src/preferences.c:268
+#: src/preferences.c:271
 msgid "Progress Bar"
 msgstr "Kazalnik napredka"
 
-#: src/preferences.c:269
+#: src/preferences.c:272
 msgid "Player"
 msgstr "Predvajalnik"
 
-#: src/preferences.c:270
+#: src/preferences.c:273
 msgid "Music Symbol (may not display on some networks)"
 msgstr "Glasbeni simbol (morda se ne prikaže na vseh omrežjih)"
 
-#: src/preferences.c:271
+#: src/preferences.c:274
 msgid "Status Message"
 msgstr ""
 
-#: src/preferences.c:275
+#: src/preferences.c:278
 msgid "Status Format"
 msgstr ""
 
-#: src/preferences.c:282
+#: src/preferences.c:285
 msgid "Playing:"
 msgstr "Predvajanje:"
 
-#: src/preferences.c:283
+#: src/preferences.c:286
 msgid "Paused:"
 msgstr ""
 
-#: src/preferences.c:284
+#: src/preferences.c:287
 msgid "Stopped:"
 msgstr "Ustavljeno:"
 
-#: src/preferences.c:312
+#: src/preferences.c:315
 msgid "Screen Name"
 msgstr "Ime"
 
-#: src/preferences.c:314
+#: src/preferences.c:317
 msgid "Protocol"
 msgstr "Protokol"
 
-#: src/preferences.c:320
+#: src/preferences.c:323
 msgid "Playing Status Format"
 msgstr ""
 
-#: src/preferences.c:325
+#: src/preferences.c:328
 msgid "Disable"
 msgstr "Onemogoči"
 
-#: src/preferences.c:331
+#: src/preferences.c:334
 msgid "Don't use 'now listening'"
 msgstr ""
 
-#: src/preferences.c:335
+#: src/preferences.c:338
 msgid ""
 "Customize playing status format, or disable status changing altogether for "
 "specific accounts"
 msgstr ""
 
-#: src/preferences.c:345
+#: src/preferences.c:348
 msgid "Other settings"
 msgstr "Ostale nastavitve"
 
-#: src/preferences.c:355
+#: src/preferences.c:358
 msgid "Don't change status message when away"
 msgstr "Ne spremeni statusa ob odsotnosti"
 
-#: src/preferences.c:362
+#: src/preferences.c:365
 msgid "Don't change status message if protocol has 'now listening'"
 msgstr ""
 
-#: src/preferences.c:368
+#: src/preferences.c:371
 msgid "Status Filter"
 msgstr "Filter stanja"
 
-#: src/preferences.c:378
+#: src/preferences.c:381
 msgid "Enable status filter"
 msgstr "Omogoči filter stanja"
 
-#: src/preferences.c:385
+#: src/preferences.c:388
 msgid "Blacklist (comma-delimited):"
 msgstr ""
 
-#: src/preferences.c:394
+#: src/preferences.c:397
 msgid "Mask character:"
 msgstr ""
 
@@ -196,7 +197,7 @@ msgstr ""
 
 #: src/lastfm.c:148
 msgid "quiet interval:"
-msgstr ""
+msgstr "tihi interval:"
 
 #: src/lastfm.c:153
 msgid ""
