@@ -31,24 +31,24 @@ _Note:_ The *MSN Messenger compatible* interface, as implemented by many players
 == Linux Players == 
 
 ||[http://amarok.kde.org/ Amarok]||Supported via the Amarok interface (a Amarok-specific DCOP interface).||
-||[http://amarok.kde.org/ Amarok2]||Supported via the MRPIS interface.||
-||[http://audacious-media-player.org Audacious]||Audacious 1.4 and later is supported via the MRPIS interface.<br>Audacious 1.3 and earlier is supported via the XMMS interface.  Title format needs to be set as '%p | %a | %t' in the players preferences. Delimiter choice '|' can be changed in musictracker settings.<br>The Audacious-specific org.atheme.audacious Dbus interface is also supported, we're not sure which versions of Audacious have only that.||
+||[http://amarok.kde.org/ Amarok2]||Supported via the MPRIS interface.||
+||[http://audacious-media-player.org Audacious]||Audacious 1.4 and later is supported via the MPRIS interface.<br>Audacious 1.3 and earlier is supported via the XMMS interface.  Title format needs to be set as '%p | %a | %t' in the players preferences. Delimiter choice '|' can be changed in musictracker settings.<br>The Audacious-specific org.atheme.audacious Dbus interface is also supported, we're not sure which versions of Audacious have only that.||
 ||[http://banshee-project.org/ Banshee]||Supported via the Banshee interface (the Banshee-specific org.bansheeproject.Banshee (versions 1.0 and later) and org.gnome.banshee (versions prior to 1.0) Dbus interfaces)||
-||[http://bmpx.backtrace.info/ BMPx]||Supported via the MRPIS interface.||
+||[http://bmpx.backtrace.info/ BMPx]||Supported via the MPRIS interface.||
 ||[http://www.clementine-player.org/ Clementine]||Supported via the MPRIS interface.||
-||[http://www.dragonplayer.org/ dragonplayer]||Supported via the MRPIS interface.||
-||[http://www.exaile.org/ Exaile]||Exaile >= 0.3 are supported via the MRPIS interface.  This needs to be enabled in Exaile via Edit/Preferences/Plugins and ensure MPRIS plugin is ticked.<br>Earlier versions of Exaile are suported via the Exaile interface (the Exaile-specific org.exaile.!DbusInterface Dbus interface).||
-||[http://code.google.com/p/gogglesmm/ Goggles Music Manager]||Supported via the MRPIS interface.||
-||[http://sourceforge.net/projects/guayadeque/ Guayadeque]||Supported via the MRPIS interface.||
+||[http://www.dragonplayer.org/ dragonplayer]||Supported via the MPRIS interface.||
+||[http://www.exaile.org/ Exaile]||Exaile >= 0.3 are supported via the MPRIS interface.  This needs to be enabled in Exaile via Edit/Preferences/Plugins and ensure MPRIS plugin is ticked.<br>Earlier versions of Exaile are suported via the Exaile interface (the Exaile-specific org.exaile.!DbusInterface Dbus interface).||
+||[http://code.google.com/p/gogglesmm/ Goggles Music Manager]||Supported via the MPRIS interface.||
+||[http://sourceforge.net/projects/guayadeque/ Guayadeque]||Supported via the MPRIS interface.||
 ||[http://www.listen-project.org/ Listen]||Supported via the Listen interface (the Listen-specific org.gnome.Listen Dbus interface).||
 ||[http://moc.daper.net/ MOC]||Supported via the MOC interface (using the mocq tool).||
-||[http://qmmp.ylsoftware.com/index_en.php QMMP] >=0.3||Supported via the MRPIS interface.||
+||[http://qmmp.ylsoftware.com/index_en.php QMMP] >=0.3||Supported via the MPRIS interface.||
 ||[http://www.sacredchao.net/quodlibet/ Quod Libet]||Supported via the !QuodLibet interface (the !QuodLibet-specific net.sacredchao.!QuodLibet Dbus interface).||
-||[http://www.gnome.org/projects/rhythmbox/ Rhythmbox]||Supported via the MRPIS interface.<br>The rhythmbox-specific org.gnome.Rhythmbox Dbus interface is also supported for older versions of this player.||
-||[http://getsongbird.com/ Songbird]||Supported via the MRPIS interface with [http://addons.songbirdnest.com/addon/1626 MPRIS addon].<br>Also supported via the dbusBird interface with [http://addons.songbirdnest.com/addon/181 DBusBird addon].||
+||[http://www.gnome.org/projects/rhythmbox/ Rhythmbox]||Supported via the MPRIS interface.<br>The rhythmbox-specific org.gnome.Rhythmbox Dbus interface is also supported for older versions of this player.||
+||[http://getsongbird.com/ Songbird]||Supported via the MPRIS interface with [http://addons.songbirdnest.com/addon/1626 MPRIS addon].<br>Also supported via the dbusBird interface with [http://addons.songbirdnest.com/addon/181 DBusBird addon].||
 ||[http://www.slimdevices.com/su_downloads.html SqueezeCenter]||Supported via the !SqueezeCenter interface.  You need to configure musictracker with the details of your !SqueezeBox server.||
 ||[http://vagalume.igalia.com/ Vagalume]||Supported via the Vagalume interface.||
-||[http://www.videolan.org/vlc/ VLC]||VLC versions >0.9.0 are supported via the MRPIS interface.  'D-Bus control interface' needs to be turned on in the player's preferences (Tools/Preferences), found under 'Control Interfaces' when 'Show settings' is set to 'all'.  You may need to restart VLC after changing this setting for it to take effect.||
+||[http://www.videolan.org/vlc/ VLC]||VLC versions >0.9.0 are supported via the MPRIS interface.  'D-Bus control interface' needs to be turned on in the player's preferences (Tools/Preferences), found under 'Control Interfaces' when 'Show settings' is set to 'all'.  You may need to restart VLC after changing this setting for it to take effect.||
 ||[http://www.xmms.org/ XMMS]||Supported via the XMMS interface.  Title format needs to be set as '%p | %a | %t' in the players preferences. Delimiter choice '|' can be changed in musictracker settings.||
 ||[http://wiki.xmms2.xmms.se XMMS2]||XMMS2 0.6 and later are supported via the XMMS2 interface.||
 
